@@ -7,6 +7,49 @@ Apache ZooKeeper is an effort to develop and maintain an open-source server whic
 ## What is ZooKeeper?
 ZooKeeper is a centralized service for maintaining configuration information, naming, providing distributed synchronization, and providing group services. All of these kinds of services are used in some form or another by distributed applications. Each time they are implemented there is a lot of work that goes into fixing the bugs and race conditions that are inevitable. Because of the difficulty of implementing these kinds of services, applications initially usually skimp on them ,which make them brittle in the presence of change and difficult to manage. Even when done correctly, different implementations of these services lead to management complexity when the applications are deployed.
 
+ ZooKeeper 是一个开源的分布式协调服务，由雅虎创建，是 Google Chubby 的开源实现。
+分布式应用程序可以基于 ZooKeeper 实现诸如数据发布/订阅、负载均衡、命名服务、分布式协
+调/通知、集群管理、Master 选举、配置维护，名字服务、分布式同步、分布式锁和分布式队列
+等功能。
+
+## 基本概念
+### 集群角色
+Leader、Follower和Observer
+![image](https://images2015.cnblogs.com/blog/581813/201706/581813-20170626010114336-754141744.jpg)
+### 会话
+会话就是一个客户端与服务器之间的一个TCP长连接。客户端和服务器的一切交互都是通过这个长连接进行的；
+
+会话会在客户端与服务器断开链接后，如果经过了设点的sessionTimeout时间内没有重新链接后失效。
+
+### 节点
+节点在ZeeKeeper中包含两层含义：
+
+集群中的一台机器，我们成为机器节点；
+ZooKeeper数据模型中的数据单元，我们成为数据节点（ZNode）。
+ZooKeeper的数据模型是内存中的一个ZNode数，由斜杠(/)进行分割的路径，就是一个ZNode，每个ZNode上除了保存自己的数据内容，还保存一系列属性信息；
+
+ZooKeeper中的数据节点分为两种：持久节点和临时节点。
+
+所谓的持久节点是指一旦这个ZNode创建成功，除非主动进行ZNode的移除操作，节点会一直保存在ZooKeeper上；而临时节点的生命周期是跟客户端的会话相关联的，一旦客户端会话失效，这个会话上的所有临时节点都会被自动移除。
+
+### 版本
+ZooKeeper为每一个ZNode节点维护一个叫做Stat的数据结构，在Stat中维护了节点相关的三个版本：
+
+当前ZNode的版本 version
+当前ZNode子节点的版本 cversion
+当前ZNode的ACL(Access Control Lists)版本 aversion
+
+### 监听器Watcher
+ZooKeeper允许用户在指定节点上注册一些Watcher，并且在一些特定事件触发的时候，ZooKeeper会通过事件通知到感兴趣的客户端上。
+
+#### ACL（Access Control Lists）
+ZooKeeper中定义了5中控制权限：
+    CREATE：创建子节点的权限
+    READ：获取节点数据和子节点列表的权限
+    WRITE：跟新节点数据的权限
+    DELETE：删除子节点的权限
+    ADMIN：设置节点ACL的权限。
+其中CREATE和DELETE这两种权限都是针对子节点的权限控制。
 
 ## 1、Zookeeper的角色
 领导者（leader），负责进行投票的发起和决议，更新系统状态。
@@ -118,7 +161,8 @@ Zookeeper是一个由多个server组成的集群
 • 选举已经产生了Leader，后面的都是follower，只能服从Leader的命令。而且这里还有个小细节，就是其实谁先启动谁当头。
 ![image](https://mmbiz.qpic.cn/mmbiz_jpg/tuSaKc6SfPricyGrecDibXhlxebC6xeh64oPUtLLHFzqv90LnCgsVUHL9g9rNrH3JQcZBEWmajKnFQAwnhdj9UeQ/640?tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
 ![image](https://mmbiz.qpic.cn/mmbiz_jpg/tuSaKc6SfPricyGrecDibXhlxebC6xeh64icHiaJT8mibvCBt631JWBqpWAwBBXjq8RNKtu26ic91ZxfLTeKQVzuWhaQ/640?tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
-6、zxid
+
+## 6、zxid
 • znode节点的状态信息中包含czxid, 那么什么是zxid呢?
 
 • ZooKeeper状态的每一次改变, 都对应着一个递增的Transaction id, 该id称为zxid. 由于zxid的递增性质, 如果zxid1小于zxid2, 那么zxid1肯定先于zxid2发生.
@@ -211,6 +255,7 @@ Follower收到uptodate消息后，又可以重新接受client的请求进行服�
 
 
 ## 11、Zookeeper 的数据模型　
+![image](https://images2015.cnblogs.com/blog/581813/201706/581813-20170626005312757-1275647224.jpg)
 层次化的目录结构，命名符合常规文件系统规范。
 
 每个节点在zookeeper中叫做znode,并且其有一个唯一的路径标识。
@@ -236,3 +281,85 @@ Znode有四种形式的节点
 * EPHEMERAL(短暂)
 * PERSISTENT_SEQUENTIAL（永久顺序）
 * EPHEMERAL_SEQUENTIAL（短暂顺序）
+
+## 13、应用场景
+### 1.数据发布与订阅（配置中心）
+ 数据发布与订阅，即所谓的配置中心，顾名思义就是发布者将数据发布到 ZooKeeper 节点上,
+供订阅者进行数据订阅，进而达到动态获取数据的目的，实现配置信息的集中式管理和动态更新。
+
+    对于：数据量通常比较小。数据内容在运行时动态变化。集群中各机器共享，配置一致。
+这样的全局配置信息就可以发布到 ZooKeeper上，让客户端（集群的机器）去订阅该消息。
+
+发布/订阅系统一般有两种设计模式，分别是推（Push）和拉（Pull）模式。
+      - 推模式
+          服务端主动将数据更新发送给所有订阅的客户端
+      - 拉模式
+          客户端主动发起请求来获取最新数据，通常客户端都采用定时轮询拉取的方式
+
+ZooKeeper 采用的是推拉相结合的方式：
+    客户端想服务端注册自己需要关注的节点，一旦该节点的数据发生变更，那么服务端就会向相应
+的客户端发送Watcher事件通知，客户端接收到这个消息通知后，需要主动到服务端获取最新的数据
+### 2.命名服务
+ 命名服务也是分布式系统中比较常见的一类场景。在分布式系统中，通过使用命名服务，客户端
+应用能够根据指定名字来获取资源或服务的地址，提供者等信息。被命名的实体通常可以是集群中的
+机器，提供的服务，远程对象等等——这些我们都可以统称他们为名字。
+
+其中较为常见的就是一些分布式服务框架（如RPC）中的服务地址列表。通过在ZooKeepr里
+创建顺序节点，能够很容易创建一个全局唯一的路径，这个路径就可以作为一个名字。
+
+ZooKeeper 的命名服务即生成全局唯一的ID
+### 3.分布式协调服务/通知
+ZooKeeper 中特有 Watcher 注册与异步通知机制，能够很好的实现分布式环境下不同机器，
+甚至不同系统之间的通知与协调，从而实现对数据变更的实时处理。使用方法通常是不同的客户端
+如果 机器节点 发生了变化，那么所有订阅的客户端都能够接收到相应的Watcher通知，并做出相应
+的处理。
+
+ZooKeeper的分布式协调/通知，是一种通用的分布式系统机器间的通信方式。
+### 4.Master选举
+
+![image](http://www.aboutyun.com/data/attachment/forum/201608/20/184729rximw9ziz9zeclxd.png)
+
+![image](http://www.aboutyun.com/data/attachment/forum/201608/20/184755snznkmmh7at9nti9.png)
+
+Master 选举可以说是 ZooKeeper 最典型的应用场景了。比如 HDFS 中 Active NameNode 的选举、YARN 中 Active ResourceManager 的选举和 HBase 中 Active HMaster 的选举等
+ 针对 Master 选举的需求，通常情况下，我们可以选择常见的关系型数据库中的主键特性来
+实现：希望成为 Master 的机器都向数据库中插入一条相同主键ID的记录，数据库会帮我们进行
+主键冲突检查，也就是说，只有一台机器能插入成功——那么，我们就认为向数据库中成功插入数据
+的客户端机器成为Master。
+
+    依靠关系型数据库的主键特性确实能够很好地保证在集群中选举出唯一的一个Master。
+
+    但是，如果当前选举出的 Master 挂了，那么该如何处理？谁来告诉我 Master 挂了呢？
+显然，关系型数据库无法通知我们这个事件。但是，ZooKeeper 可以做到！
+
+    利用 ZooKeepr 的强一致性，能够很好地保证在分布式高并发情况下节点的创建一定能够
+保证全局唯一性，即 ZooKeeper 将会保证客户端无法创建一个已经存在的 数据单元节点。
+    也就是说，如果同时有多个客户端请求创建同一个临时节点，那么最终一定只有一个客户端
+请求能够创建成功。利用这个特性，就能很容易地在分布式环境中进行 Master 选举了。
+
+    成功创建该节点的客户端所在的机器就成为了 Master。同时，其他没有成功创建该节点的
+客户端，都会在该节点上注册一个子节点变更的 Watcher，用于监控当前 Master 机器是否存
+活，一旦发现当前的Master挂了，那么其他客户端将会重新进行 Master 选举。
+
+    这样就实现了 Master 的动态选举。
+### 5.分布式锁
+分布式锁是控制分布式系统之间同步访问共享资源的一种方式 
+分布式锁又分为排他锁和共享锁两种
+![image](http://www.aboutyun.com/data/attachment/forum/201608/20/184557iv77xzbyas7bc99o.png)
+#### 排它锁 
+   ZooKeeper如何实现排它锁？
+定义锁 
+ZooKeeper 上的一个 机器节点 可以表示一个锁
+获得锁 
+ 把ZooKeeper上的一个节点看作是一个锁，获得锁就通过创建临时节点的方式来实现。 
+ ZooKeeper 会保证在所有客户端中，最终只有一个客户端能够创建成功，那么就可以 
+ 认为该客户端获得了锁。同时，所有没有获取到锁的客户端就需要到/exclusive_lock 
+ 节点上注册一个子节点变更的Watcher监听，以便实时监听到lock节点的变更情况。
+释放锁 
+ 因为锁是一个临时节点，释放锁有两种方式
+    当前获得锁的客户端机器发生宕机或重启，那么该临时节点就会被删除，释放锁
+    正常执行完业务逻辑后，客户端就会主动将自己创建的临时节点删除，释放锁
+无论在什么情况下移除了lock节点，ZooKeeper 都会通知所有在 /exclusive_lock 节点上注册了节点变更 Watcher 监听的客户端。这些客户端在接收到通知后，再次重新发起分布式锁获取，即重复『获取锁』过程
+
+#### 共享锁
+共享锁在同一个进程中很容易实现，但是在跨进程或者在不同 Server 之间就不好实现了。Zookeeper 却很容易实现这个功能，实现方式也是需要获得锁的 Server 创建一个 EPHEMERAL_SEQUENTIAL 目录节点，然后调用 getChildren方法获取当前的目录节点列表中最小的目录节点是不是就是自己创建的目录节点，如果正是自己创建的，那么它就获得了这个锁，如果不是那么它就调用 exists(String path, boolean watch) 方法并监控 Zookeeper 上目录节点列表的变化，一直到自己创建的节点是列表中最小编号的目录节点，从而获得锁，释放锁很简单，只要删除前面它自己所创建的目录节点就行了
