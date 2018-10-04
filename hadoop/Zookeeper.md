@@ -44,11 +44,17 @@ ZooKeeper允许用户在指定节点上注册一些Watcher，并且在一些特�
 
 #### ACL（Access Control Lists）
 ZooKeeper中定义了5中控制权限：
+    
     CREATE：创建子节点的权限
+    
     READ：获取节点数据和子节点列表的权限
+    
     WRITE：跟新节点数据的权限
+    
     DELETE：删除子节点的权限
+    
     ADMIN：设置节点ACL的权限。
+    
 其中CREATE和DELETE这两种权限都是针对子节点的权限控制。
 
 ## 1、Zookeeper的角色
