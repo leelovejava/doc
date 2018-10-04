@@ -12,7 +12,9 @@ ZooKeeper is a centralized service for maintaining configuration information, na
 领导者（leader），负责进行投票的发起和决议，更新系统状态。
 学习者（learner），包括跟随者（follower）和观察者（observer），follower用于接受客户端请求并想客户端返回结果，在选主过程中参与投票Observer可以接受客户端连接，将写请求转发给leader，但observer不参加投票过程，只同步leader的状态，observer的目的是为了扩展系统，提高读取速度。
 观察者(observer)
+
 ![image](https://mmbiz.qpic.cn/mmbiz_jpg/tuSaKc6SfPricyGrecDibXhlxebC6xeh64HMc6z4Z3paKpPZiatsWfe3icUAr0WMdZw7QwOI9BaI8dRGCodGia9IoYg/640?tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+
 ![image](https://mmbiz.qpic.cn/mmbiz_jpg/tuSaKc6SfPricyGrecDibXhlxebC6xeh64viadYdFdWdhN6Ry5uPz3E6xJ3QhCVib6zHzAic92P7M9lFjPcm7ox2bww/640?tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
 
 • Zookeeper的核心是**原子广播**，这个机制保证了各个Server之间的同步。实现这个机制的协议叫做Zab协议。Zab协议有两种模式，它们分别是恢复模式（选主）和广播模式（同步）。当服务启动或者在领导者崩溃后，Zab就进入了恢复模式，当领导者被选举出来，且大多数Server完成了和leader的状态同步以后，恢复模式就结束了。状态同步保证了leader和Server具有相同的系统状态。
