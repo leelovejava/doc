@@ -4,6 +4,8 @@
 ## Welcome to Apache ZooKeeper
 Apache ZooKeeper is an effort to develop and maintain an open-source server which enables highly reliable distributed coordination.
 
+![image](https://www.w3cschool.cn/attachments/image/20170110/1484044507543563.jpg)
+
 ## What is ZooKeeper?
 ZooKeeper is a centralized service for maintaining configuration information, naming, providing distributed synchronization, and providing group services. All of these kinds of services are used in some form or another by distributed applications. Each time they are implemented there is a lot of work that goes into fixing the bugs and race conditions that are inevitable. Because of the difficulty of implementing these kinds of services, applications initially usually skimp on them ,which make them brittle in the presence of change and difficult to manage. Even when done correctly, different implementations of these services lead to management complexity when the applications are deployed.
 
@@ -17,18 +19,21 @@ Leader、Follower和Observer
 ### 会话
 会话就是一个客户端与服务器之间的一个TCP长连接。客户端和服务器的一切交互都是通过这个长连接进行的；
 
-会话会在客户端与服务器断开连接后，如果经过了设点的sessionTimeout时间内没有重新链接后失效。
+会话会在客户端与服务器断开连接后，如果经过了设置的sessionTimeout时间内没有重新连接后失效。
 
 ### 节点
 节点在ZeeKeeper中包含两层含义：
 
-集群中的一台机器，我们成为机器节点；
-ZooKeeper数据模型中的数据单元，我们成为数据节点（ZNode）。
+1) 集群中的一台机器，我们称之为机器节点；
+
+2) ZooKeeper数据模型中的数据单元，我们称之为数据节点（ZNode）。
+
 ZooKeeper的数据模型是内存中的一个ZNode数，由斜杠(/)进行分割的路径，就是一个ZNode，每个ZNode上除了保存自己的数据内容，还保存一系列属性信息；
 
 ZooKeeper中的数据节点分为两种：持久节点和临时节点。
 
-所谓的持久节点是指一旦这个ZNode创建成功，除非主动进行ZNode的移除操作，节点会一直保存在ZooKeeper上；而临时节点的生命周期是跟客户端的会话相关联的，一旦客户端会话失效，这个会话上的所有临时节点都会被自动移除。
+所谓的持久节点是指一旦这个ZNode创建成功，除非主动进行ZNode的移除操作，节点会一直保存在ZooKeeper上;
+临时节点的生命周期是跟客户端的会话相关联的，一旦客户端会话失效，这个会话上的所有临时节点都会被自动移除。
 
 ### 版本
 ZooKeeper为每一个ZNode节点维护一个叫做Stat的数据结构，在Stat中维护了节点相关的三个版本：
@@ -57,6 +62,7 @@ ZooKeeper中定义了5中控制权限：
 
 ## 1、Zookeeper的角色
 领导者（leader），负责进行投票的发起和决议，更新系统状态。
+
 学习者（learner），包括跟随者（follower）和观察者（observer），follower用于接受客户端请求并想客户端返回结果，在选主过程中参与投票Observer可以接受客户端连接，将写请求转发给leader，但observer不参加投票过程，只同步leader的状态，observer的目的是为了扩展系统，提高读取速度。
 观察者(observer)
 
@@ -110,6 +116,7 @@ Zookeeper是一个由多个server组成的集群
 
 ## 4、Zookeeper节点数据操作流程
 ![image](https://mmbiz.qpic.cn/mmbiz_jpg/tuSaKc6SfPricyGrecDibXhlxebC6xeh64veia83nxMNQzUd7JbxqejoZIu8yiaUpQictAcxZB60qS9GpVSyGibCRqng/640?tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+
 注：1.在Client向Follwer发出一个写的请求
 
 2.Follwer把请求发送给Leader
