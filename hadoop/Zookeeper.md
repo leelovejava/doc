@@ -16,10 +16,11 @@ ZooKeeper is a centralized service for maintaining configuration information, na
 ### 集群角色
 Leader、Follower和Observer
 ![image](https://images2015.cnblogs.com/blog/581813/201706/581813-20170626010114336-754141744.jpg)
+
 ### 会话
 会话就是一个客户端与服务器之间的一个TCP长连接。客户端和服务器的一切交互都是通过这个长连接进行的；
 
-会话会在客户端与服务器断开连接后，如果经过了设置的sessionTimeout时间内没有重新连接后失效。
+会话会在客户端与服务器断开连接后，如果超过设置的sessionTimeout时间内没有重新连接后失效。
 
 ### 节点
 节点在ZeeKeeper中包含两层含义：
@@ -61,16 +62,18 @@ ZooKeeper中定义了5种控制权限：
 其中CREATE和DELETE这两种权限都是针对子节点的权限控制。
 
 ## 1、Zookeeper的角色
-领导者（leader），负责进行投票的发起和决议，更新系统状态。
+领导者（leader）: 负责进行投票的发起和决议，更新系统状态,不接受client的请求。
+学习者（learner）: 包括跟随者（follower）和观察者（observer）
+跟随者（follower）:接受客户端请求并返回客户端结果，
+观察者 (observer) : 在选主过程中参与投票Observer可以接受客户端连接，将写请求转发给leader，但observer不参加投票过程，只同步leader的状态，observer的目的是为了扩展系统，提高读取速度。
 
-学习者（learner），包括跟随者（follower）和观察者（observer），follower用于接受客户端请求并想客户端返回结果，在选主过程中参与投票Observer可以接受客户端连接，将写请求转发给leader，但observer不参加投票过程，只同步leader的状态，observer的目的是为了扩展系统，提高读取速度。
-观察者(observer)
 
 ![image](https://mmbiz.qpic.cn/mmbiz_jpg/tuSaKc6SfPricyGrecDibXhlxebC6xeh64HMc6z4Z3paKpPZiatsWfe3icUAr0WMdZw7QwOI9BaI8dRGCodGia9IoYg/640?tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
 
 ![image](https://mmbiz.qpic.cn/mmbiz_jpg/tuSaKc6SfPricyGrecDibXhlxebC6xeh64viadYdFdWdhN6Ry5uPz3E6xJ3QhCVib6zHzAic92P7M9lFjPcm7ox2bww/640?tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
 
-• Zookeeper的核心是**原子广播**，这个机制保证了各个Server之间的同步。实现这个机制的协议叫做Zab协议。Zab协议有两种模式，它们分别是恢复模式（选主）和广播模式（同步）。当服务启动或者在领导者崩溃后，Zab就进入了恢复模式，当领导者被选举出来，且大多数Server完成了和leader的状态同步以后，恢复模式就结束了。状态同步保证了leader和Server具有相同的系统状态。
+• Zookeeper的核心是**原子广播**，这个机制保证了各个Server之间的同步。实现这个机制的协议叫做Zab协议。
+Zab协议有两种模式，它们分别是恢复模式（选主）和广播模式（同步）。当服务启动或者在领导者崩溃后，Zab就进入了恢复模式，当领导者被选举出来，且大多数Server完成了和leader的状态同步以后，恢复模式就结束了。状态同步保证了leader和Server具有相同的系统状态。
 
 • 为了保证事务的顺序一致性，zookeeper采用了递增的事务id号（zxid）来标识事务。所有的提议（proposal）都在被提出的时候加上了zxid。实现中zxid是一个64位的数字，它高32位是epoch用来标识leader关系是否改变，每次一个leader被选出来，它都会有一个新的epoch，标识当前属于那个leader的统治时期。低32位用于递增计数。
 
@@ -104,11 +107,11 @@ Zookeeper是一个由多个server组成的集群
 
 ## 3、Zookeeper 的保证　
 
- 更新请求顺序进行，来自同一个client的更新请求按其发送顺序依次执行。
+ 循序性:更新请求顺序进行，来自同一个client的更新请求按其发送顺序依次执行。
 
- 数据更新原子性，一次数据更新要么成功，要么失败。
+ 圆子性,数据更新原子性，一次数据更新要么成功，要么失败。
 
- 全局唯一数据视图，client无论连接到哪个server，数据视图都是一致的。
+ 一致性,全局唯一数据视图，client无论连接到哪个server，数据视图都是一致的。
 
  实时性，在一定事件范围内，client能读到最新数据。
 
@@ -585,3 +588,5 @@ delete(String path, int version)
 ```
 close();
 ```
+
+### 7.Zookeeper和Eureka的区别?
