@@ -7,10 +7,8 @@ Apache ZooKeeper is an effort to develop and maintain an open-source server whic
 ## What is ZooKeeper?
 ZooKeeper is a centralized service for maintaining configuration information, naming, providing distributed synchronization, and providing group services. All of these kinds of services are used in some form or another by distributed applications. Each time they are implemented there is a lot of work that goes into fixing the bugs and race conditions that are inevitable. Because of the difficulty of implementing these kinds of services, applications initially usually skimp on them ,which make them brittle in the presence of change and difficult to manage. Even when done correctly, different implementations of these services lead to management complexity when the applications are deployed.
 
- ZooKeeper 是一个开源的分布式协调服务，由雅虎创建，是 Google Chubby 的开源实现。
-分布式应用程序可以基于 ZooKeeper 实现诸如数据发布/订阅、负载均衡、命名服务、分布式协
-调/通知、集群管理、Master 选举、配置维护，命名服务、分布式同步、分布式锁和分布式队列
-等功能。
+ ZooKeeper是一个开源的分布式协调服务，由雅虎创建，是 Google Chubby 的开源实现。
+分布式应用程序可以基于ZooKeeper 实现诸如数据发布/订阅、负载均衡、命名服务、分布式协调/通知、集群管理、Master 选举、配置维护，命名服务、分布式同步、分布式锁和分布式队列等功能。
 
 ## 基本概念
 ### 集群角色
