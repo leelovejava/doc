@@ -46,7 +46,7 @@ ZooKeeper为每一个ZNode节点维护一个叫做Stat的数据结构，在Stat�
 ZooKeeper允许用户在指定节点上注册一些Watcher，并且在一些特定事件触发的时候，ZooKeeper会通过事件通知到感兴趣的客户端上。
 
 #### ACL（Access Control Lists）
-ZooKeeper中定义了5中控制权限：
+ZooKeeper中定义了5种控制权限：
     
     CREATE：创建子节点的权限
     
