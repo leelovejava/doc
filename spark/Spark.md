@@ -120,7 +120,8 @@ The RDD interface is still supported, and you can get a more complete reference 
 
 ### 4.2.Interactive Analysis with the Spark Shell(使用spark shell进行交互式操作)
 #### 4.2.1.Basics(基本用法)
-Spark’s shell provides a simple way to learn the API, as well as a powerful tool to analyze data interactively. It is available in either Scala (which runs on the Java VM and is thus a good way to use existing Java libraries) or Python. Start it by running the following in the Spark directory:
+Spark’s shell provides a simple way to learn the API, as well as a powerful tool to analyze data interactively. 
+It is available in either Scala (which runs on the Java VM and is thus a good way to use existing Java libraries) or Python. Start it by running the following in the Spark directory:
 *Spark的shell提供了一个学习API的简单方法，同时也是交互式分析数据的强大工具。它可以使用Scala或Python语言进行开发，可通过在Spark目录运行以下命令启动Spark-Shell：*
 ```
 ./bin/spark-shell
@@ -224,13 +225,14 @@ The interesting part is that these same functions can be used on very large data
 You can also do this interactively by connecting bin/spark-shell to a cluster, as described in the [RDD programming guide](http://spark.apache.org/docs/latest/rdd-programming-guide.html#using-the-shell).
 
 ### 4.3.Self-Contained Applications(Spark应用程序)
-Suppose we wish to write a self-contained application using the Spark API. We will walk through a simple application in Scala (with sbt), Java (with Maven), and Python (pip).
+Suppose we wish to write a self-contained application using the Spark API. 
+We will walk through a simple application in Scala (with sbt), Java (with Maven), and Python (pip).
 
 *假设我们希望使用Spark API编写一个Spark 应用程序。我们将通过一个简单的应用程序，通过Scala（与SBT），Java（与Maven）和Python（PIP）*
 *我们将在Scala中创建一个非常简单的Spark应用程序，事实上，它被命名为SimpleApp.scala：*
 
 ```
-//* SimpleApp.scala */
+ //* SimpleApp.scala */
  import org.apache.spark.sql.SparkSession
  
  object SimpleApp {
