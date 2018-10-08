@@ -98,7 +98,7 @@ export SPARK_DAEMON_JAVA_OPTS="-Dspark.deploy.recoveryMode=ZOOKEEPER -Dspark.dep
 1.在node1节点上修改slaves配置文件内容指定worker节点
 2.在node1上执行sbin/start-all.sh脚本，然后在node2上执行sbin/start-master.sh启动第二个Master
 
-## Quick start
+## [Quick start](http://spark.apache.org/docs/latest/quick-start.html)
 ### 1、前言
 This tutorial provides a quick introduction to using Spark. We will first introduce the API through Spark’s interactive shell (in Python or Scala), then show how to write applications in Java, Scala, and Python.
 
