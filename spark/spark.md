@@ -1,105 +1,45 @@
-# Apache Spark
+####Spark
+####Overview
+spark.apache.org
 
-Spark is a fast and general cluster computing system for Big Data. It provides
-high-level APIs in Scala, Java, Python, and R, and an optimized engine that
-supports general computation graphs for data analysis. It also supports a
-rich set of higher-level tools including Spark SQL for SQL and DataFrames,
-MLlib for machine learning, GraphX for graph processing,
-and Spark Streaming for stream processing.
+####Spring for Apache Hadoop
+##### 1、[Overview](https://spring.io/projects/spring-hadoop)
+Spring Hadoop简化了Apache Hadoop，提供了一个统一的配置模型以及简单易用的API来使用HDFS、MapReduce、Pig以及Hive。
+还集成了其它Spring生态系统项目，如Spring Integration和Spring Batch
+##### 2、Features特点
+* Support to create Hadoop applications that are configured using Dependency Injection and run as standard Java applications vs. using Hadoop command line utilities.
+  >支持创建Hadoop应用，配置使用依赖注入和运行标准的java应用程序和使用Hadoop的命令行工具
+* Integration with Spring Boot to simply creat Spring apps that connect to HDFS to read and write data.
+  >集成Spring Boot，可以简单地创建Spring应用程序去连接HDFS进行读写数据
+* Create and configure applications that use Java MapReduce, Streaming, Hive, Pig, or HBase
+  >创建和配置，使用java的MapReduce，Streaming，Hive，Pig或HBase
+* Extensions to Spring Batch to support creating Hadoop based workflows for any type of Hadoop Job or HDFS operation.
+  >扩展Spring Batch支持创建基于Hadoop的工作流的任何类型的Hadoop Job或HDFS的操作
+* Script HDFS operations using any JVM based scripting language.
+  >脚本HDFS操作使用任何基于JVM的脚本语言
+* Easily create custom Spring Boot based aplications that can be deployed to execute on YARN.
+  >基于SpringBoot轻松地创建自定义的基础应用，应用可以部署在YARN上
+* DAO support (Template & Callbacks) for HBase.
+  >支持DAO，可以使用模板或回调的方式操作Hbase
+* Support for Hadoop Security.
+  >支持Hadoop安全验证
 
-<http://spark.apache.org/>
+##### 3、Spring Boot Config
+```
+<dependencies>
+    <dependency>
+        <groupId>org.springframework.data</groupId>
+        <artifactId>spring-data-hadoop</artifactId>
+        <version>2.5.0.RELEASE</version>
+    </dependency>
+</dependencies>
+```
 
+##### 4、Quick start
+##### 5、Doc&Api
+https://docs.spring.io/spring-hadoop/docs/2.5.0.RELEASE/reference/html/
+https://docs.spring.io/spring-hadoop/docs/2.5.0.RELEASE/api/
+http://blog.51cto.com/zero01/2094901?from=singlemessage
 
-## Online Documentation
-
-You can find the latest Spark documentation, including a programming
-guide, on the [project web page](http://spark.apache.org/documentation.html).
-This README file only contains basic setup instructions.
-
-## Building Spark
-
-Spark is built using [Apache Maven](http://maven.apache.org/).
-To build Spark and its example programs, run:
-
-    build/mvn -DskipTests clean package
-
-(You do not need to do this if you downloaded a pre-built package.)
-
-You can build Spark using more than one thread by using the -T option with Maven, see ["Parallel builds in Maven 3"](https://cwiki.apache.org/confluence/display/MAVEN/Parallel+builds+in+Maven+3).
-More detailed documentation is available from the project site, at
-["Building Spark"](http://spark.apache.org/docs/latest/building-spark.html).
-
-For general development tips, including info on developing Spark using an IDE, see ["Useful Developer Tools"](http://spark.apache.org/developer-tools.html).
-
-## Interactive Scala Shell
-
-The easiest way to start using Spark is through the Scala shell:
-
-    ./bin/spark-shell
-
-Try the following command, which should return 1000:
-
-    scala> sc.parallelize(1 to 1000).count()
-
-## Interactive Python Shell
-
-Alternatively, if you prefer Python, you can use the Python shell:
-
-    ./bin/pyspark
-
-And run the following command, which should also return 1000:
-
-    >>> sc.parallelize(range(1000)).count()
-
-## Example Programs
-
-Spark also comes with several sample programs in the `examples` directory.
-To run one of them, use `./bin/run-example <class> [params]`. For example:
-
-    ./bin/run-example SparkPi
-
-will run the Pi example locally.
-
-You can set the MASTER environment variable when running examples to submit
-examples to a cluster. This can be a mesos:// or spark:// URL,
-"yarn" to run on YARN, and "local" to run
-locally with one thread, or "local[N]" to run locally with N threads. You
-can also use an abbreviated class name if the class is in the `examples`
-package. For instance:
-
-    MASTER=spark://host:7077 ./bin/run-example SparkPi
-
-Many of the example programs print usage help if no params are given.
-
-## Running Tests
-
-Testing first requires [building Spark](#building-spark). Once Spark is built, tests
-can be run using:
-
-    ./dev/run-tests
-
-Please see the guidance on how to
-[run tests for a module, or individual tests](http://spark.apache.org/developer-tools.html#individual-tests).
-
-There is also a Kubernetes integration test, see resource-managers/kubernetes/integration-tests/README.md
-
-## A Note About Hadoop Versions
-
-Spark uses the Hadoop core library to talk to HDFS and other Hadoop-supported
-storage systems. Because the protocols have changed in different versions of
-Hadoop, you must build Spark against the same version that your cluster runs.
-
-Please refer to the build documentation at
-["Specifying the Hadoop Version and Enabling YARN"](http://spark.apache.org/docs/latest/building-spark.html#specifying-the-hadoop-version-and-enabling-yarn)
-for detailed guidance on building for a particular distribution of Hadoop, including
-building for particular Hive and Hive Thriftserver distributions.
-
-## Configuration
-
-Please refer to the [Configuration Guide](http://spark.apache.org/docs/latest/configuration.html)
-in the online documentation for an overview on how to configure Spark.
-
-## Contributing
-
-Please review the [Contribution to Spark guide](http://spark.apache.org/contributing.html)
-for information on how to get started contributing to the project.
+##### 6、spring-hadoop
+[Using a Windows client together with a Linux cluster](https://github.com/spring-projects/spring-hadoop/wiki/Using-a-Windows-client-together-with-a-Linux-cluster)
