@@ -170,6 +170,7 @@ wordCounts: org.apache.spark.sql.Dataset[(String, Long)] = [value: string, count
 ```
 #### collection
 Here, we call flatMap to transform a Dataset of lines to a Dataset of words, and then combine groupByKey and count to compute the per-word counts in the file as a Dataset of (String, Long) pairs. 
+
 *具体流程如下：* 
 *1. 调用flatMap将行数据集转换为单词数据集* 
 *2. 结合groupByKey和count来计算文件中每个字的计数，作为（String，Long）格式保存起来*
