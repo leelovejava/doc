@@ -98,16 +98,16 @@ export SPARK_DAEMON_JAVA_OPTS="-Dspark.deploy.recoveryMode=ZOOKEEPER -Dspark.dep
 1.在node1节点上修改slaves配置文件内容指定worker节点
 2.在node1上执行sbin/start-all.sh脚本，然后在node2上执行sbin/start-master.sh启动第二个Master
 
-## [Quick start](http://spark.apache.org/docs/latest/quick-start.html)
-### 1、前言
+## 4.[Quick start](http://spark.apache.org/docs/latest/quick-start.html)
+### 4.1.前言
 This tutorial provides a quick introduction to using Spark. We will first introduce the API through Spark’s interactive shell (in Python or Scala), then show how to write applications in Java, Scala, and Python.
 
 To follow along with this guide, first download a packaged release of Spark from the Spark website. Since we won’t be using HDFS, you can download a package for any version of Hadoop
 
 Note that, before Spark 2.0, the main programming interface of Spark was the Resilient Distributed Dataset (RDD). After Spark 2.0, RDDs are replaced by Dataset, which is strongly-typed like an RDD, but with richer optimizations under the hood. The RDD interface is still supported, and you can get a more complete reference at the RDD programming guide. However, we highly recommend you to switch to use Dataset, which has better performance than RDD. See the SQL programming guide to get more information about Dataset
 
-### 2、Interactive Analysis with the Spark Shell(使用spark shell进行交互式操作)
-### Basics(基本用法)
+### 4.2.Interactive Analysis with the Spark Shell(使用spark shell进行交互式操作)
+#### 4.2.1.Basics(基本用法)
 Spark’s shell provides a simple way to learn the API, as well as a powerful tool to analyze data interactively. It is available in either Scala (which runs on the Java VM and is thus a good way to use existing Java libraries) or Python. Start it by running the following in the Spark directory:
 *Spark的shell提供了一个学习API的简单方法，同时也是交互式分析数据的强大工具。它可以使用Scala或Python语言进行开发，可通过在Spark目录运行以下命令启动Spark-Shell：*
 ```
@@ -143,16 +143,17 @@ textFile.filter(line => line.contains("Spark")).count() // How many lines contai
 res3: Long = 15
 ```
 
-### 3、More on Dataset Operations(更多DataSet 操作)
-####
+#### 4.2.2.More on Dataset Operations(更多DataSet 操作)
+#####
 Dataset actions and transformations can be used for more complex computations. 
 Let’s say we want to find the line with the most words:
+
 *DataSet的Action和Transformation操作可实现更复杂的计算。比方说，我们想找到最多的单词：*
 ```
 scala> textFile.map(line => line.split(" ").size).reduce((a, b) => if (a > b) a else b)
 res4: Long = 15
 ```
-#### 
+##### 
 This first maps a line to an integer value, creating a new Dataset. 
 reduce is called on that Dataset to find the largest word count. 
 The arguments to map and reduce are Scala function literals (closures), and can use any language feature or Scala/Java library. 
@@ -167,14 +168,14 @@ scala> import java.lang.Math
 scala> textFile.map(line => line.split(" ").size).reduce((a, b) => Math.max(a, b))
 res5: Int = 15
 ```
-#### 
+##### 
 One common data flow pattern is MapReduce, as popularized by Hadoop. Spark can implement MapReduce flows easily:
 *一种常见的数据流模式是MapReduce，正如Hadoop所普及的。Spark可以轻易实现MapReduce的操作：*
 ```
 scala> val wordCounts = textFile.flatMap(line => line.split(" ")).groupByKey(identity).count()
 wordCounts: org.apache.spark.sql.Dataset[(String, Long)] = [value: string, count(1): bigint]
 ```
-#### collection
+##### collection
 Here, we call flatMap to transform a Dataset of lines to a Dataset of words, and then combine groupByKey and count to compute the per-word counts in the file as a Dataset of (String, Long) pairs. 
 
 *具体流程如下：* 
@@ -188,7 +189,7 @@ scala> wordCounts.collect()
 res6: Array[(String, Int)] = Array((means,1), (under,2), (this,3), (Because,1), (Python,2), (agree,1), (cluster.,1), ...)
 ```
 
-### 4、Caching(缓存)
+#### 4.2.3.Caching(缓存)
 Spark also supports pulling data sets into a cluster-wide in-memory cache. This is very useful when data is accessed repeatedly, such as when querying a small “hot” dataset or when running an iterative algorithm like PageRank. 
 
 *Spark还支持将DataSet保存到集群范围内的内存缓存中。当重复访问数据时，如查询小的“热”数据集或运行迭代算法（如PageRank）时，这非常有用。*
@@ -210,10 +211,12 @@ The interesting part is that these same functions can be used on very large data
 *使用Spark探索和缓存100行文本文件似乎很愚蠢，但有趣的部分是这些相同的功能可以用在非常大的数据集上，即使当它们被划分成数十或数百个节点时也可以缓存*
 You can also do this interactively by connecting bin/spark-shell to a cluster, as described in the [RDD programming guide](http://spark.apache.org/docs/latest/rdd-programming-guide.html#using-the-shell).
 
-### 5、Self-Contained Applications(Spark应用程序)
+### 4.3.Self-Contained Applications(Spark应用程序)
 Suppose we wish to write a self-contained application using the Spark API. We will walk through a simple application in Scala (with sbt), Java (with Maven), and Python (pip).
+
 *假设我们希望使用Spark API编写一个Spark 应用程序。我们将通过一个简单的应用程序，通过Scala（与SBT），Java（与Maven）和Python（PIP）*
-我们将在Scala中创建一个非常简单的Spark应用程序，事实上，它被命名为SimpleApp.scala：
+*我们将在Scala中创建一个非常简单的Spark应用程序，事实上，它被命名为SimpleApp.scala：*
+
 ```
 //* SimpleApp.scala */
  import org.apache.spark.sql.SparkSession
@@ -231,13 +234,21 @@ Suppose we wish to write a self-contained application using the Spark API. We wi
  }
 ```
 Note that applications should define a main() method instead of extending scala.App. Subclasses of scala.App may not work correctly.
+
 *请注意，应用程序应该定义一个main（）方法，而不是扩展scala.App。 scala.App的子类可能无法正常工作*
+
 This program just counts the number of lines containing ‘a’ and the number containing ‘b’ in the Spark README. Note that you’ll need to replace YOUR_SPARK_HOME with the location where Spark is installed. Unlike the earlier examples with the Spark shell, which initializes its own SparkSession, we initialize a SparkSession as part of the program.
+
 *这个程序只是计算Spark Readme文件中包含’a’的行数和包含’b’的数字*
+
 We call SparkSession.builder to construct a [[SparkSession]], then set the application name, and finally call getOrCreate to get the [[SparkSession]] instance.
+
 *我们调用SparkSession.builder来构造[[SparkSession]]，然后设置应用程序名称，最后调用getOrCreate来获取[[SparkSession]]实例*
+
 Our application depends on the Spark API, so we’ll also include an sbt configuration file, build.sbt, which explains that Spark is a dependency. This file also adds a repository that Spark depends on:
+
 *我们的应用程序依赖于Spark API，所以我们还将包含一个sbt配置文件build.sbt，它解释了Spark是一个依赖项。该文件还添加了Spark所依赖的存储库：*
+
 ```
 name := "Simple Project"
 
@@ -249,7 +260,9 @@ libraryDependencies += "org.apache.spark" %% "spark-sql" % "2.3.2"
 ```
 
 For sbt to work correctly, we’ll need to layout SimpleApp.scala and build.sbt according to the typical directory structure. Once that is in place, we can create a JAR package containing the application’s code, then use the spark-submit script to run our program.
+
 *为了正常工作，我们需要根据典型的目录结构来放置SimpleApp.scala和build.sbt。一旦放置好，我们可以创建一个包含应用程序代码的JAR包，然后使用spark-submit脚本来运行我们的程序。*
+
 bin/spark-submit
 ```
 # Your directory layout should look like this
@@ -328,15 +341,24 @@ $ YOUR_SPARK_HOME/bin/spark-submit \
 Lines with a: 46, Lines with b: 23
 ```
 
-#### Where to Go from Here(更多)
+### 4.4.Where to Go from Here(更多)
+
 Congratulations on running your first Spark application!
+
 *祝贺您运行您的第一个Spark应用程序！*
+
 For an in-depth overview of the API, start with the [RDD programming guide](http://spark.apache.org/docs/latest/rdd-programming-guide.html) and the SQL programming guide, or see “Programming Guides” menu for other components.
+
 *有关API的深入概述，请从[RDD编程指南](http://blog.csdn.net/zuolovefu/article/details/79117926)和[SQL编程指南](http://spark.apache.org/docs/latest/sql-programming-guide.html)开始，或者参阅其他组件的“编程指南”菜单*
+
 For running applications on a cluster, head to the [deployment overview](http://spark.apache.org/docs/latest/cluster-overview.html).
+
 *要在集群上运行应用程序，请转到[部署概述](http://spark.apache.org/docs/latest/cluster-overview.html)*
+
 Finally, Spark includes several samples in the examples directory (Scala, Java, Python, R). You can run them as follows:
+
 *最后，Spark在示例目录（Scala，Java，Python，R）中包含了几个示例。你可以如下运行它们：*
+
 ```
 # For Scala and Java, use run-example:
 ./bin/run-example SparkPi
@@ -348,8 +370,8 @@ Finally, Spark includes several samples in the examples directory (Scala, Java, 
 ./bin/spark-submit examples/src/main/r/dataframe.R
 ```
 
-## 4.执行Spark程序
-### 4.1.执行第一个spark程序
+## 5.执行Spark程序
+### 5.1.执行第一个spark程序
 /usr/local/spark-1.5.2-bin-hadoop2.6/bin/spark-submit \
 --class org.apache.spark.examples.SparkPi \
 --master spark://node1.itcast.cn:7077 \
@@ -359,10 +381,10 @@ Finally, Spark includes several samples in the examples directory (Scala, Java, 
 100
 该算法是利用蒙特·卡罗算法求PI
 
-### 4.2.启动Spark Shell
+### 5.2.启动Spark Shell
 spark-shell是Spark自带的交互式Shell程序，方便用户进行交互式编程，用户可以在该命令行下用scala编写spark程序。
 
-#### 4.2.1.启动spark shell
+#### 5.2.1.启动spark shell
 ```
 /usr/local/spark-1.5.2-bin-hadoop2.6/bin/spark-shell \
 --master spark://node1.itcast.cn:7077 \
@@ -379,7 +401,7 @@ spark-shell是Spark自带的交互式Shell程序，方便用户进行交互式�
 
 Spark Shell中已经默认将SparkContext类初始化为对象sc。用户代码如果需要用到，则直接应用sc即可
 
-#### 4.2.2.在spark shell中编写WordCount程序
+#### 5.2.2.在spark shell中编写WordCount程序
 ##### 1.首先启动hdfs
 ##### 2.向hdfs上传一个文件到hdfs://node1.itcast.cn:9000/words.txt
 ##### 3.在spark shell中用scala语言编写spark程序
@@ -397,7 +419,7 @@ map((_,1))将单词和1构成元组
 reduceByKey(_+_)按照key进行reduce，并将value累加
 saveAsTextFile("hdfs://node1.itcast.cn:9000/out")将结果写入到hdfs中
 
-### 4.3.在IDEA中编写WordCount程序
+### 5.3.在IDEA中编写WordCount程序
 spark shell仅在测试和验证我们的程序时使用的较多，在生产环境中，通常会在IDE中编制程序，然后打成jar包，然后提交到集群，最常用的是创建一个Maven项目，利用Maven来管理jar包的依赖。
 
 1.创建一个项目
