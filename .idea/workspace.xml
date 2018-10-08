@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4c01e2bc-b486-461a-8040-52b9be5ebcbf" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/spark/Spark.md" beforeDir="false" afterPath="$PROJECT_DIR$/spark/Spark.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/spark/SparkSQL.md" beforeDir="false" afterPath="$PROJECT_DIR$/spark/SparkSQL.md" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -23,7 +22,7 @@
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="gitignore" value="1" />
-          <entry key="md" value="27" />
+          <entry key="md" value="28" />
           <entry key="png" value="3" />
         </counts>
       </usages-collector>
@@ -31,19 +30,19 @@
         <counts>
           <entry key="Git file" value="1" />
           <entry key="Image" value="3" />
-          <entry key="Markdown" value="27" />
+          <entry key="Markdown" value="28" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="md" value="1461" />
-          <entry key="txt" value="147" />
+          <entry key="md" value="1680" />
+          <entry key="txt" value="162" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Markdown" value="1461" />
-          <entry key="PLAIN_TEXT" value="147" />
+          <entry key="Markdown" value="1680" />
+          <entry key="PLAIN_TEXT" value="162" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages" />
@@ -54,12 +53,24 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/spark/Spark.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="FIRST">
-              <first_editor relative-caret-position="438">
-                <caret line="358" column="3" selection-start-line="358" selection-start-column="3" selection-end-line="358" selection-end-column="3" />
+              <first_editor relative-caret-position="188">
+                <caret line="36" selection-start-line="36" selection-end-line="36" selection-end-column="79" />
+              </first_editor>
+              <second_editor />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/spark/SparkSQL.md">
+          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+            <state split_layout="FIRST">
+              <first_editor relative-caret-position="415">
+                <caret line="245" column="78" selection-start-line="245" selection-start-column="78" selection-end-line="245" selection-end-column="78" />
               </first_editor>
               <second_editor />
             </state>
@@ -90,6 +101,7 @@
       <find>启动后执行jps命令，主节点上有Master进程，其他子节点上有Work进行，登录Spark管</find>
       <find>3.填写maven的GAV，然后点击next</find>
       <find>1.创建一个项目</find>
+      <find>shell</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -120,6 +132,7 @@
         <option value="$PROJECT_DIR$/spark/SparkRDD.md" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/spark/Spark.md" />
+        <option value="$PROJECT_DIR$/spark/SparkSQL.md" />
       </list>
     </option>
   </component>
@@ -178,7 +191,7 @@
               <item name="doc" type="462c0819:PsiDirectoryNode" />
               <item name="img" type="462c0819:PsiDirectoryNode" />
               <item name="spark" type="462c0819:PsiDirectoryNode" />
-              <item name="spark" type="462c0819:PsiDirectoryNode" />
+              <item name="spark-sql" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="doc" type="b2602c69:ProjectViewProjectNode" />
@@ -195,7 +208,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1538974262306" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1538977029719" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -245,7 +258,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1538961726198</updated>
-      <workItem from="1538961727815" duration="11915000" />
+      <workItem from="1538961727815" duration="13786000" />
     </task>
     <task id="LOCAL-00001" summary="修改zookeeper的笔记">
       <created>1538963640062</created>
@@ -373,11 +386,25 @@
       <option name="project" value="LOCAL" />
       <updated>1538974063367</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="换行">
+      <created>1538974274008</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1538974274008</updated>
+    </task>
+    <task id="LOCAL-00020" summary="新增spark-sql图片">
+      <created>1538975076972</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1538975076972</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="11915000" />
+    <option name="totallyTimeSpent" value="13786000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="0" />
@@ -388,10 +415,10 @@
       <window_info id="UI Designer" />
       <window_info id="Capture Tool" />
       <window_info id="Favorites" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" id="Version Control" visible="true" weight="0.329718" />
+      <window_info anchor="bottom" id="Version Control" visible="true" weight="0.329718" />
       <window_info anchor="bottom" id="Terminal" />
       <window_info anchor="bottom" id="Event Log" side_tool="true" />
       <window_info anchor="bottom" id="FindBugs-IDEA" />
@@ -475,7 +502,9 @@
     <MESSAGE value="新增spark图片" />
     <MESSAGE value="新增spark笔记" />
     <MESSAGE value="修改spark图片" />
-    <option name="LAST_COMMIT_MESSAGE" value="修改spark图片" />
+    <MESSAGE value="换行" />
+    <MESSAGE value="新增spark-sql图片" />
+    <option name="LAST_COMMIT_MESSAGE" value="新增spark-sql图片" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/hadoop/Zookeeper.md">
@@ -552,14 +581,6 @@
           <first_editor relative-caret-position="414">
             <caret line="18" column="21" lean-forward="true" selection-start-line="18" selection-start-column="21" selection-end-line="18" selection-end-column="21" />
           </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/spark/SparkSQL.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="FIRST">
-          <first_editor />
           <second_editor />
         </state>
       </provider>
@@ -641,8 +662,18 @@
     <entry file="file://$PROJECT_DIR$/spark/Spark.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="FIRST">
-          <first_editor relative-caret-position="438">
-            <caret line="358" column="3" selection-start-line="358" selection-start-column="3" selection-end-line="358" selection-end-column="3" />
+          <first_editor relative-caret-position="188">
+            <caret line="36" selection-start-line="36" selection-end-line="36" selection-end-column="79" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spark/SparkSQL.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="FIRST">
+          <first_editor relative-caret-position="415">
+            <caret line="245" column="78" selection-start-line="245" selection-start-column="78" selection-end-line="245" selection-end-column="78" />
           </first_editor>
           <second_editor />
         </state>
