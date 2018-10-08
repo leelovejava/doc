@@ -142,18 +142,23 @@ saveAsTextFile("hdfs://node1.itcast.cn:9000/out")将结果写入到hdfs中
 spark shell仅在测试和验证我们的程序时使用的较多，在生产环境中，通常会在IDE中编制程序，然后打成jar包，然后提交到集群，最常用的是创建一个Maven项目，利用Maven来管理jar包的依赖。
 
 1.创建一个项目
+
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/06.png)
 
 2.选择Maven项目，然后点击next
+
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/07.png)
 
 3.填写maven的GAV，然后点击next
+
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/08.png)
 
 4.填写项目名称，然后点击finish
+
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/09.png)
 
 5.创建好maven项目后，点击Enable Auto-Import
+
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/10.png)
 
 6.配置Maven的pom.xml
@@ -275,9 +280,11 @@ spark shell仅在测试和验证我们的程序时使用的较多，在生产环
 </project>
 ```
 7.将src/main/java和src/test/java分别修改成src/main/scala和src/test/scala，与pom.xml中的配置保持一致
+
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/18-pom-build.png)
 
 8.新建一个scala class，类型为Object
+
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/12.png)
 
 
@@ -302,18 +309,22 @@ object WordCount {
 ```
 
 10.使用Maven打包：首先修改pom.xml中的main class
+
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/17-pom-main-class.png)
 
 
 点击idea右侧的Maven Project选项
+
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/13.png)
 
 
 点击Lifecycle,选择clean和package，然后点击Run Maven Build
+
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/14.png)
 
 
 11.选择编译成功的jar包，并将该jar上传到Spark集群中的某个节点上
+
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/15.png)
 
 
@@ -339,8 +350,10 @@ hdfs://node1.itcast.cn:9000/out
 ```
 
 查看程序执行结果
+```
 hdfs dfs -cat hdfs://node1.itcast.cn:9000/out/part-00000
 (hello,6)
 (tom,3)
 (kitty,2)
 (jerry,1)
+```
