@@ -3,7 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="4c01e2bc-b486-461a-8040-52b9be5ebcbf" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/spark/SparkSQL.md" beforeDir="false" afterPath="$PROJECT_DIR$/spark/SparkSQL.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/spark/spark/01.png" beforeDir="false" afterPath="$PROJECT_DIR$/img/spark/spark/01.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/spark/spark/03.png" beforeDir="false" afterPath="$PROJECT_DIR$/img/spark/spark/03.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/spark/Spark.md" beforeDir="false" afterPath="$PROJECT_DIR$/spark/Spark.md" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -22,27 +24,28 @@
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="gitignore" value="1" />
-          <entry key="md" value="28" />
-          <entry key="png" value="3" />
+          <entry key="md" value="31" />
+          <entry key="png" value="5" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="Git file" value="1" />
-          <entry key="Image" value="3" />
-          <entry key="Markdown" value="28" />
+          <entry key="Image" value="5" />
+          <entry key="Markdown" value="31" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="md" value="1723" />
-          <entry key="txt" value="170" />
+          <entry key="md" value="2208" />
+          <entry key="txt" value="176" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Markdown" value="1723" />
-          <entry key="PLAIN_TEXT" value="170" />
+          <entry key="Markdown" value="2205" />
+          <entry key="PLAIN_TEXT" value="176" />
+          <entry key="XML" value="3" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages" />
@@ -54,11 +57,11 @@
   <component name="FileEditorManager">
     <leaf>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/spark/Spark.md">
+        <entry file="file://$PROJECT_DIR$/hadoop/Hadoop.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="FIRST">
-              <first_editor relative-caret-position="188">
-                <caret line="36" selection-start-line="36" selection-end-line="36" selection-end-column="79" />
+              <first_editor relative-caret-position="1197">
+                <caret line="132" column="64" lean-forward="true" selection-start-line="132" selection-start-column="64" selection-end-line="132" selection-end-column="64" />
               </first_editor>
               <second_editor />
             </state>
@@ -66,30 +69,18 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/spark/SparkSQL.md">
+        <entry file="file://$PROJECT_DIR$/spark/Spark.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="FIRST">
-              <first_editor relative-caret-position="231">
-                <caret line="296" column="5" selection-start-line="296" selection-start-column="5" selection-end-line="296" selection-end-column="5" />
+              <first_editor relative-caret-position="395">
+                <caret line="238" lean-forward="true" selection-start-line="238" selection-end-line="238" />
+                <folding>
+                  <element signature="imports" expanded="true" />
+                </folding>
               </first_editor>
               <second_editor />
             </state>
           </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/img/spark/spark/06.png">
-          <provider selected="true" editor-type-id="images" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/img/spark/spark/05.png">
-          <provider selected="true" editor-type-id="images" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/img/spark/spark/03.png">
-          <provider selected="true" editor-type-id="images" />
         </entry>
       </file>
     </leaf>
@@ -103,6 +94,8 @@
       <find>1.创建一个项目</find>
       <find>shell</find>
       <find>####</find>
+      <find>2.3.1.DSL风格语法</find>
+      <find>/bin/spark-shell</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -132,8 +125,8 @@
         <option value="$PROJECT_DIR$/spark/SparkStraming.md" />
         <option value="$PROJECT_DIR$/spark/SparkRDD.md" />
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/spark/Spark.md" />
         <option value="$PROJECT_DIR$/spark/SparkSQL.md" />
+        <option value="$PROJECT_DIR$/spark/Spark.md" />
       </list>
     </option>
   </component>
@@ -192,7 +185,7 @@
               <item name="doc" type="462c0819:PsiDirectoryNode" />
               <item name="img" type="462c0819:PsiDirectoryNode" />
               <item name="spark" type="462c0819:PsiDirectoryNode" />
-              <item name="spark-sql" type="462c0819:PsiDirectoryNode" />
+              <item name="spark" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="doc" type="b2602c69:ProjectViewProjectNode" />
@@ -209,7 +202,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1538977401194" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1538984911260" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -259,7 +252,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1538961726198</updated>
-      <workItem from="1538961727815" duration="14127000" />
+      <workItem from="1538961727815" duration="20129000" />
     </task>
     <task id="LOCAL-00001" summary="修改zookeeper的笔记">
       <created>1538963640062</created>
@@ -415,11 +408,18 @@
       <option name="project" value="LOCAL" />
       <updated>1538977253907</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="换行">
+      <created>1538977418615</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1538977418615</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="14127000" />
+    <option name="totallyTimeSpent" value="20129000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="0" />
@@ -430,10 +430,10 @@
       <window_info id="UI Designer" />
       <window_info id="Capture Tool" />
       <window_info id="Favorites" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" visible="true" weight="0.329718" />
+      <window_info active="true" anchor="bottom" id="Version Control" visible="true" weight="0.1670282" />
       <window_info anchor="bottom" id="Terminal" />
       <window_info anchor="bottom" id="Event Log" side_tool="true" />
       <window_info anchor="bottom" id="FindBugs-IDEA" />
@@ -517,10 +517,10 @@
     <MESSAGE value="新增spark图片" />
     <MESSAGE value="新增spark笔记" />
     <MESSAGE value="修改spark图片" />
-    <MESSAGE value="换行" />
     <MESSAGE value="新增spark-sql图片" />
     <MESSAGE value="修改spark-sql笔记" />
-    <option name="LAST_COMMIT_MESSAGE" value="修改spark-sql笔记" />
+    <MESSAGE value="换行" />
+    <option name="LAST_COMMIT_MESSAGE" value="换行" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/hadoop/Zookeeper.md">
@@ -548,16 +548,6 @@
         <state split_layout="FIRST">
           <first_editor relative-caret-position="797">
             <caret line="47" column="20" selection-start-line="47" selection-start-column="20" selection-end-line="47" selection-end-column="20" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/spark/Spark-quickstart.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="SPLIT">
-          <first_editor relative-caret-position="751">
-            <caret line="105" selection-start-line="105" selection-end-line="105" />
           </first_editor>
           <second_editor />
         </state>
@@ -636,16 +626,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/hadoop/Hadoop.md">
-      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-        <state split_layout="FIRST">
-          <first_editor relative-caret-position="1303">
-            <caret line="159" selection-start-line="159" selection-end-line="159" />
-          </first_editor>
-          <second_editor />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/hadoop/Hdfs.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="FIRST">
@@ -666,30 +646,56 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/img/spark/spark/03.png">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/img/spark/spark/05.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
     <entry file="file://$PROJECT_DIR$/img/spark/spark/06.png">
       <provider selected="true" editor-type-id="images" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/spark/Spark.md">
+    <entry file="file://$PROJECT_DIR$/spark/SparkSQL.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="FIRST">
-          <first_editor relative-caret-position="188">
-            <caret line="36" selection-start-line="36" selection-end-line="36" selection-end-column="79" />
+          <first_editor relative-caret-position="184">
+            <caret line="75" column="28" lean-forward="true" selection-start-line="75" selection-start-column="28" selection-end-line="75" selection-end-column="28" />
           </first_editor>
           <second_editor />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/spark/SparkSQL.md">
+    <entry file="file://$PROJECT_DIR$/hadoop/Hadoop.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="FIRST">
-          <first_editor relative-caret-position="231">
-            <caret line="296" column="5" selection-start-line="296" selection-start-column="5" selection-end-line="296" selection-end-column="5" />
+          <first_editor relative-caret-position="1197">
+            <caret line="132" column="64" lean-forward="true" selection-start-line="132" selection-start-column="64" selection-end-line="132" selection-end-column="64" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/img/spark/spark/03.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/img/spark/spark/01.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spark/Spark-quickstart.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="FIRST">
+          <first_editor relative-caret-position="-1157">
+            <caret line="12" column="23" lean-forward="true" selection-start-line="12" selection-start-column="23" selection-end-line="12" selection-end-column="23" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/spark/Spark.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="FIRST">
+          <first_editor relative-caret-position="395">
+            <caret line="238" lean-forward="true" selection-start-line="238" selection-end-line="238" />
+            <folding>
+              <element signature="imports" expanded="true" />
+            </folding>
           </first_editor>
           <second_editor />
         </state>
