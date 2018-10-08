@@ -275,7 +275,7 @@ spark shell仅在测试和验证我们的程序时使用的较多，在生产环
 </project>
 ```
 7.将src/main/java和src/test/java分别修改成src/main/scala和src/test/scala，与pom.xml中的配置保持一致
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/11.png)
+![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/18-pom-build.png)
 
 8.新建一个scala class，类型为Object
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/12.png)
