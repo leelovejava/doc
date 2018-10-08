@@ -326,8 +326,21 @@ public class SimpleApp {
   </dependencies>
 </project>
 ```
-# Package a JAR containing your application
+####
+We lay out these files according to the canonical Maven directory structure:
 ```
+$ find .
+./pom.xml
+./src
+./src/main
+./src/main/java
+./src/main/java/SimpleApp.java
+```
+#### 
+Now, we can package the application using Maven and execute it with ./bin/spark-submit.
+#### Package a JAR containing your application
+```
+# Package a JAR containing your application
 $ mvn package
 ...
 [INFO] Building jar: {..}/{..}/target/simple-project-1.0.jar
