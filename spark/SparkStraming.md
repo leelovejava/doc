@@ -27,14 +27,16 @@ Spark Streaming类似于Apache Storm，用于流式数据的处理。根据其�
 ### 2.1.3.Spark与Storm的对比
 Spark	Storm
 	
-开发语言：Scala	开发语言：Clojure
+开发语言：Scala	
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-stram/06.png?raw=true)
 
+开发语言：Clojure
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-stram/07.png?raw=true)
 
-编程模型：DStream	编程模型：Spout/Bolt
+编程模型：DStream	
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-stram/08.png?raw=true)
 
+编程模型：Spout/Bolt
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-stram/09.png?raw=true)	
 
 ## 3.DStream
@@ -185,14 +187,14 @@ object NetworkUpdateStateWordCount {
 
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-stram/15.png?raw=true)
 
-1.安装并配置zk
-2.安装并配置Kafka
-3.启动zk
-4.启动Kafka
-5.创建topic
+* 1.安装并配置zk
+* 2.安装并配置Kafka
+* 3.启动zk
+* 4.启动Kafka
+* 5.创建topic
 bin/kafka-topics.sh --create --zookeeper node1.itcast.cn:2181,node2.itcast.cn:2181 \
 --replication-factor 3 --partitions 3 --topic urlcount
-6.编写Spark Streaming应用程序
+* 6.编写Spark Streaming应用程序
 ```
 package cn.itcast.spark.streaming
 
