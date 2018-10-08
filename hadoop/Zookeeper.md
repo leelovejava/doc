@@ -384,15 +384,77 @@ ZooKeeper 上的一个 机器节点 可以表示一个锁
 #### 共享锁
 共享锁在同一个进程中很容易实现，但是在跨进程或者在不同 Server 之间就不好实现了。Zookeeper 却很容易实现这个功能，实现方式也是需要获得锁的 Server 创建一个 EPHEMERAL_SEQUENTIAL 目录节点，然后调用 getChildren方法获取当前的目录节点列表中最小的目录节点是不是就是自己创建的目录节点，如果正是自己创建的，那么它就获得了这个锁，如果不是那么它就调用 exists(String path, boolean watch) 方法并监控 Zookeeper 上目录节点列表的变化，一直到自己创建的节点是列表中最小编号的目录节点，从而获得锁，释放锁很简单，只要删除前面它自己所创建的目录节点就行了
 
-### 6.JAVA API
+基于ZooKeeper分布式锁的流程
+* 在zookeeper指定节点（locks）下创建临时顺序节点node_n
+* 获取locks下所有子节点children
+* 对子节点按节点自增序号从小到大排序
+* 判断本节点是不是第一个子节点，若是，则获取锁；若不是，则监听比该节点小的那个节点的删除事件
+* 若监听事件生效，则回到第二步重新进行判断，直到获取到锁
+### 6.命令行操作
+#### 启动
+    bin/zkServer.sh start
+#### 进入
+    bin/zkServer.sh
+    bin/zkCli.sh -timeout 5000  -server 127.0.0.1:2181
+#### 查看
+    ls path [watch]
+    ls /
+#### 查看节点状态
+```
+    stat path [watch]
+    stat /zk    
+    
+    // 创建节点时的事务id  
+    cZxid = 0x0
+    ctime = Thu Jan 01 08:00:00 CST 1970
+    mZxid = 0x0
+    mtime = Thu Jan 01 08:00:00 CST 1970
+    // 子节点列表最后一次被修改的事务id
+    pZxid = 0x0
+    // 节点版本号
+    cversion = -1
+    // 数据版本号
+    dataVersion = 0
+    // acl权限版本号
+    aclVersion = 0
+    ephemeralOwner = 0x0
+    dataLength = 0
+    numChildren = 1
+```       
+#### 创建节点    
+    create [-s] [-e] path data ac
+##### 临时节点不允许有子节点(临时、永久)    
+##### 创建永久节点
+    create /zk myData
+##### 创建临时节点
+    create /zk -e myData
+##### 创建顺序节点
+    create /zk -s myData         
+#### 获取节点
+    get path [watch]
+    get /zk
+#### 删除节点
+    delete path [version]
+    delete /zk
+#### 级联删除  
+    rmr path
+    rmr /zk
+#### 修改
+    set path data [version]
+    set /zk "zsl"
+#### 监听
+    get /zk2 watch
+#### 退出
+    quit             
+### 7.JAVA API
 ####  Java绑定
-ZooKeeper类
+org.apache.zookeeper.Zookeeper
 
 ####  connect-连接到ZooKeeper集合
 ```
-// connectionString - ZooKeeper集合主机。
-// sessionTimeout - 会话超时（以毫秒为单位）。
-// watcher - 实现“监视器”界面的对象。ZooKeeper集合通过监视器对象返回连接状态
+// connectionString - ZooKeeper集合主机。        127.0.0.1:2181,
+// sessionTimeout - 会话超时（以毫秒为单位）。    2000
+// watcher - 实现“监视器”界面的对象。ZooKeeper集合通过监视器对象返回连接状态 new Watcher()
 ZooKeeper(String connectionString, int sessionTimeout, Watcher watcher)
 ```
 
@@ -449,7 +511,7 @@ public class ZooKeeperConnection {
 // path - Znode路径。例如，/myapp1，/myapp2，/myapp1/mydata1，myapp2/mydata1/myanothersubdata
 // data - 要存储在指定znode路径中的数据
 // acl - 要创建的节点的访问控制列表。ZooKeeper API提供了一个静态接口 ZooDefs.Ids 来获取一些基本的acl列表。例如，ZooDefs.Ids.OPEN_ACL_UNSAFE返回打开znode的acl列表。
-// createMode - 节点的类型，即临时，顺序或两者。这是一个枚举
+// createMode - 节点的类型，即临时，顺序或两者。枚举
 create(String path, byte[] data, List<ACL> acl, CreateMode createMode)
 ```
 
@@ -590,3 +652,22 @@ close();
 ```
 
 ### 7.Zookeeper和Eureka的区别?
+Zookeeper:
+基于cp(数据一致性、容错性),服务不可用情况:正在选主、集群半数机器不可用,对于服务消费者来说,能消费才是最重要的
+作为注册中心，其实配置是不经常变动的，只有发版和机器出故障时会变。对于不经常变动的配置来说,CP是不合适的
+SpringCloud支持zookeeper作注册中心
+
+Eureka:
+基于AP(可用性、容错性),牺牲一致性,保证数据的可用性,返回旧数据和缓存数据
+运行多个实例,解决单点问题
+Peer to Peer对等通信,去中心化的架构
+2.0闭源,最新版的springCloud使用eureka1.9.2
+
+总结: 
+理论上Eureka是更适合作注册中心。
+现实环境中大部分项目可能会使用ZooKeeper，那是因为集群不够大，并且基本不会遇到用做注册中心的机器一半以上都挂了的情况 
+
+分布式架构设计的CAP原理:
+consistency->C->一致性 [kən'sɪst(ə)nsɪ]
+availability->A->可用性 [ə,veɪlə'bɪlətɪ]
+partition tolerance->P->分区容错性 [pɑː'tɪʃ(ə)n] ['tɒl(ə)r(ə)ns]
