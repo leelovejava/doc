@@ -145,14 +145,20 @@ res3: Long = 15
 
 ### 3、More on Dataset Operations(更多DataSet 操作)
 ####
-Dataset actions and transformations can be used for more complex computations. Let’s say we want to find the line with the most words:
+Dataset actions and transformations can be used for more complex computations. 
+Let’s say we want to find the line with the most words:
 *DataSet的Action和Transformation操作可实现更复杂的计算。比方说，我们想找到最多的单词：*
 ```
 scala> textFile.map(line => line.split(" ").size).reduce((a, b) => if (a > b) a else b)
 res4: Long = 15
 ```
 #### 
-This first maps a line to an integer value, creating a new Dataset. reduce is called on that Dataset to find the largest word count. The arguments to map and reduce are Scala function literals (closures), and can use any language feature or Scala/Java library. For example, we can easily call functions declared elsewhere. We’ll use Math.max() function to make this code easier to understand:
+This first maps a line to an integer value, creating a new Dataset. 
+reduce is called on that Dataset to find the largest word count. 
+The arguments to map and reduce are Scala function literals (closures), and can use any language feature or Scala/Java library. 
+For example, we can easily call functions declared elsewhere. 
+We’ll use Math.max() function to make this code easier to understand:
+
 *里面的操作如下：* 
 *1. 将一行map到一个整数值，创建一个新的DataSet。 *
 *2. 在该DataSet上调用reduce来查找最大的字数*
@@ -176,15 +182,19 @@ Here, we call flatMap to transform a Dataset of lines to a Dataset of words, and
 *2. 结合groupByKey和count来计算文件中每个字的计数，作为（String，Long）格式保存起来*
 *To collect the word counts in our shell, we can call collect:*
 *如果想要把结果收集起来，可以调用collect方法：*
+
 ```
 scala> wordCounts.collect()
 res6: Array[(String, Int)] = Array((means,1), (under,2), (this,3), (Because,1), (Python,2), (agree,1), (cluster.,1), ...)
 ```
+
 ### 4、Caching(缓存)
 Spark also supports pulling data sets into a cluster-wide in-memory cache. This is very useful when data is accessed repeatedly, such as when querying a small “hot” dataset or when running an iterative algorithm like PageRank. 
+
 *Spark还支持将DataSet保存到集群范围内的内存缓存中。当重复访问数据时，如查询小的“热”数据集或运行迭代算法（如PageRank）时，这非常有用。*
 As a simple example, let’s mark our linesWithSpark dataset to be cached:
 *举一个简单的例子，让我们标记我们的linesWithSpark数据集被缓存：*
+
 ```
 scala> linesWithSpark.cache()
 res7: linesWithSpark.type = [value: string]
