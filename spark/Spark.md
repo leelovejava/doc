@@ -372,6 +372,7 @@ Finally, Spark includes several samples in the examples directory (Scala, Java, 
 
 ## 5.执行Spark程序
 ### 5.1.执行第一个spark程序
+```
 /usr/local/spark-1.5.2-bin-hadoop2.6/bin/spark-submit \
 --class org.apache.spark.examples.SparkPi \
 --master spark://node1.itcast.cn:7077 \
@@ -379,6 +380,7 @@ Finally, Spark includes several samples in the examples directory (Scala, Java, 
 --total-executor-cores 2 \
 /usr/local/spark-1.5.2-bin-hadoop2.6/lib/spark-examples-1.5.2-hadoop2.6.0.jar \
 100
+```
 该算法是利用蒙特·卡罗算法求PI
 
 ### 5.2.启动Spark Shell
@@ -405,12 +407,14 @@ Spark Shell中已经默认将SparkContext类初始化为对象sc。用户代码�
 ##### 1.首先启动hdfs
 ##### 2.向hdfs上传一个文件到hdfs://node1.itcast.cn:9000/words.txt
 ##### 3.在spark shell中用scala语言编写spark程序
+```
 sc.textFile("hdfs://node1.itcast.cn:9000/words.txt").flatMap(_.split(" "))
 .map((_,1)).reduceByKey(_+_).saveAsTextFile("hdfs://node1.itcast.cn:9000/out")
-
+```
 ##### 4.使用hdfs命令查看结果
+```
 hdfs dfs -ls hdfs://node1.itcast.cn:9000/out/p*
-
+```
 说明：
 sc是SparkContext对象，该对象时提交spark程序的入口
 textFile(hdfs://node1.itcast.cn:9000/words.txt)是hdfs中读取数据
