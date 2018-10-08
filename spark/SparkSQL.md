@@ -7,11 +7,11 @@
 
 ### 1.3.熟练使用Spark SQL完成计算任务
 
-##2.Spark SQL
+## 2.Spark SQL
 
-###2.1.Spark SQL概述
+### 2.1.Spark SQL概述
 
-###2.1.1.什么是Spark SQL
+### 2.1.1.什么是Spark SQL
 
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-sql/01.png)
 Spark SQL是Spark用来处理结构化数据的一个模块，它提供了一个编程抽象叫做DataFrame并且作为分布式SQL查询引擎的作用。
@@ -19,29 +19,29 @@ Spark SQL是Spark用来处理结构化数据的一个模块，它提供了一个
 ### 2.1.2.为什么要学习Spark SQL
 我们已经学习了Hive，它是将Hive SQL转换成MapReduce然后提交到集群上执行，大大简化了编写MapReduce的程序的复杂性，由于MapReduce这种计算模型执行效率比较慢。所有Spark SQL的应运而生，它是将Spark SQL转换成RDD，然后提交到集群执行，执行效率非常快！
 
-####1.易整合
+#### 1.易整合
 
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-sql/02.png)
 
-####2.统一的数据访问方式
+#### 2.统一的数据访问方式
 
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-sql/03.png)
 
-####3.兼容Hive
+#### 3.兼容Hive
 
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-sql/04.png)
 
-####4.标准的数据连接
+#### 4.标准的数据连接
 
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-sql/05.png)
 
-###2.2.DataFrames
-####2.2.1.什么是DataFrames
+### 2.2.DataFrames
+#### 2.2.1.什么是DataFrames
 与RDD类似，DataFrame也是一个分布式数据容器。然而DataFrame更像传统数据库的二维表格，除了数据以外，还记录数据的结构信息，即schema。同时，与Hive类似，DataFrame也支持嵌套数据类型（struct、array和map）。从API易用性的角度上 看，DataFrame API提供的是一套高层的关系操作，比函数式的RDD API要更加友好，门槛更低。由于与R和Pandas的DataFrame类似，Spark DataFrame很好地继承了传统单机数据分析的开发体验。
 
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-sql/06.png)
 
-####2.2.2.创建DataFrames
+#### 2.2.2.创建DataFrames
  在Spark SQL中SQLContext是创建DataFrames和执行SQL的入口，在spark-1.5.2中已经内置了一个sqlContext
 
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-sql/07.png)
@@ -65,7 +65,7 @@ val personDF = personRDD.toDF
 personDF.show
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-sql/08.png)
 
-###2.3.DataFrame常用操作
+### 2.3.DataFrame常用操作
 #### 2.3.1.DSL风格语法
 //查看DataFrame中的内容
 personDF.show
@@ -230,29 +230,29 @@ hdfs dfs -cat  hdfs://node1.itcast.cn:9000/out1/part-r-*
 
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-sql/15.png)
 
-##4.数据源
-###4.1.JDBC
+## 4.数据源
+### 4.1.JDBC
 Spark SQL可以通过JDBC从关系型数据库中读取数据的方式创建DataFrame，通过对DataFrame一系列的计算后，还可以将数据再写回关系型数据库中。
 
-###4.1.1.从MySQL中加载数据（Spark Shell方式）
-####1.启动Spark Shell，必须指定mysql连接驱动jar包
+### 4.1.1.从MySQL中加载数据（Spark Shell方式）
+#### 1.启动Spark Shell，必须指定mysql连接驱动jar包
 ```
 /usr/local/spark-1.5.2-bin-hadoop2.6/bin/spark-shell \
 --master spark://node1.itcast.cn:7077 \
 --jars /usr/local/spark-1.5.2-bin-hadoop2.6/mysql-connector-java-5.1.35-bin.jar \
 --driver-class-path /usr/local/spark-1.5.2-bin-hadoop2.6/mysql-connector-java-5.1.35-bin.jar 
 ```
-####2.从mysql中加载数据
+#### 2.从mysql中加载数据
 ```
 val jdbcDF = sqlContext.read.format("jdbc").options(Map("url" -> "jdbc:mysql://192.168.10.1:3306/bigdata", "driver" -> "com.mysql.jdbc.Driver", "dbtable" -> "person", "user" -> "root", "password" -> "123456")).load()
 ```
-#####3.执行查询
+##### 3.执行查询
 jdbcDF.show()
 
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-sql/16.png)
 
-###4.1.2.将数据写入到MySQL中（打jar包方式）
-1.编写Spark SQL程序
+### 4.1.2.将数据写入到MySQL中（打jar包方式）
+#### 1.编写Spark SQL程序
 ```
 package cn.itcast.spark.sql
 
@@ -292,9 +292,9 @@ object JdbcRDD {
 }
 ```
 
-2.用maven将程序打包
+#### 2.用maven将程序打包
 
-3.将Jar包提交到spark集群
+#### 3.将Jar包提交到spark集群
 ```
 /usr/local/spark-1.5.2-bin-hadoop2.6/bin/spark-submit \
 --class cn.itcast.spark.sql.JdbcRDD \
