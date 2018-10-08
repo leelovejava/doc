@@ -50,6 +50,8 @@ Spark可以非常方便地与其他的开源产品进行融合。比如，Spark�
 准备两台以上Linux服务器，安装好JDK1.7
 
 ### 3.1.2.下载Spark安装包
+#### [Building Spark] (http://spark.apache.org/docs/latest/building-spark.html)
+
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/04-download.png)
 http://www.apache.org/dyn/closer.lua/spark/spark-1.5.2/spark-1.5.2-bin-hadoop2.6.tgz
 上传解压安装包
@@ -99,12 +101,22 @@ export SPARK_DAEMON_JAVA_OPTS="-Dspark.deploy.recoveryMode=ZOOKEEPER -Dspark.dep
 2.在node1上执行sbin/start-all.sh脚本，然后在node2上执行sbin/start-master.sh启动第二个Master
 
 ## 4.[Quick start](http://spark.apache.org/docs/latest/quick-start.html)
+[2.2.1官方quick start翻译](https://blog.csdn.net/zuolovefu/article/details/79117824)
 ### 4.1.前言
+
 This tutorial provides a quick introduction to using Spark. We will first introduce the API through Spark’s interactive shell (in Python or Scala), then show how to write applications in Java, Scala, and Python.
+
+*本教程提供了使用Spark的快速入门教程。我们将首先通过Spark的交互式shell（Python或Scala）介绍其API，然后展示如何用Java，Scala和Python编写Spark应用程序。*
 
 To follow along with this guide, first download a packaged release of Spark from the Spark website. Since we won’t be using HDFS, you can download a package for any version of Hadoop
 
-Note that, before Spark 2.0, the main programming interface of Spark was the Resilient Distributed Dataset (RDD). After Spark 2.0, RDDs are replaced by Dataset, which is strongly-typed like an RDD, but with richer optimizations under the hood. The RDD interface is still supported, and you can get a more complete reference at the RDD programming guide. However, we highly recommend you to switch to use Dataset, which has better performance than RDD. See the SQL programming guide to get more information about Dataset
+*要学习本教程，请先从Spark网站下载Spark的安装包。由于我们不会使用HDFS，因此您可以下载任何版本的Hadoop的软件包*
+
+Note that, before Spark 2.0, the main programming interface of Spark was the Resilient Distributed Dataset (RDD). After Spark 2.0, RDDs are replaced by Dataset, which is strongly-typed like an RDD, but with richer optimizations under the hood.
+*请注意，在Spark 2.0之前，Spark的主要编程接口是弹性分布式数据集（RDD）。在Spark 2.0之后，RDD被DataSet取代，DataSet类似于RDD的加强版，在引擎盖下有更丰富的优化。*
+
+The RDD interface is still supported, and you can get a more complete reference at the RDD programming guide. However, we highly recommend you to switch to use Dataset, which has better performance than RDD. See the SQL programming guide to get more information about Dataset
+*RDD接口仍然可使用，您可以在[RDD编程指南](http://blog.csdn.net/zuolovefu/article/details/79117926)中获得更完整的参考资料。但是，我们强烈建议您切换到使用DataSet，这具有比RDD更好的性能。请参阅[SQL编程指南](http://spark.apache.org/docs/latest/sql-programming-guide.html)以获取有关数据集的更多信息。*
 
 ### 4.2.Interactive Analysis with the Spark Shell(使用spark shell进行交互式操作)
 #### 4.2.1.Basics(基本用法)
@@ -117,8 +129,8 @@ Spark’s shell provides a simple way to learn the API, as well as a powerful to
 *Spark的主要抽象是一个名为Dataset的分布式集合。DataSet可以从Hadoop输入格式或者其他Dataset转换得来。 让我们利用Spark源目录中的README文件的文本中创建一个新的DataSet：*
 ```
 scala> val textFile = spark.read.textFile("README.md")
+textFile: org.apache.spark.sql.Dataset[String] = [value: string]
 ```
-输出 textFile: org.apache.spark.sql.Dataset[String] = [value: string]
 
 #### You can get values from Dataset directly, by calling some actions, or transform the Dataset to get a new one. For more details, please read the API doc.
 *我们可以直接调用方法从DataSet里得出某些值，也可以把一个DataSet转换成一个新的Dataset。更多信息，请看DataSet [API文档](http://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.sql.Dataset)*
@@ -170,7 +182,7 @@ res5: Int = 15
 ```
 ##### 
 One common data flow pattern is MapReduce, as popularized by Hadoop. Spark can implement MapReduce flows easily:
-*一种常见的数据流模式是MapReduce，正如Hadoop所普及的。Spark可以轻易实现MapReduce的操作：*
+*一种常见的数据流模式是MapReduce，由Hadoop所普及的。Spark可以轻易实现MapReduce流：*
 ```
 scala> val wordCounts = textFile.flatMap(line => line.split(" ")).groupByKey(identity).count()
 wordCounts: org.apache.spark.sql.Dataset[(String, Long)] = [value: string, count(1): bigint]
@@ -401,6 +413,14 @@ spark-shell是Spark自带的交互式Shell程序，方便用户进行交互式�
 
 #### 5.2.1.启动spark shell
 ```
+--master MASTER_URL         spark://host:port, mesos://host:port, yarn, or local.
+// 2:运行的线程数,*:表示使用机器上所有可用的核数
+bin/spark-shell --master local[2]
+// 本地模式使用2GB内存
+spark-shell --driver-memory 2g --master local[*]
+// 在yarn上启动
+bin/spark-shell --master yarn-client
+
 /usr/local/spark-1.5.2-bin-hadoop2.6/bin/spark-shell \
 --master spark://node1.itcast.cn:7077 \
 --executor-memory 2g \
@@ -655,3 +675,39 @@ hdfs dfs -cat hdfs://node1.itcast.cn:9000/out/part-00000
 (kitty,2)
 (jerry,1)
 ```
+### 6.运行模式
+#### local(本地模式)
+* 采用单节点多线程（cpu)方式运行,是一种OOTB（开箱即用）的方式,只需要在spark-env.sh导出JAVA_HOME,无需其他任何配置即可使用，因而常用于开发和学习
+* 方式：./spark-shell - -master local[n] ，n代表线程数
+#### Standalone
+* 由一个主节点多个从节点组成,主，即为master;从，即为worker
+* 集群模式
+spark-env.sh
+```
+SPARK_MASTER_HOST=192.168.137.200 ##配置Master节点
+3. SPARK_WORKER_CORES=2 ##配置应用程序允许使用的核数（默认是所有的core）
+4. SPARK_WORKER_MEMORY=2g  ##配置应用程序允许使用的内存（默认是一个G）
+
+```
+slaves
+```
+192.168.137.200
+192.168.137.201
+192.168.137.202
+```
+* 启动集群
+```
+ sbin/start-all.sh
+```
+#### Spark on Yarn
+* 将Spark应用程序跑在Yarn集群之上，通过Yarn资源调度将executor启动在container中，从而完成driver端分发给executor的各个任务
+* 将Spark作业跑在Yarn上，首先需要启动Yarn集群，然后通过spark-shell或spark-submit的方式将作业提交到Yarn上运行
+spark-env.sh
+```
+HADOOP_CONF_DIR=/opt/software/hadoop-2.6.0-cdh5.7.0/etc/hadoop
+YARN_CONF_DIR=
+```
+##### client模式
+![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/19-spark-on-yarn-client.png)
+##### cluster模式
+![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/20-spark-on-yarn-cluster.png)
