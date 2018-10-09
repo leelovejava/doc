@@ -68,7 +68,7 @@ Spark也可以不依赖于第三方的资源管理和调度器，它实现了Sta
 
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/22-spark-PK-hadoop.png)
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/23-spark-PK-hadoop2.png)
+![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/23-spark-PK-hadoop2.jpg)
 
 ## 3.Spark集群安装
 ### 3.1.安装
@@ -990,7 +990,7 @@ object DataFrameApp {
 ```
 1,zhangsan,20
 2,lisi,30
-3,wangwu,40123
+3,wangwu,40
 ```
 1）方式一：反射，前提：事先需要知道字段，字段类型 
 2）方式二：编程，如果第一种情况不能满足需求（实现不知道列）
