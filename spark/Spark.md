@@ -127,7 +127,7 @@ It is available in either Scala (which runs on the Java VM and is thus a good wa
 ./bin/spark-shell
 ```
 #### Spark’s primary abstraction is a distributed collection of items called a Dataset. Datasets can be created from Hadoop InputFormats (such as HDFS files) or by transforming other Datasets. Let’s make a new Dataset from the text of the README file in the Spark source directory:
-*Spark的主要抽象是一个名为Dataset的分布式集合。DataSet可以从Hadoop输入格式或者其他Dataset转换得来。 让我们利用Spark源目录中的README文件的文本中创建一个新的DataSet：*
+*Spark的主要抽象是一个名为Dataset的分布式集合。DataSet可以从Hadoop输入格式或者其他Dataset转换得来。 让我们利用Spark根目录中的README文件的文本中创建一个新的DataSet：*
 ```
 scala> val textFile = spark.read.textFile("README.md")
 textFile: org.apache.spark.sql.Dataset[String] = [value: string]
@@ -408,7 +408,18 @@ Finally, Spark includes several samples in the examples directory (Scala, Java, 
 /usr/local/spark-1.5.2-bin-hadoop2.6/lib/spark-examples-1.5.2-hadoop2.6.0.jar \
 100
 ```
+参数说明
+* class           作业的主类,即main函数所有的类,参考值:org.apache.spark.examples.SparkPi     
+* master          master的URL.参考值:yarn
+* deploy-mode     client和cluster2种模式,参考值:client
+* driver-memory   driver 使用的内存，不可超过单机的 core 总数,参考值:4g
+* num-executors   创建多少个 executor,参考值:2
+* executor-memory 各个 executor 使用的最大内存，不可超过单机的最大可使用内存。参考值:2g
+* executor-cores  各个 executor 使用的并发线程数目，也即每个 executor 最大可并发执行的 Task 数目。 参考值:2
+* conf            指定key=value形式的配置
 该算法是利用蒙特·卡罗算法求PI
+
+![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/21-spark-on-submit.png)
 
 ### 5.2.启动Spark Shell
 spark-shell是Spark自带的交互式Shell程序，方便用户进行交互式编程，用户可以在该命令行下用scala编写spark程序。
@@ -713,3 +724,5 @@ YARN_CONF_DIR=
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/19-spark-on-yarn-client.png)
 ##### cluster模式
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/20-spark-on-yarn-cluster.png)
+
+#### Spark On Mesos
