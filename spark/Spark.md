@@ -44,6 +44,12 @@ Spark提供了统一的解决方案。Spark可以用于批处理、交互式查�
 Spark可以非常方便地与其他的开源产品进行融合。比如，Spark可以使用Hadoop的YARN和Apache Mesos作为它的资源管理和调度器，器，并且可以处理所有Hadoop支持的数据，包括HDFS、HBase和Cassandra等。这对于已经部署Hadoop集群的用户特别重要，因为不需要做任何数据迁移就可以使用Spark的强大处理能力。Spark也可以不依赖于第三方的资源管理和调度器，它实现了Standalone作为其内置的资源管理和调度框架，这样进一步降低了Spark的使用门槛，使得所有人都可以非常容易地部署和使用Spark。此外，Spark还提供了在EC2上部署Standalone的Spark集群的工具。
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/03.png)
 
+### 2.4.Hadoop和Spark的对比
+
+![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/22-spark-PK-hadoop.png)
+
+![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/23-spark-PK-hadoop2.png)
+
 ## 3.Spark集群安装
 ### 3.1.安装
 ### 3.1.1.机器部署
