@@ -809,3 +809,204 @@ YARN_CONF_DIR=
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/20-spark-on-yarn-cluster.png)
 
 #### Spark On Mesos
+
+## 7.DataFrame&DataSet
+### 7.1.概述
+
+  A Dataset is a distributed collection of data.  
+  A DataFrame is a Dataset organized into named columns.
+
+Dataset：分布式数据集 
+DataFrame：以列（列名，列的类型，列值）的形式构成的分布式数据集
+
+1）DataFrame和RDD对比
+
+RDD：
+* java/scala ⇒ jvm
+* python ⇒ python runtime
+
+DataFrame:
+* java/scala/python ⇒ Logic Plan
+
+### 7.2.DataFrame 基本API常用操作
+
+1）DataFrameApp.scala
+```
+package com.lihaogn.spark
+
+import org.apache.spark.sql.SparkSession
+
+/**
+  * DataFrame API基本操作
+  */
+object DataFrameApp {
+
+  def main(args: Array[String]): Unit = {
+
+    val spark = SparkSession.builder().appName("DataFrameApp").master("local[2]").getOrCreate()
+
+    // 将json文件加载成一个dataframe
+    val peopleDF = spark.read.format("json").
+      load("/Users/Mac/app/spark-2.2.0-bin-2.6.0-cdh5.7.0/examples/src/main/resources/people.json")
+
+    // 输出dataframe对应的schema信息
+    peopleDF.printSchema()
+
+    // 输出数据集的前20条记录
+    peopleDF.show()
+
+    // 查询某列所有的数据：select name from table-name
+    peopleDF.select("name").show()
+
+    // 查询某几列所有的数据，并对列进行计算：select name,age+10 as age2 from table-name
+    peopleDF.select(peopleDF.col("name"),(peopleDF.col("age")+10).as("age2")).show()
+
+    // 根据某一列的值进行过滤：select * from table where age>19
+    peopleDF.filter(peopleDF.col("age")>19).show()
+
+    // 根据某一列进行分组，然后再进行聚合操作：select age,count(1) from table-name group by age
+    peopleDF.groupBy("age").count().show()
+
+    spark.stop()
+
+  }
+}
+```
+
+2）运行结果 
+ 
+![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/24.png)
+
+![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/25.png)
+
+![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/26.png)
+
+![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/27.png)
+
+![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/28.png)
+
+![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/29.png)
+
+
+### 7.3.DataFrame与RDD互操作
+  Spark SQL supports two different methods for converting existing RDDs into Datasets. The first method uses reflection to infer the schema of an RDD that contains specific types of objects. This reflection based approach leads to more concise code and works well when you already know the schema while writing your Spark application.
+  
+  The second method for creating Datasets is through a programmatic interface that allows you to construct a schema and then apply it to an existing RDD. While this method is more verbose, it allows you to construct Datasets when the columns and their types are not known until runtime.
+
+
+准备操作文件：infos.txt
+```
+1,zhangsan,20
+2,lisi,30
+3,wangwu,40123
+```
+1）方式一：反射，前提：事先需要知道字段，字段类型 
+2）方式二：编程，如果第一种情况不能满足需求（实现不知道列）
+
+DataFrameRDDApp.scala
+```
+package com.lihaogn.spark
+
+import org.apache.spark.sql.types.{IntegerType, StringType, StructField, StructType}
+import org.apache.spark.sql.{Row, SparkSession}
+
+/**
+  * DataFrame与RDD互操作
+  */
+object DataFrameRDDApp {
+
+  def main(args: Array[String]): Unit = {
+    val spark = SparkSession.builder().appName("DataFrameApp").master("local[2]").getOrCreate()
+
+    // 反射方式
+//    inferReflection(spark)
+
+    // 编程方式
+    program(spark)
+
+    spark.stop()
+  }
+
+  def program(spark:SparkSession): Unit ={
+
+    // RDD ==> DataFrame
+    val rdd=spark.sparkContext.textFile("/Users/Mac/testdata/infos.txt")
+
+    val infoRDD=rdd.map(_.split(",")).map(line=>Row(line(0).toInt,line(1),line(2).toInt))
+
+    val structType=StructType(Array(StructField("id",IntegerType,true),
+      StructField("name",StringType,true),
+      StructField("age",IntegerType,true)))
+
+    val infoDF=spark.createDataFrame(infoRDD,structType)
+    infoDF.printSchema()
+    infoDF.show()
+
+    // 通过df的api操作
+    infoDF.filter(infoDF.col("age")>30).show()
+
+    // 通过sql方式操作
+    infoDF.createOrReplaceTempView("infos")
+    spark.sql("select * from infos where age>30").show()
+  }
+
+
+  def inferReflection(spark:SparkSession): Unit ={
+
+    // RDD ==> DataFrame
+    val rdd=spark.sparkContext.textFile("/Users/Mac/testdata/infos.txt")
+
+    // 需要导入隐式转换
+    import spark.implicits._
+    val infoDF=rdd.map(_.split(",")).map(line=>Info(line(0).toInt,line(1),line(2).toInt)).toDF()
+
+    infoDF.show()
+
+    infoDF.filter(infoDF.col("age")>30).show()
+
+    // sql方式
+    infoDF.createOrReplaceTempView("infos")
+    spark.sql("select * from infos where age>30").show()
+  }
+
+  case class Info(id: Int, name: String, age: Int)
+
+}
+```
+
+### 7.4.DataSet
+
+1）使用 
+DatasetApp.scala
+```
+package com.imooc.spark
+
+import org.apache.spark.sql.SparkSession
+
+/**
+ * Dataset操作
+ */
+object DatasetApp {
+
+  def main(args: Array[String]) {
+    val spark = SparkSession.builder().appName("DatasetApp")
+      .master("local[2]").getOrCreate()
+
+    //注意：需要导入隐式转换
+    import spark.implicits._
+
+    val path = "file:///home/hadoop/data/sales.csv"
+
+    //spark如何解析csv文件？
+    val df = spark.read.option("header","true").option("inferSchema","true").csv(path)
+    df.show
+
+    val ds = df.as[Sales]
+    ds.map(line => line.itemId).show
+
+    spark.stop()
+  }
+
+  case class Sales(transactionId:Int,customerId:Int,itemId:Int,amountPaid:Double)
+}
+```
