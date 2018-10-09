@@ -163,7 +163,9 @@ hadoop002
 
 将配置好的Spark拷贝到其他节点上
 scp -r spark-1.5.2-bin-hadoop2.6/ hadoop000:/usr/local/
+
 scp -r spark-1.5.2-bin-hadoop2.6/ hadoop001:/usr/local/
+
 scp -r spark-1.5.2-bin-hadoop2.6/ hadoop002.cn:/usr/local/
 
 ### 3.1.4.启动Spark
