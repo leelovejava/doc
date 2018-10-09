@@ -10,6 +10,10 @@ spark.apache.org
 
 ## 2.Spark概述
 ### 2.1.什么是Spark（官网：http://spark.apache.org）
+Apache Spark™ is a unified analytics engine for large-scale data processing.
+
+*Apache Spark™ 是一个快速通用的处理大规模数据的引擎*
+
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/01.png)
  内存计算框架
 
@@ -19,6 +23,18 @@ Spark基于内存计算，提高了在大数据环境下数据处理的实时性
 Spark得到了众多大数据公司的支持，这些公司包括Hortonworks、IBM、Intel、Cloudera、MapR、Pivotal、百度、阿里、腾讯、京东、携程、优酷土豆。
 当前百度的Spark已应用于凤巢、大搜索、直达号、百度大数据等业务；阿里利用GraphX构建了大规模的图计算和图挖掘系统，实现了很多生产系统的推荐算法；
 腾讯Spark集群达到8000台的规模，是当前已知的世界上最大的Spark集群。
+
+#### 产生背景
+##### MapReduce局限性
+1）代码繁琐 
+2）只能够支持map和reduce方法 
+3）执行效率低下 
+4）不适合迭代多次、交互式、流式的处理
+
+##### 框架多样化
+1）批处理（离线）：MapReduce、Hive、Pig 
+2）流式处理（实时）：Storm，JStorm 
+3）交互式计算：Impala
 
 ### 2.2.为什么要学Spark
 中间结果输出：基于MapReduce的计算引擎通常会将中间结果输出到磁盘上，进行存储和容错。
@@ -38,10 +54,14 @@ Spark支持Java、Python和Scala的API，还支持超过80种高级算法，使�
 
 
 #### 2.3.3.通用
-Spark提供了统一的解决方案。Spark可以用于批处理、交互式查询（Spark SQL）、实时流处理（Spark Streaming）、机器学习（Spark MLlib）和图计算（GraphX）。这些不同类型的处理都可以在同一个应用中无缝使用。Spark统一的解决方案非常具有吸引力，毕竟任何公司都想用统一的平台去处理遇到的问题，减少开发和维护的人力成本和部署平台的物力成本。
+Spark提供了统一的解决方案。Spark可以用于批处理、交互式查询（Spark SQL）、实时流处理（Spark Streaming）、机器学习（Spark MLlib）和图计算（GraphX）。
+这些不同类型的处理都可以在同一个应用中无缝使用。Spark统一的解决方案非常具有吸引力，毕竟任何公司都想用统一的平台去处理遇到的问题，减少开发和维护的人力成本和部署平台的物力成本。
 
 #### 2.3.4.兼容性
-Spark可以非常方便地与其他的开源产品进行融合。比如，Spark可以使用Hadoop的YARN和Apache Mesos作为它的资源管理和调度器，器，并且可以处理所有Hadoop支持的数据，包括HDFS、HBase和Cassandra等。这对于已经部署Hadoop集群的用户特别重要，因为不需要做任何数据迁移就可以使用Spark的强大处理能力。Spark也可以不依赖于第三方的资源管理和调度器，它实现了Standalone作为其内置的资源管理和调度框架，这样进一步降低了Spark的使用门槛，使得所有人都可以非常容易地部署和使用Spark。此外，Spark还提供了在EC2上部署Standalone的Spark集群的工具。
+Spark可以非常方便地与其他的开源产品进行融合。比如，Spark可以使用Hadoop的YARN和Apache Mesos作为它的资源管理和调度器，并且可以处理所有Hadoop支持的数据，包括HDFS、HBase和Cassandra等。
+这对于已经部署Hadoop集群的用户特别重要，因为不需要做任何数据迁移就可以使用Spark的强大处理能力。
+Spark也可以不依赖于第三方的资源管理和调度器，它实现了Standalone作为其内置的资源管理和调度框架，这样进一步降低了Spark的使用门槛，使得所有人都可以非常容易地部署和使用Spark。
+此外，Spark还提供了在EC2上部署Standalone的Spark集群的工具。
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/03.png)
 
 ### 2.4.Hadoop和Spark的对比
@@ -56,43 +76,100 @@ Spark可以非常方便地与其他的开源产品进行融合。比如，Spark�
 准备两台以上Linux服务器，安装好JDK1.7
 
 ### 3.1.2.下载Spark安装包
-#### [Building Spark] (http://spark.apache.org/docs/latest/building-spark.html)
-
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/04-download.png)
-http://www.apache.org/dyn/closer.lua/spark/spark-1.5.2/spark-1.5.2-bin-hadoop2.6.tgz
+#### 1) 下载tar包 
+[spark1.5.2-hadoop2.6](http://www.apache.org/dyn/closer.lua/spark/spark-1.5.2/spark-1.5.2-bin-hadoop2.6.tgz)
 上传解压安装包
 上传spark-1.5.2-bin-hadoop2.6.tgz安装包到Linux上
 解压安装包到指定位置
 tar -zxvf spark-1.5.2-bin-hadoop2.6.tgz -C /usr/local
 
-### 3.1.3.配置Spark
-进入到Spark安装目录
-cd /usr/local/spark-1.5.2-bin-hadoop2.6
-进入conf目录并重命名并修改spark-env.sh.template文件
-cd conf/
-mv spark-env.sh.template spark-env.sh
-vi spark-env.sh
-在该配置文件中添加如下配置
-export JAVA_HOME=/usr/java/jdk1.7.0_45
-export SPARK_MASTER_IP=node1.itcast.cn
-export SPARK_MASTER_PORT=7077
-保存退出
-重命名并修改slaves.template文件
-mv slaves.template slaves
-vi slaves
-在该文件中添加子节点所在的位置（Worker节点）
-node2.itcast.cn
-node3.itcast.cn
-node4.itcast.cn
-保存退出
-将配置好的Spark拷贝到其他节点上
-scp -r spark-1.5.2-bin-hadoop2.6/ node2.itcast.cn:/usr/local/
-scp -r spark-1.5.2-bin-hadoop2.6/ node3.itcast.cn:/usr/local/
-scp -r spark-1.5.2-bin-hadoop2.6/ node4.itcast.cn:/usr/local/
+#### 2) 编译源码
+![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/04-download.png)
 
-Spark集群配置完毕，目前是1个Master，3个Work，在node1.itcast.cn上启动Spark集群
+##### [Building Spark] (http://spark.apache.org/docs/latest/building-spark.html)
+
+##### 前置条件(环境)
+* jdk 8+
+* maven 3.3.9+
+* hadoop-2.6.0-cdh5.7.0.tar.gz
+* Scala-2.11.8
+
+##### 修改文件 spark-2.2.0/pom.xml
+```xml
+<repositorys>
+    <repository>
+      <id>cloudera</id>
+      <url>https://repository.cloudera.com/artifactory/cloudera-repos/</url>
+    </repository>
+    
+    <repository>  
+        <id>alimaven</id>  
+        <name>aliyun maven</name>  
+        <url>http://maven.aliyun.com/nexus/content/groups/public/</url>  
+    </repository>
+</repositorys>
+
 ```
-/usr/local/spark-1.5.2-bin-hadoop2.6/sbin/start-all.sh
+##### 编译
+```
+/dev/make-distribution.sh --name 2.6.0-cdh5.7.0 --tgz -Phadoop-2.6 -Dhadoop.version=2.6.0-cdh5.7.0 -Phive -Phive-thriftserver -Pyarn
+```
+
+### 3.1.3.配置Spark
+#### 1) local模式
+启动spark-shell
+```
+spark-shell --master local[2]
+```
+#### 2) standalone模式
+Spark Standalone模式的架构和Hadoop HDFS/YARN很类似：1 master + n worker
+
+##### 进入到Spark安装目录
+cd /usr/local/spark-1.5.2-bin-hadoop2.6
+
+##### conf/spark-env.sh
+进入conf目录并重命名并修改spark-env.sh.template文件
+```
+export JAVA_HOME=/home/hadoop/java/jdk1.8
+export SCALA_HOME=/home/hadoop/scala-2.11.7
+export HADOOP_HOME=/home/hadoop/hadoop-2.7.2
+export HADOOP_CONF_DIR=/home/hadoop-2.7.2/etc/hadoop
+
+export SPARK_MASTER_PORT=7077
+export SPARK_MASTER_HOST=hadoop000
+export SPARK_MASTER_IP=hadoop000
+export SPARK_WORKER_CORES=2g
+export SPARK_WORKER_MEMORY=2g
+export SPARK_WORKER_INSTANCES=1
+```
+```
+# 配置解释
+JAVA_HOME：Java安装目录
+SCALA_HOME：Scala安装目录
+HADOOP_HOME：hadoop安装目录
+HADOOP_CONF_DIR：hadoop集群的配置文件的目录
+SPARK_MASTER_IP：spark集群的Master节点的ip地址(to bind the master to a different IP address or hostname)
+SPARK_WORKER_MEMORY：每个worker节点能够最大分配给exectors的内存大小(to set how much total memory workers have to give executors (e.g. 1000m, 2g))
+SPARK_WORKER_CORES：每个worker节点所占有的CPU核数目(to set the number of cores to use on this machine)
+SPARK_WORKER_INSTANCES：每台机器上开启的worker节点的数目(to set the number of worker processes per node)
+```
+
+##### conf/slaves
+重命名并修改slaves.template文件
+在该文件中添加子节点所在的位置（Worker节点）
+hadoop000
+hadoop001
+hadoop002
+
+将配置好的Spark拷贝到其他节点上
+scp -r spark-1.5.2-bin-hadoop2.6/ hadoop000:/usr/local/
+scp -r spark-1.5.2-bin-hadoop2.6/ hadoop001:/usr/local/
+scp -r spark-1.5.2-bin-hadoop2.6/ hadoop002.cn:/usr/local/
+
+### 3.1.4.启动Spark
+Spark集群配置完毕，目前是1个Master，3个Work，在hadoop000上启动Spark集群
+```
+sbin/start-all.sh
 ```
 
 启动后执行jps命令，主节点上有Master进程，其他子节点上有Work进行，登录Spark管理界面查看集群状态（主节点）：http://node1.itcast.cn:8080/
