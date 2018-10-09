@@ -811,22 +811,114 @@ YARN_CONF_DIR=
 #### Spark On Mesos
 
 ## 7.DataFrame&DataSet
+
+### problem
+* 1、DataFrame比RDD有哪些优点？
+* 2、DataFrame和Dataset有什么关系？
+* 3、有了DataFrame为什么还有引入Dataset？
+* 4、Dataset在Spark源码中长什么样？
+
+
+
+
 ### 7.1.概述
+[快速理解Spark Dataset](https://www.jianshu.com/p/77811ae29fdd)
 
-  A Dataset is a distributed collection of data.  
+#### 7.1.1.RDD
+##### 概述
+弹性分布式数据集，是Spark对数据进行的一种抽象，可以理解为Spark对数据的一种组织方式
+*简单:RDD就是一种数据结构，里面包含了数据和操作数据的方法*
+
+##### 特点
+###### 弹性：
+* 数据可完全放内存或完全放磁盘，也可部分存放在内存，部分存放在磁盘，并可以自动切换
+RDD出错后可自动重新计算（通过血缘自动容错）
+* 可checkpoint（设置检查点，用于容错），可persist或cache（缓存）
+* 里面的数据是分片的（也叫分区，partition），分片的大小可自由设置和细粒度调整
+
+###### 分布式：
+* RDD中的数据可存放在多个节点上
+
+###### 数据集：
+* 数据的集合
+相对于与DataFrame和Dataset，RDD是Spark最底层的抽象，目前是开发者用的最多的，但逐步会转向DataFrame和Dataset（当然，这是Spark的发展趋势）
+
+#### 7.1.2.DataSet
+  A Dataset is a distributed collection of data. 
+  *Dataset：分布式数据集*  
+
+```
+A Dataset is a distributed collection of data. 
+Dataset is a new interface added in Spark 1.6 that provides the benefits of RDDs (strong typing, ability to use powerful lambda functions) with the benefits 
+of Spark SQL’s optimized execution engine. 
+A Dataset can be constructed from JVM objects and then manipulated using functional transformations (map, flatMap, filter, etc.). 
+The Dataset API is available in Scala and Java. 
+Python does not have the support for the Dataset API. But due to Python’s dynamic nature, many of the benefits of the Dataset API are already available (i.e. you can access the field of a row by name naturally row.columnName). 
+The case for R is similar.
+```  
+  
+  
+#### 7.1.3.DataFrame 
   A DataFrame is a Dataset organized into named columns.
+  * DataFrame：以列（列名，列的类型，列值）的形式构成的分布式数据集*
+  
+  DataFrame:思想来源于Python的pandas库，RDD是一个数据集，DataFrame在RDD的基础上加了Schema（描述数据的信息，可以认为是元数据，DataFrame曾经就有个名字叫SchemaRDD）
 
-Dataset：分布式数据集 
-DataFrame：以列（列名，列的类型，列值）的形式构成的分布式数据集
-
-1）DataFrame和RDD对比
-
-RDD：
+#### 7.2.对比
+##### RDD：
 * java/scala ⇒ jvm
 * python ⇒ python runtime
+![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/30-rdd-data.png)
 
-DataFrame:
+##### DataFrame:
 * java/scala/python ⇒ Logic Plan
+
+![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/31-dataFrame-data.png)
+
+DataFrame比RDD多了一个表头信息（Schema），像一张表了，DataFrame还配套了新的操作数据的方法，DataFrame API（如df.select())和SQL(select id, name from xx_table where ...)
+
+有了DataFrame这个高一层的抽象后，我们处理数据更加简单了，甚至可以用SQL来处理数据了，对开发者来说，易用性有了很大的提升。
+
+通过DataFrame API或SQL处理数据，会自动经过Spark 优化器（Catalyst）的优化，即使你写的程序或SQL不高效，也可以运行的很快
+
+*DataFrame是用来处理结构化数据的*
+
+###### 结构化和非结构化数据
+结构化数据:也称行数据,二维表结构来逻辑表达和实现的数据, 对于表结构的每一列，都有着清晰的定义
+
+非结构化数据:不方便用数据库二维逻辑表来表现的数据,特点是数据结构不规则或不完整，没有预定义的数据模型
+
+##### Dataset
+相对于RDD，Dataset提供了强类型支持，也是在RDD的每行数据加了类型约束
+
+数据格式
+![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/32-Dataset-data.png)
+
+或者这种,每行数据是个Object
+![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/33-DataSet-data2.png)
+
+使用Dataset API的程序，会经过Spark SQL的优化器进行优化
+目前仅支持Scala、Java API，尚未提供Python的API
+
+1) 相比DataFrame，Dataset提供了*编译时类型检查*，对于分布式程序来讲，提交一次作业太费劲了（要编译、打包、上传、运行），避免到提交到集群运行时才发现错误，这也是引入Dataset的一个重要原因
+
+![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/34-DataFrame.png)
+
+![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/35-Dataset.png)
+
+2) RDD转换DataFrame后不可逆，但RDD转换Dataset是可逆的（这也是Dataset产生的原因）
+
+* 启动spark-shell，创建一个RDD
+
+![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/36-creae-rdd.png)
+
+* 通过RDD创建DataFrame，再通过DataFrame转换成RDD，发现RDD的类型变成了Row类型
+
+![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/37-DataFrame-convert-rdd.png)
+
+* 通过RDD创建Dataset，再通过Dataset转换为RDD，发现RDD还是原始类型
+
+![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/38-Dataset-convert-rdd.png)
 
 ### 7.2.DataFrame 基本API常用操作
 
