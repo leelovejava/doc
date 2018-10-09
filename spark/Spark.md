@@ -162,6 +162,7 @@ hadoop001
 hadoop002
 
 将配置好的Spark拷贝到其他节点上
+
 scp -r spark-1.5.2-bin-hadoop2.6/ hadoop000:/usr/local/
 
 scp -r spark-1.5.2-bin-hadoop2.6/ hadoop001:/usr/local/
@@ -783,8 +784,8 @@ hdfs dfs -cat hdfs://node1.itcast.cn:9000/out/part-00000
 spark-env.sh
 ```
 SPARK_MASTER_HOST=192.168.137.200 ##配置Master节点
-3. SPARK_WORKER_CORES=2 ##配置应用程序允许使用的核数（默认是所有的core）
-4. SPARK_WORKER_MEMORY=2g  ##配置应用程序允许使用的内存（默认是一个G）
+SPARK_WORKER_CORES=2 ##配置应用程序允许使用的核数（默认是所有的core）
+SPARK_WORKER_MEMORY=2g  ##配置应用程序允许使用的内存（默认是一个G）
 
 ```
 slaves
@@ -812,7 +813,7 @@ YARN_CONF_DIR=
 
 #### Spark On Mesos
 
-## 7.DataFrame&DataSet
+## 7.[DataFrame&DataSet](http://spark.apache.org/docs/latest/sql-programming-guide.html)
 
 ### problem
 * 1、DataFrame比RDD有哪些优点？
@@ -894,9 +895,11 @@ DataFrame比RDD多了一个表头信息（Schema），像一张表了，DataFram
 相对于RDD，Dataset提供了强类型支持，也是在RDD的每行数据加了类型约束
 
 数据格式
+
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/32-Dataset-data.png)
 
 或者这种,每行数据是个Object
+
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/33-DataSet-data2.png)
 
 使用Dataset API的程序，会经过Spark SQL的优化器进行优化
