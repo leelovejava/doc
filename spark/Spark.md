@@ -218,11 +218,13 @@ The RDD interface is still supported, and you can get a more complete reference 
 #### 4.2.1.Basics(基本用法)
 Spark’s shell provides a simple way to learn the API, as well as a powerful tool to analyze data interactively. 
 It is available in either Scala (which runs on the Java VM and is thus a good way to use existing Java libraries) or Python. Start it by running the following in the Spark directory:
+
 *Spark的shell提供了一个学习API的简单方法，同时也是交互式分析数据的强大工具。它可以使用Scala或Python语言进行开发，可通过在Spark目录运行以下命令启动Spark-Shell：*
 ```
 ./bin/spark-shell
 ```
 #### Spark’s primary abstraction is a distributed collection of items called a Dataset. Datasets can be created from Hadoop InputFormats (such as HDFS files) or by transforming other Datasets. Let’s make a new Dataset from the text of the README file in the Spark source directory:
+
 *Spark的主要抽象是一个名为Dataset的分布式集合。
 DataSet可以从Hadoop输入格式或者其他Dataset转换得来。 
 让我们利用Spark根目录中的README文件的文本中创建一个新的DataSet：*
@@ -232,6 +234,7 @@ textFile: org.apache.spark.sql.Dataset[String] = [value: string]
 ```
 
 #### You can get values from Dataset directly, by calling some actions, or transform the Dataset to get a new one. For more details, please read the API doc.
+
 *我们可以直接调用方法从DataSet里得出某些值，也可以把一个DataSet转换成一个新的Dataset。更多信息，请看DataSet [API文档](http://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.sql.Dataset)*
 ```
 scala> textFile.count() // Number of items in this Dataset
@@ -241,6 +244,7 @@ scala> textFile.first() // First item in this Dataset
 res1: String = # Apache Spark
 ```
 #### Now let’s transform this Dataset to a new one. We call filter to return a new Dataset with a subset of the items in the file.
+
 *现在让我们转换这个Dataset到一个新的Dataset。我们调用filter来返回一个新的Dataset。*
 ```
 scala> val linesWithSpark = textFile.filter(line => line.contains("Spark"))
