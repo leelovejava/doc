@@ -70,8 +70,11 @@ Spark也可以不依赖于第三方的资源管理和调度器，它实现了Sta
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/03.png)
 
 ### 2.4.Hadoop和Spark的对比
+* feature对比 
 
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/22-spark-PK-hadoop.png)
+
+* 生态圈对比
 
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/23-spark-PK-hadoop2.jpg)
 
