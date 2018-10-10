@@ -50,14 +50,16 @@ Spark是MapReduce的替代方案，而且兼容HDFS、Hive，可融入Hadoop的�
 
 #### 2.3.2.易用
 Spark支持Java、Python和Scala的API，还支持超过80种高级算法，使用户可以快速构建不同的应用。而且Spark支持交互式的Python和Scala的shell，可以非常方便地在这些shell中使用Spark集群来验证解决问题的方法。
+
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/16-feature-ease-of-use.png)
 
+![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/40-feature-easy-of-use2.png)
 
 #### 2.3.3.通用
 Spark提供了统一的解决方案。Spark可以用于批处理、交互式查询（Spark SQL）、实时流处理（Spark Streaming）、机器学习（Spark MLlib）和图计算（GraphX）。
 这些不同类型的处理都可以在同一个应用中无缝使用。Spark统一的解决方案非常具有吸引力，毕竟任何公司都想用统一的平台去处理遇到的问题，减少开发和维护的人力成本和部署平台的物力成本。
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/39-generality.png)
+![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/39-feature-generality.png)
 
 #### 2.3.4.兼容性
 Spark可以非常方便地与其他的开源产品进行融合。比如，Spark可以使用Hadoop的YARN和Apache Mesos作为它的资源管理和调度器，并且可以处理所有Hadoop支持的数据，包括HDFS、HBase和Cassandra等。
