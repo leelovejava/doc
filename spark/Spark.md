@@ -207,9 +207,11 @@ To follow along with this guide, first download a packaged release of Spark from
 *要学习本教程，请先从Spark网站下载Spark的安装包。由于我们不会使用HDFS，因此您可以下载任何版本的Hadoop的软件包*
 
 Note that, before Spark 2.0, the main programming interface of Spark was the Resilient Distributed Dataset (RDD). After Spark 2.0, RDDs are replaced by Dataset, which is strongly-typed like an RDD, but with richer optimizations under the hood.
-*请注意，在Spark 2.0之前，Spark的主要编程接口是弹性分布式数据集（RDD）。在Spark 2.0之后，RDD被DataSet取代，DataSet类似于RDD的加强版，在引擎盖下有更丰富的优化。*
+
+*请注意，在Spark 2.0之前，Spark的主要编程接口是弹性分布式数据集（RDD）。在Spark 2.0之后，RDD被DataSet取代，DataSet是强数据类型,类似于RDD，在它之下有更丰富的优化。*
 
 The RDD interface is still supported, and you can get a more complete reference at the RDD programming guide. However, we highly recommend you to switch to use Dataset, which has better performance than RDD. See the SQL programming guide to get more information about Dataset
+
 *RDD接口仍然可使用，您可以在[RDD编程指南](http://blog.csdn.net/zuolovefu/article/details/79117926)中获得更完整的参考资料。但是，我们强烈建议您切换到使用DataSet，这具有比RDD更好的性能。请参阅[SQL编程指南](http://spark.apache.org/docs/latest/sql-programming-guide.html)以获取有关数据集的更多信息。*
 
 ### 4.2.Interactive Analysis with the Spark Shell(使用spark shell进行交互式操作)
