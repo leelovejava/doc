@@ -213,7 +213,9 @@ It is available in either Scala (which runs on the Java VM and is thus a good wa
 ./bin/spark-shell
 ```
 #### Spark’s primary abstraction is a distributed collection of items called a Dataset. Datasets can be created from Hadoop InputFormats (such as HDFS files) or by transforming other Datasets. Let’s make a new Dataset from the text of the README file in the Spark source directory:
-*Spark的主要抽象是一个名为Dataset的分布式集合。DataSet可以从Hadoop输入格式或者其他Dataset转换得来。 让我们利用Spark根目录中的README文件的文本中创建一个新的DataSet：*
+*Spark的主要抽象是一个名为Dataset的分布式集合。
+DataSet可以从Hadoop输入格式或者其他Dataset转换得来。 
+让我们利用Spark根目录中的README文件的文本中创建一个新的DataSet：*
 ```
 scala> val textFile = spark.read.textFile("README.md")
 textFile: org.apache.spark.sql.Dataset[String] = [value: string]
@@ -873,7 +875,7 @@ The case for R is similar.
 * python ⇒ python runtime
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/30-rdd-data.png)
 
-##### DataFrame:
+##### DataFrame:    
 * java/scala/python ⇒ Logic Plan
 
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/31-dataFrame-data.png)
@@ -901,6 +903,10 @@ DataFrame比RDD多了一个表头信息（Schema），像一张表了，DataFram
 或者这种,每行数据是个Object
 
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/33-DataSet-data2.png)
+
+DataFrame = Dataset[Row]
+Dataset：强类型  typed  case class
+DataFrame：弱类型   Row
 
 使用Dataset API的程序，会经过Spark SQL的优化器进行优化
 目前仅支持Scala、Java API，尚未提供Python的API
