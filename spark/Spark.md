@@ -46,7 +46,7 @@ Spark是MapReduce的替代方案，而且兼容HDFS、Hive，可融入Hadoop的�
 ### 2.3.Spark特点
 #### 2.3.1.快
 与Hadoop的MapReduce相比，Spark基于内存的运算要快100倍以上，基于硬盘的运算也要快10倍以上。Spark实现了高效的DAG执行引擎，可以通过基于内存来高效处理数据流。
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/02.png)
+![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/02-feature-speed.png)
 
 #### 2.3.2.易用
 Spark支持Java、Python和Scala的API，还支持超过80种高级算法，使用户可以快速构建不同的应用。而且Spark支持交互式的Python和Scala的shell，可以非常方便地在这些shell中使用Spark集群来验证解决问题的方法。
