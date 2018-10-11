@@ -758,7 +758,7 @@ spark shell仅在测试和验证我们的程序时使用的较多，在生产环
 
 
 9.编写spark程序
-```
+```scala
 package cn.itcast.spark
 
 import org.apache.spark.{SparkContext, SparkConf}
@@ -984,7 +984,7 @@ DataFrame：弱类型   Row
 ### 7.2.DataFrame 基本API常用操作
 
 1）DataFrameApp.scala
-```
+```scala
 package com.lihaogn.spark
 
 import org.apache.spark.sql.SparkSession
@@ -1057,7 +1057,7 @@ object DataFrameApp {
 2）方式二：编程，如果第一种情况不能满足需求（实现不知道列）
 
 DataFrameRDDApp.scala
-```
+```scala
 package com.lihaogn.spark
 
 import org.apache.spark.sql.types.{IntegerType, StringType, StructField, StructType}
@@ -1131,7 +1131,7 @@ object DataFrameRDDApp {
 
 1）使用 
 DatasetApp.scala
-```
+```scala
 package com.imooc.spark
 
 import org.apache.spark.sql.SparkSession
@@ -1165,6 +1165,14 @@ object DatasetApp {
 ```
 
 ## 8.[API](https://blog.csdn.net/liam08/article/details/79661686)
+*常用:*
+*collect()*
+*count()*
+*reduce()*
+*col()*
+*show()*
+*printSchema()*
+*filter()/where()*
 
 ### 8.1.类方法 Actions
 #### 8.1.1.collect(): Array[T]
