@@ -536,6 +536,15 @@ Finally, Spark includes several samples in the examples directory (Scala, Java, 
 ## 5.执行Spark程序
 ### 5.1.执行第一个spark程序
 ```
+/bin/spark-submit \
+  --class <main-class> \
+  --master <master-url> \
+  --deploy-mode <deploy-mode> \
+  --conf <key>=<value> \
+  ... # other options
+  <application-jar> \
+  [application-arguments]
+  
 /usr/local/spark-1.5.2-bin-hadoop2.6/bin/spark-submit \
 --class org.apache.spark.examples.SparkPi \
 --master spark://node1.itcast.cn:7077 \
@@ -545,17 +554,25 @@ Finally, Spark includes several samples in the examples directory (Scala, Java, 
 100
 ```
 参数说明
-* class           作业的主类,即main函数所有的类,参考值:org.apache.spark.examples.SparkPi     
+* class           作业的主类,即main函数所有的类,参考值:org.apache.spark.examples.SparkPi
+                  *The entry point for your application (e.g. org.apache.spark.examples.SparkPi)*     
 * master          master的URL.参考值:yarn
-* deploy-mode     client和cluster2种模式,参考值:client
+                  *The master URL for the cluster (e.g. spark://23.195.26.187:7077)*
+* deploy-mode     client和cluster2种模式,参考值:client 
+                  *Whether to deploy your driver on the worker nodes (cluster) or locally as an external client (client) (default: client)* 
 * driver-memory   driver 使用的内存，不可超过单机的 core 总数,参考值:4g
 * num-executors   创建多少个 executor,参考值:2
 * executor-memory 各个 executor 使用的最大内存，不可超过单机的最大可使用内存。参考值:2g
 * executor-cores  各个 executor 使用的并发线程数目，也即每个 executor 最大可并发执行的 Task 数目。 参考值:2
 * conf            指定key=value形式的配置
+                  *Arbitrary Spark configuration property in key=value format. For values that contain spaces wrap “key=value” in quotes (as shown)*
+* application-jar *Path to a bundled jar including your application and all dependencies. The URL must be globally visible inside of your cluster, for instance, an hdfs:// path or a file:// path that is present on all nodes*
+* application-arguments Arguments passed to the main method of your main class, if any
 该算法是利用蒙特·卡罗算法求PI
 
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/21-spark-on-submit.png)
+
+[spark-submit](http://spark.apache.org/docs/latest/submitting-applications.html)
 
 ### 5.2.启动Spark Shell
 spark-shell是Spark自带的交互式Shell程序，方便用户进行交互式编程，用户可以在该命令行下用scala编写spark程序。
