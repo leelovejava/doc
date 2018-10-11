@@ -1445,6 +1445,7 @@ transform[U](t: (Dataset[T]) ⇒ Dataset[U]): Dataset[U]
 应用t函数转换Dataset。
 
 #### 8.4.22 union
+```
 union(other: Dataset[T]): Dataset[T]
 等于UNION ALL in SQL。
 注意是按列位置合并：
@@ -1459,8 +1460,10 @@ df1.union(df2).show
 // |   1|   2|   3|
 // |   4|   5|   6|
 // +----+----+----+
+```
 
 #### 8.4.23 unionByName
+```
 unionByName(other: Dataset[T]): Dataset[T]
 同union方法，但是按列名合并：
 val df1 = Seq((1, 2, 3)).toDF("col0", "col1", "col2")
@@ -1473,7 +1476,7 @@ df1.unionByName(df2).show
 // |   1|   2|   3|
 // |   6|   4|   5|
 // +----+----+----+
-
+```
 #### 8.4.24 where
 where(conditionExpr: String): Dataset[T]
 where(condition: Column): Dataset[T]
