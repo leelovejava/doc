@@ -240,15 +240,31 @@ textFile: org.apache.spark.sql.Dataset[String] = [value: string]
 scala> textFile.count() // Number of items in this Dataset
 res0: Long = 126 // May be different from yours as README.md will change over time, similar to other outputs
 
+// count(): Long
+// 数据行数
+
 scala> textFile.first() // First item in this Dataset
 res1: String = # Apache Spark
+
+// first(): T
+// 返回第一行，是head()的别名。
+
 ```
+
 #### Now let’s transform this Dataset to a new one. We call filter to return a new Dataset with a subset of the items in the file.
 
 *现在让我们转换这个Dataset到一个新的Dataset。我们调用filter来返回一个新的Dataset。*
 ```
 scala> val linesWithSpark = textFile.filter(line => line.contains("Spark"))
 linesWithSpark: org.apache.spark.sql.Dataset[String] = [value: string]
+
+filter(func: (T) ⇒ Boolean): Dataset[T]
+filter(conditionExpr: String): Dataset[T]
+filter(condition: Column): Dataset[T]
+根据条件过滤行
+e.g.
+peopleDs.filter("age > 15")
+peopleDs.filter($"age" > 15)
 ```
 输出 linesWithSpark: org.apache.spark.sql.Dataset[String] = [value: string]
 #### We can chain together transformations and actions:
@@ -267,6 +283,10 @@ Let’s say we want to find the line with the most words:
 ```
 scala> textFile.map(line => line.split(" ").size).reduce((a, b) => if (a > b) a else b)
 res4: Long = 15
+
+reduce(func: (T, T) ⇒ T): T
+根据映射函数func，对RDD中的元素进行二元计算，返回计算结果。
+注意：提供的函数应满足交换律及结合律，否则计算结果将是非确定的。
 ```
 ##### 
 This first maps a line to an integer value, creating a new Dataset. 
@@ -289,6 +309,12 @@ One common data flow pattern is MapReduce, as popularized by Hadoop. Spark can i
 ```
 scala> val wordCounts = textFile.flatMap(line => line.split(" ")).groupByKey(identity).count()
 wordCounts: org.apache.spark.sql.Dataset[(String, Long)] = [value: string, count(1): bigint]
+
+flatMap[U](func: (T) ⇒ TraversableOnce[U])(implicit arg0: Encoder[U]): Dataset[U]
+第一步和map一样，最后将所有的输出合并
+
+groupByKey[K](func: (T) ⇒ K)(implicit arg0: Encoder[K]): KeyValueGroupedDataset[K, T]
+现根据func函数生成key，然后按key分组。
 ```
 ##### collection
 Here, we call flatMap to transform a Dataset of lines to a Dataset of words, and then combine groupByKey and count to compute the per-word counts in the file as a Dataset of (String, Long) pairs. 
@@ -302,6 +328,10 @@ Here, we call flatMap to transform a Dataset of lines to a Dataset of words, and
 ```
 scala> wordCounts.collect()
 res6: Array[(String, Int)] = Array((means,1), (under,2), (this,3), (Because,1), (Python,2), (agree,1), (cluster.,1), ...)
+
+collect(): Array[T]
+返回一个数组，包含Dataset所有行的数据。
+注意：所有数据会被加载进driver进程的内存。
 ```
 
 #### 4.2.3.Caching(缓存)
@@ -320,6 +350,10 @@ res8: Long = 15
 
 scala> linesWithSpark.count()
 res9: Long = 15
+
+cache(): Dataset.this.type
+缓存数据,MEMORY_AND_DISK模式。
+注意：RDD的cache函数默认是MEMORY_ONLY。
 ```
 It may seem silly to use Spark to explore and cache a 100-line text file. 
 The interesting part is that these same functions can be used on very large data sets, even when they are striped across tens or hundreds of nodes. 
@@ -1127,3 +1161,287 @@ object DatasetApp {
   case class Sales(transactionId:Int,customerId:Int,itemId:Int,amountPaid:Double)
 }
 ```
+
+## 8.[API](https://blog.csdn.net/liam08/article/details/79661686)
+
+### 8.1.类方法
+     
+### 8.2.基本函数（Basic Dataset functions)
+
+### 8.3.流式函数（streaming）
+
+### 8.4.强类型转换（Typed transformations）
+
+#### 8.4.1 alias
+alias(alias: Symbol): Dataset[T]
+alias(alias: String): Dataset[T]
+as(alias: Symbol): Dataset[T]
+as(alias: String): Dataset[T]
+给Dataset一个别名
+
+#### 8.4.2 coalesce
+coalesce(numPartitions: Int): Dataset[T]
+分区合并(只能减少分区)
+
+#### 8.4.3 distinct
+distinct(): Dataset[T]
+dropDuplicates的别名
+
+dropDuplicates(col1: String, cols: String*): Dataset[T]
+dropDuplicates(colNames: Array[String]): Dataset[T]
+dropDuplicates(colNames: Seq[String]): Dataset[T]
+dropDuplicates(): Dataset[T]
+根据指定字段，对数据去重。
+
+#### 8.4.4 except
+except(other: Dataset[T]): Dataset[T]
+去除other中也有的行。同EXCEPT DISTINCT in SQL。
+//TODO
+
+#### 8.4.5 filter
+filter(func: (T) ⇒ Boolean): Dataset[T]
+filter(conditionExpr: String): Dataset[T]
+filter(condition: Column): Dataset[T]
+根据条件过滤行
+e.g.
+peopleDs.filter("age > 15")
+peopleDs.filter($"age" > 15)
+
+#### 8.4.6 flatMap
+flatMap[U](func: (T) ⇒ TraversableOnce[U])(implicit arg0: Encoder[U]): Dataset[U]
+第一步和map一样，最后将所有的输出合并。
+
+#### 8.4.7 groupByKey
+groupByKey[K](func: (T) ⇒ K)(implicit arg0: Encoder[K]): KeyValueGroupedDataset[K, T]
+现根据func函数生成key，然后按key分组。
+
+#### 8.4.8 intersect
+intersect(other: Dataset[T]): Dataset[T]
+求两个dataset的交集，等同于INTERSECT in SQL.
+
+#### 8.4.9 joinWith
+joinWith[U](other: Dataset[U], condition: Column): Dataset[(T, U)]
+inner equi-join两个dataset
+
+joinWith[U](other: Dataset[U], condition: Column, joinType: String): Dataset[(T, U)]
+joinType可选：inner, cross, outer, full, full_outer, left, left_outer, right, right_outer
+
+#### 8.4.10 limit
+limit(n: Int): Dataset[T]
+返回前n行，与head的区别是，head是一个action，会马上返回结果数组。
+
+#### 8.4.11 map
+map[U](func: (T) ⇒ U)(implicit arg0: Encoder[U]): Dataset[U]
+在每一个元素应用func函数，返回包含结果集的dataset。
+
+#### 8.4.12 mapPartitions
+mapPartitions[U](func: (Iterator[T]) ⇒ Iterator[U])(implicit arg0: Encoder[U]): Dataset[U]
+在每一个分区应用func函数，返回包含结果集的dataset。
+
+#### 8.4.13 orderBy
+orderBy(sortExprs: Column*): Dataset[T]
+orderBy(sortCol: String, sortCols: String*): Dataset[T]
+sort的别名
+
+#### 8.4.14 sort
+sort(sortExprs: Column*): Dataset[T]
+sort(sortCol: String, sortCols: String*): Dataset[T]
+按指定列排序，默认asc。
+e.g. ds.sort($"col1", $"col2".desc)
+
+#### 8.4.15 sortWithinPartitions
+sortWithinPartitions(sortExprs: Column*): Dataset[T]
+sortWithinPartitions(sortCol: String, sortCols: String*): Dataset[T]
+分区内排序，同"SORT BY" in SQL (Hive QL).
+
+#### 8.4.16 randomSplit
+randomSplit(weights: Array[Double]): Array[Dataset[T]]
+randomSplit(weights: Array[Double], seed: Long): Array[Dataset[T]]
+按权重随机分割数据
+
+#### 8.4.17 repartition
+repartition(partitionExprs: Column*): Dataset[T]
+repartition(numPartitions: Int, partitionExprs: Column*): Dataset[T]
+repartition(numPartitions: Int): Dataset[T]
+按指定表达式，分区数，重新分区（hash），同"DISTRIBUTE BY" in SQL。
+默认分区数为spark.sql.shuffle.partitions
+
+#### 8.4.18 repartitionByRange
+repartitionByRange(partitionExprs: Column*): Dataset[T]
+repartitionByRange(numPartitions: Int, partitionExprs: Column*): Dataset[T]
+按指定表达式，分区数，重新分区，采用Range partition方式，按键范围分区。
+分区默认排序方式为ascending nulls first，分区内数据未排序。
+
+#### 8.4.19 sample
+sample(withReplacement: Boolean, fraction: Double): Dataset[T]
+sample(withReplacement: Boolean, fraction: Double, seed: Long): Dataset[T]
+sample(fraction: Double): Dataset[T]
+sample(fraction: Double, seed: Long): Dataset[T]
+随机取样本数据
+withReplacement：Sample with replacement or not.
+fraction：Fraction of rows to generate, range [0.0, 1.0].
+seed：Seed for sampling.
+
+#### 8.4.20 select
+select[U1](c1: TypedColumn[T, U1]): Dataset[U1]
+根据列/表达式获取列数据
+
+#### 8.4.21 except
+transform[U](t: (Dataset[T]) ⇒ Dataset[U]): Dataset[U]
+应用t函数转换Dataset。
+
+#### 8.4.22 union
+union(other: Dataset[T]): Dataset[T]
+等于UNION ALL in SQL。
+注意是按列位置合并：
+val df1 = Seq((1, 2, 3)).toDF("col0", "col1", "col2")
+val df2 = Seq((4, 5, 6)).toDF("col1", "col2", "col0")
+df1.union(df2).show
+
+// output:
+// +----+----+----+
+// |col0|col1|col2|
+// +----+----+----+
+// |   1|   2|   3|
+// |   4|   5|   6|
+// +----+----+----+
+
+#### 8.4.23 unionByName
+unionByName(other: Dataset[T]): Dataset[T]
+同union方法，但是按列名合并：
+val df1 = Seq((1, 2, 3)).toDF("col0", "col1", "col2")
+val df2 = Seq((4, 5, 6)).toDF("col1", "col2", "col0")
+df1.unionByName(df2).show
+// output:
+// +----+----+----+
+// |col0|col1|col2|
+// +----+----+----+
+// |   1|   2|   3|
+// |   6|   4|   5|
+// +----+----+----+
+
+#### 8.4.24 where
+where(conditionExpr: String): Dataset[T]
+where(condition: Column): Dataset[T]
+filter的别名
+
+### 8.5.弱类型转换（Untyped transformations）
+返回类型为DataFrame而不是Dataset
+
+#### 8.5.1 agg 
+```
+agg(expr: Column, exprs: Column*): DataFrame
+agg(exprs: Map[String, String]): DataFrame
+agg(aggExpr: (String, String), aggExprs: (String, String)*): DataFrame
+在整个dataset进行聚合。
+ds.agg(...) 是 ds.groupBy().agg(...) 的简写。
+e.g.
+ds.agg(max($"age"), avg($"salary"))
+ds.agg(Map("age" -> "max", "salary" -> "avg"))
+ds.agg("age" -> "max", "salary" -> "avg")
+```
+
+#### 8.5.2 apply/col 
+```
+apply(colName: String): Column
+col(colName: String): Column
+colRegex(colName: String): Column
+返回指定列。
+```
+
+#### 8.5.3 crossJoin 
+```
+crossJoin(right: Dataset[_]): DataFrame
+cross join。
+```
+
+#### 8.5.4 cube 
+```
+cube(col1: String, cols: String*): RelationalGroupedDataset
+cube(cols: Column*): RelationalGroupedDataset
+使用指定列创建多维cube。
+//TODO
+```
+
+#### 8.5.5 drop 
+```
+drop(col: Column): DataFrame
+drop(colNames: String*): DataFrame
+drop(colName: String): DataFrame
+剪掉指定字段。
+```
+
+#### 8.5.6 agg 
+```
+groupBy(col1: String, cols: String*): RelationalGroupedDataset
+groupBy(cols: Column*): RelationalGroupedDataset
+按指定列分组
+```
+
+#### 8.5.7 agg 
+```
+join(right: Dataset[_], joinExprs: Column, joinType: String): DataFrame
+join(right: Dataset[_], joinExprs: Column): DataFrame
+join(right: Dataset[_], usingColumns: Seq[String], joinType: String): DataFrame
+join(right: Dataset[_], usingColumns: Seq[String]): DataFrame
+join(right: Dataset[_], usingColumn: String): DataFrame
+join(right: Dataset[_]): DataFrame
+与另一个DataFrame join。
+joinExprs：$"df1Key" === $"df2Key"
+usingColumn：Seq("user_id", "user_name")
+joinType：Default inner. Must be one of: inner, cross, outer, full, full_outer, left, left_outer, right, right_outer, left_semi, left_anti.
+```
+
+#### 8.5.8 agg 
+na: DataFrameNaFunctions
+见DataFrameNaFunctions
+
+#### 8.5.9 stat 
+``` 
+stat: DataFrameStatFunctions
+见DataFrameStatFunctions
+``` 
+
+#### 8.5.10 rollup
+``` 
+rollup(col1: String, cols: String*): RelationalGroupedDataset
+rollup(cols: Column*): RelationalGroupedDataset
+使用指定列进行rollup聚合。//TODO
+``` 
+
+#### 8.5.11 select 
+``` 
+select(col: String, cols: String*): DataFrame
+select(cols: Column*): DataFrame
+selectExpr(exprs: String*): DataFrame
+选取指定列、SQL表达式。
+``` 
+
+#### 8.5.12 withColumn 
+``` 
+withColumn(colName: String, col: Column): DataFrame
+新增或替换一列。
+``` 
+
+#### 8.5.13 withColumnRenamed 
+``` 
+withColumnRenamed(existingName: String, newName: String): DataFrame
+将指定列更名。
+``` 
+
+### 8.6.未分组（Ungrouped）
+
+#### 8.6.1.queryExecution: QueryExecution
+     执行计划
+
+#### 8.6.2.sparkSession: SparkSession
+     创建该dataset的SparkSession
+     
+#### 8.6.3.sqlContext: SQLContext
+     dataset的SQLContext
+     
+#### 8.6.4.toJSON:Dataset[String]
+     每行数据转成JSON字符串。
+     
+#### 8.6.5.toString(): String
+     Any的toString
