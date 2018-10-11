@@ -752,6 +752,8 @@ spark shell仅在测试和验证我们的程序时使用的较多，在生产环
 
 8.新建一个scala class，类型为Object
 
+[idea scala插件](http://plugins.jetbrains.com/plugin/1347-scala)
+
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/12.png)
 
 
@@ -1164,11 +1166,163 @@ object DatasetApp {
 
 ## 8.[API](https://blog.csdn.net/liam08/article/details/79661686)
 
-### 8.1.类方法
+### 8.1.类方法 Actions
+#### 8.1.1.collect(): Array[T]
+返回一个数组，包含Dataset所有行的数据。
+注意：所有数据会被加载进driver进程的内存。
+
+#### 8.1.2.collectAsList(): List[T]
+同上，但是返回Java list。
+
+#### 8.1.3.count(): Long
+数据行数
+
+#### 8.1.4.describe(cols: String*): DataFrame
+计算指定列的统计指标，包括count, mean, stddev, min, and max.
+
+#### 8.1.5.head(): T
+返回第一行
+
+#### 8.1.6.head(n: Int): Array[T]
+返回前N行
+
+#### 8.1.7.first(): T
+返回第一行，是head()的别名。
+
+#### 8.1.8.foreach(f: (T) ⇒ Unit): Unit
+所有元素上应用f函数
+
+#### 8.1.9.foreachPartition(f: (Iterator[T]) ⇒ Unit): Unit
+所有元素分区上应用f函数
+
+#### 8.1.10.reduce(func: (T, T) ⇒ T): T
+根据映射函数func，对RDD中的元素进行二元计算，返回计算结果。
+注意：提供的函数应满足交换律及结合律，否则计算结果将是非确定的。
+
+#### 8.1.11.show(numRows: Int, truncate: Int, vertical: Boolean): Unit
+表格形式打印出数据。numRows：显示的行数，truncate：裁剪字符串类型值到指定长度，vertical：垂直打印。
+
+#### 8.1.12.show(numRows: Int, truncate: Int): Unit
+show(numRows: Int, truncate: Boolean): Unit
+show(truncate: Boolean): Unit
+numRows=20 truncate=20
+
+#### 8.1.13.show(numRows: Int): Unit
+truncate=20
+
+#### 8.1.14.show(): Unit
+numRows=20 truncate=20
+
+#### 8.1.15.summary(statistics: String*): DataFrame
+计算数据集statistics指定的指标，可指定 count, mean, stddev, min, approximate quartiles (percentiles at 25%, 50%, and 75%), and max.
+如未指定则会计算全部。
+
+#### 8.1.16.take(n: Int): Array[T]
+获取前n行
+
+#### 8.1.17.takeAsList(n: Int): List[T]
+获取前n行保存为list
+
+#### 8.1.18.toLocalIterator(): Iterator[T]
+返回一个所有行的迭代器
+The iterator will consume as much memory as the largest partition in this Dataset.
+
      
 ### 8.2.基本函数（Basic Dataset functions)
+### 8.2.1.as[U](implicit arg0: Encoder[U]): Dataset[U]
+将数据映射成指定类型U，返回新的Dataset
+
+### 8.2.2.persist(newLevel: StorageLevel): Dataset.this.type
+缓存数据，可设置缓存级别。
+
+### 8.2.3.persist(): Dataset.this.type
+同cache方法
+
+### 8.2.4.cache(): Dataset.this.type
+缓存数据,MEMORY_AND_DISK模式。
+注意：RDD的cache函数默认是MEMORY_ONLY。
+
+### 8.2.5.checkpoint(eager: Boolean): Dataset[T]
+返回一个checkpointed的Dataset，Dataset的逻辑执行计划将被截断。
+
+### 8.2.6.checkpoint(): Dataset[T]
+同上，eager=true.
+
+### 8.2.7.columns: Array[String]
+数组形式返回所有列名。
+
+### 8.2.8.dtypes: Array[(String, String)]
+数组形式返回所有列名及类型。
+
+### 8.2.9.createGlobalTempView(viewName: String): Unit
+创建全局临时视图(view)，生命周期与Spark应用一致。
+可以跨session访问。e.g. SELECT * FROM global_temp.view1.
+
+### 8.2.10.createOrReplaceGlobalTempView(viewName: String): Unit
+同上，已存在则替换。
+
+### 8.2.11.createTempView(viewName: String): Unit
+创建本地临时视图(view)，仅当前SparkSession可访问。
+注意：不跟任何库绑定，不能用db1.view1这样的形式访问。
+
+### 8.2.12.createOrReplaceTempView(viewName: String): Unit
+同上，已存在则替换。
+
+### 8.2.13.explain(): Unit
+打印物理执行计划
+另有：queryExecution变量，完整执行计划。
+
+### 8.2.14.explain(extended: Boolean): Unit
+打印物理+逻辑执行计划
+
+### 8.2.15.hint(name: String, parameters: Any*): Dataset[T]
+当前dataset指定hint。//todo
+e.g. df1.join(df2.hint("broadcast"))
+
+### 8.2.16.inputFiles: Array[String]
+返回组成Dataset的输入文件（Returns a best-effort snapshot of the files that compose this Dataset）
+
+### 8.2.17.isLocal: Boolean
+collect和take是否可以本地执行，不需要executor.
+
+### 8.2.18.localCheckpoint(eager: Boolean): Dataset[T]
+执行本地Checkpoint，返回新dataset。
+
+### 8.2.19.localCheckpoint(): Dataset[T]
+eager=true
+
+### 8.2.20.printSchema(): Unit
+打印schema结构
+
+### 8.2.21.rdd: RDD[T]
+dataset内部的RDD
+
+### 8.2.22.schema: StructType
+schema
+
+### 8.2.23.storageLevel: StorageLevel
+当前存储等级，没有被persist则是StorageLevel.NONE
+
+### 8.2.24.toDF(): DataFrame
+toDF(colNames: String*): DataFrame
+转为DataFrame，也可以将RDD转为DataFrame。
+
+### 8.2.25.unpersist(): Dataset.this.type
+unpersist(blocking: Boolean): Dataset.this.type
+删除缓存，blocking表示是否等所有blocks删除后才返回,删除期间阻塞。
+
+### 8.2.26.write: DataFrameWriter[T]
+DataFrameWriter，非流式数据写接口。
+
+### 8.2.27.writeStream: DataStreamWriter[T]
+DataStreamWriter，流式数据写接口。
 
 ### 8.3.流式函数（streaming）
+isStreaming: Boolean
+是否流式数据
+
+withWatermark(eventTime: String, delayThreshold: String): Dataset[T]
+Defines an event time watermark for this Dataset.
 
 ### 8.4.强类型转换（Typed transformations）
 
