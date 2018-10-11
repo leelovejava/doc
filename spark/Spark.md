@@ -1143,6 +1143,7 @@ object DatasetApp {
 
   def main(args: Array[String]) {
     val spark = SparkSession.builder().appName("DatasetApp")
+      // master(spark://master:7077)
       .master("local[2]").getOrCreate()
 
     //注意：需要导入隐式转换
