@@ -1002,7 +1002,8 @@ DataFrame：弱类型   Row
 ### 7.2.DataFrame 基本API常用操作
 people.json
 ```json
-[{
+[
+    {
 		"age": null,
 		"name": "Michael"
 	},
