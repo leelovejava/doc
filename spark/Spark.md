@@ -76,7 +76,7 @@ Spark也可以不依赖于第三方的资源管理和调度器，它实现了Sta
 
 * 生态圈对比
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/23-spark-PK-hadoop2.jpg)
+![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/23-spark-PK-hadoop2.png)
 
 ## 3.Spark集群安装
 ### 3.1.安装
@@ -848,8 +848,8 @@ hdfs dfs -cat hdfs://node1.itcast.cn:9000/out/part-00000
 * 采用单节点多线程（cpu)方式运行,是一种OOTB（开箱即用）的方式,只需要在spark-env.sh导出JAVA_HOME,无需其他任何配置即可使用，因而常用于开发和学习
 * 方式：./spark-shell - -master local[n] ，n代表线程数
 #### Standalone
-* 由一个主节点多个从节点组成,主，即为master;从，即为worker
-* 集群模式
+* 采用Master/Slave结构,由一个主节点多个从节点组成,主，即为master;从，即为worker;为解决单点故障，可以采用Zookeeper实现高可靠(High Availability, HA)
+* 集群模式(利用Spark自带的资源管理与调度器运行Spark集群)
 spark-env.sh
 ```
 SPARK_MASTER_HOST=192.168.137.200 ##配置Master节点
@@ -868,7 +868,7 @@ slaves
  sbin/start-all.sh
 ```
 #### Spark on Yarn
-* 将Spark应用程序跑在Yarn集群之上，通过Yarn资源调度将executor启动在container中，从而完成driver端分发给executor的各个任务
+* 将Spark应用程序跑在Yarn集群之上，(资源管理交给YARN，Spark只负责进行任务调度和计算)通过Yarn资源调度将executor启动在container中，从而完成driver端分发给executor的各个任务
 * 将Spark作业跑在Yarn上，首先需要启动Yarn集群，然后通过spark-shell或spark-submit的方式将作业提交到Yarn上运行
 spark-env.sh
 ```
@@ -881,6 +881,7 @@ YARN_CONF_DIR=
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/20-spark-on-yarn-cluster.png)
 
 #### Spark On Mesos
+* 运行在Mesos,资源管理管理交给Mesos,Spark只负责运行任务调度和计算
 
 ## 7.[DataFrame&DataSet](http://spark.apache.org/docs/latest/sql-programming-guide.html)
 
@@ -1646,3 +1647,42 @@ withColumnRenamed(existingName: String, newName: String): DataFrame
      
 #### 8.6.5.toString(): String
      Any的toString
+     
+## 9.Spark组件(Components)
+![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/42-spark-on-yarn.png)
+* ClusterManager:在Standalone模式中即为Master节点（主节点），控制整个集群，监控Worker.在YARN中为ResourceManager
+* Worker:从节点，负责控制计算节点，启动Executor或Driver。在YARN模式中为NodeManager,负责计算节点的控制。
+* Driver:运行Application的main()函数并创建SparkContect。
+* Executor:执行器，在worker node上执行任务的组件、用于启动线程池运行任务。每个Application拥有独立的一组Executor。
+* SparkContext:整个应用的上下文，控制应用的生命周期。
+* RDD：Spark的计算单元，一组RDD可形成执行的有向无环图RDD Graph。
+* DAG Scheduler:根据作业(Job)构建基于Stage的DAG，并提交Stage给TaskScheduler。
+* TaskScheduler:将任务(Task)分发给Executor。
+* SparkEnv:线程级别的上下文，存储运行时的重要组件的引用
+    1、MapOutPutTracker:负责Shuffle元信息的存储。
+    2、BroadcastManager:负责广播变量的控制与元信息的存储。
+    3、BlockManager:负责存储管理、创建和查找快。
+    4、MetricsSystem:监控运行时性能指标信息。
+    5、SparkConf:负责存储配置信息。
+
+## 10.Spark整体流程
+### Spark流程
+* 1、Client提交应用。  
+* 2、Master找到一个Worker启动Driver  
+* 3、Driver向Master或者资源管理器申请资源，之后将应用转化为RDD Graph  
+* 4、再由DAGSchedule将RDD Graph转化为Stage的有向无环图提交给TaskSchedule。  
+* 5、再由TaskSchedule提交任务给Executor执行。  
+* 6、其它组件协同工作，确保整个应用顺利执行。       
+
+![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/43-spark-components.png)
+
+### Spark on Yarn流程
+* 1、基于YARN的Spark作业首先由客户端生成作业信息，提交给ResourceManager。  
+* 2、ResourceManager在某一NodeManager汇报时把AppMaster分配给NodeManager。  
+* 3、NodeManager启动SparkAppMaster。
+* 4、SparkAppMastere启动后初始化然后向ResourceManager申请资源。  
+* 5、申请到资源后，SparkAppMaster通过RPC让NodeManager启动相应的SparkExecutor。  
+* 6、SparkExecutor向SparkAppMaster汇报并完成相应的任务。  
+* 7、SparkClient会通过AppMaster获取作业运行状态。  
+
+![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/42-spark-on-yarn.png)
