@@ -1000,7 +1000,22 @@ DataFrame：弱类型   Row
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/38-Dataset-convert-rdd.png)
 
 ### 7.2.DataFrame 基本API常用操作
-
+people.json
+```json
+[{
+		"age": null,
+		"name": "Michael"
+	},
+	{
+		"age": 30,
+		"name": "Andy"
+	},
+	{
+		"age": 19,
+		"name": "Justin"
+	}
+]
+```
 1）DataFrameApp.scala
 ```scala
 package com.lihaogn.spark
