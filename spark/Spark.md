@@ -1649,7 +1649,9 @@ withColumnRenamed(existingName: String, newName: String): DataFrame
      Any的toString
      
 ## 9.Spark组件(Components)
+
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/42-spark-on-yarn.png)
+
 * ClusterManager:在Standalone模式中即为Master节点（主节点），控制整个集群，监控Worker.在YARN中为ResourceManager
 * Worker:从节点，负责控制计算节点，启动Executor或Driver。在YARN模式中为NodeManager,负责计算节点的控制。
 * Driver:运行Application的main()函数并创建SparkContect。
