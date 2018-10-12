@@ -940,6 +940,7 @@ The case for R is similar.
 ##### RDD：
 * java/scala ⇒ jvm
 * python ⇒ python runtime
+
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/30-rdd-data.png)
 
 ##### DataFrame:    
