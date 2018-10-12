@@ -1121,6 +1121,7 @@ object DataFrameRDDApp {
 
     val infoRDD=rdd.map(_.split(",")).map(line=>Row(line(0).toInt,line(1),line(2).toInt))
 
+    // 通过StructType直接指定每个字段的schema
     val structType=StructType(Array(StructField("id",IntegerType,true),
       StructField("name",StringType,true),
       StructField("age",IntegerType,true)))
