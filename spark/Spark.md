@@ -9,7 +9,10 @@ spark.apache.org
 ## 1.3.目标3：编写简单的Spark应用程序
 
 ## 2.Spark概述
+
 ### [Spark-survey](https://blog.csdn.net/lovehuangjiaju/article/details/48765165)
+
+[spark trend](https://trends.google.com/trends/explore?geo=US&q=hadoop,spark,mapReduce)
 
 ### 2.1.什么是Spark（官网：http://spark.apache.org）
 Apache Spark™ is a unified analytics engine for large-scale data processing.
@@ -79,6 +82,24 @@ Spark也可以不依赖于第三方的资源管理和调度器，它实现了Sta
 * 生态圈对比
 
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/23-spark-PK-hadoop2.png)
+
+## Spark应用场景?
+* 保险:Spark的机学习功能来处理和分析所有索赔,优化索赔报销流程
+* 电信:诈骗
+* 广告:广告点击流量实时统计
+* 医疗:使用Spark Core、Streaming和SQL构建病人护理系统
+* 零售业:使用Spark分析销售点数据和优惠券使用情况
+* 电商:数据分析,构建用户画像,实时推荐系统,精准营销,千人千面
+* 银行业:使用机器学习模型来预测某些金融产品的零食银行的客户的资料
+* 政府:分析地理、时间、财政支持
+* 科学研究:通过时间、深度、地理分析地震时间来预测未来的事件
+* 投资银行:分析日内股价于预测未来的价格走势
+           风控(通过对个人的信用评估，风险承担能力评估，结合众多理财产品，推荐相应的投资理财产品)
+* 地理空间分析:按时间和地理分析Uber旅行,以预测未来的需求和定价
+* Teitter情绪分析:分析大量的推文,以确定特定组织和产品的积极,消极或中立的情绪
+* 航空公司:建立预测航空旅行延误的模型
+* 设备:预测建筑物超过林界温度的可能性
+* 安保:人脸识别,人工智能与大数据结合，进行海量数据库匹配，双重保险，更安全
 
 ## 3.Spark集群安装
 ### 3.1.安装
@@ -511,7 +532,7 @@ Lines with a: 46, Lines with b: 23
 Congratulations on running your first Spark application!
 
 *祝贺您运行您的第一个Spark应用程序！*
-
+  
 For an in-depth overview of the API, start with the [RDD programming guide](http://spark.apache.org/docs/latest/rdd-programming-guide.html) and the SQL programming guide, or see “Programming Guides” menu for other components.
 
 *有关API的深入概述，请从[RDD编程指南](http://blog.csdn.net/zuolovefu/article/details/79117926)和[SQL编程指南](http://spark.apache.org/docs/latest/sql-programming-guide.html)开始，或者参阅其他组件的“编程指南”菜单*

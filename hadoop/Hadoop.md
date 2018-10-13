@@ -1,4 +1,7 @@
 # hadoop
+## 简介
+[传智大数据](http://www.itcast.cn/subject/cloudzly/index.shtml)
+
 ## Overview
 [hadoop官网](http://hadoop.apache.org)
 
