@@ -5,10 +5,12 @@ spark.apache.org
 
 ## 1.课程目标
 ## 1.1.目标1：熟悉Spark相关概念
-## 1.2.目标2：搭建Spark集群
+## 1.2.目标2：搭建Spark单机/集群
 ## 1.3.目标3：编写简单的Spark应用程序
 
 ## 2.Spark概述
+### [Spark-survey](https://blog.csdn.net/lovehuangjiaju/article/details/48765165)
+
 ### 2.1.什么是Spark（官网：http://spark.apache.org）
 Apache Spark™ is a unified analytics engine for large-scale data processing.
 
