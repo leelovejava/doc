@@ -8,9 +8,12 @@
 ![avatar](https://images2018.cnblogs.com/blog/1228818/201804/1228818-20180412130640231-449939615.png)
 [Sqoop学习之路](https://www.cnblogs.com/qingyunzong/p/8807252.html)
 [doc](http://sqoop.apache.org/docs/1.4.7/SqoopUserGuide.html)
+
 #####工作机制
 将导入或导出命令翻译成 MapReduce 程序来实现 在翻译出的 MapReduce 中主要是对 InputFormat 和 OutputFormat 进行定制
+
 #####安装
+
 1).下载&解压
 [下载地址](http://mirrors.hust.edu.cn/apache/)
 sqoop版本说明
@@ -19,6 +22,7 @@ sqoop版本说明
 
 sqoop-1.4.6 或者 sqoop-1.4.7 它是 sqoop1
 ![avatar](https://images2018.cnblogs.com/blog/1228818/201804/1228818-20180412131040413-312918279.png)
+
 2). 修改conf/sqoop-env-template.sh
 mv sqoop-env-template.sh sqoop-env.sh
 3). 修改 sqoop-env.sh
@@ -30,6 +34,7 @@ mv sqoop-env-template.sh sqoop-env.sh
     oracle
         oracle.jdbc.OracleDriver
         http://www.datanucleus.org/downloads/maven2/oracle/ojdbc6/11.2.0.3/ojdbc6-11.2.0.3.jar
+
 #####命令
 * sqoop 帮助
 ./sqoop help
@@ -37,7 +42,7 @@ mv sqoop-env-template.sh sqoop-env.sh
 ./sqoop import --help
 * sqoop 列出database；
 ./sqoop list-databases --connect jdbc:mysql://127.0.0.1/ --username root -P
-* sqoop 测试链接查询数据
+* sqoop 测试连接查询数据
 ./sqoop eval --connect jdbc:mysql://127.0.0.1/dianping --username root --password 123456 --query "select SHOP_NAME,STAR from SHOP limit 10"
 * sqoop导入数据到hdfs
 ./sqoop import --connect jdbc:mysql://127.0.0.1/dianping --username root -P  --table SHOP --target-dir /dianping.shop --num-mappers 1
