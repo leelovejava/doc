@@ -2,13 +2,44 @@
 ## 简介
 [传智大数据](http://www.itcast.cn/subject/cloudzly/index.shtml)
 
+大数据5V特点:
+
+1）Volume(大量) ['vɒljuːm]
+    数据量大，包括采集、存储和计算的量都非常大。大数据的起始计量单位至少是P（1000个T）、E（100万个T）或Z（10亿个T）
+
+2）Velocity(高速)[vəˈlɒsəti]
+    数据增长速度快，处理速度也快，时效性要求高。比如搜索引擎要求几分钟前的新闻能够被用户查询到，个性化推荐算法尽可能要求实时完成推荐。这是大数据区别于传统数据挖掘的显著特征
+
+3) Variety(多样)[və'raɪətɪ] 
+    种类和来源多样化。包括结构化、半结构化和非结构化数据，具体表现为网络日志、音频、视频、图片、地理位置信息等等，多类型的数据对数据的处理能力提出了更高的要求
+
+4) Value(低价值密度)['væljuː] 
+    数据价值密度相对较低，或者说是浪里淘沙却又弥足珍贵。随着互联网以及物联网的广泛应用，信息感知无处不在，信息海量，但价值密度较低，如何结合业务逻辑并通过强大的机器算法来挖掘数据价值，是大数据时代最需要解决的问题
+
+5) Veracity(真实性)[vəˈræsəti] 
+    数据的准确性和可信赖度，即数据的质量
+
+[大数据5v指的是什么？——以沃尔玛为例](https://blog.csdn.net/goddess_ever_never/article/details/80063066)
+    
 ## Overview
 [hadoop官网](http://hadoop.apache.org)
 
+[十年了，Hadoop的前世今生](https://blog.csdn.net/lfq1532632051/article/details/53219558)
+
+### hadoop由来
+
+项目作者的孩子对黄色大象玩具的命名
+
+开源、分布式存储与分布式计算的平台
+
+Hadoop能做什么：
+
+1. 搭建大型数据仓库，PB级数据的存储、处理、分析、统计等业务
+
+2. 搜索引擎、日志分析、数据挖掘、商业智能
+
 ## hadoop生态系统
 * HDFS->分布式文件系统
-* MapReduce->分布式计算框架
-* Spark->快速，通用引擎用于大规模数据处理
 * Yarn->分布式资源调度
 * Zookeeper->分布式协调服务
 * pig->数据流处理
@@ -17,6 +48,8 @@
 * Oozie->工作流程调度程序(工作流,A作业输出作为B作业的输出)
 * Sqoop->数据同步工具
 * Storm->分布式实时计算系统
+* MapReduce->分布式计算框架
+* Spark->快速，通用引擎用于大规模数据处理
 * impala->实时查询数据
 * Ambari->基于web的部署/管理/监控Hadoop集群的工具集
 * Kafka->消息队列
@@ -24,6 +57,38 @@
 * Phoenix->SQL中间层,构建于Hbase之上
 * Hive->基于Hadoop的数据仓库
 * Hbase->分布式列数据库
+
+![image](https://github.com/leelovejava/doc/blob/master/img/hadoop/04-ecosystem.png)
+
+### Hadoop
+    名称由来：项目作者DougCutting的孩子对黄色大象玩具的命名
+    开源、分布式存储与分布式计算的平台,分布式计算的基础架构    
+    
+    狭义Hadoop VS 广义Hadoop
+    狭义:HDFS、MapReduce、YARN
+    广义:Hadoop生态系统,每个子系统只解决某一个特定的问题领域,小而精 
+
+### HDFS（分布式文件系统）
+    1. 源于Google在2003年10月发表的GFS论文
+    2. 对GFS的克隆
+    3. 特点：扩展性、容错性、海量数据存储
+    4. 将文件切分成指定大小的数据块并且多副本存于多个机器上
+    5. 数据切分、多副本、容错对用户是透明的
+
+![image](https://github.com/leelovejava/doc/blob/master/img/hadoop/02-hdfs.png)    
+    
+### YARN（资源管理）
+    1. 整个集群资源的管理与调度
+    2. 特点：扩展性、容错性、多框架资源统一调度 
+
+![image](https://github.com/leelovejava/doc/blob/master/img/hadoop/01-yarn.png)    
+
+### MapReduce（分布式计算框架）
+    1. 2004年12月的GoogleMapReduce论文
+    2. Google MapReduce的克隆版
+    3. 特点：扩展性、容错性、海量数据的离线处理
+    
+![image](https://github.com/leelovejava/doc/blob/master/img/hadoop/03-mapreduce.png)        
 
 ## 特点：
 1.开源、社区活跃
