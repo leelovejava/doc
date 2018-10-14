@@ -40,23 +40,23 @@ Hadoop能做什么：
 
 ## hadoop生态系统
 * HDFS->分布式文件系统
-* Yarn->分布式资源调度
-* Zookeeper->分布式协调服务
-* pig->数据流处理
+* Yarn->分布式资源调度,xx on yarn,资源按需分配,提高集群资源的利用率
+* Zookeeper->分布式协调服务,解决单点故障
 * Flume->日志收集框架
-* mahout-(数据挖掘库)机器学习
+* mahout-(数据挖掘库)机器学习,基于MapReduce的mahout停止维护,转向基于Spark
 * Oozie->工作流程调度程序(工作流,A作业输出作为B作业的输出)
-* Sqoop->数据同步工具
+* Sqoop->数据同步工具,关系型数据库到hadoop生态上的数据交换工具
 * Storm->分布式实时计算系统
 * MapReduce->分布式计算框架
 * Spark->快速，通用引擎用于大规模数据处理
 * impala->实时查询数据
 * Ambari->基于web的部署/管理/监控Hadoop集群的工具集
 * Kafka->消息队列
-* Spark SQL
 * Phoenix->SQL中间层,构建于Hbase之上
 * Hive->基于Hadoop的数据仓库
+* pig->数据流处理,现基本不用
 * Hbase->分布式列数据库
+* R->用做统计分析
 
 ![image](https://github.com/leelovejava/doc/blob/master/img/hadoop/04-ecosystem.png)
 
@@ -87,6 +87,14 @@ Hadoop能做什么：
     1. 2004年12月的GoogleMapReduce论文
     2. Google MapReduce的克隆版
     3. 特点：扩展性、容错性、海量数据的离线处理
+
+### Hive
+    最初用于解决海量结构化的日志数据统计问题.比如:统计访问量
+    构建在hadoop之上的数据仓库
+    定义一种类SQL的查询语言,HQL(类似但不完全相同)->hibernate HQL
+    通常于进行离线数据处理
+    底层采用多种执行引擎(Spark、Tez、MapReduce)
+    支持多种不同的压缩格式(gzip snappy bzip2)、存储格式(TextFile SequenceFile RCFile ORC Parquet)、自定义函数(UDF)
     
 ![image](https://github.com/leelovejava/doc/blob/master/img/hadoop/03-mapreduce.png)        
 
