@@ -140,6 +140,7 @@ object InferringSchema {
     //将RDD和case class关联
     val personRDD = lineRDD.map(x => Person(x(0).toInt, x(1), x(2).toInt))
     //导入隐式转换，如果不到人无法将RDD转换成DataFrame
+    // 隐式转换函数是以implicits关键字声明的带有单个参数的函数.这种函数将会自动转换应用,将值从一种类型转换为另一种类型
     //将RDD转换成DataFrame
     import sqlContext.implicits._
     val personDF = personRDD.toDF
