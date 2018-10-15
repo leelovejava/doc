@@ -1169,6 +1169,7 @@ object DataFrameRDDApp {
     val rdd=spark.sparkContext.textFile("/Users/Mac/testdata/infos.txt")
 
     // 需要导入隐式转换
+    // 隐式的对类的方法进行增强，丰富现有类库的功能
     // 隐式转换函数是以implicits关键字声明的带有单个参数的函数.这种函数将会自动转换应用,将值从一种类型转换为另一种类型
     import spark.implicits._
     val infoDF=rdd.map(_.split(",")).map(line=>Info(line(0).toInt,line(1),line(2).toInt)).toDF()
