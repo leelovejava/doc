@@ -60,6 +60,13 @@ Spark支持Java、Python和Scala的API，还支持超过80种高级算法，使�
 
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/40-feature-easy-of-use2.png)
 
+```
+wordCount
+
+spark.read.textFile("/home/hadoop/data/words.txt").flatMap(line => line.split(" ")).groupByKey(identity).count().collect()
+
+```
+
 #### 2.3.3.通用
 Spark提供了统一的解决方案。Spark可以用于批处理、交互式查询（Spark SQL）、实时流处理（Spark Streaming）、机器学习（Spark MLlib）和图计算（GraphX）。
 这些不同类型的处理都可以在同一个应用中无缝使用。Spark统一的解决方案非常具有吸引力，毕竟任何公司都想用统一的平台去处理遇到的问题，减少开发和维护的人力成本和部署平台的物力成本。
