@@ -60,6 +60,13 @@ Spark支持Java、Python和Scala的API，还支持超过80种高级算法，使�
 
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/40-feature-easy-of-use2.png)
 
+```
+wordCount
+
+spark.read.textFile("/home/hadoop/data/words.txt").flatMap(line => line.split(" ")).groupByKey(identity).count().collect()
+
+```
+
 #### 2.3.3.通用
 Spark提供了统一的解决方案。Spark可以用于批处理、交互式查询（Spark SQL）、实时流处理（Spark Streaming）、机器学习（Spark MLlib）和图计算（GraphX）。
 这些不同类型的处理都可以在同一个应用中无缝使用。Spark统一的解决方案非常具有吸引力，毕竟任何公司都想用统一的平台去处理遇到的问题，减少开发和维护的人力成本和部署平台的物力成本。
@@ -219,6 +226,10 @@ export SPARK_DAEMON_JAVA_OPTS="-Dspark.deploy.recoveryMode=ZOOKEEPER -Dspark.dep
 
 ## 4.[Quick start](http://spark.apache.org/docs/latest/quick-start.html)
 [2.2.1官方quick start翻译](https://blog.csdn.net/zuolovefu/article/details/79117824)
+[rdd-programming-guide](http://spark.apache.org/docs/latest/rdd-programming-guide.html)
+[rdd编程指引](https://blog.csdn.net/alendx/article/details/81985176)
+[RDD API](https://blog.csdn.net/a123demi/article/details/71453594?utm_source=blogxgwz2)
+
 ### 4.1.前言
 
 This tutorial provides a quick introduction to using Spark. We will first introduce the API through Spark’s interactive shell (in Python or Scala), then show how to write applications in Java, Scala, and Python.
@@ -246,6 +257,16 @@ It is available in either Scala (which runs on the Java VM and is thus a good wa
 ```
 ./bin/spark-shell
 ```
+
+```
+sc.textFile("/home/hadoop/data/words.txt").flatMap(_.split(" ")).map((_,1)).reduceByKey(_+_).collection
+
+sc.textFile("/home/hadoop/data/words.txt").flatMap(_.split(" ")).map((_,1)).reduceByKey(_+_).sortBy(_._2, false).collect
+
+sc.textFile("/home/hadoop/data/words.txt").flatMap(_.split(" ")).map((_,1)).reduceByKey(_+_).saveAsTextFile("/home/hadoop/data/words_out.txt")
+
+sc.textFile("hdfs://hadoop:9000/words.txt").flatMap(_.split(" ")).map((_,1)).reduceByKey(_+_).saveAsTextFile("hdfs://hadoop:9000/out")
+```
 #### Spark’s primary abstraction is a distributed collection of items called a Dataset. Datasets can be created from Hadoop InputFormats (such as HDFS files) or by transforming other Datasets. Let’s make a new Dataset from the text of the README file in the Spark source directory:
 
 *Spark的主要抽象是一个名为Dataset的分布式集合。
@@ -254,6 +275,12 @@ DataSet可以从Hadoop输入格式或者其他Dataset转换得来。
 ```
 scala> val textFile = spark.read.textFile("README.md")
 textFile: org.apache.spark.sql.Dataset[String] = [value: string]
+
+text file RDDs的创建可以使用SparkContext的textFile方法。该方法接受一个文件的URI地址(或者是机器上的一个本地路径，或者是一个hdfs://，等URI)作为参数，并读取文件的一行数据，放入集合中
+
+
+读取文件README.md来创建RDD,文件中的每一行就是RDD中的一个元素
+scala> val b = sc.textFile("README.md")
 ```
 
 #### You can get values from Dataset directly, by calling some actions, or transform the Dataset to get a new one. For more details, please read the API doc.
@@ -272,6 +299,9 @@ res1: String = # Apache Spark
 // first(): T
 // 返回第一行，是head()的别名。
 
+// spark的算子分为两种
+//  1). Transformation 转换,延迟加载
+//  2). Action         动作
 ```
 
 #### Now let’s transform this Dataset to a new one. We call filter to return a new Dataset with a subset of the items in the file.
@@ -630,8 +660,7 @@ Spark Shell中已经默认将SparkContext类初始化为对象sc。用户代码�
 ##### 2.向hdfs上传一个文件到hdfs://node1.itcast.cn:9000/words.txt
 ##### 3.在spark shell中用scala语言编写spark程序
 ```
-sc.textFile("hdfs://node1.itcast.cn:9000/words.txt").flatMap(_.split(" "))
-.map((_,1)).reduceByKey(_+_).saveAsTextFile("hdfs://node1.itcast.cn:9000/out")
+sc.textFile("hdfs://hadoop:9000/words.txt").flatMap(_.split(" ")).map((_,1)).reduceByKey(_+_).saveAsTextFile("hdfs://hadoop:9000/out")
 ```
 ##### 4.使用hdfs命令查看结果
 ```
@@ -640,8 +669,8 @@ hdfs dfs -ls hdfs://node1.itcast.cn:9000/out/p*
 说明：
 sc是SparkContext对象，该对象时提交spark程序的入口
 textFile(hdfs://node1.itcast.cn:9000/words.txt)是hdfs中读取数据
-flatMap(_.split(" "))先map在压平
-map((_,1))将单词和1构成元组
+flatMap(_.split(" ")) 先map在压平,通过空格把单词分开,_是每一行
+map((_,1))将单词和1构成元组,匿名函数,相当于map(x->(x,1))
 reduceByKey(_+_)按照key进行reduce，并将value累加
 saveAsTextFile("hdfs://node1.itcast.cn:9000/out")将结果写入到hdfs中
 
@@ -927,10 +956,10 @@ YARN_CONF_DIR=
 
 ##### 特点
 ###### 弹性：
-* 数据可完全放内存或完全放磁盘，也可部分存放在内存，部分存放在磁盘，并可以自动切换
-RDD出错后可自动重新计算（通过血缘自动容错）
-* 可checkpoint（设置检查点，用于容错），可persist或cache（缓存）
-* 里面的数据是分片的（也叫分区，partition），分片的大小可自由设置和细粒度调整
+* 存储的弹性:数据可完全放内存或完全放磁盘，也可部分存放在内存，部分存放在磁盘,可自动切换
+* 容错的弹性:RDD出错后可自动重新计算（通过血缘自动容错）,可checkpoint（设置检查点，用于容错），可persist或cache（缓存）
+* 计算的弹性:计算出错重试机制
+* 分片的弹性:里面的数据是分片的（也叫分区，partition），分片的大小可自由设置和细粒度调整;RDD里的具体数据是分布在多台机器上的Executor里面
 
 ###### 分布式：
 * RDD中的数据可存放在多个节点上
@@ -938,6 +967,15 @@ RDD出错后可自动重新计算（通过血缘自动容错）
 ###### 数据集：
 * 数据的集合
 相对于与DataFrame和Dataset，RDD是Spark最底层的抽象，目前是开发者用的最多的，但逐步会转向DataFrame和Dataset（当然，这是Spark的发展趋势）
+
+##### 做了什么?
+RDD的创建->RDD的转换->RDD的缓存->RDD的行动->RDD的输出
+
+sc.textFile("xx").flatMap(_.split(" ")).map((_,1)).reduceByKey(_+_).saveAsTextFile("xx");
+读取数据              处理/计算数据                                     存储结果数据
+创建RDD            
+flatMap:把每一行切分了单词(每一行创建了一个RDD,一个相当于一个分区)
+map:生成一个RDD,原组
 
 #### 7.1.2.DataSet
   A Dataset is a distributed collection of data. 
