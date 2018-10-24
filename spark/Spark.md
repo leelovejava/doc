@@ -259,7 +259,9 @@ It is available in either Scala (which runs on the Java VM and is thus a good wa
 ```
 
 ```
-sc.textFile("/home/hadoop/data/words.txt").flatMap(_.split(" ")).map((_,1)).reduceByKey(_+_).collection
+spark.read.textFile("/home/hadoop/data/words.txt").collect
+
+sc.textFile("/home/hadoop/data/wordCount.txt").flatMap(_.split(" ")).map((_,1)).reduceByKey(_+_).collect
 
 sc.textFile("/home/hadoop/data/words.txt").flatMap(_.split(" ")).map((_,1)).reduceByKey(_+_).sortBy(_._2, false).collect
 
