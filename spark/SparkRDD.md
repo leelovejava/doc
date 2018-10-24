@@ -427,12 +427,16 @@ res8: Array[(String, Int)] = Array((dog,100), (cat,200), (mouse,200))
 ```
 //通过并行化生成rdd
 val rdd1 = sc.parallelize(List(5, 6, 4, 7, 3, 8, 2, 9, 1, 10))
+
 //对rdd1里的每一个元素乘2然后排序
 val rdd2 = rdd1.map(_ * 2).sortBy(x => x, true)
+// res0: Array[Int] = Array(2, 4, 6, 8, 10, 12, 14, 16, 18, 20) 
+
 //过滤出大于等于十的元素
 val rdd3 = rdd2.filter(_ >= 10)
 //将元素以数组的方式在客户端显示
 rdd3.collect
+// res1: Array[Int] = Array(10, 12, 14, 16, 18, 20)
 ```
 
 练习2：
@@ -441,6 +445,7 @@ val rdd1 = sc.parallelize(Array("a b c", "d e f", "h i j"))
 //将rdd1里面的每一个元素先切分在压平
 val rdd2 = rdd1.flatMap(_.split(' '))
 rdd2.collect
+// res2: Array[String] = Array(a, b, c, d, e, f, h, i, j)
 ```
 
 练习3：
@@ -454,20 +459,28 @@ val rdd4 = rdd1.intersection(rdd2)
 //去重
 rdd3.distinct.collect
 rdd4.collect
+// res4: Array[Int] = Array(4, 3)
 ```
 
 练习4：
 ```
 val rdd1 = sc.parallelize(List(("tom", 1), ("jerry", 3), ("kitty", 2)))
+// res5: Array[(String, Int)] = Array((tom,1), (jerry,3), (kitty,2))
+
 val rdd2 = sc.parallelize(List(("jerry", 2), ("tom", 1), ("shuke", 2)))
 //求jion
 val rdd3 = rdd1.join(rdd2)
 rdd3.collect
+// res6: Array[(String, (Int, Int))] = Array((tom,(1,1)), (jerry,(3,2)))
+
 //求并集
 val rdd4 = rdd1 union rdd2
+// res7: Array[(String, Int)] = Array((tom,1), (jerry,3), (kitty,2), (jerry,2), (tom,1), (shuke,2))
+
 //按key进行分组
 rdd4.groupByKey
 rdd4.collect
+// res9: Array[(String, Int)] = Array((tom,1), (jerry,3), (kitty,2), (jerry,2), (tom,1), (shuke,2))
 ```
 
 练习5：
@@ -478,6 +491,7 @@ val rdd2 = sc.parallelize(List(("jerry", 2), ("tom", 1), ("shuke", 2)))
 val rdd3 = rdd1.cogroup(rdd2)
 //注意cogroup与groupByKey的区别
 rdd3.collect
+// res10: Array[(String, (Iterable[Int], Iterable[Int]))] = Array((tom,(CompactBuffer(1, 2),CompactBuffer(1))), (jerry,(CompactBuffer(3),CompactBuffer(2))), (shuke,(CompactBuffer(),CompactBuffer(2))), (kitty,(CompactBuffer(2),CompactBuffer())))
 ```
 
 练习6：
@@ -485,6 +499,8 @@ rdd3.collect
 val rdd1 = sc.parallelize(List(1, 2, 3, 4, 5))
 //reduce聚合
 val rdd2 = rdd1.reduce(_ + _)
+// rdd2: Int = 15
+
 rdd2.collect
 ```
 
@@ -493,13 +509,36 @@ rdd2.collect
 val rdd1 = sc.parallelize(List(("tom", 1), ("jerry", 3), ("kitty", 2),  ("shuke", 1)))
 val rdd2 = sc.parallelize(List(("jerry", 2), ("tom", 3), ("shuke", 2), ("kitty", 5)))
 val rdd3 = rdd1.union(rdd2)
+// rdd3: Array[(String, Int)] = Array((tom,1), (jerry,3), (kitty,2), (shuke,1), (jerry,2), (tom,3), (shuke,2), (kitty,5))
+
 //按key进行聚合
 val rdd4 = rdd3.reduceByKey(_ + _)
 rdd4.collect
+// res14: Array[(String, Int)] = Array((tom,4), (jerry,5), (shuke,3), (kitty,7))
+
 //按value的降序排序
 val rdd5 = rdd4.map(t => (t._2, t._1)).sortByKey(false).map(t => (t._2, t._1))
 rdd5.collect
+//res15: Array[(String, Int)] = Array((kitty,7), (jerry,5), (tom,4), (shuke,3))
 ```
+
+练习8：flatMap
+```
+val a = sc.parallelize(1 to 10, 5)
+// a: Array[Int] = Array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+
+a.flatMap(1 to _).collect
+//res47: Array[Int] = Array(1, 1, 2, 1, 2, 3, 1, 2, 3, 4, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 6, 7, 1, 2, 3, 4, 5, 6, 7, 8, 1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+
+sc.parallelize(List(1, 2, 3), 2).flatMap(x => List(x, x, x)).collect
+//res85: Array[Int] = Array(1, 1, 1, 2, 2, 2, 3, 3, 3)
+
+// The program below generates a random number of copies (up to 10) of the items in the list.
+val x  = sc.parallelize(1 to 10, 3)
+x.flatMap(List.fill(scala.util.Random.nextInt(10))(_)).collect
+//res1: Array[Int] = Array(1, 2, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10)
+```
+
 //想要了解更多，访问下面的地址
 http://homepage.cs.latrobe.edu.au/zhe/ZhenHeSparkRDDAPIExamples.html
 
