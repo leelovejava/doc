@@ -439,13 +439,28 @@ rdd3.collect
 // res1: Array[Int] = Array(10, 12, 14, 16, 18, 20)
 ```
 
-练习2：
+练习2：flatMap
 ```
 val rdd1 = sc.parallelize(Array("a b c", "d e f", "h i j"))
 //将rdd1里面的每一个元素先切分在压平
 val rdd2 = rdd1.flatMap(_.split(' '))
 rdd2.collect
 // res2: Array[String] = Array(a, b, c, d, e, f, h, i, j)
+
+-----------------------------------------------------
+val a = sc.parallelize(1 to 10, 5)
+// a: Array[Int] = Array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+
+a.flatMap(1 to _).collect
+//res47: Array[Int] = Array(1, 1, 2, 1, 2, 3, 1, 2, 3, 4, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 6, 7, 1, 2, 3, 4, 5, 6, 7, 8, 1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+
+sc.parallelize(List(1, 2, 3), 2).flatMap(x => List(x, x, x)).collect
+//res85: Array[Int] = Array(1, 1, 1, 2, 2, 2, 3, 3, 3)
+
+// The program below generates a random number of copies (up to 10) of the items in the list.
+val x  = sc.parallelize(1 to 10, 3)
+x.flatMap(List.fill(scala.util.Random.nextInt(10))(_)).collect
+//res1: Array[Int] = Array(1, 2, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10)
 ```
 
 练习3：
@@ -522,25 +537,7 @@ rdd5.collect
 //res15: Array[(String, Int)] = Array((kitty,7), (jerry,5), (tom,4), (shuke,3))
 ```
 
-练习8：flatMap
-```
-val a = sc.parallelize(1 to 10, 5)
-// a: Array[Int] = Array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
-
-a.flatMap(1 to _).collect
-//res47: Array[Int] = Array(1, 1, 2, 1, 2, 3, 1, 2, 3, 4, 1, 2, 3, 4, 5, 1, 2, 3, 4, 5, 6, 1, 2, 3, 4, 5, 6, 7, 1, 2, 3, 4, 5, 6, 7, 8, 1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
-
-sc.parallelize(List(1, 2, 3), 2).flatMap(x => List(x, x, x)).collect
-//res85: Array[Int] = Array(1, 1, 1, 2, 2, 2, 3, 3, 3)
-
-// The program below generates a random number of copies (up to 10) of the items in the list.
-val x  = sc.parallelize(1 to 10, 3)
-x.flatMap(List.fill(scala.util.Random.nextInt(10))(_)).collect
-//res1: Array[Int] = Array(1, 2, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10)
-```
-
-//想要了解更多，访问下面的地址
-http://homepage.cs.latrobe.edu.au/zhe/ZhenHeSparkRDDAPIExamples.html
+[更多实例](http://homepage.cs.latrobe.edu.au/zhe/ZhenHeSparkRDDAPIExamples.html)
 
 ### 2.4.RDD的依赖关系
 RDD和它依赖的父RDD（s）的关系有两种不同的类型，即窄依赖（narrow dependency）和宽依赖（wide dependency）。
