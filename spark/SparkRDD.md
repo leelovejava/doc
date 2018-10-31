@@ -136,7 +136,7 @@ scala> rdd1.groupBy(_._1).collect
 res18: Array[(String, Iterable[(String, Int, Int)])] = Array((a,CompactBuffer((a,1,2), (a,4,5))), (b,CompactBuffer((b,1,1))))
 ```
 
-* groupByKey([numTasks])		在一个(K,V)的RDD上调用，返回一个(K, Iterator[V])的RDD,只针对数据是*对偶元组*的
+* groupByKey([numTasks])		在一个(K,V)的RDD上调用，返回一个(K, Iterator[V])的RDD,只针对数据是**对偶元组**的
 group类似，不过和它不同的是他不接收一个函数，而是直接*将键值对类型的数据的key作为group的key值*.同样的，他也可以接收其他参数比如说partitioner
 ```
 val rdd1 = sc.parallelize(List(("tom", 1), ("jerry", 2), ("kitty", 3)))
