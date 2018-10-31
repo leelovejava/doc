@@ -137,7 +137,7 @@ res18: Array[(String, Iterable[(String, Int, Int)])] = Array((a,CompactBuffer((a
 ```
 
 * groupByKey([numTasks])		在一个(K,V)的RDD上调用，返回一个(K, Iterator[V])的RDD,只针对数据是**对偶元组**的
-group类似，不过和它不同的是他不接收一个函数，而是直接*将键值对类型的数据的key作为group的key值*.同样的，他也可以接收其他参数比如说partitioner
+group类似，不过和它不同的是他不接收一个函数，而是直接**将键值对类型的数据的key作为group的key值**.同样的，他也可以接收其他参数比如说partitioner
 ```
 val rdd1 = sc.parallelize(List(("tom", 1), ("jerry", 2), ("kitty", 3)))
 val rdd2 = sc.parallelize(List(("jerry", 9), ("tom", 8), ("shuke", 7)))
@@ -482,7 +482,7 @@ x.flatMap(List.fill(scala.util.Random.nextInt(10))(_)).collect
 //res1: Array[Int] = Array(1, 2, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 10, 10, 10, 10, 10, 10, 10, 10)
 ```
 
-练习3：
+练习3：交/并/差
 ```
 val rdd1 = sc.parallelize(List(5, 6, 4, 3))
 val rdd2 = sc.parallelize(List(1, 2, 3, 4))
@@ -502,7 +502,7 @@ val rdd1 = sc.parallelize(List(("tom", 1), ("jerry", 3), ("kitty", 2)))
 // res5: Array[(String, Int)] = Array((tom,1), (jerry,3), (kitty,2))
 
 val rdd2 = sc.parallelize(List(("jerry", 2), ("tom", 1), ("shuke", 2)))
-//求jion
+//求join
 val rdd3 = rdd1.join(rdd2)
 rdd3.collect
 // res6: Array[(String, (Int, Int))] = Array((tom,(1,1)), (jerry,(3,2)))
@@ -525,7 +525,12 @@ val rdd2 = sc.parallelize(List(("jerry", 2), ("tom", 1), ("shuke", 2)))
 val rdd3 = rdd1.cogroup(rdd2)
 //注意cogroup与groupByKey的区别
 rdd3.collect
+// 将同一个rdd里面的有相同的key的值放在一个CompactBuffer里面。最后再和同一个key相关
 // res10: Array[(String, (Iterable[Int], Iterable[Int]))] = Array((tom,(CompactBuffer(1, 2),CompactBuffer(1))), (jerry,(CompactBuffer(3),CompactBuffer(2))), (shuke,(CompactBuffer(),CompactBuffer(2))), (kitty,(CompactBuffer(2),CompactBuffer())))
+
+groupByKey
+scala> sc.parallelize(List(("tom", 1), ("tom", 2), ("jerry", 3), ("kitty", 2))).groupByKey.collect
+res5: Array[(String, Iterable[Int])] = Array((tom,CompactBuffer(1, 2)), (jerry,CompactBuffer(3)), (kitty,CompactBuffer(2)))
 ```
 
 练习6：
