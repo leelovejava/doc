@@ -25,6 +25,21 @@ RDD允许用户在执行多个查询时显式地将工作集缓存在内存中�
 5）一个列表，存储存取每个Partition的优先位置（preferred location）。对于一个HDFS文件来说，这个列表保存的就是每个Partition所在的块的位置。按照“移动数据不如移动计算”的理念，Spark在进行任务调度的时候，会尽可能地将计算任务分配到其所要处理数据块的存储位置。
 
 ### 2.2.创建RDD
+
+*parallelize*
+```
+并行集合的创建（RDD）
+使用已经存在的迭代器或者集合通过调用spark驱动程序提供的parallelize函数来创建并行集合
+并行集合被创建用来在分布式集群上并行计算的
+
+sc.parallelize(1 to 5).collect
+res0: Array[Int] = Array(1, 2, 3, 4, 5)
+
+// 第二个参数:分区数量,就是将RDD切分多少个分区
+sc.parallelize(1 to 9, 4).collect
+res2: Array[Int] = Array(1, 2, 3, 4, 5, 6, 7, 8, 9)
+```
+
 1）由一个已经存在的Scala集合创建。
     val rdd1 = sc.parallelize(Array(1,2,3,4,5,6,7,8))
 
@@ -46,6 +61,7 @@ RDD中的所有转换都是*延迟加载*的，也就是说，它们并不会直
 #### 常用的Transformation：
     
 * map(func)	返回一个新的RDD，该RDD由每一个输入元素经过func函数转换后组成
+            数据集中的每个元素经过用户自定义的函数转换形成一个新的RDD
 ```
 val rdd1 = sc.parallelize(List(5,6,4,7,3,8,2,9,1,10))
 ```
@@ -56,7 +72,7 @@ val rdd2 = sc.parallelize(List(5,6,4,7,3,8,2,9,1,10)).map(_*2).sortBy(x=>x,true)
 val rdd3 = rdd2.filter(_>10)
 ```
 
-* flatMap(func)	类似于map，但是每一个输入元素可以被映射为0或多个输出元素（所以func应该返回一个序列，而不是单一元素）(所以func应该返回一个序列，而不是单一元素）。类似于先map，然后再flatten)
+* flatMap(func)	类似于map，但是每一个输入元素可以被映射为0或多个输出元素,将结果扁平化输出(所以func应该返回一个序列，而不是单一元素)。类似于先map，然后再flatten)
 ```
 val rdd4 = sc.parallelize(Array("a b c", "d e f", "h i j"))
 rdd4.flatMap(_.split(' ')).collect
@@ -95,7 +111,7 @@ val rdd8 = rdd6.union(rdd7)
 rdd8.distinct.sortBy(x=>x).collect
 ```
 
-* groupBy：传入一个参数的函数，按照传入的参数为key，返回一个新的RDD[(K, Iterable[T])]，value是所有可以相同的传入数据组成的迭代器
+* groupBy：传入一个参数的函数,按照传入的参数为key,通过这个key来对里面的元素进行分组,返回一个新的RDD[(K, Iterable[T])]，value是所有可以相同的传入数据组成的迭代器
 ```
 /**
 * Return an RDD of grouped items. Each group consists of a key and a sequence of elements
@@ -111,14 +127,17 @@ def groupBy[K](f: T => K)(implicit kt: ClassTag[K]): RDD[(K, Iterable[T])] = wit
 }
 ```
 ```
-scala> val rdd1=sc.parallelize(List(("a",1,2),("b",1,1),("a",4,5)))
-rdd1: org.apache.spark.rdd.RDD[(String, Int, Int)] = ParallelCollectionRDD[47] at parallelize at <console>:24
+scala> val a = sc.parallelize(1 to 9, 3)
+scala> a.groupBy(x => { if (x % 2 == 0) "even" else "odd" }).collect
+//返回的even或者odd字符串作为key来group RDD里面的值，
+res42: Array[(String, Seq[Int])] = Array((even,ArrayBuffer(2, 4, 6, 8)), (odd,ArrayBuffer(1, 3, 5, 7, 9)))
 
 scala> rdd1.groupBy(_._1).collect
 res18: Array[(String, Iterable[(String, Int, Int)])] = Array((a,CompactBuffer((a,1,2), (a,4,5))), (b,CompactBuffer((b,1,1))))
 ```
 
-* groupByKey([numTasks])		在一个(K,V)的RDD上调用，返回一个(K, Iterator[V])的RDD,只针对数据是对偶元组的
+* groupByKey([numTasks])		在一个(K,V)的RDD上调用，返回一个(K, Iterator[V])的RDD,只针对数据是*对偶元组*的
+group类似，不过和它不同的是他不接收一个函数，而是直接*将键值对类型的数据的key作为group的key值*.同样的，他也可以接收其他参数比如说partitioner
 ```
 val rdd1 = sc.parallelize(List(("tom", 1), ("jerry", 2), ("kitty", 3)))
 val rdd2 = sc.parallelize(List(("jerry", 9), ("tom", 8), ("shuke", 7)))
