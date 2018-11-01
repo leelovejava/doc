@@ -24,6 +24,29 @@ RDD允许用户在执行多个查询时显式地将工作集缓存在内存中�
 
 5）一个列表，存储存取每个Partition的优先位置（preferred location）。对于一个HDFS文件来说，这个列表保存的就是每个Partition所在的块的位置。按照“移动数据不如移动计算”的理念，Spark在进行任务调度的时候，会尽可能地将计算任务分配到其所要处理数据块的存储位置。
 
+### 2.1.3.RDD的弹性
+
+1)自动进行内存和磁盘数据存储的切换
+    Spark优先把数据放到内存中，如果内存放不下，就会放到磁盘里面，程序进行自动的存储切换
+    
+2)基于血统的高效容错机制
+    在RDD进行转换和动作的时候，会形成RDD的Lineage依赖链，当某一个RDD失效的时候，可以通过重新计算上游的RDD来重新生成丢失的RDD数据。
+    
+3)Task如果失败会自动进行特定次数的重试
+    RDD的计算任务如果运行失败，会自动进行任务的重新计算，默认次数是4次。
+    
+4)Stage如果失败会自动进行特定次数的重试
+    如果Job的某个Stage阶段计算失败，框架也会自动进行任务的重新计算，默认次数也是4次。
+    
+5)Checkpoint和Persist可主动或被动触发
+    RDD可以通过Persist持久化将RDD缓存到内存或者磁盘，当再次用到该RDD时直接读取就行。也可以将RDD进行检查点，检查点会将数据存储在HDFS中，该RDD的所有父RDD依赖都会被移除。
+    
+6)数据调度弹性
+    Spark把这个JOB执行模型抽象为通用的有向无环图DAG，可以将多Stage的任务串联或并行执行，调度引擎自动处理Stage的失败以及Task的失败。
+    
+7)数据分片的高度弹性
+    可以根据业务的特征，动态调整数据分片的个数，提升整体的应用执行效率。
+
 ### 2.2.创建RDD
 
 *parallelize*
@@ -564,26 +587,39 @@ rdd5.collect
 [更多实例](http://homepage.cs.latrobe.edu.au/zhe/ZhenHeSparkRDDAPIExamples.html)
 
 ### 2.4.RDD的依赖关系
+
+依赖:RDDs通过操作算子进行转换，转换得到的新RDD包含了从其他RDDs衍生所必需的信息，RDDs之间维护着这种血缘关系
+
 RDD和它依赖的父RDD（s）的关系有两种不同的类型，即窄依赖（narrow dependency）和宽依赖（wide dependency）。
 
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-rdd/02.png?raw=true)
 
+![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-rdd/07-depend.png?raw=true)
+
+
 #### 2.4.1.窄依赖
 窄依赖指的是每一个父RDD的Partition最多被子RDD的一个Partition使用
-总结：窄依赖我们形象的比喻为独生子女
+
+一个RDD和他父RDD的关系,一对一,喻独生子女
 
 #### 2.4.2.宽依赖
 宽依赖指的是多个子RDD的Partition会依赖同一个父RDD的Partition
-总结：窄依赖我们形象的比喻为超生
+
+父RDD和子RDD的partition之间一对多,比喻超生
 
 #### 2.4.3.Lineage
 RDD只支持粗粒度转换，即在大量记录上执行的单个操作。将创建RDD的一系列Lineage（即血统）记录下来，以便恢复丢失的分区。RDD的Lineage会记录RDD的元数据信息和转换行为，当该RDD的部分分区数据丢失时，它可以根据这些信息来重新运算和恢复丢失的数据分区。
+
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-rdd/03.png?raw=true)
 
 ### 2.5.RDD的缓存
+
 Spark速度非常快的原因之一，就是在不同操作中可以在内存中持久化或缓存个数据集。当持久化某个RDD后，每一个节点都将把计算的分片结果保存在内存中，并在对此RDD或衍生出的RDD进行的其他动作中重用。这使得后续的动作变得更加迅速。RDD相关的持久化和缓存，是Spark最重要的特征之一。可以说，缓存是Spark构建迭代式算法和快速交互式查询的关键。
 
+![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-rdd/09-cache.png?raw=true)
+
 #### 2.5.1.RDD缓存方式
+
 RDD通过persist方法或cache方法可以将前面的计算结果缓存，但是并不是这两个方法被调用时立即缓存，而是触发后面的action时，该RDD将会被缓存在计算节点的内存中，并供后面重用。
 
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-rdd/05-storage-level.png?raw=true)
@@ -595,5 +631,11 @@ RDD通过persist方法或cache方法可以将前面的计算结果缓存，但�
 缓存有可能丢失，或者存储存储于内存的数据由于内存不足而被删除，RDD的缓存容错机制保证了即使缓存丢失也能保证计算的正确执行。通过基于RDD的一系列转换，丢失的数据会被重算，由于RDD的各个Partition是相对独立的，因此只需要计算丢失的部分即可，并不需要重算全部Partition。
 
 ### 2.6.DAG的生成
+
 DAG(Directed Acyclic Graph)叫做有向无环图，原始的RDD通过一系列的转换就就形成了DAG，根据RDD之间的依赖关系的不同将DAG划分成不同的Stage，对于窄依赖，partition的转换处理在Stage中完成计算。对于宽依赖，由于有Shuffle的存在，只能在parent RDD处理完成后，才能开始接下来的计算，因此宽依赖是划分Stage的依据。
+
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-rdd/04.png?raw=true)
+
+通过RDDs之间的这种依赖关系，一个任务流可以描述为DAG(有向无环图)，如下图所示，在实际执行过程中宽依赖对应于Shuffle(图中的reduceByKey和join)，窄依赖中的所有转换操作可以通过类似于管道的方式一气呵成执行(图中map和union可以一起执行)
+
+![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-rdd/08-dag.png?raw=true)
