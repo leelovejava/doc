@@ -64,15 +64,24 @@ res2: Array[Int] = Array(1, 2, 3, 4, 5, 6, 7, 8, 9)
 ```
 
 1）由一个已经存在的Scala集合创建。
-    val rdd1 = sc.parallelize(Array(1,2,3,4,5,6,7,8))
-
+    1.1) parallelize val rdd1 = sc.parallelize(Array(1,2,3,4,5,6,7,8))
+    
+    1.2) makeRDD
+        sc.makeRDD(seq)
+            sc.makeRDD(1 to 10)
+        sc.makeRDD(seq[(T,seq)]) 指定RDD的存放位置
+        
+     查看该rdd的分区数量，默认是程序所分配的cpu core的数量，也可以在创建的时候指定
+         rdd1.partitions.length
+        创建的时候指定分区数量：
+          val rdd1 = sc.parallelize(Array(1,2,3.4),3)
+        
 2）由外部存储系统的数据集创建，包括本地的文件系统，还有所有Hadoop支持的数据集，比如HDFS、Cassandra、HBase等
     val rdd2 = sc.textFile("hdfs://node1.itcast.cn:9000/words.txt")
 
-3）查看该rdd的分区数量，默认是程序所分配的cpu core的数量，也可以在创建的时候指定
-     rdd1.partitions.length
-    创建的时候指定分区数量：
-      val rdd1 = sc.parallelize(Array(1,2,3.4),3)
+3）从另外一个RDD转换过来
+    
+   
       
 ### 2.3.RDD编程API
 
