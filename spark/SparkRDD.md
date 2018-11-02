@@ -172,7 +172,7 @@ val rdd5 = rdd4.map(x=>(x._1,x._2.sum))
 rdd5: Array[(String, Int)] = Array((tom,9), (shuke,7), (kitty,3), (jerry,11))
 ```
 
-* reduceByKey(func, [numTasks])	在一个(K,V)的RDD上调用，返回一个(K,V)的RDD，使用指定的reduce函数，将相同key的值聚合到一起，与groupByKey类似，reduce任务的个数可以通过第二个可选的参数来设置
+* reduceByKey(func, [numTasks])	在一个(K,V)的RDD上调用，返回一个(K,V)的RDD，使用指定的reduce函数，**将相同key的值聚合到一起**，与groupByKey类似，reduce任务的个数可以通过第二个可选的参数来设置
 ```
 val rdd1 = sc.parallelize(List(("tom", 1), ("jerry", 2), ("kitty", 3)))
 val rdd2 = sc.parallelize(List(("jerry", 9), ("tom", 8), ("shuke", 7)))
