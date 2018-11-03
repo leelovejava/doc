@@ -1,4 +1,29 @@
-[TOC]
+# kafka
+
+* [kafka概述](#一 Kafka概述)
+  * [Kafka是什么](#1.1 Kafka是什么)
+  * [Kafka内部实现原理](#1.2 Kafka内部实现原理)
+  * [为什么需要消息队列](#1.2 为什么需要消息队列)
+  * [Kafka架构](#1.3 Kafka架构)
+* [kafka集群部署](#二 Kafka集群部署)
+  * [环境准备](#2.1 环境准备)
+  * [Kafka集群部署 ](#2.2 Kafka集群部署 )
+  * [Kafka命令行操作](#2.3 Kafka命令行操作)
+  * [Kafka配置信息](#2.4 Kafka配置信息)
+* [kafka工作流程分析](#六 kafka Streams)
+  * [Kafka生产过程分析](#3.1 Kafka生产过程分析)
+  * [broker 保存消息](#3.2 broker 保存消息)
+  * [Kafka消费过程分析](#3.3 Kafka消费过程分析)
+* [kafka API实战](#四 Kafka API实战)
+  * [环境准备](#4.1 环境准备)
+  * [Kafka生产者Java API](#4.2 Kafka生产者Java API)
+  * [Kafka消费者Java API](#4.3 Kafka消费者Java API)
+* [kafka producer拦截器](#五 Kafka producer拦截器(interceptor))
+  * [拦截器原理](#5.1 拦截器原理)
+  * [拦截器案例](#5.2 拦截器案例)
+* [kafka stream](#六 kafka Streams)
+  * [概述](#6.1 概述)
+  * [Kafka Stream案例](#6.2 Kafka Stream案例)
 
 # Kafka
 
@@ -640,7 +665,7 @@ push（推）模式很难适应消费速率不同的消费者，因为消息发�
 
 ### 四 Kafka API实战
 
-4.1 环境准备
+### 4.1 环境准备
 
 1）在eclipse中创建一个java工程
 
@@ -652,9 +677,9 @@ push（推）模式很难适应消费速率不同的消费者，因为消息发�
 
 [atguigu@hadoop102 kafka]$ bin/kafka-console-consumer.sh --zookeeper hadoop102:2181 --topic first
 
-4.2 Kafka生产者Java API
+### 4.2 Kafka生产者Java API
 
-4.2.1 创建生产者（过时的API）
+#### 4.2.1 创建生产者（过时的API）
 ```java
 package com.atguigu.kafka;
 import java.util.Properties;
@@ -777,7 +802,7 @@ public class CallBackProducer {
 0）需求：将所有数据存储到topic的第0号分区上
 
 1）定义一个类实现Partitioner接口，重写里面的方法（过时API）
-```
+```java
 package com.atguigu.kafka;
 import java.util.Map;
 import kafka.producer.Partitioner;
@@ -797,7 +822,7 @@ public class CustomPartitioner implements Partitioner {
 ```
 
 2）自定义分区（新API）
-```
+```java
 package com.atguigu.kafka;
 import java.util.Map;
 import org.apache.kafka.clients.producer.Partitioner;
@@ -869,7 +894,7 @@ public class PartitionerProducer {
 [atguigu@hadoop102 first-1]$ tail -f 00000000000000000000.log
 [atguigu@hadoop102 first-2]$ tail -f 00000000000000000000.log
 	（2）发现数据都存储到指定的分区了。
-4.3 Kafka消费者Java API
+### 4.3 Kafka消费者Java API
 0）在控制台创建发送者
 [atguigu@hadoop104 kafka]$ bin/kafka-console-producer.sh --broker-list hadoop102:9092 --topic first
 >hello world
