@@ -21,23 +21,31 @@
 ### 1.2 为什么需要消息队列
 1）解耦：
 　　允许你独立的扩展或修改两边的处理过程，只要确保它们遵守同样的接口约束。
+
 2）冗余：
 消息队列把数据进行持久化直到它们已经被完全处理，通过这一方式规避了数据丢失风险。许多消息队列所采用的"插入-获取-删除"范式中，在把一个消息从队列中删除之前，需要你的处理系统明确的指出该消息已经被处理完毕，从而确保你的数据被安全的保存直到你使用完毕。
+
 3）扩展性：
 因为消息队列解耦了你的处理过程，所以增大消息入队和处理的频率是很容易的，只要另外增加处理过程即可。
+
 4）灵活性 & 峰值处理能力：
 在访问量剧增的情况下，应用仍然需要继续发挥作用，但是这样的突发流量并不常见。如果为以能处理这类峰值访问为标准来投入资源随时待命无疑是巨大的浪费。使用消息队列能够使关键组件顶住突发的访问压力，而不会因为突发的超负荷的请求而完全崩溃。
+
 5）可恢复性：
 系统的一部分组件失效时，不会影响到整个系统。消息队列降低了进程间的耦合度，所以即使一个处理消息的进程挂掉，加入队列中的消息仍然可以在系统恢复后被处理。
+
 6）顺序保证：
 在大多使用场景下，数据处理的顺序都很重要。大部分消息队列本来就是排序的，并且能保证数据会按照特定的顺序来处理。（Kafka保证一个Partition内的消息的有序性）
+
 7）缓冲：
 有助于控制和优化数据流经过系统的速度，解决生产消息和消费消息的处理速度不一致的情况。
+
 8）异步通信：
 很多时候，用户不想也不需要立即处理消息。消息队列提供了异步处理机制，允许用户把一个消息放入队列，但并不立即处理它。想向队列中放入多少消息就放多少，然后在需要的时候再去处理它们。
 
 ### 1.3 Kafka架构
  ![image](https://github.com/leelovejava/doc/blob/master/img/kafka/02.png)
+ 
 1）Producer ：消息生产者，就是向kafka broker发消息的客户端。
 2）Consumer ：消息消费者，向kafka broker取消息的客户端
 3）Topic ：可以理解为一个队列。
@@ -45,30 +53,37 @@
 5）Broker ：一台kafka服务器就是一个broker。一个集群由多个broker组成。一个broker可以容纳多个topic。
 6）Partition：为了实现扩展性，一个非常大的topic可以分布到多个broker（即服务器）上，一个topic可以分为多个partition，每个partition是一个有序的队列。partition中的每条消息都会被分配一个有序的id（offset）。kafka只保证按一个partition中的顺序将消息发给consumer，不保证一个topic的整体（多个partition间）的顺序。
 7）Offset：kafka的存储文件都是按照offset.kafka来命名，用offset做名字的好处是方便查找。例如你想找位于2049的位置，只要找到2048.kafka的文件即可。当然the first offset就是00000000000.kafka
-二 Kafka集群部署
-2.1 环境准备
-2.1.1 集群规划
+
+## 二 Kafka集群部署
+
+### 2.1 环境准备
+
+#### 2.1.1 集群规划
 hadoop102					hadoop103				hadoop104
 zk							zk						zk
 kafka						kafka					kafka
-2.1.2 jar包下载
+
+#### 2.1.2 jar包下载
 http://kafka.apache.org/downloads.html
 
 ![image](https://github.com/leelovejava/doc/blob/master/img/kafka/03.png)
  
-2.1.3 虚拟机准备
+#### 2.1.3 虚拟机准备
 1）准备3台虚拟机
 2）配置ip地址
     
 3）配置主机名称
  
 4）3台主机分别关闭防火墙
+```
 [root@hadoop102 atguigu]# chkconfig iptables off
 [root@hadoop103 atguigu]# chkconfig iptables off
 [root@hadoop104 atguigu]# chkconfig iptables off
-2.1.4 安装jdk
+```
+
+#### 2.1.4 安装jdk
 	 
-2.1.5 安装Zookeeper
+#### 2.1.5 安装Zookeeper
 0）集群规划
 在hadoop102、hadoop103和hadoop104三个节点上部署Zookeeper。
 1）解压安装
@@ -82,10 +97,13 @@ http://kafka.apache.org/downloads.html
 	（1）具体配置
 	dataDir=/opt/module/zookeeper-3.4.10/zkData
 	增加如下配置
-	#######################cluster##########################
+```	
+#######################cluster##########################
 server.2=hadoop102:2888:3888
 server.3=hadoop103:2888:3888
 server.4=hadoop104:2888:3888
+```
+
 （2）配置参数解读
 Server.A=B:C:D。
 A是一个数字，表示这个是第几号服务器；
@@ -105,7 +123,7 @@ D是万一集群中的Leader服务器挂了，需要一个端口来重新进行�
 	scp -r zookeeper-3.4.10/ root@hadoop104.atguigu.com:/opt/app/
 	并分别修改myid文件中内容为3、4
 （4）分别启动zookeeper
-	[root@hadoop102 zookeeper-3.4.10]# bin/zkServer.sh start
+[root@hadoop102 zookeeper-3.4.10]# bin/zkServer.sh start
 [root@hadoop103 zookeeper-3.4.10]# bin/zkServer.sh start
 [root@hadoop104 zookeeper-3.4.10]# bin/zkServer.sh start
 （5）查看状态
@@ -121,6 +139,7 @@ Mode: leader
 JMX enabled by default
 Using config: /opt/module/zookeeper-3.4.10/bin/../conf/zoo.cfg
 Mode: follower
+
 2.2 Kafka集群部署 
 1）解压安装包
 [atguigu@hadoop102 software]$ tar -zxvf kafka_2.11-0.11.0.0.tgz -C /opt/module/
@@ -172,77 +191,90 @@ export PATH=$PATH:$KAFKA_HOME/bin
 [atguigu@hadoop102 kafka]$ bin/kafka-server-start.sh config/server.properties &
 [atguigu@hadoop103 kafka]$ bin/kafka-server-start.sh config/server.properties &
 [atguigu@hadoop104 kafka]$ bin/kafka-server-start.sh config/server.properties &
+
 2.3 Kafka命令行操作
+
+0) 启动kafka
+
+bin/kafka-server-start.sh config/server.properties
+kafka-server-start.sh config/server.properties 1>/dev/null 2>&1 &
+
 1）查看当前服务器中的所有topic
-[atguigu@hadoop102 kafka]$ bin/kafka-topics.sh --list --zookeeper hadoop102:2181
+[atguigu@hadoop102 kafka]$ bin/kafka-topics.sh --list --zookeeper 127.0.0.1:2181
+
 2）创建topic
-[atguigu@hadoop102 kafka]$ bin/kafka-topics.sh --create --zookeeper hadoop102:2181 --replication-factor 3 --partitions 1 --topic first
+[atguigu@hadoop102 kafka]$ bin/kafka-topics.sh --create --zookeeper 127.0.0.1:2181 --replication-factor 3 --partitions 1 --topic first
 选项说明：
 --topic 定义topic名
 --replication-factor  定义副本数
 --partitions  定义分区数
+
 3）	删除topic
-[atguigu@hadoop102 kafka]$ bin/kafka-topics.sh --delete --zookeeper hadoop102:2181 --topic first
+[atguigu@hadoop102 kafka]$ bin/kafka-topics.sh --delete --zookeeper 127.0.0.1:2181 --topic first
 需要server.properties中设置delete.topic.enable=true否则只是标记删除或者直接重启。
+
 4）发送消息
-[atguigu@hadoop102 kafka]$ bin/kafka-console-producer.sh --broker-list hadoop102:9092 --topic first
+[atguigu@hadoop102 kafka]$ bin/kafka-console-producer.sh --broker-list 127.0.0.1:9092 --topic first
 >hello world
 >atguigu  atguigu
+
 5）消费消息
-[atguigu@hadoop103 kafka]$ bin/kafka-console-consumer.sh --zookeeper hadoop102:2181 --from-beginning --topic first
+[atguigu@hadoop103 kafka]$ bin/kafka-console-consumer.sh --zookeeper 127.0.0.1:2181 --from-beginning --topic first
+
 6）查看某个Topic的详情
-[atguigu@hadoop102 kafka]$ bin/kafka-topics.sh --topic first --describe --zookeeper hadoop102:2181
+[atguigu@hadoop102 kafka]$ bin/kafka-topics.sh --topic first --describe --zookeeper 127.0.0.1:2181
 
 2.4 Kafka配置信息
 
 2.4.1 Broker配置信息
-属性	            默认值	            描述
-broker.id		    必填参数，broker的唯一标识
-log.dirs	        /tmp/kafka-logs	    Kafka数据存放的目录。可以指定多个目录，中间用逗号分隔，当新partition被创建的时会被存放到当前存放partition最少的目录。
-port	            9092	            BrokerServer接受客户端连接的端口号
-zookeeper.connect	null	Zookeeper的连接串，格式为：hostname1:port1,hostname2:port2,hostname3:port3。可以填一个或多个，为了提高可靠性，建议都填上。注意，此配置允许我们指定一个zookeeper路径来存放此kafka集群的所有数据，为了与其他应用集群区分开，建议在此配置中指定本集群存放目录，格式为：hostname1:port1,hostname2:port2,hostname3:port3/chroot/path 。需要注意的是，消费者的参数要和此参数一致。
-message.max.bytes	1000000	服务器可以接收到的最大的消息大小。注意此参数要和consumer的maximum.message.size大小一致，否则会因为生产者生产的消息太大导致消费者无法消费。
-num.io.threads	8	服务器用来执行读写请求的IO线程数，此参数的数量至少要等于服务器上磁盘的数量。
-queued.max.requests	500	I/O线程可以处理请求的队列大小，若实际请求数超过此大小，网络线程将停止接收新的请求。
-socket.send.buffer.bytes	100 * 1024	The SO_SNDBUFF buffer the server prefers for socket connections.
-socket.receive.buffer.bytes	100 * 1024	The SO_RCVBUFF buffer the server prefers for socket connections.
-socket.request.max.bytes	100 * 1024 * 1024	服务器允许请求的最大值， 用来防止内存溢出，其值应该小于 Java heap size.
-num.partitions	1	默认partition数量，如果topic在创建时没有指定partition数量，默认使用此值，建议改为5
-log.segment.bytes	1024 * 1024 * 1024	Segment文件的大小，超过此值将会自动新建一个segment，此值可以被topic级别的参数覆盖。
-log.roll.{ms,hours}	24 * 7 hours	新建segment文件的时间，此值可以被topic级别的参数覆盖。
-log.retention.{ms,minutes,hours}	7 days	Kafka segment log的保存周期，保存周期超过此时间日志就会被删除。此参数可以被topic级别参数覆盖。数据量大时，建议减小此值。
-log.retention.bytes	-1	每个partition的最大容量，若数据量超过此值，partition数据将会被删除。注意这个参数控制的是每个partition而不是topic。此参数可以被log级别参数覆盖。
-log.retention.check.interval.ms	5 minutes	删除策略的检查周期
-auto.create.topics.enable	true	自动创建topic参数，建议此值设置为false，严格控制topic管理，防止生产者错写topic。
-default.replication.factor	1	默认副本数量，建议改为2。
-replica.lag.time.max.ms	10000	在此窗口时间内没有收到follower的fetch请求，leader会将其从ISR(in-sync replicas)中移除。
-replica.lag.max.messages	4000	如果replica节点落后leader节点此值大小的消息数量，leader节点就会将其从ISR中移除。
-replica.socket.timeout.ms	30 * 1000	replica向leader发送请求的超时时间。
+属性	                    默认值	                        描述
+broker.id		            必填参数            broker的唯一标识
+log.dirs	              /tmp/kafka-logs	    Kafka数据存放的目录。可以指定多个目录，中间用逗号分隔，当新partition被创建的时会被存放到当前存放partition最少的目录。
+port	                    9092	            BrokerServer接受客户端连接的端口号
+zookeeper.connect	        null	            Zookeeper的连接串，格式为：hostname1:port1,hostname2:port2,hostname3:port3。可以填一个或多个，为了提高可靠性，建议都填上。注意，此配置允许我们指定一个zookeeper路径来存放此kafka集群的所有数据，为了与其他应用集群区分开，建议在此配置中指定本集群存放目录，格式为：hostname1:port1,hostname2:port2,hostname3:port3/chroot/path 。需要注意的是，消费者的参数要和此参数一致。
+message.max.bytes	        1000000	            服务器可以接收到的最大的消息大小。注意此参数要和consumer的maximum.message.size大小一致，否则会因为生产者生产的消息太大导致消费者无法消费。
+num.io.threads	              8	                服务器用来执行读写请求的IO线程数，此参数的数量至少要等于服务器上磁盘的数量。
+queued.max.requests	         500	            I/O线程可以处理请求的队列大小，若实际请求数超过此大小，网络线程将停止接收新的请求。
+socket.send.buffer.bytes	                    100 * 1024	The SO_SNDBUFF buffer the server prefers for socket connections.
+socket.receive.buffer.bytes	 100 * 1024	        The SO_RCVBUFF buffer the server prefers for socket connections.
+socket.request.max.bytes	 100 * 1024 * 1024	服务器允许请求的最大值， 用来防止内存溢出，其值应该小于 Java heap size.
+num.partitions	1	    默认partition数量，如果topic在创建时没有指定partition数量，默认使用此值，建议改为5
+log.segment.bytes	    1024 * 1024 * 1024	    Segment文件的大小，超过此值将会自动新建一个segment，此值可以被topic级别的参数覆盖。
+log.roll.{ms,hours}	    24 * 7 hours	        新建segment文件的时间，此值可以被topic级别的参数覆盖。
+log.retention.{ms,minutes,hours}	7 days	    Kafka segment log的保存周期，保存周期超过此时间日志就会被删除。此参数可以被topic级别参数覆盖。数据量大时，建议减小此值。
+log.retention.bytes	-1	        每个partition的最大容量，若数据量超过此值，partition数据将会被删除。注意这个参数控制的是每个partition而不是topic。此参数可以被log级别参数覆盖。
+log.retention.check.interval.ms	5 minutes	    删除策略的检查周期
+auto.create.topics.enable	    true	        自动创建topic参数，建议此值设置为false，严格控制topic管理，防止生产者错写topic。
+default.replication.factor	    1	            默认副本数量，建议改为2。
+replica.lag.time.max.ms	        10000	        在此窗口时间内没有收到follower的fetch请求，leader会将其从ISR(in-sync replicas)中移除。
+replica.lag.max.messages	    4000	        如果replica节点落后leader节点此值大小的消息数量，leader节点就会将其从ISR中移除。
+replica.socket.timeout.ms	30 * 1000	        replica向leader发送请求的超时时间。
 replica.socket.receive.buffer.bytes	64 * 1024	The socket receive buffer for network requests to the leader for replicating data.
-replica.fetch.max.bytes	1024 * 1024	The number of byes of messages to attempt to fetch for each partition in the fetch requests the replicas send to the leader.
-replica.fetch.wait.max.ms	500	The maximum amount of time to wait time for data to arrive on the leader in the fetch requests sent by the replicas to the leader.
-num.replica.fetchers	1	Number of threads used to replicate messages from leaders. Increasing this value can increase the degree of I/O parallelism in the follower broker.
+replica.fetch.max.bytes	    1024 * 1024	        The number of byes of messages to attempt to fetch for each partition in the fetch requests the replicas send to the leader.
+replica.fetch.wait.max.ms	        500	        The maximum amount of time to wait time for data to arrive on the leader in the fetch requests sent by the replicas to the leader.
+num.replica.fetchers	            1	        Number of threads used to replicate messages from leaders. Increasing this value can increase the degree of I/O parallelism in the follower broker.
 fetch.purgatory.purge.interval.requests	1000	The purge interval (in number of requests) of the fetch request purgatory.
-zookeeper.session.timeout.ms	6000	ZooKeeper session 超时时间。如果在此时间内server没有向zookeeper发送心跳，zookeeper就会认为此节点已挂掉。 此值太低导致节点容易被标记死亡；若太高，.会导致太迟发现节点死亡。
-zookeeper.connection.timeout.ms	6000	客户端连接zookeeper的超时时间。
-zookeeper.sync.time.ms	2000	H ZK follower落后 ZK leader的时间。
-controlled.shutdown.enable	true	允许broker shutdown。如果启用，broker在关闭自己之前会把它上面的所有leaders转移到其它brokers上，建议启用，增加集群稳定性。
-auto.leader.rebalance.enable	true	If this is enabled the controller will automatically try to balance leadership for partitions among the brokers by periodically returning leadership to the “preferred” replica for each partition if it is available.
-leader.imbalance.per.broker.percentage	10	The percentage of leader imbalance allowed per broker. The controller will rebalance leadership if this ratio goes above the configured value per broker.
-leader.imbalance.check.interval.seconds	300	The frequency with which to check for leader imbalance.
-offset.metadata.max.bytes	4096	The maximum amount of metadata to allow clients to save with their offsets.
-connections.max.idle.ms	600000	Idle connections timeout: the server socket processor threads close the connections that idle more than this.
-num.recovery.threads.per.data.dir	1	The number of threads per data directory to be used for log recovery at startup and flushing at shutdown.
-unclean.leader.election.enable	true	Indicates whether to enable replicas not in the ISR set to be elected as leader as a last resort, even though doing so may result in data loss.
-delete.topic.enable	false	启用deletetopic参数，建议设置为true。
-offsets.topic.num.partitions	50	The number of partitions for the offset commit topic. Since changing this after deployment is currently unsupported, we recommend using a higher setting for production (e.g., 100-200).
-offsets.topic.retention.minutes	1440	Offsets that are older than this age will be marked for deletion. The actual purge will occur when the log cleaner compacts the offsets topic.
-offsets.retention.check.interval.ms	600000	The frequency at which the offset manager checks for stale offsets.
-offsets.topic.replication.factor	3	The replication factor for the offset commit topic. A higher setting (e.g., three or four) is recommended in order to ensure higher availability. If the offsets topic is created when fewer brokers than the replication factor then the offsets topic will be created with fewer replicas.
-offsets.topic.segment.bytes	104857600	Segment size for the offsets topic. Since it uses a compacted topic, this should be kept relatively low in order to facilitate faster log compaction and loads.
-offsets.load.buffer.size	5242880	An offset load occurs when a broker becomes the offset manager for a set of consumer groups (i.e., when it becomes a leader for an offsets topic partition). This setting corresponds to the batch size (in bytes) to use when reading from the offsets segments when loading offsets into the offset manager’s cache.
-offsets.commit.required.acks	-1	The number of acknowledgements that are required before the offset commit can be accepted. This is similar to the producer’s acknowledgement setting. In general, the default should not be overridden.
-offsets.commit.timeout.ms	5000	The offset commit will be delayed until this timeout or the required number of replicas have received the offset commit. This is similar to the producer request timeout.
+zookeeper.session.timeout.ms	6000	        ZooKeeper session 超时时间。如果在此时间内server没有向zookeeper发送心跳，zookeeper就会认为此节点已挂掉。 此值太低导致节点容易被标记死亡；若太高，.会导致太迟发现节点死亡。
+zookeeper.connection.timeout.ms	6000	        客户端连接zookeeper的超时时间。
+zookeeper.sync.time.ms	        2000	        H ZK follower落后 ZK leader的时间。
+controlled.shutdown.enable	    true	        允许broker shutdown。如果启用，broker在关闭自己之前会把它上面的所有leaders转移到其它brokers上，建议启用，增加集群稳定性。
+auto.leader.rebalance.enable	true	        If this is enabled the controller will automatically try to balance leadership for partitions among the brokers by periodically returning leadership to the “preferred” replica for each partition if it is available.
+leader.imbalance.per.broker.percentage	   10	The percentage of leader imbalance allowed per broker. The controller will rebalance leadership if this ratio goes above the configured value per broker.
+leader.imbalance.check.interval.seconds	   300	The frequency with which to check for leader imbalance.
+offset.metadata.max.bytes	        4096	    The maximum amount of metadata to allow clients to save with their offsets.
+connections.max.idle.ms	            600000	    Idle connections timeout: the server socket processor threads close the connections that idle more than this.
+num.recovery.threads.per.data.dir	 1	        The number of threads per data directory to be used for log recovery at startup and flushing at shutdown.
+unclean.leader.election.enable	    true	    Indicates whether to enable replicas not in the ISR set to be elected as leader as a last resort, even though doing so may result in data loss.
+delete.topic.enable	                false	    启用deletetopic参数，建议设置为true。
+offsets.topic.num.partitions	    50	        The number of partitions for the offset commit topic. Since changing this after deployment is currently unsupported, we recommend using a higher setting for production (e.g., 100-200).
+offsets.topic.retention.minutes	    1440	    Offsets that are older than this age will be marked for deletion. The actual purge will occur when the log cleaner compacts the offsets topic.
+offsets.retention.check.interval.ms	600000	    The frequency at which the offset manager checks for stale offsets.
+offsets.topic.replication.factor	3	        The replication factor for the offset commit topic. A higher setting (e.g., three or four) is recommended in order to ensure higher availability. If the offsets topic is created when fewer brokers than the replication factor then the offsets topic will be created with fewer replicas.
+offsets.topic.segment.bytes	    104857600	    Segment size for the offsets topic. Since it uses a compacted topic, this should be kept relatively low in order to facilitate faster log compaction and loads.
+offsets.load.buffer.size	    5242880	        An offset load occurs when a broker becomes the offset manager for a set of consumer groups (i.e., when it becomes a leader for an offsets topic partition). This setting corresponds to the batch size (in bytes) to use when reading from the offsets segments when loading offsets into the offset manager’s cache.
+offsets.commit.required.acks	-1	            The number of acknowledgements that are required before the offset commit can be accepted. This is similar to the producer’s acknowledgement setting. In general, the default should not be overridden.
+offsets.commit.timeout.ms	    5000	        The offset commit will be delayed until this timeout or the required number of replicas have received the offset commit. This is similar to the producer request timeout.
+
 2.4.2 Producer配置信息
 属性	默认值	描述
 metadata.broker.list		启动时producer查询brokers的列表，可以是集群中所有brokers的一个子集。注意，这个参数只是用来获取topic的元信息用，producer会从元信息中挑选合适的broker并与之建立socket连接。格式是：host1:port1,host2:port2。
@@ -288,11 +320,11 @@ zookeeper.session.timeout.ms	6000	ZooKeeper session timeout. If the consumer fai
 zookeeper.connection.timeout.ms	6000	The max time that the client waits while establishing a connection to zookeeper.
 zookeeper.sync.time.ms	2000	How far a ZK follower can be behind a ZK leader
 
-三 Kafka工作流程分析
+## 三 Kafka工作流程分析
 
 ![image](https://github.com/leelovejava/doc/blob/master/img/kafka/04.png)
  
-3.1 Kafka生产过程分析
+### 3.1 Kafka生产过程分析
 
 3.1.1 写入方式
 producer采用推（push）模式将消息发布到broker，每条消息都被追加（append）到分区（patition）中，属于顺序写磁盘（顺序写磁盘效率比随机写内存要高，保障kafka吞吐率）。
@@ -311,6 +343,7 @@ producer采用推（push）模式将消息发布到broker，每条消息都被�
 （2）未指定patition但指定key，通过对key的value进行hash出一个patition
 （3）patition和key都未指定，使用轮询选出一个patition。
 DefaultPartitioner类
+```
 public int partition(String topic, Object key, byte[] keyBytes, Object value, byte[] valueBytes, Cluster cluster) {
         List<PartitionInfo> partitions = cluster.partitionsForTopic(topic);
         int numPartitions = partitions.size();
@@ -329,7 +362,7 @@ public int partition(String topic, Object key, byte[] keyBytes, Object value, by
             return Utils.toPositive(Utils.murmur2(keyBytes)) % numPartitions;
         }
     }
-
+```
 3.1.3 副本（Replication）
 同一个partition可能会有多个replication（对应 server.properties 配置中的 default.replication.factor=N）。没有replication的情况下，一旦broker 宕机，其上所有 patition 的数据都不可被消费，同时producer也不能再将数据存于其上的patition。引入replication之后，同一个partition可能会有多个replication，而这时需要在这些replication之间选出一个leader，producer和consumer只与这个leader交互，其它replication作为follower从leader 中复制数据。
 
@@ -397,6 +430,7 @@ kafka提供了两套consumer API：高级Consumer API和低级API。
 consumer采用pull（拉）模式从broker中读取数据。
 push（推）模式很难适应消费速率不同的消费者，因为消息发送速率是由broker决定的。它的目标是尽可能以最快速度传递消息，但是这样很容易造成consumer来不及处理消息，典型的表现就是拒绝服务以及网络拥塞。而pull模式则可以根据consumer的消费能力以适当的速率消费消息。
 对于Kafka而言，pull模式更合适，它可简化broker的设计，consumer可自主控制消费消息的速率，同时consumer可以自己控制消费方式——即可批量消费也可逐条消费，同时还能选择不同的提交方式从而实现不同的传输语义。
+
 3.3.5 消费者组案例
 1）需求：测试同一个消费者组中的消费者，同一时刻只能有一个消费者消费。
 2）案例实操
@@ -417,6 +451,7 @@ push（推）模式很难适应消费速率不同的消费者，因为消息发�
 1）在eclipse中创建一个java工程
 2）在工程的根目录创建一个lib文件夹
 3）解压kafka安装包，将安装包libs目录下的jar包拷贝到工程的lib目录下，并build path。
+
 4）启动zk和kafka集群，在kafka集群中打开一个消费者
 [atguigu@hadoop102 kafka]$ bin/kafka-console-consumer.sh --zookeeper hadoop102:2181 --topic first
 
