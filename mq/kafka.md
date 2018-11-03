@@ -1,4 +1,6 @@
-[TOC] # Kafka
+[TOC]
+
+# Kafka
 
 ## 一 Kafka概述
 
