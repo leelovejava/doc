@@ -49,7 +49,7 @@
 1）Producer ：消息生产者，就是向kafka broker发消息的客户端。
 2）Consumer ：消息消费者，向kafka broker取消息的客户端
 3）Topic ：可以理解为一个队列。
-4） Consumer Group （CG）：这是kafka用来实现一个topic消息的广播（发给所有的consumer）和单播（发给任意一个consumer）的手段。一个topic可以有多个CG。topic的消息会复制（不是真的复制，是概念上的）到所有的CG，但每个partion只会把消息发给该CG中的一个consumer。如果需要实现广播，只要每个consumer有一个独立的CG就可以了。要实现单播只要所有的consumer在同一个CG。用CG还可以将consumer进行自由的分组而不需要多次发送消息到不同的topic。
+4）Consumer Group （CG）：这是kafka用来实现一个topic消息的广播（发给所有的consumer）和单播（发给任意一个consumer）的手段。一个topic可以有多个CG。topic的消息会复制（不是真的复制，是概念上的）到所有的CG，但每个partion只会把消息发给该CG中的一个consumer。如果需要实现广播，只要每个consumer有一个独立的CG就可以了。要实现单播只要所有的consumer在同一个CG。用CG还可以将consumer进行自由的分组而不需要多次发送消息到不同的topic。
 5）Broker ：一台kafka服务器就是一个broker。一个集群由多个broker组成。一个broker可以容纳多个topic。
 6）Partition：为了实现扩展性，一个非常大的topic可以分布到多个broker（即服务器）上，一个topic可以分为多个partition，每个partition是一个有序的队列。partition中的每条消息都会被分配一个有序的id（offset）。kafka只保证按一个partition中的顺序将消息发给consumer，不保证一个topic的整体（多个partition间）的顺序。
 7）Offset：kafka的存储文件都是按照offset.kafka来命名，用offset做名字的好处是方便查找。例如你想找位于2049的位置，只要找到2048.kafka的文件即可。当然the first offset就是00000000000.kafka
@@ -195,8 +195,8 @@ export PATH=$PATH:$KAFKA_HOME/bin
 2.3 Kafka命令行操作
 
 0) 启动kafka
-
 bin/kafka-server-start.sh config/server.properties
+bin/kafka-server-start.sh config/server.properties &
 kafka-server-start.sh config/server.properties 1>/dev/null 2>&1 &
 
 1）查看当前服务器中的所有topic
@@ -764,21 +764,26 @@ public class CustomNewConsumer {
 }
 ```
 
-五 Kafka producer拦截器(interceptor)
-5.1 拦截器原理
+## 五 Kafka producer拦截器(interceptor)
+
+### 5.1 拦截器原理
 Producer拦截器(interceptor)是在Kafka 0.10版本被引入的，主要用于实现clients端的定制化控制逻辑。
 对于producer而言，interceptor使得用户在消息发送前以及producer回调逻辑前有机会对消息做一些定制化需求，比如修改消息等。同时，producer允许用户指定多个interceptor按序作用于同一条消息从而形成一个拦截链(interceptor chain)。Intercetpor的实现接口是org.apache.kafka.clients.producer.ProducerInterceptor，其定义的方法包括：
+
 （1）configure(configs)
 获取配置信息和初始化数据时调用。
+
 （2）onSend(ProducerRecord)：
 该方法封装进KafkaProducer.send方法中，即它运行在用户主线程中。Producer确保在消息被序列化以计算分区前调用该方法。用户可以在该方法中对消息做任何操作，但最好保证不要修改消息所属的topic和分区，否则会影响目标分区的计算
+
 （3）onAcknowledgement(RecordMetadata, Exception)：
 该方法会在消息被应答之前或消息发送失败时调用，并且通常都是在producer回调逻辑触发之前。onAcknowledgement运行在producer的IO线程中，因此不要在该方法中放入很重的逻辑，否则会拖慢producer的消息发送效率
+
 （4）close：
 关闭interceptor，主要用于执行一些资源清理工作
 如前所述，interceptor可能被运行在多个线程中，因此在具体实现时用户需要自行确保线程安全。另外倘若指定了多个interceptor，则producer将按照指定顺序调用它们，并仅仅是捕获每个interceptor可能抛出的异常记录到错误日志中而非在向上传递。这在使用过程中要特别留意。
 
-5.2 拦截器案例
+### 5.2 拦截器案例
 1）需求：
 实现一个简单的双interceptor组成的拦截链。第一个interceptor会在消息发送前将时间戳信息加到消息value的最前部；第二个interceptor会在消息发送后更新成功发送消息数或失败发送消息数。
 
@@ -1085,4 +1090,136 @@ public class LogProcessor implements Processor<byte[], byte[]> {
 world
 atguigu
 hahaha
+```
+
+### 6.3 Spring-cloud-stream+kafka
+https://blog.csdn.net/my_momo_csdn/article/details/81983553
+
+#### 6.3.1 消费者
+
+```xml
+  <dependency>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-starter-stream-kafka</artifactId>
+    <version>1.2.1.RELEASE</version>
+</dependency>
+```
+
+消费者配置
+```properties
+#kafka对应的地址
+spring.cloud.stream.kafka.binder.brokers = 192.168.xx.xxx:9092
+#kafka的zookeeper对应的地址
+spring.cloud.stream.kafka.binder.zkNodes = 192.168.xx.xxx:2181
+#监听kafka的topic
+spring.cloud.stream.bindings.xxxxxx.destination = topic-test
+#消费者分组
+spring.cloud.stream.bindings.xxxxxx.group = test-group
+#接收原始消息
+spring.cloud.stream.bindings.xxxxxx.consumer.headerMode = raw
+
+# 其中“xxxxxx”是自定义字段，需要和第三步中消费者代码的String INPUT = "xxxxxx";保持一致；
+```
+
+```
+public interface MqSinkI {
+
+    String INPUT = "xxxxxx";
+
+    /**
+     * 消费者接口
+     *
+     * @return org.springframework.messaging.SubscribableChannel 接口对象
+     */
+    @Input(MqSinkI.INPUT)
+    SubscribableChannel input();
+
+}
+@EnableBinding(value = {MqSinkI.class})
+public class MqSinkReceiver {
+
+    @Autowired
+    MqListener mqListener;
+
+    @StreamListener(MqSinkI.INPUT)
+    public void messageListen(JSONObject jsonParam) {
+        System.out.println("收到信息:" + jsonParam.toString());
+        //处理请求的类，对消息进行处理
+        mqListener.listen(jsonParam);
+    }
+}
+
+@Component
+public class MqListener {
+
+    public void listen(JSONObject jsonParam) {
+        System.out.println("收到：" + jsonParam);
+    }
+}
+```
+
+#### 6.3.2 生产者
+
+kafka生产者配置
+
+```
+#kafka对应的地址
+spring.cloud.stream.kafka.binder.brokers=192.168.11.199:9092
+#kafka的zookeeper对应的地址
+spring.cloud.stream.kafka.binder.zkNodes=192.168.11.199:2181
+spring.cloud.stream.bindings.oooooooo.destination=topic-test
+spring.cloud.stream.bindings.oooooooo.content-type=application/json
+```
+
+
+```
+public interface MySource {
+
+    String OUTPUT = "oooooooo";
+
+    String OUTPUT1 = "myOutputTest1";
+
+
+    @Output(MySource.OUTPUT)
+    MessageChannel output();
+}
+
+
+@EnableBinding(MySource.class)
+public class SendService {
+
+    @Autowired
+    private MySource mySource;
+
+
+    public void sendMessage(String msg) {
+        try {
+            mySource.output().send(MessageBuilder.withPayload(msg).build());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+@RestController
+public class ProducerController {
+
+    @Autowired
+    private SendService service;
+
+    @RequestMapping(value = "/kafka")
+    public void send() {
+        while (true) {
+            //发送消息到指定topic
+            JSONObject obj = new JSONObject();
+            obj.put("time", (new Date()).toString());
+            System.out.println("生产者发送：" + obj.toString());
+            service.sendMessage(obj.toString());
+            try {
+                Thread.sleep(5 * 1000);
+            } catch (InterruptedException e) {
+            }
+        }
+    }
+}
 ```
