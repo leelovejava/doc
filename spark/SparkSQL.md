@@ -16,32 +16,203 @@
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-sql/01.png)
 Spark SQL是Spark用来处理结构化数据的一个模块，它提供了一个编程抽象叫做DataFrame并且作为分布式SQL查询引擎的作用。
 
+将数据的计算任务通过SQL的形式转化为RDD的计算,类似于Hive通过SQl的形式将数据的计算任务转换成MapReduce
+
 ### 2.1.2.为什么要学习Spark SQL
+
 我们已经学习了Hive，它是将Hive SQL转换成MapReduce然后提交到集群上执行，大大简化了编写MapReduce的程序的复杂性，由于MapReduce这种计算模型执行效率比较慢。所有Spark SQL的应运而生，它是将Spark SQL转换成RDD，然后提交到集群执行，执行效率非常快！
 
 #### 1.易整合
 
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-sql/02.png)
 
+和Spark core的无缝整合,写RDD的应用时,配置Spark SQL实现逻辑
+
 #### 2.统一的数据访问方式
 
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-sql/03.png)
+
+Spark 提供了标准化的SQL查询
 
 #### 3.兼容Hive
 
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-sql/04.png)
 
+Hive的继承,Spark SQL通过内嵌Hive或者连接外部已经部署好的hive实例,实现对Hive语法的继承和操作
+
 #### 4.标准的数据连接
 
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-sql/05.png)
 
+Spark SQL可以通过thrift Server来支持JDBC、ODBC的访问,将自己作为一个BI Server使用
+
 ### 2.2.DataFrames
 #### 2.2.1.什么是DataFrames
+
+Spark SQL的数据抽象
+
 与RDD类似，DataFrame也是一个分布式数据容器。然而DataFrame更像传统数据库的二维表格，除了数据以外，还记录数据的结构信息，即schema。同时，与Hive类似，DataFrame也支持嵌套数据类型（struct、array和map）。从API易用性的角度上 看，DataFrame API提供的是一套高层的关系操作，比函数式的RDD API要更加友好，门槛更低。由于与R和Pandas的DataFrame类似，Spark DataFrame很好地继承了传统单机数据分析的开发体验。
 
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-sql/06.png)
+            
 
-#### 2.2.2.创建DataFrames
+#### 2.2.3 RDD vs DataFrames vs DataSet
+
+![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-sql/17.png)     
+
+版本的产生
+Spark Core->RDD(Spark 1.0)
+                
+                DataFrame(Spark 1.3)
+Spark SQL->     DataSet(Spark 1.6) 
+
+在后期的Spark版本中，DataSet会逐步取代RDD和DataFrame成为唯一的API接口
+
+##### RDD
+* RDD是一个懒执行的不可变的可以支持Lambda表达式的并行数据集合。
+* RDD的最大好处就是简单，API的人性化程度很高。
+* RDD的劣势是性能限制，它是一个JVM驻内存对象，这也就决定了存在GC的限制和数据增加时Java序列化成本的升高
+
+##### Dataframe
+
+与RDD类似，DataFrame也是一个分布式数据容器。
+
+然而DataFrame更像传统数据库的二维表格，除了数据以外，还记录数据的结构信息，即schema。
+
+同时，与Hive类似，DataFrame也支持嵌套数据类型（struct、array和map）。
+
+从API易用性的角度上看，DataFrame API提供的是一套高层的关系操作，比函数式的RDD API要更加友好，门槛更低。
+
+由于与R和Pandas的DataFrame类似，Spark DataFrame很好地继承了传统单机数据分析的开发体验
+
+![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-sql/18.png)   
+
+##### Dataset
+
+1)是Dataframe API的一个扩展，是Spark最新的数据抽象
+
+2)用户友好的API风格，既具有类型安全检查也具有Dataframe的查询优化特性。
+
+3)Dataset支持编解码器，当需要访问非堆上的数据时可以避免反序列化整个对象，提高了效率。
+
+4)样例类被用来在Dataset中定义数据的结构信息，样例类中每个属性的名称直接映射到DataSet中的字段名称。
+
+5)Dataframe是Dataset的特列，DataFrame=Dataset[Row] ，所以可以通过as方法将Dataframe转换为Dataset。Row是一个类型，跟Car、Person这些的类型一样，所有的表结构信息我都用Row来表示。
+
+6)DataSet是强类型的。比如可以有Dataset[Car]，Dataset[Person].
+
+DataFrame只是知道字段，但是不知道字段的类型，所以在执行这些操作的时候是没办法在编译的时候检查是否类型失败的，比如你可以对一个String进行减法操作，在执行的时候才报错，而DataSet不仅仅知道字段，而且知道字段类型，所以有更严格的错误检查。就跟JSON对象和类对象之间的类比
+
+##### 共性
+
+1)、RDD、DataFrame、Dataset全都是spark平台下的分布式弹性数据集，为处理超大型数据提供便利
+2)、三者都有惰性机制，在进行创建、转换，如map方法时，不会立即执行，只有在遇到Action如foreach时，三者才会开始遍历运算，极端情况下，如果代码里面有创建、转换，但是后面没有在Action中使用对应的结果，在执行时会被直接跳过.
+```
+val sparkconf = new SparkConf().setMaster("local").setAppName("test").set("spark.port.maxRetries","1000")
+val spark = SparkSession.builder().config(sparkconf).getOrCreate()
+val rdd=spark.sparkContext.parallelize(Seq(("a", 1), ("b", 1), ("a", 1)))
+// map不运行
+rdd.map{line=>
+  println("运行")
+  line._1
+}
+```
+3)、三者都会根据spark的内存情况自动缓存运算，这样即使数据量很大，也不用担心会内存溢出
+4)、三者都有partition的概念
+5)、三者有许多共同的函数，如filter，排序等
+6)、在对DataFrame和Dataset进行操作许多操作都需要这个包进行支持
+```
+import spark.implicits._
+```
+7)、DataFrame和Dataset均可使用模式匹配获取各个字段的值和类型
+DataFrame:
+```
+testDF.map{
+      case Row(col1:String,col2:Int)=>
+        println(col1);println(col2)
+        col1
+      case _=>
+        ""
+    }
+```
+Dataset:
+```
+case class Coltest(col1:String,col2:Int)extends Serializable //定义字段名和类型
+    testDS.map{
+      case Coltest(col1:String,col2:Int)=>
+        println(col1);println(col2)
+        col1
+      case _=>
+        ""
+    }
+```
+
+##### 三者的区别
+
+RDD:
+
+1)、RDD一般和spark mlib同时使用
+
+2)、**RDD不支持sparksql操作**
+
+DataFrame:
+
+1)、与RDD和Dataset不同，DataFrame每一行的类型固定为Row，只有通过解析才能获取各个字段的值，如
+```
+testDF.foreach{
+  line =>
+    val col1=line.getAs[String]("col1")
+    val col2=line.getAs[String]("col2")
+}
+```
+**每一列的值没法直接访问**
+
+
+2)、DataFrame与Dataset一般与spark ml同时使用
+
+3)、**DataFrame与Dataset均支持sparksql的操作**，比如select，groupby之类，还能注册临时表/视窗，进行sql语句操作，如
+```
+dataDF.createOrReplaceTempView("tmp")
+spark.sql("select  ROW,DATE from tmp where DATE is not null order by DATE").show(100,false)
+```
+
+4)、DataFrame与Dataset支持一些特别方便的保存方式，比如保存成csv，可以带上表头，这样每一列的字段名一目了然
+```
+//保存
+val saveoptions = Map("header" -> "true", "delimiter" -> "\t", "path" -> "hdfs://master01:9000/test")
+datawDF.write.format("com.atguigu.spark.csv").mode(SaveMode.Overwrite).options(saveoptions).save()
+//读取
+val options = Map("header" -> "true", "delimiter" -> "\t", "path" -> "hdfs://master01:9000/test")
+val datarDF= spark.read.options(options).format("com.atguigu.spark.csv").load()
+```
+利用这样的保存方式，可以方便的获得字段名和列的对应，而且分隔符（delimiter）可以自由指定
+5)、*劣势:编译期间缺少类型安全检查、运行期检查*
+
+Dataset:
+
+**Dataset和DataFrame拥有完全相同的成员函数，区别只是每一行的数据类型不同。**
+**DataFrame也可以叫Dataset[Row],每一行的类型是Row，不解析，每一行究竟有哪些字段，各个字段又是什么类型都无从得知，只能用上面提到的getAS方法或者共性中的第七条提到的模式匹配拿出特定字段**
+**而Dataset中，每一行是什么类型是不一定的，在自定义了case class之后可以很自由的获得每一行的信息**
+```
+case class Coltest(col1:String,col2:Int)extends Serializable //定义字段名和类型
+/**
+ rdd
+ ("a", 1)
+ ("b", 1)
+ ("a", 1)
+**/
+val test: Dataset[Coltest]=rdd.map{line=>
+      Coltest(line._1,line._2)
+    }.toDS
+test.map{
+      line=>
+        println(line.col1)
+        println(line.col2)
+    }
+```
+可以看出，Dataset在需要访问列中的某个字段时是非常方便的，然而，如果要写一些适配性很强的函数时，如果使用Dataset，行的类型又不确定，可能是各种case class，无法实现适配，这时候用DataFrame即Dataset[Row]就能比较好的解决问题
+
+#### 2.2.4.创建DataFrames
  在Spark SQL中SQLContext是创建DataFrames和执行SQL的入口，在spark-1.5.2中已经内置了一个sqlContext
 
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-sql/07.png)
