@@ -1054,7 +1054,8 @@ public class InterceptorProducer {
 
 （1）在kafka上启动消费者，然后运行客户端java程序。
 
->>[atguigu@hadoop102 kafka]$ in/kafka-console-consumer.sh --zookeeper hadoop102:2181 --from-beginning --topic first
+[atguigu@hadoop102 kafka]$ in/kafka-console-consumer.sh --zookeeper hadoop102:2181 --from-beginning --topic first
+```
 1501904047034,message0
 1501904047225,message1
 1501904047230,message2
@@ -1065,6 +1066,7 @@ public class InterceptorProducer {
 1501904047246,message7
 1501904047249,message8
 1501904047252,message9
+```
 
 （2）观察java平台控制台输出数据如下：
 >>Successful sent: 10
@@ -1099,14 +1101,19 @@ Kafka Streams。Apache Kafka开源项目的一个组成部分。是一个功能�
 ##### 6.1.3 为什么要有Kafka Stream
 当前已经有非常多的流式处理系统，最知名且应用最多的开源流式处理系统有Spark Streaming和Apache Storm。Apache Storm发展多年，应用广泛，提供记录级别的处理能力，当前也支持SQL on Stream。而Spark Streaming基于Apache Spark，可以非常方便与图计算，SQL处理等集成，功能强大，对于熟悉其它Spark应用开发的用户而言使用门槛低。另外，目前主流的Hadoop发行版，如Cloudera和Hortonworks，都集成了Apache Storm和Apache Spark，使得部署更容易。
 既然Apache Spark与Apache Storm拥用如此多的优势，那为何还需要Kafka Stream呢？笔者认为主要有如下原因。
+
 第一，Spark和Storm都是流式处理框架，而Kafka Stream提供的是一个基于Kafka的流式处理类库。框架要求开发者按照特定的方式去开发逻辑部分，供框架调用。开发者很难了解框架的具体运行方式，从而使得调试成本高，并且使用受限。而Kafka Stream作为流式处理类库，直接提供具体的类给开发者调用，整个应用的运行方式主要由开发者控制，方便使用和调试。
  
 ![image](https://github.com/leelovejava/doc/blob/master/img/kafka/10.png) 
  
 第二，虽然Cloudera与Hortonworks方便了Storm和Spark的部署，但是这些框架的部署仍然相对复杂。而Kafka Stream作为类库，可以非常方便的嵌入应用程序中，它对应用的打包和部署基本没有任何要求。
+
 第三，就流式处理系统而言，基本都支持Kafka作为数据源。例如Storm具有专门的kafka-spout，而Spark也提供专门的spark-streaming-kafka模块。事实上，Kafka基本上是主流的流式处理系统的标准数据源。换言之，大部分流式系统中都已部署了Kafka，此时使用Kafka Stream的成本非常低。
+
 第四，使用Storm或Spark Streaming时，需要为框架本身的进程预留资源，如Storm的supervisor和Spark on YARN的node manager。即使对于应用实例而言，框架本身也会占用部分资源，如Spark Streaming需要为shuffle和storage预留内存。但是Kafka作为类库不占用系统资源。
+
 第五，由于Kafka本身提供数据持久化，因此Kafka Stream提供滚动部署和滚动升级以及重新计算的能力。
+
 第六，由于Kafka Consumer Rebalance机制，Kafka Stream可以在线动态调整并行度。
 
 ### 6.2 Kafka Stream案例
