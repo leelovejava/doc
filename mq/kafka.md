@@ -1,4 +1,4 @@
-# Kafka
+[TOC] # Kafka
 
 ## 一 Kafka概述
 
@@ -563,7 +563,9 @@ drwxrwxr-x. 2 atguigu atguigu  4096 8月   6 14:37 first-2
 ![image](https://github.com/leelovejava/doc/blob/master/img/kafka/07.png) 
  
 注意：producer不在zk中注册，消费者在zk中注册。
-3.3 Kafka消费过程分析
+
+### 3.3 Kafka消费过程分析
+
 kafka提供了两套consumer API：高级Consumer API和低级API。
 
 ### 3.3.1 高级API
@@ -624,6 +626,7 @@ push（推）模式很难适应消费速率不同的消费者，因为消息发�
 	
 	（2）在hadoop102、hadoop103上分别启动消费者
 [atguigu@hadoop102 kafka]$ bin/kafka-console-consumer.sh --zookeeper hadoop102:2181 --topic first --consumer.config config/consumer.properties
+
 [atguigu@hadoop103 kafka]$ bin/kafka-console-consumer.sh --zookeeper hadoop102:2181 --topic first --consumer.config config/consumer.properties
 	
 	（3）在hadoop104上启动生产者
