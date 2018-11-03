@@ -44,14 +44,21 @@
 很多时候，用户不想也不需要立即处理消息。消息队列提供了异步处理机制，允许用户把一个消息放入队列，但并不立即处理它。想向队列中放入多少消息就放多少，然后在需要的时候再去处理它们。
 
 ### 1.3 Kafka架构
+
  ![image](https://github.com/leelovejava/doc/blob/master/img/kafka/02.png)
  
 1）Producer ：消息生产者，就是向kafka broker发消息的客户端。
+
 2）Consumer ：消息消费者，向kafka broker取消息的客户端
+
 3）Topic ：可以理解为一个队列。
+
 4）Consumer Group （CG）：这是kafka用来实现一个topic消息的广播（发给所有的consumer）和单播（发给任意一个consumer）的手段。一个topic可以有多个CG。topic的消息会复制（不是真的复制，是概念上的）到所有的CG，但每个partion只会把消息发给该CG中的一个consumer。如果需要实现广播，只要每个consumer有一个独立的CG就可以了。要实现单播只要所有的consumer在同一个CG。用CG还可以将consumer进行自由的分组而不需要多次发送消息到不同的topic。
+
 5）Broker ：一台kafka服务器就是一个broker。一个集群由多个broker组成。一个broker可以容纳多个topic。
+
 6）Partition：为了实现扩展性，一个非常大的topic可以分布到多个broker（即服务器）上，一个topic可以分为多个partition，每个partition是一个有序的队列。partition中的每条消息都会被分配一个有序的id（offset）。kafka只保证按一个partition中的顺序将消息发给consumer，不保证一个topic的整体（多个partition间）的顺序。
+
 7）Offset：kafka的存储文件都是按照offset.kafka来命名，用offset做名字的好处是方便查找。例如你想找位于2049的位置，只要找到2048.kafka的文件即可。当然the first offset就是00000000000.kafka
 
 ## 二 Kafka集群部署
@@ -127,46 +134,73 @@ D是万一集群中的Leader服务器挂了，需要一个端口来重新进行�
 
 ##### 3）集群操作
 （1）在/opt/module/zookeeper-3.4.10/zkData目录下创建一个myid的文件
+
 	touch myid
-添加myid文件，注意一定要在linux里面创建，在notepad++里面很可能乱码
+   添加myid文件，注意一定要在linux里面创建，在notepad++里面很可能乱码
+
 （2）编辑myid文件
+
 	vi myid
+	
 	在文件中添加与server对应的编号：如2
+	
 （3）拷贝配置好的zookeeper到其他机器上
+
 	scp -r zookeeper-3.4.10/ root@hadoop103.atguigu.com:/opt/app/
+	
 	scp -r zookeeper-3.4.10/ root@hadoop104.atguigu.com:/opt/app/
+	
 	并分别修改myid文件中内容为3、4
+	
 （4）分别启动zookeeper
+
 [root@hadoop102 zookeeper-3.4.10]# bin/zkServer.sh start
+
 [root@hadoop103 zookeeper-3.4.10]# bin/zkServer.sh start
+
 [root@hadoop104 zookeeper-3.4.10]# bin/zkServer.sh start
+
 （5）查看状态
+
 [root@hadoop102 zookeeper-3.4.10]# bin/zkServer.sh status
+
 JMX enabled by default
+
 Using config: /opt/module/zookeeper-3.4.10/bin/../conf/zoo.cfg
-Mode: follower
-[root@hadoop103 zookeeper-3.4.10]# bin/zkServer.sh status
-JMX enabled by default
-Using config: /opt/module/zookeeper-3.4.10/bin/../conf/zoo.cfg
-Mode: leader
-[root@hadoop104 zookeeper-3.4.5]# bin/zkServer.sh status
-JMX enabled by default
-Using config: /opt/module/zookeeper-3.4.10/bin/../conf/zoo.cfg
+
 Mode: follower
 
-2.2 Kafka集群部署 
-1）解压安装包
+[root@hadoop103 zookeeper-3.4.10]# bin/zkServer.sh status
+
+JMX enabled by default
+
+Using config: /opt/module/zookeeper-3.4.10/bin/../conf/zoo.cfg
+
+Mode: leader
+
+[root@hadoop104 zookeeper-3.4.5]# bin/zkServer.sh status
+
+JMX enabled by default
+
+Using config: /opt/module/zookeeper-3.4.10/bin/../conf/zoo.cfg
+
+Mode: follower
+
+### 2.2 Kafka集群部署 
+
+#### 1）解压安装包
+
 [atguigu@hadoop102 software]$ tar -zxvf kafka_2.11-0.11.0.0.tgz -C /opt/module/
 
-2）修改解压后的文件名称
+#### 2）修改解压后的文件名称
 
 [atguigu@hadoop102 module]$ mv kafka_2.11-0.11.0.0/ kafka
 
-3）在/opt/module/kafka目录下创建logs文件夹
+#### 3）在/opt/module/kafka目录下创建logs文件夹
 
 [atguigu@hadoop102 kafka]$ mkdir logs
 
-4）修改配置文件
+#### 4）修改配置文件
 
 [atguigu@hadoop102 kafka]$ cd config/
 
@@ -201,7 +235,7 @@ zookeeper.connect=hadoop102:2181,hadoop103:2181,hadoop104:2181
 ```
 
 
-5）配置环境变量
+#### 5）配置环境变量
 
 [root@hadoop102 module]# vi /etc/profile
 ```
@@ -211,54 +245,74 @@ export PATH=$PATH:$KAFKA_HOME/bin
 ```
 [root@hadoop102 module]# source /etc/profile
 
-6）分发安装包
+#### 6）分发安装包
+
 [root@hadoop102 etc]# xsync profile
+
 [atguigu@hadoop102 module]$ xsync kafka/
 
-7）分别在hadoop103和hadoop104上修改配置文件/opt/module/kafka/config/server.properties中的broker.id=1、broker.id=2
+#### 7）分别在hadoop103和hadoop104上修改配置文件/opt/module/kafka/config/server.properties中的broker.id=1、broker.id=2
 	注：broker.id不得重复
 
-8）启动集群
+#### 8）启动集群
+
 依次在hadoop102、hadoop103、hadoop104节点上启动kafka
+
 [atguigu@hadoop102 kafka]$ bin/kafka-server-start.sh config/server.properties &
+
 [atguigu@hadoop103 kafka]$ bin/kafka-server-start.sh config/server.properties &
+
 [atguigu@hadoop104 kafka]$ bin/kafka-server-start.sh config/server.properties &
 
-2.3 Kafka命令行操作
+### 2.3 Kafka命令行操作
 
-0) 启动kafka
+#### 0) 启动kafka
+
 bin/kafka-server-start.sh config/server.properties
+
 bin/kafka-server-start.sh config/server.properties &
+
 kafka-server-start.sh config/server.properties 1>/dev/null 2>&1 &
 
-1）查看当前服务器中的所有topic
+#### 1）查看当前服务器中的所有topic
 [atguigu@hadoop102 kafka]$ bin/kafka-topics.sh --list --zookeeper 127.0.0.1:2181
 
-2）创建topic
+#### 2）创建topic
 [atguigu@hadoop102 kafka]$ bin/kafka-topics.sh --create --zookeeper 127.0.0.1:2181 --replication-factor 3 --partitions 1 --topic first
+
 选项说明：
+
 --topic 定义topic名
+
 --replication-factor  定义副本数
+
 --partitions  定义分区数
 
-3）	删除topic
+
+#### 3）	删除topic
+
 [atguigu@hadoop102 kafka]$ bin/kafka-topics.sh --delete --zookeeper 127.0.0.1:2181 --topic first
+
 需要server.properties中设置delete.topic.enable=true否则只是标记删除或者直接重启。
 
-4）发送消息
+#### 4）发送消息
+
 [atguigu@hadoop102 kafka]$ bin/kafka-console-producer.sh --broker-list 127.0.0.1:9092 --topic first
+
 >hello world
 >atguigu  atguigu
 
-5）消费消息
+#### 5）消费消息
+
 [atguigu@hadoop103 kafka]$ bin/kafka-console-consumer.sh --zookeeper 127.0.0.1:2181 --from-beginning --topic first
 
-6）查看某个Topic的详情
+#### 6）查看某个Topic的详情
+
 [atguigu@hadoop102 kafka]$ bin/kafka-topics.sh --topic first --describe --zookeeper 127.0.0.1:2181
 
-2.4 Kafka配置信息
+### 2.4 Kafka配置信息
 
-2.4.1 Broker配置信息
+#### 2.4.1 Broker配置信息
 属性	                    默认值	                        描述
 broker.id		            必填参数            broker的唯一标识
 log.dirs	              /tmp/kafka-logs	    Kafka数据存放的目录。可以指定多个目录，中间用逗号分隔，当新partition被创建的时会被存放到当前存放partition最少的目录。
@@ -307,7 +361,7 @@ offsets.load.buffer.size	    5242880	        An offset load occurs when a broker
 offsets.commit.required.acks	-1	            The number of acknowledgements that are required before the offset commit can be accepted. This is similar to the producer’s acknowledgement setting. In general, the default should not be overridden.
 offsets.commit.timeout.ms	    5000	        The offset commit will be delayed until this timeout or the required number of replicas have received the offset commit. This is similar to the producer request timeout.
 
-2.4.2 Producer配置信息
+#### 2.4.2 Producer配置信息
 属性	默认值	描述
 metadata.broker.list		启动时producer查询brokers的列表，可以是集群中所有brokers的一个子集。注意，这个参数只是用来获取topic的元信息用，producer会从元信息中挑选合适的broker并与之建立socket连接。格式是：host1:port1,host2:port2。
 request.required.acks	0	参见3.2节介绍
@@ -327,7 +381,8 @@ queue.enqueue.timeout.ms	-1	当达到上面参数值时producer阻塞等待的�
 batch.num.messages	200	采用异步模式时，一个batch缓存的消息数量。达到这个数量值时producer才会发送消息。
 send.buffer.bytes	100 * 1024	Socket write buffer size
 client.id	“”	The client id is a user-specified string sent in each request to help trace calls. It should logically identify the application making the request.
-2.4.3 Consumer配置信息
+
+#### 2.4.3 Consumer配置信息
 属性	默认值	描述
 group.id		Consumer的组ID，相同goup.id的consumer属于同一个组。
 zookeeper.connect		Consumer的zookeeper连接串，要和broker的配置一致。
