@@ -1051,8 +1051,10 @@ public class InterceptorProducer {
 }
 ```
 3）测试
+
 （1）在kafka上启动消费者，然后运行客户端java程序。
-[atguigu@hadoop102 kafka]$ in/kafka-console-consumer.sh --zookeeper hadoop102:2181 --from-beginning --topic first
+
+>>[atguigu@hadoop102 kafka]$ in/kafka-console-consumer.sh --zookeeper hadoop102:2181 --from-beginning --topic first
 1501904047034,message0
 1501904047225,message1
 1501904047230,message2
@@ -1063,9 +1065,10 @@ public class InterceptorProducer {
 1501904047246,message7
 1501904047249,message8
 1501904047252,message9
+
 （2）观察java平台控制台输出数据如下：
-Successful sent: 10
-Failed sent: 0
+>>Successful sent: 10
+  Failed sent: 0
 
 ## 六 kafka Streams
 
@@ -1240,7 +1243,7 @@ https://blog.csdn.net/my_momo_csdn/article/details/81983553
 #### 6.3.1 消费者
 
 ```xml
-  <dependency>
+<dependency>
     <groupId>org.springframework.cloud</groupId>
     <artifactId>spring-cloud-starter-stream-kafka</artifactId>
     <version>1.2.1.RELEASE</version>
@@ -1263,7 +1266,7 @@ spring.cloud.stream.bindings.xxxxxx.consumer.headerMode = raw
 # 其中“xxxxxx”是自定义字段，需要和第三步中消费者代码的String INPUT = "xxxxxx";保持一致；
 ```
 
-```
+```java
 public interface MqSinkI {
 
     String INPUT = "xxxxxx";
@@ -1304,7 +1307,7 @@ public class MqListener {
 
 kafka生产者配置
 
-```
+```properties
 #kafka对应的地址
 spring.cloud.stream.kafka.binder.brokers=192.168.11.199:9092
 #kafka的zookeeper对应的地址
@@ -1314,7 +1317,7 @@ spring.cloud.stream.bindings.oooooooo.content-type=application/json
 ```
 
 
-```
+```java
 public interface MySource {
 
     String OUTPUT = "oooooooo";
