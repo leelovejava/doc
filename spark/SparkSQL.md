@@ -389,8 +389,6 @@ val jdbcDF = sqlContext.read.format("jdbc").options(Map("url" -> "jdbc:mysql://1
 ##### 3.执行查询
 jdbcDF.show()
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-sql/16.png)
-
 ### 4.1.2.将数据写入到MySQL中（打jar包方式）
 #### 1.编写Spark SQL程序
 ```
