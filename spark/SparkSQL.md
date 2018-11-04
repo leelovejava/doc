@@ -85,13 +85,11 @@ Spark SQL->     DataSet(Spark 1.6)
 
 由于与R和Pandas的DataFrame类似，Spark DataFrame很好地继承了传统单机数据分析的开发体验
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-sql/18.png)   
-
 ##### Dataset
 
 1)是Dataframe API的一个扩展，是Spark最新的数据抽象
 
-2)用户友好的API风格，既具有类型安全检查也具有Dataframe的查询优化特性。
+2)用户友好的API风格，具有**类型安全检查**和Dataframe的查询优化特性。
 
 3)Dataset支持编解码器，当需要访问非堆上的数据时可以避免反序列化整个对象，提高了效率。
 
