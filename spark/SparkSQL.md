@@ -70,9 +70,8 @@ Spark SQL的数据抽象
 
 版本的产生
 Spark Core->RDD(Spark 1.0)
-                
-                DataFrame(Spark 1.3)
-Spark SQL->     DataSet(Spark 1.6) 
+            DataFrame(Spark 1.3)
+Spark SQL-> DataSet(Spark 1.6) 
 
 在后期的Spark版本中，DataSet会逐步取代RDD和DataFrame成为唯一的API接口
 
@@ -83,13 +82,13 @@ Spark SQL->     DataSet(Spark 1.6)
 
 ##### Dataframe
 
-性能比RDD要高(定制化内存管理、优化的执行计划);DataSet包含了DataFrame所有的优化机制
+1).性能比RDD要高(定制化内存管理、优化的执行计划);DataSet包含了DataFrame所有的优化机制
 
-DataFrame和DataSet都有可控的内存管理机制,所有数据都保存在非堆上,使用了catalyst进行SQL优化
+2).DataFrame和DataSet都有可控的内存管理机制,所有数据都保存在非堆上,使用了catalyst进行SQL优化
 
-RDD+Schema,二维表格；编译期间不进行类型检查,运行期间检查
+3).RDD+Schema,二维表格；编译期间不进行类型检查,运行期间检查
 
-DataFrame = DataSet[Row]
+4).DataFrame = DataSet[Row]
 
 
 ##### Dataset
@@ -217,30 +216,6 @@ test.map{
 ```
 可以看出，Dataset在需要访问列中的某个字段时是非常方便的，然而，如果要写一些适配性很强的函数时，如果使用Dataset，行的类型又不确定，可能是各种case class，无法实现适配，这时候用DataFrame即Dataset[Row]就能比较好的解决问题
 
-#### 2.2.4.创建DataFrames
- 在Spark SQL中SQLContext是创建DataFrames和执行SQL的入口，在spark-1.5.2中已经内置了一个sqlContext
-
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-sql/07.png)
-
-1.在本地创建一个文件，有三列，分别是id、name、age，用空格分隔，然后上传到hdfs上
-hdfs dfs -put person.txt /
-
-2.在spark shell执行下面命令，读取数据，将每一行的数据使用列分隔符分割
-val lineRDD = sc.textFile("hdfs://node1.itcast.cn:9000/person.txt").map(_.split(" "))
-
-3.定义case class（相当于表的schema）
-case class Person(id:Int, name:String, age:Int)
-
-4.将RDD和case class关联
-val personRDD = lineRDD.map(x => Person(x(0).toInt, x(1), x(2).toInt))
-
-5.将RDD转换成DataFrame
-val personDF = personRDD.toDF
-
-6.对DataFrame进行处理
-personDF.show
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-sql/08.png)
-
 ### 2.3.DataFrame常用操作
 
 spark 客户端操作
@@ -268,45 +243,6 @@ spark.sql("SELECT * FROM persons where age > 21").show()
 ```
 
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-sql/18.png)
-
-#### 2.3.1.DSL风格语法
-//查看DataFrame中的内容
-personDF.show
-
-//查看DataFrame部分列中的内容
-personDF.select(personDF.col("name")).show
-personDF.select(col("name"), col("age")).show
-personDF.select("name").show
-
-//打印DataFrame的Schema信息
-personDF.printSchema
-
-//查询所有的name和age，并将age+1
-personDF.select(col("id"), col("name"), col("age") + 1).show
-personDF.select(personDF("id"), personDF("name"), personDF("age") + 1).show
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-sql/09.png)
-
-//过滤age大于等于18的
-personDF.filter(col("age") >= 18).show
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-sql/10.png)
-
-//按年龄进行分组并统计相同年龄的人数
-personDF.groupBy("age").count().show()
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-sql/11.png)
-
-#### 2.3.2.SQL风格语法
-如果想使用SQL风格的语法，需要将DataFrame注册成表
-personDF.registerTempTable("t_person")
-
-//查询年龄最大的前两名
-sqlContext.sql("select * from t_person order by age desc limit 2").show
-
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-sql/12.png)
-
-//显示表的Schema信息
-sqlContext.sql("desc t_person").show
-
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-sql/13.png)
 
 ## 3.以编程方式执行Spark SQL查询
 ### 3.1.编写Spark SQL查询程序
@@ -378,10 +314,6 @@ object HelloWorld {
 hdfs://hadoop:9000/person.txt \
 hdfs://hadoop:9000/out 
 ```
-查看运行结果
-hdfs dfs -cat  hdfs://node1.itcast.cn:9000/out/part-r-*
-
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-sql/14.png)
 
 #### 3.1.2.通过StructType直接指定Schema
 创建一个object为cn.itcast.spark.sql.SpecifyingSchema
@@ -430,17 +362,13 @@ object SpecifyingSchema {
 ```
 将程序打成jar包，上传到spark集群，提交Spark任务
 ```
-/usr/local/spark-1.5.2-bin-hadoop2.6/bin/spark-submit \
+/home/hadoop/app/spark-2.2.0-bin-2.6.0-cdh5.7.0/bin/spark-submit \
 --class cn.itcast.spark.sql.InferringSchema \
---master spark://node1.itcast.cn:7077 \
+--master spark://hadoop.cn:7077 \
 /root/spark-mvn-1.0-SNAPSHOT.jar \
-hdfs://node1.itcast.cn:9000/person.txt \
-hdfs://node1.itcast.cn:9000/out1 
+hdfs://hadoop:9000/person.txt \
+hdfs://hadoop.cn:9000/out1 
 ```
-查看结果
-hdfs dfs -cat  hdfs://node1.itcast.cn:9000/out1/part-r-*
-
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-sql/15.png)
 
 ## 4.数据源
 ### 4.1.JDBC
