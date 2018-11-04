@@ -51,7 +51,11 @@ Spark SQL可以通过thrift Server来支持JDBC、ODBC的访问,将自己作为�
 
 Spark SQL的数据抽象
 
-与RDD类似，DataFrame也是一个分布式数据容器。然而DataFrame更像传统数据库的二维表格，除了数据以外，还记录数据的结构信息，即schema。同时，与Hive类似，DataFrame也支持嵌套数据类型（struct、array和map）。从API易用性的角度上 看，DataFrame API提供的是一套高层的关系操作，比函数式的RDD API要更加友好，门槛更低。由于与R和Pandas的DataFrame类似，Spark DataFrame很好地继承了传统单机数据分析的开发体验。
+与RDD类似，DataFrame也是一个分布式数据容器。
+然而DataFrame更像传统数据库的二维表格，除了数据以外，还记录数据的结构信息，即schema。
+同时，与Hive类似，DataFrame也支持嵌套数据类型（struct、array和map）。
+从API易用性的角度上 看，DataFrame API提供的是一套高层的关系操作，比函数式的RDD API要更加友好，门槛更低。
+由于与R和Pandas的DataFrame类似，Spark DataFrame很好地继承了传统单机数据分析的开发体验。
 
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-sql/06.png)
             
@@ -75,19 +79,18 @@ Spark SQL->     DataSet(Spark 1.6)
 
 ##### Dataframe
 
-与RDD类似，DataFrame也是一个分布式数据容器。
+性能比RDD要高(定制化内存管理、优化的执行计划);DataSet包含了DataFrame所有的优化机制
 
-然而DataFrame更像传统数据库的二维表格，除了数据以外，还记录数据的结构信息，即schema。
+DataFrame和DataSet都有可控的内存管理机制,所有数据都保存在非堆上,使用了catalyst进行SQL优化
 
-同时，与Hive类似，DataFrame也支持嵌套数据类型（struct、array和map）。
+RDD+Schema,二维表格；编译期间不进行类型检查,运行期间检查
 
-从API易用性的角度上看，DataFrame API提供的是一套高层的关系操作，比函数式的RDD API要更加友好，门槛更低。
+DataFrame = DataSet[Row]
 
-由于与R和Pandas的DataFrame类似，Spark DataFrame很好地继承了传统单机数据分析的开发体验
 
 ##### Dataset
 
-1)是Dataframe API的一个扩展，是Spark最新的数据抽象
+1)是Dataframe API的一个扩展，是Spark最新的数据抽象;
 
 2)用户友好的API风格，具有**类型安全检查**和Dataframe的查询优化特性。
 
@@ -235,6 +238,33 @@ personDF.show
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-sql/08.png)
 
 ### 2.3.DataFrame常用操作
+
+spark 客户端操作
+```
+var df = spark.read.json("examples/src/main/resources/people.json")
+
+df.show()
+
+df.filter($"age">21).show()
+
+// createGlobalTempView:Register the DataFrame as a global temporary view，多个session可以使用
+// createOrReplaceGlobalTempView
+// createOrReplaceTempView:Register the DataFrame as a temporary view,注册成为一张表,当前session可用
+// createTempView
+df.createOrReplaceTempView("persons")
+
+spark.sql("SELECT * FROM persons").show()
+
+spark.sql("SELECT * FROM persons where age > 21").show()
+
+// spark-shell来操作Spark SQL,spark作为SparkSession的变量名,sc作为SparkContext的变量名
+// 通过Spark提供的方法读取json,将json文件转化为DataFrame
+// 通过DataFrame提供的API来操作DataFrame里面的数据
+// 将DataFrame注册为一个临时表的方式,来通过Spark.sql方式运行标准的SQL语句来查询
+```
+
+![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-sql/18.png)
+
 #### 2.3.1.DSL风格语法
 //查看DataFrame中的内容
 personDF.show
@@ -278,6 +308,7 @@ sqlContext.sql("desc t_person").show
 ### 3.1.编写Spark SQL查询程序
 前面我们学习了如何在Spark Shell中使用SQL完成查询，现在我们来实现在自定义的程序中编写Spark SQL查询程序。首先在maven项目的pom.xml中添加Spark SQL的依赖
 ```xml
+<!--spark sql-->
 <dependency>
     <groupId>org.apache.spark</groupId>
     <artifactId>spark-sql_2.10</artifactId>
@@ -287,54 +318,61 @@ sqlContext.sql("desc t_person").show
 #### 3.1.1.通过反射推断Schema
 创建一个object为cn.itcast.spark.sql.InferringSchema
 ```
-package cn.itcast.spark.sql
+package com.atguigu.sparksql
 
+import org.apache.spark.sql.SparkSession
 import org.apache.spark.{SparkConf, SparkContext}
-import org.apache.spark.sql.SQLContext
+import org.slf4j.LoggerFactory
 
-object InferringSchema {
+
+/**
+  * Created by wuyufei on 31/07/2017.
+  */
+object HelloWorld {
+
+  val logger = LoggerFactory.getLogger(HelloWorld.getClass)
+
   def main(args: Array[String]) {
-
     //创建SparkConf()并设置App名称
-    val conf = new SparkConf().setAppName("SQL-1")
-    //SQLContext要依赖SparkContext
-    val sc = new SparkContext(conf)
-    //创建SQLContext
-    val sqlContext = new SQLContext(sc)
+    val spark = SparkSession
+      .builder()
+      .appName("Spark SQL basic example")
+      .config("spark.some.config.option", "some-value")
+      .getOrCreate()
 
-    //从指定的地址创建RDD
-    val lineRDD = sc.textFile(args(0)).map(_.split(" "))
-
-    //创建case class
-    //将RDD和case class关联
-    val personRDD = lineRDD.map(x => Person(x(0).toInt, x(1), x(2).toInt))
-    //导入隐式转换，如果不到人无法将RDD转换成DataFrame
+    // For implicit conversions like converting RDDs to DataFrames
     // 隐式转换函数是以implicits关键字声明的带有单个参数的函数.这种函数将会自动转换应用,将值从一种类型转换为另一种类型
-    //将RDD转换成DataFrame
-    import sqlContext.implicits._
-    val personDF = personRDD.toDF
-    //注册表
-    personDF.registerTempTable("t_person")
-    //传入SQL
-    val df = sqlContext.sql("select * from t_person order by age desc limit 2")
-    //将结果以JSON的方式存储到指定位置
-    df.write.json(args(1))
-    //停止Spark Context
-    sc.stop()
-  }
-}
+    //  导入隐式转换,将RDD转换成DataFrame
+    import spark.implicits._
 
-//case class一定要放到外面
-case class Person(id: Int, name: String, age: Int)
+    val df = spark.read.json("examples/src/main/resources/people.json")
+
+    // Displays the content of the DataFrame to stdout
+    // show操作类似于Action,将DataFrame直接打印到Console
+    df.show()
+    
+    // DSL风格的使用方式中,属性的获取方式
+    df.filter($"age" > 21).show()
+    
+    // 将DataFrame注册为一张临时表
+    df.createOrReplaceTempView("persons")
+
+    // 通过Spark sql方式来运行sql
+    spark.sql("SELECT * FROM persons where age > 21").show()
+
+    spark.stop()
+  }
+
+}
 ```
 将程序打成jar包，上传到spark集群，提交Spark任务
 ```
-/usr/local/spark-1.5.2-bin-hadoop2.6/bin/spark-submit \
+/home/hadoop/app/spark-2.2.0-bin-2.6.0-cdh5.7.0/bin/spark-submit \
 --class cn.itcast.spark.sql.InferringSchema \
---master spark://node1.itcast.cn:7077 \
+--master spark://hadoop:7077 \
 /root/spark-mvn-1.0-SNAPSHOT.jar \
-hdfs://node1.itcast.cn:9000/person.txt \
-hdfs://node1.itcast.cn:9000/out 
+hdfs://hadoop:9000/person.txt \
+hdfs://hadoop:9000/out 
 ```
 查看运行结果
 hdfs dfs -cat  hdfs://node1.itcast.cn:9000/out/part-r-*
@@ -473,3 +511,138 @@ object JdbcRDD {
 --driver-class-path /usr/local/spark-1.5.2-bin-hadoop2.6/mysql-connector-java-5.1.35-bin.jar \
 /root/spark-mvn-1.0-SNAPSHOT.jar 
 ```
+
+## 5.Spark应用解析
+
+### 5.1.DataFrame的创建
+
+#### 5.1.1.数据源的创建(通过Spark的数据源进行创建)
+```
+val df = spark.read.json("examples/src/main/resources/people.json")
+// Displays the content of the DataFrame to stdout
+df.show()
+// +----+-------+
+// | age|   name|
+// +----+-------+
+// |null|Michael|
+// |  30|   Andy|
+// |  19| Justin|
+// +----+-------+
+```
+
+### 5.1.2.RDD的创建(从一个存在的RDD进行转换)
+```
+/**
+Michael, 29
+Andy, 30
+Justin, 19
+**/
+scala> val peopleRdd = sc.textFile("examples/src/main/resources/people.txt")
+peopleRdd: org.apache.spark.rdd.RDD[String] = examples/src/main/resources/people.txt MapPartitionsRDD[18] at textFile at <console>:24
+//把每一行的数据用，隔开 然后通过第二个map转换成一个Array 再通过toDF 映射给name age
+scala> val peopleDF3 = peopleRdd.map(_.split(",")).map(paras => (paras(0),paras(1).trim().toInt)).toDF("name","age")
+peopleDF3: org.apache.spark.sql.DataFrame = [name: string, age: int]
+
+scala> peopleDF.show()
++-------+---+
+|   name|age|
++-------+---+
+|Michael| 29|
+|   Andy| 30|
+| Justin| 19|
++-------+---+
+```
+
+#### 5.1.3.Hive的创建(从Hive Table进行查询返回)
+
+### 5.2.DataFrame常用操作
+
+#### 5.2.1.DSL风格语法
+```
+// This import is needed to use the $-notation
+import spark.implicits._
+// Print the schema in a tree format
+df.printSchema()
+// root
+// |-- age: long (nullable = true)
+// |-- name: string (nullable = true)
+
+// Select only the "name" column
+df.select("name").show()
+// +-------+
+// |   name|
+// +-------+
+// |Michael|
+// |   Andy|
+// | Justin|
+// +-------+
+
+// Select everybody, but increment the age by 1
+df.select($"name", $"age" + 1).show()
+// +-------+---------+
+// |   name|(age + 1)|
+// +-------+---------+
+// |Michael|     null|
+// |   Andy|       31|
+// | Justin|       20|
+// +-------+---------+
+
+// Select people older than 21
+df.filter($"age" > 21).show()
+// +---+----+
+// |age|name|
+// +---+----+
+// | 30|Andy|
+// +---+----+
+
+// Count people by age
+df.groupBy("age").count().show()
+// +----+-----+
+// | age|count|
+// +----+-----+
+// |  19|    1|
+// |null|    1|
+// |  30|    1|
+// +----+-----+
+```
+#### 5.2.3.SQL风格语法
+```
+// Register the DataFrame as a SQL temporary view
+df.createOrReplaceTempView("people")
+
+val sqlDF = spark.sql("SELECT * FROM people")
+sqlDF.show()
+// +----+-------+
+// | age|   name|
+// +----+-------+
+// |null|Michael|
+// |  30|   Andy|
+// |  19| Justin|
+// +----+-------+
+
+
+// Register the DataFrame as a global temporary view
+df.createGlobalTempView("people")
+
+// Global temporary view is tied to a system preserved database `global_temp`
+spark.sql("SELECT * FROM global_temp.people").show()
+// +----+-------+
+// | age|   name|
+// +----+-------+
+// |null|Michael|
+// |  30|   Andy|
+// |  19| Justin|
+// +----+-------+
+
+// Global temporary view is cross-session
+spark.newSession().sql("SELECT * FROM global_temp.people").show()
+// +----+-------+
+// | age|   name|
+// +----+-------+
+// |null|Michael|
+// |  30|   Andy|
+// |  19| Justin|
+// +----+-------+
+```
+
+临时表是Session范围内的，Session退出后，表就失效了。如果想应用范围内有效，可以使用全局表。注意使用全局表时需要全路径访问，如：global_temp.people
