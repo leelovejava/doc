@@ -1,11 +1,15 @@
 # Spark SQL and DataFrame
 
 ## 1.课程目标
+
 ### 1.1.掌握Spark SQL的原理
 
 ### 1.2.掌握DataFrame数据结构和使用方式
 
-### 1.3.熟练使用Spark SQL完成计算任务
+### 1.3.类型转换
+
+### 1.4.熟练使用Spark SQL完成计算任务
+
 
 ## 2.Spark SQL
 
@@ -558,6 +562,9 @@ scala> peopleDF.show()
 ### 5.2.DataFrame常用操作
 
 #### 5.2.1.DSL风格语法
+
+**前提:引入隐式转换import spark.implicits._**
+
 ```
 // This import is needed to use the $-notation
 import spark.implicits._
@@ -648,4 +655,104 @@ spark.newSession().sql("SELECT * FROM global_temp.people").show()
 // +----+-------+
 ```
 
-临时表是Session范围内的，Session退出后，表就失效了。如果想应用范围内有效，可以使用全局表。注意使用全局表时需要全路径访问，如：global_temp.people
+临时表是Session范围内的，Session退出后，表就失效了。如果想应用范围内有效，可以使用全局表。注意使用全局表时需要加上前缀访问，如：global_temp.people
+
+### 5.3.DataFrame、DataSet、RDD的互操作
+
+var peopleRDD = sc.textFile("examples/src/main/resources/people.txt")
+
+res2: Array[String] = Array(Michael, 29, Andy, 30, Justin, 19)
+
+#### RDD->DataFrame
+toDF("name","age")
+
+var peopleDF=peopleRDD.map(_.split(",")).map(para=>(para(0).trim(),para(1).trim().toInt)).toDF("name","age")
+
+```
+scala>peopleDF.show
++-------+---+
+|   name|age|
++-------+---+
+|Michael| 29|
+|   Andy| 30|
+| Justin| 19|
++-------+---+
+```
+
+**一般用元组把一行的数据写在一起，然后在toDF中指定字段名**
+```
+import spark.implicits._
+val testDF = rdd.map {line=>
+      (line._1,line._2)
+    }.toDF("col1","col2")
+```
+
+#### DataFrame/Dataset转RDD
+dataFrame.rdd
+dataSet.rdd
+
+peopleDF.rdd.collect
+
+res4: Array[org.apache.spark.sql.Row] = Array([Michael,29], [Andy,30], [Justin,19])
+
+#### RDD转Dataset
+toDS
+
+**强类型,前提:定义样例类**
+scala>case class Person(name:String,age:Int)
+
+Person:样例类
+
+**定义每一行的类型（case class）时，已经给出了字段名和类型，后面只要往case class里面添加值即可**
+
+
+var peopleDS=Seq(Person("Lucy",25)).toDS
+
+peopleDS.show
+
+
+```
+import spark.implicits._
+case class Coltest(col1:String,col2:Int)extends Serializable //定义字段名和类型
+val testDS = rdd.map {line=>
+      Coltest(line._1,line._2)
+    }.toDS
+```
+
+#### Dataset转DataFrame
+
+**把case class封装成Row**
+
+dataSet.toDF
+
+```
+scala>peopleDS.toDF.show
++----+---+
+|name|age|
++----+---+
+|Lucy| 25|
++----+---+
+```
+
+```
+import spark.implicits._
+val testDF = testDS.toDF
+```
+
+#### DataFrame转Dataset
+
+dataFrame.as[Person]
+
+```
+scala> peopleDF.as[Person].collect
+res11: Array[Person] = Array(Person(Michael,29), Person(Andy,30), Person(Justin,19))
+```
+
+```
+import spark.implicits._
+case class Coltest(col1:String,col2:Int)extends Serializable //定义字段名和类型
+val testDS = testDF.as[Coltest]
+
+//这种方法就是在给出每一列的类型后，使用as方法，转成Dataset，这在数据类型是DataFrame又需要针对各个字段处理时极为方便。
+//在使用一些特殊的操作时，一定要加上 import spark.implicits._ 不然toDF、toDS无法使用
+```
