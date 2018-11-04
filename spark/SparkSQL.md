@@ -606,6 +606,9 @@ df.groupBy("age").count().show()
 // +----+-----+
 ```
 #### 5.2.3.SQL风格语法
+
+**前提:注册一张临时表**
+
 ```
 // Register the DataFrame as a SQL temporary view
 df.createOrReplaceTempView("people")
