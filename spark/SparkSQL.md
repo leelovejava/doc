@@ -13,6 +13,10 @@
 
 ## 2.Spark SQL
 
+### doc
+
+[奇虎360基于SparkSQL的海量数据仓库设计与实践](https://mp.weixin.qq.com/s/gCErgNcUiS4dBofkhvDLwQ)
+
 ### 2.1.Spark SQL概述
 
 ### 2.1.1.什么是Spark SQL
