@@ -380,6 +380,8 @@ Spark SQL可以通过JDBC从关系型数据库中读取数据的方式创建Data
 
 ### 4.1.1.从MySQL中加载数据（Spark Shell方式）
 #### 1.启动Spark Shell，必须指定mysql连接驱动jar包
+启动spark
+sbin/start-master.sh 
 ```
 /usr/local/spark-1.5.2-bin-hadoop2.6/bin/spark-shell \
 --master spark://node1.itcast.cn:7077 \
@@ -720,8 +722,7 @@ val peopleRDD = spark.sparkContext.textFile("examples/src/main/resources/people.
 
 val schemaString = "name age"
 // Generate the schema based on the string of schema
-val fields = schemaString.split(" ")
-.map(fieldName => StructField(fieldName, StringType, nullable = true))
+val fields = schemaString.split(" ").map(fieldName => StructField(fieldName, StringType, nullable = true))
 
 // 2).创建用StructType来表示的行结构信息
 val schema = StructType(fields)
@@ -731,3 +732,91 @@ val rowRDD = peopleRDD.map(_.split(",")).map(attributes => Row(attributes(0), at
 // 3).通过SparkSession提供的createDataFrame方法来应用Schema
 val peopleDF = spark.createDataFrame(rowRDD, schema)
 ```
+
+#### 5.5.用户自定义函数
+
+通过spark.udf功能用户可以自定义函数
+
+##### 5.5.1.用户自定义UDF函数
+```
+scala> val df = spark.read.json("examples/src/main/resources/people.json")
+df: org.apache.spark.sql.DataFrame = [age: bigint, name: string]
+
+scala> df.show()
++----+-------+
+| age|   name|
++----+-------+
+|null|Michael|
+|  30|   Andy|
+|  19| Justin|
++----+-------+
+
+
+scala> spark.udf.register("addName", (x:String)=> "Name:"+x)
+res5: org.apache.spark.sql.expressions.UserDefinedFunction = UserDefinedFunction(<function1>,StringType,Some(List(StringType)))
+
+scala> df.createOrReplaceTempView("people")
+
+scala> spark.sql("Select addName(name), age from people").show()
++-----------------+----+
+|UDF:addName(name)| age|
++-----------------+----+
+|     Name:Michael|null|
+|        Name:Andy|  30|
+|      Name:Justin|  19|
++-----------------+----+
+```
+
+##### 5.5.2.用户自定义聚合函数
+
+5.5.2.1 弱类型用户自定义聚合函数
+
+5.5.2.2 强类型用户自定义聚合函数
+
+## 6.SparkSQL数据源 
+
+### 通用加载/保存方法
+
+### Parquet文件
+
+
+### Hive数据库
+
+### JSON数据集
+
+### JDBC
+**相关的数据库驱动放到SPARK_HOME/lib**
+
+>>bin/spark-shell --jars jars/mysql-connector-java-5.1.27.jar
+
+
+```
+val jdbcDF = spark.read.format("jdbc").option("url", "jdbc:mysql://hadoop000:3306/mysql").option("dbtable", "db").option("user", "root").option("password", "root").load()
+
+val connectionProperties = new Properties()
+connectionProperties.put("user", "root")
+connectionProperties.put("password", "root")
+```
+
+#### 8.项目实战 
+慕课网日志实战
+
+数据处理流程
+1）数据采集
+	Flume： web日志写入到HDFS
+
+2）数据清洗
+	脏数据
+	Spark、Hive、MapReduce 或者是其他的一些分布式计算框架  
+	清洗完之后的数据可以存放在HDFS(Hive/Spark SQL)
+
+3）数据处理
+	按照我们的需要进行相应业务的统计和分析
+	Spark、Hive、MapReduce 或者是其他的一些分布式计算框架
+
+4）处理结果入库
+	结果可以存放到RDBMS、NoSQL
+
+5）数据的可视化
+	通过图形化展示的方式展现出来：饼图、柱状图、地图、折线图
+	ECharts、HUE、Zeppelin
