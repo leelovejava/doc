@@ -686,3 +686,48 @@ val testDS = testDF.as[Coltest]
 //这种方法就是在给出每一列的类型后，使用as方法，转成Dataset，这在数据类型是DataFrame又需要针对各个字段处理时极为方便。
 //在使用一些特殊的操作时，一定要加上 import spark.implicits._ 不然toDF、toDS无法使用
 ```
+### 5.4.Dataset和RDD互操作
+#### 5.4.1.通过反射获取Scheam
+
+SparkSQL能够自动将包含有case类的RDD转换成DataFrame，case类定义了table的结构，case类属性通过反射变成了表的列名。
+
+Case类可以包含诸如Seqs或者Array等复杂的结构。
+
+```
+map(attributes => Person(attributes(0), attributes(1).trim.toInt)).toDF()
+
+// RDD->DataFrame
+//peopleRDD.map(_.split(",")).map(para=>(para(0).trim(),para(1).trim().toInt)).toDF("name","age")
+
+// 访问元素
+teenagersDF.map(teenager => "Name: " + teenager(0)).show()
+teenagersDF.map(teenager => "Name: " + teenager.getAs[String]("name")).show()
+```
+
+#### 5.4.2.通过编程设置Schema（StructType）
+
+如果case类不能够提前定义，可以通过下面三个步骤定义一个DataFrame
+
+1).创建一个多行结构的RDD
+
+2).创建用StructType来表示的行结构信息
+
+3).通过SparkSession提供的createDataFrame方法来应用Schema
+
+```
+// 1).创建一个多行结构的RDD
+val peopleRDD = spark.sparkContext.textFile("examples/src/main/resources/people.txt")
+
+val schemaString = "name age"
+// Generate the schema based on the string of schema
+val fields = schemaString.split(" ")
+.map(fieldName => StructField(fieldName, StringType, nullable = true))
+
+// 2).创建用StructType来表示的行结构信息
+val schema = StructType(fields)
+
+val rowRDD = peopleRDD.map(_.split(",")).map(attributes => Row(attributes(0), attributes(1).trim))
+
+// 3).通过SparkSession提供的createDataFrame方法来应用Schema
+val peopleDF = spark.createDataFrame(rowRDD, schema)
+```
