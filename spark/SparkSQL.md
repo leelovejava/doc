@@ -775,16 +775,128 @@ scala> spark.sql("Select addName(name), age from people").show()
 
 ## 6.SparkSQL数据源 
 
-### 通用加载/保存方法
+### 6.1.通用加载/保存方法
+默认数据源为Parquet格式.数据源为Parquet文件时，Spark SQL可以方便的执行所有的操作
+修改默认的数据源格式:spark.sql.sources.default
+```
+val df = sqlContext.read.load("examples/src/main/resources/users.parquet") 
+df.select("name", "favorite_color").write.save("namesAndFavColors.parquet")
+```
 
-### Parquet文件
+当数据源格式不是parquet格式文件时,需要手动指定数据源的格式(json, parquet, jdbc, orc, libsvm, csv, text)
 
+read.load:加载通用数据,使用write和save保存数据
+```
+val peopleDF = spark.read.format("json").load("examples/src/main/resources/people.json")
+peopleDF.write.format("parquet").save("hdfs://hadoop000:8020/namesAndAges.parquet")
 
-### Hive数据库
+// 直接运行sql在文件上
+val sqlDF = spark.sql("SELECT * FROM parquet.`hdfs://hadoop000:8020/users.parquet`")
+sqlDF.show()
 
-### JSON数据集
+// 1).DataFrames读取json,保存为parquet,维护模式信息
+// val peopleDF = spark.read.json("examples/src/main/resources/people.json").write.parquet("examples/src/main/resources/people.parquet")
+// 2).启动hadoop   hadoop_home/sbin/start-all.sh
+// 3).关闭安全模式 hadoop_home/
+// put: Call From hadoop000/192.168.9.242 to hadoop000:8020 failed on connection exception: java.net.ConnectException: Connection refused; For more details see:  http://wiki.apache.org/hadoop/ConnectionRefused
+// 4).上传文件到hdfs
+// hadoop fs -put /home/hadoop/app/spark-2.2.0-bin-2.6.0-cdh5.7.0/examples/src/main/resources/people.parquet /
+// 5).spark sql读取hdfs上的文件
+// val parquetFileDF  = spark.read.parquet("hdfs://hadoop000:9000/people.parquet")
+// 错误1:org.apache.spark.sql.AnalysisException: Call From hadoop000/192.168.9.242 to hadoop000:9000 failed on connection exception: java.net.ConnectException: Connection refused; For more details see:  http://wiki.apache.org/hadoop/ConnectionRefused; line 1 pos 14
+// 原因:hdfs老版本的端口号为8020,新版本的端口为9000
+// val parquetFileDF  = spark.read.parquet("hdfs://hadoop000:8020/people.parquet")
+// 错误2:
+// WARN ObjectStore: Failed to get database parquet, returning NoSuchObjectException
+// sqlDF: org.apache.spark.sql.DataFrame = [name: string, favorite_color: string ... 1 more field]
+// 创建视图(输出时,format("parquet)):parquetFileDF.createOrReplaceTempView("parquet")
+// val namesDF = spark.sql("SELECT name FROM parquetFile WHERE age BETWEEN 13 AND 19")
+// namesDF.map(attributes => "Name: " + attributes(0)).show()
 
-### JDBC
+```
+
+文件保存选项
+SaveMode执行存储操作(非原子操作,不会锁定)
+| Scala/Java | Any Language | Meaning |
+| ------ | ------ | ------ |
+| SaveMode.ErrorIfExists(default) | "error"(default) | 如果文件存在，则报错 |
+| SaveMode.Append | "append" | 追加 |
+| SaveMode.Overwrite | ""overwrite"" | 覆写 |
+| SaveMode.Ignore	 | "ignore" | 数据存在，则忽略 |
+
+### 6.2.Parquet文件
+
+Parquet是一种流行的列式存储格式，可以高效地存储具有嵌套字段的记录。
+
+![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-sql/19-parquet.png)
+
+#### 6.2.1.Parquet读写
+Parquet格式经常在Hadoop生态圈中被使用，它也支持Spark SQL的全部数据类型。Spark SQL 提供了直接读取和存储 Parquet 格式文件的方法
+```
+// Encoders for most common types are automatically provided by importing spark.implicits._
+import spark.implicits._
+
+val peopleDF = spark.read.json("examples/src/main/resources/people.json")
+
+// DataFrames can be saved as Parquet files, maintaining the schema information
+peopleDF.write.parquet("hdfs://master01:9000/people.parquet")
+
+// Read in the parquet file created above
+// Parquet files are self-describing so the schema is preserved
+// The result of loading a Parquet file is also a DataFrame
+val parquetFileDF = spark.read.parquet("hdfs://master01:9000/people.parquet")
+
+// Parquet files can also be used to create a temporary view and then used in SQL statements
+parquetFileDF.createOrReplaceTempView("parquetFile")
+val namesDF = spark.sql("SELECT name FROM parquetFile WHERE age BETWEEN 13 AND 19")
+namesDF.map(attributes => "Name: " + attributes(0)).show()
+// +------------+
+// |       value|
+// +------------+
+// |Name: Justin|
+// +------------+
+```
+
+#### 6.2.2.解析分区信息
+
+对表进行分区是对数据进行优化的方式之一。在分区的表内，数据通过分区列将数据存储在不同的目录下。Parquet数据源现在能够自动发现并解析分区信息
+
+#### 6.2.3.Schema合并
+
+用户可以先定义一个简单的Schema，然后逐渐的向Schema中增加列描述。通过这种方式，用户可以获取多个有不同Schema但相互兼容的Parquet文件。现在Parquet数据源能自动检测这种情况，并合并这些文件的schemas
+
+因为Schema合并是一个高消耗的操作，在大多数情况下并不需要，所以Spark SQL从1.5.0开始默认关闭了该功能。可以通过下面两种方式开启该功能：
+
+当数据源为Parquet文件时，将数据源选项mergeSchema设置为true
+
+>>sqlContext.read.option("mergeSchema", "true").parquet("hdfs://master01:9000/data/test_table")
+
+设置全局SQL选项spark.sql.parquet.mergeSchema为true
+
+### 6.3.Hive数据库
+
+**Spark SQL中包含Hive的库，不需要安装Hive**
+
+推荐编译Spark SQL时引入Hive支持
+
+HiveQL 中的 CREATE TABLE(并非 CREATE EXTERNAL TABLE)语句来创建表，这些表会被放在默认的文件系统中的/user/hive/warehouse目录,
+
+classPath中有配好的hdfs-site.xml,默认的文件系统就是 HDFS,否则本地文件系统
+
+#### 6.3.1.内嵌Hive
+
+用默认的hive,会在当前工作目录创建(Hive元数据仓库:metastore_db)
+
+![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-sql/20-hive.png)
+
+#### 6.3.2.外部Hive
+复制 hive-site.xml 到spark_home/conf
+
+>>bin/spark-shell --master spark://hadoop000:7077 --jars jars/mysql-connector-java-5.1.27-bin.jar
+
+### 6.4.JSON数据集
+
+### 6.5.JDBC
 **相关的数据库驱动放到SPARK_HOME/lib**
 
 >>bin/spark-shell --jars jars/mysql-connector-java-5.1.27.jar
