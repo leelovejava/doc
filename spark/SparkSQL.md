@@ -871,7 +871,7 @@ namesDF.map(attributes => "Name: " + attributes(0)).show()
 
 当数据源为Parquet文件时，将数据源选项mergeSchema设置为true
 
->>sqlContext.read.option("mergeSchema", "true").parquet("hdfs://master01:9000/data/test_table")
+>sqlContext.read.option("mergeSchema", "true").parquet("hdfs://master01:9000/data/test_table")
 
 设置全局SQL选项spark.sql.parquet.mergeSchema为true
 
