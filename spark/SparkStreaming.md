@@ -4,8 +4,27 @@
 ### 1.1.掌握Spark Streaming的原理
 ### 1.2.熟练使用Spark Streaming完成流式计算任务
 
+## 离线计算与实时计算的对比
+1) 数据来源
+   离线： HDFS 历史数据 数据量比较大
+   实时： 消息队列(Kafka)，实时新增/修改记录过来的某一笔数据
+   
+2）处理过程
+   离线： MapReduce： map + reduce
+   实时： Spark(DStream/SS)
+   
+3) 处理速度
+   离线： 慢
+   实时： 快速
+
+4）进程
+   离线： 启动+销毁
+   实时： 7*24
+
 ## 2.Spark Streaming介绍
+
 ### 2.1.Spark Streaming概述
+
 ### 2.1.1.什么是Spark Streaming
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-stream/01.png?raw=true)
 
@@ -94,6 +113,19 @@ saveAsHadoopFiles(prefix, [suffix])	Save this DStream's contents as Hadoop files
 foreachRDD(func)	The most generic output operator that applies a function, func, to each RDD generated from the stream. This function should push the data in each RDD to an external system, such as saving the RDD to files, or writing it over the network to a database. Note that the function func is executed in the driver process running the streaming application, and will usually have RDD actions in it that will force the computation of the streaming RDDs.
 
 ## 4.实战
+
+### 4.0.流处理的流程
+
+![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-stream/18.png?raw=true)
+
+初识实时流处理--->日志收集框架Flume--->消息队列Kafka--->实战环境搭建--->Spark Streaming入门--->
+
+Spark Streaming进阶--->Spark Streaming集成Flume--->
+
+整合Flume,Kafka,Spark Streaming打造通用的流处理平台基础。--->
+
+Spark Streaming项目实战--->数据处理结果可视化
+
 ### 4.1.用Spark Streaming实现实时WordCount
 架构图：
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-stream/13.png?raw=true)
@@ -237,3 +269,20 @@ object UrlCount {
   }
 }
 ```
+### 4.3.慕课网日志
+
+处理流程剖析
+
+日志产生器
+
+使用Flume采集日志
+
+将Flume收集到的数据输出到Kafka
+
+Spark Streaming消费Kafka的数据进行统计
+
+Spark Streaming如何高效的读写数据到Hbase
+
+本地测试和生产环境使用的拓展
+
+Java开发Spark要点拓展
