@@ -903,7 +903,7 @@ spark.sql("SELECT * FROM src").show
 #### 6.3.2.外部Hive
 复制 hive-site.xml 到spark_home/conf
 
->>bin/spark-shell --master spark://hadoop000:7077 --jars jars/mysql-connector-java-5.1.27-bin.jar
+>bin/spark-shell --master spark://hadoop000:7077 --jars jars/mysql-connector-java-5.1.27-bin.jar
 
 HiveContext
 
@@ -912,7 +912,7 @@ HiveContext
 ### 6.5.JDBC
 **相关的数据库驱动放到SPARK_HOME/lib**
 
->>bin/spark-shell --jars jars/mysql-connector-java-5.1.27.jar
+>bin/spark-shell --jars jars/mysql-connector-java-5.1.27.jar
 
 
 ```
