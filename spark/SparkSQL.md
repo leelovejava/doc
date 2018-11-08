@@ -859,7 +859,9 @@ namesDF.map(attributes => "Name: " + attributes(0)).show()
 
 #### 6.2.2.解析分区信息
 
-对表进行分区是对数据进行优化的方式之一。在分区的表内，数据通过分区列将数据存储在不同的目录下。Parquet数据源现在能够自动发现并解析分区信息
+对表进行分区是对数据进行优化的方式之一。在分区的表内，数据通过分区列将数据存储在不同的目录下。Parquet数据源现在能够自动发现并解析分区信息,
+
+自动解析分区类型 spark.sql.sources.partitionColumnTypeInference.enabled 默认为true,关闭为disabled;默认解析string类型
 
 #### 6.2.3.Schema合并
 
@@ -889,10 +891,21 @@ classPath中有配好的hdfs-site.xml,默认的文件系统就是 HDFS,否则本
 
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-sql/20-hive.png)
 
+```
+spark.sql("show tables").show
+spark.sql("CREATE TABLE IF NOT EXISTS src(key INT,value STRING)")
+spark.sql("show tables").show
+spark.sql("SELECT * FROM src").show
+spark.sql("LOAD DATA LOCAL INPATH 'examples/src/main/resources/kv1.txt' INTO TABLE src")
+spark.sql("SELECT * FROM src").show
+```
+
 #### 6.3.2.外部Hive
 复制 hive-site.xml 到spark_home/conf
 
 >>bin/spark-shell --master spark://hadoop000:7077 --jars jars/mysql-connector-java-5.1.27-bin.jar
+
+HiveContext
 
 ### 6.4.JSON数据集
 
@@ -912,6 +925,16 @@ connectionProperties.put("password", "root")
 
 #### 8.项目实战 
 慕课网日志实战
+
+[基于SparkSql的日志分析实战](https://blog.csdn.net/sinat_37513998/article/details/82892444)
+
+用户日志分析系统实战
+(一) https://blog.csdn.net/qq_17776287/article/details/78535896
+(二) https://blog.csdn.net/qq_17776287/article/details/78546161
+(三) https://blog.csdn.net/qq_17776287/article/details/78557056
+(四) https://blog.csdn.net/qq_17776287/article/details/78565958
+(五) https://blog.csdn.net/qq_17776287/article/details/78566902
+(六) https://blog.csdn.net/qq_17776287/article/details/78566904
 
 数据处理流程
 1）数据采集
