@@ -62,19 +62,6 @@ Storm 编程模型：Spout/Bolt
 
 ## 3.DStream
 
-netCat:
-
-网络工具
-
-[安装](https://blog.csdn.net/bsunp/article/details/56484356?locationNum=11&fps=1)
-```
-wget https://sourceforge.NET/projects/netcat/files/netcat/0.7.1/netcat-0.7.1.tar.gz/download
-./configure
-make && make install
-
-nc -help成功
-```
-
 ### 3.1.什么是DStream
 Discretized Stream是Spark Streaming的基础抽象，代表持续性的数据流和经过各种Spark原语操作后的结果数据流。
 在内部实现上，DStream是一系列连续的RDD来表示。每个RDD含有一段时间间隔内的数据，如下图：
@@ -145,6 +132,18 @@ Spark Streaming项目实战--->数据处理结果可视化
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-stream/13.png?raw=true)
 
 #### 1.安装并启动生成者
+
+netCat:网络工具
+
+[安装](https://blog.csdn.net/bsunp/article/details/56484356?locationNum=11&fps=1)
+```
+wget https://sourceforge.NET/projects/netcat/files/netcat/0.7.1/netcat-0.7.1.tar.gz/download
+./configure
+make && make install
+
+nc -help成功
+```
+
 首先在一台Linux（ip：192.168.10.101）上用YUM安装nc工具
 yum install -y nc
 
@@ -169,7 +168,7 @@ object NetworkWordCount {
     //设置DStream批次时间间隔为2秒
     val ssc = new StreamingContext(conf, Seconds(2))
     //通过网络读取数据
-    val lines = ssc.socketTextStream("192.168.10.101", 9999)
+    val lines = ssc.socketTextStream("hadoop000", 9999)
     //将读到的数据用空格切成单词
     val words = lines.flatMap(_.split(" "))
     //将单词和1组成一个pair
