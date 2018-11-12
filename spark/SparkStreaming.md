@@ -61,6 +61,20 @@ Storm 编程模型：Spout/Bolt
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-stream/09.png?raw=true)	
 
 ## 3.DStream
+
+netCat:
+
+网络工具
+
+[安装](https://blog.csdn.net/bsunp/article/details/56484356?locationNum=11&fps=1)
+```
+wget https://sourceforge.NET/projects/netcat/files/netcat/0.7.1/netcat-0.7.1.tar.gz/download
+./configure
+make && make install
+
+nc -help成功
+```
+
 ### 3.1.什么是DStream
 Discretized Stream是Spark Streaming的基础抽象，代表持续性的数据流和经过各种Spark原语操作后的结果数据流。
 在内部实现上，DStream是一系列连续的RDD来表示。每个RDD含有一段时间间隔内的数据，如下图：
