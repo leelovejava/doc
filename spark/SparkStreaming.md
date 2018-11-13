@@ -113,9 +113,65 @@ saveAsObjectFiles(prefix, [suffix])	Save this DStream's contents as SequenceFile
 saveAsHadoopFiles(prefix, [suffix])	Save this DStream's contents as Hadoop files. The file name at each batch interval is generated based on prefix and suffix: "prefix-TIME_IN_MS[.suffix]". 
 foreachRDD(func)	The most generic output operator that applies a function, func, to each RDD generated from the stream. This function should push the data in each RDD to an external system, such as saving the RDD to files, or writing it over the network to a database. Note that the function func is executed in the driver process running the streaming application, and will usually have RDD actions in it that will force the computation of the streaming RDDs.
 
-## 4.实战
+## 4.DStreams
 
-### 4.0.流处理的流程
+### 4.1.简介
+Spark Streaming的基础抽象，代表持续性的数据流和经过各种Spark原语操作后的结果数据流
+
+DStream是一系列连续的RDD来表示,每个RDD含有一段时间间隔内的数据
+
+### 4.2.DStreams输入
+
+每个接收器都以 Spark 执行器程序中一个长期运行的任务的形式运行，因此会占据分配给应用的 CPU 核心,本地模式,不要使用local或者local[1]
+
+#### 4.3.基本数据源
+
+4.3.1.文件数据源
+ 兼容HDFS
+ fileStream/textFileStream
+    
+  ssc.textFileStream("hdfs://hadoop000:9000/data/")
+
+4.3.2.**自定义数据源**
+ 
+ 继承Receiver，并实现onStart、onStop方法来自定义数据源采集
+
+4.3.3.RDD队列
+
+```
+  //创建RDD队列
+  val rddQueue = new mutable.SynchronizedQueue[RDD[Int]]()
+
+  // Create the QueueInputDStream and use it do some processing
+  // 创建QueueInputDStream
+  val inputStream = ssc.queueStream(rddQueue)
+```
+
+#### 4.4.高级数据源
+
+4.4.1.kafka
+
+spark- streaming-kafka_2.10 KafkaUtils
+
+val topicLines = KafkaUtils.createStream(ssc, zkQuorum, group, topics) 
+
+4.4.2.Flume-ng
+
+两个接收器
+
+推式接收器:以Avro数据池的方式工作,由Flume向其中推数据
+
+拉式接收器:从自定义的中间数据池中拉取数据,由其他数据池中拉数据,而其他进程可以使用Flume把数据推进该中间数据池
+
+#### 4.5.DStreams转换
+
+有状态转换
+
+无状态转换
+
+## 5.实战
+
+### 5.1.流处理的流程
 
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-stream/18.png?raw=true)
 
@@ -127,11 +183,11 @@ Spark Streaming进阶--->Spark Streaming集成Flume--->
 
 Spark Streaming项目实战--->数据处理结果可视化
 
-### 4.1.用Spark Streaming实现实时WordCount
+### 5.2.用Spark Streaming实现实时WordCount
 架构图：
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-stream/13.png?raw=true)
 
-#### 1.安装并启动生成者
+#### 5.2.1.安装并启动生成者
 
 netCat:网络工具
 
@@ -150,7 +206,7 @@ yum install -y nc
 启动一个服务端并监听9999端口
 nc -lk 9999
 
-#### 2.编写Spark Streaming程序
+#### 5.2.2.编写Spark Streaming程序
 ```
 package cn.itcast.spark.streaming
 
@@ -185,14 +241,14 @@ object NetworkWordCount {
 }
 ```
 
-#### 3.启动Spark Streaming程序：由于使用的是本地模式"local[2]"所以可以直接在本地运行该程序
+#### 5.2.3.启动Spark Streaming程序：由于使用的是本地模式"local[2]"所以可以直接在本地运行该程序
 注意：要指定并行度，如在本地运行设置setMaster("local[2]")，相当于启动两个线程，一个给receiver，一个给computer。如果是在集群中运行，必须要求集群中可用core数大于1
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-stream/13.png?raw=true)
 
-#### 4.在Linux端命令行中输入单词
+#### 5.2.4.在Linux端命令行中输入单词
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-stream/14.png?raw=true)
 
-#### 5.在IDEA控制台中查看结果
+#### 5.2.5.在IDEA控制台中查看结果
 
 问题：结果每次在Linux段输入的单词次数都被正确的统计出来，但是结果不能累加！如果需要累加需要使用updateStateByKey(func)来更新状态，下面给出一个例子：
 ```
@@ -308,7 +364,7 @@ object KafkaStreaming{
 }
 ```
 
-### 4.2.Spark Streaming整合Kafka完成网站点击流实时统计
+### 5.3.Spark Streaming整合Kafka完成网站点击流实时统计
 
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-stream/15.png?raw=true)
 
@@ -359,7 +415,7 @@ object UrlCount {
   }
 }
 ```
-### 4.3.慕课网日志
+### 5.4.慕课网日志
 
 处理流程剖析
 
