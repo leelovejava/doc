@@ -36,3 +36,6 @@ firewall-cmd --zone=public --add-port=1000-2000/tcp --permanent
 
 centos7安装网卡关闭的解决办法
 https://blog.csdn.net/dancheren/article/details/73611878
+
+按日期截取日志
+sed -n '/2018-11-14 10:00:/,/2018-11-14 12:00:/p' intellif_monitor_info.log > 2018111414.log
