@@ -48,22 +48,40 @@ Spark Streaming支持的数据输入源很多，例如：Kafka、Flume、Twitter
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-stream/05.png?raw=true)
 
 ### 2.1.3.Spark与Storm的对比	
-Spark 开发语言：Scala	
+
+1) 开发语言
+Spark ：Scala	
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-stream/06.png?raw=true)
 
-Storm 开发语言：Clojure
+Storm ：Clojure
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-stream/07.png?raw=true)
 
-Spark 编程模型：DStream	
+2) 编程模型
+Spark :DStream	
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-stream/08.png?raw=true)
 
-Storm 编程模型：Spout/Bolt
+Storm :Spout/Bolt
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-stream/09.png?raw=true)	
+
+3) 场景
+
+Storm 场景:
+1、纯实时--实时金融系统，金融交易和分析
+2、事务机制和可靠性机制
+3、如果还需要针对高峰低峰时间段，动态调整实时计算程序的并行度，以最大限度利用集群资源（通常是在小型公司，集群资源紧张的情况），也可以考虑用Storm
+4、不需要在中间执行SQL交互式查询、复杂的transformation算子等，那么用Storm是比较好的选择
+
+Spark 场景:
+1、还包括了离线批处理、交互式查询等业务功能
+2、涉及到高延迟批处理、交互式查询等功能
 
 ## 3.DStream
 
 ### 3.1.什么是DStream
 Discretized Stream是Spark Streaming的基础抽象，代表持续性的数据流和经过各种Spark原语操作后的结果数据流。
+
+实现:
+"微批次"架构,把流式计算当作一系列连续的小规模批处理
 在内部实现上，DStream是一系列连续的RDD来表示。每个RDD含有一段时间间隔内的数据，如下图：
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-stream/10.png?raw=true)
 
@@ -130,11 +148,12 @@ DStream是一系列连续的RDD来表示,每个RDD含有一段时间间隔内的
  兼容HDFS
  fileStream/textFileStream
     
-  ssc.textFileStream("hdfs://hadoop000:9000/data/")
+  ssc.textFileStream(dataDirectory)
 
 4.3.2.**自定义数据源**
  
- 继承Receiver，并实现onStart、onStop方法来自定义数据源采集
+ 继承Receiver，并重写onStart(在Receiver启动的时候调用的方法)、onStop(在Receiver正常停止的情况下调用的方法)方法来自定义数据源采集
+ 涉及多线程,sock(获取ip,端口,交给输入流调用),输入流调用时： val lines=  ssc.receiverStream(new socketReceiver("hadoop100",9999))
 
 4.3.3.RDD队列
 
@@ -165,9 +184,17 @@ val topicLines = KafkaUtils.createStream(ssc, zkQuorum, group, topics)
 
 #### 4.5.DStreams转换
 
-有状态转换
+有状态转换:(根据之前的RDD或中间数据生成当前RDD)：updateStateBykey() 
+        window系列的updateStateBykey():结果贯穿整个应用程序,需要做检查点的目录
+             window系列，如reduceByKeyAndWindow 是一个时间范围的计算,处理一段时间内发送的业务,如：性能,比例 
+                    包括:窗口大小：类似于1步
+                         滑动步长：类似于1步的大小
 
-无状态转换
+无状态转换:map(),flatMap(),filit(),repartition()
+
+#### 4.6.DStreams输出
+
+print、saveAsTextFiles、saveAsHadoopFiles
 
 ## 5.实战
 
