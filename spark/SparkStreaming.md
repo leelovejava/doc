@@ -75,6 +75,10 @@ Spark 场景:
 1、还包括了离线批处理、交互式查询等业务功能
 2、涉及到高延迟批处理、交互式查询等功能
 
+
+Spark Streaming与Flink的区别?
+https://mp.weixin.qq.com/s/xc0cJhcwUaT9SHxX7vdXsg
+
 ## 3.DStream
 
 ### 3.1.什么是DStream
@@ -181,6 +185,33 @@ val topicLines = KafkaUtils.createStream(ssc, zkQuorum, group, topics)
 推式接收器:以Avro数据池的方式工作,由Flume向其中推数据
 
 拉式接收器:从自定义的中间数据池中拉取数据,由其他数据池中拉数据,而其他进程可以使用Flume把数据推进该中间数据池
+
+
+flume ng + Spark Steam
+```pom
+<dependency>
+    <groupId>org.apache.spark</groupId>
+    <artifactId>spark-streaming-flume-sink_2.11</artifactId>
+    <version>1.2.0</version>
+</dependency>
+```
+
+配置
+
+自定义 Flume 数据池添加到一个节点上之后，就需要配置 Flume 来把数据推送到这个数据池中
+
+```properties
+a1.sinks = spark
+a1.sinks.spark.type = org.apache.spark.streaming.flume.sink.SparkSink
+a1.sinks.spark.hostname = receiver-hostname
+a1.sinks.spark.port = port-used-for-sync-not-spark-port
+a1.sinks.spark.channel = memoryChannel
+```
+flume启动
+>> bin/flume-ng agent -n a1 -c conf/ -f conf/flume-poll-spark.conf -Dflume.root.logger=INFO,console
+
+// 利用sparkStreaming对接flume数据，实现单词计算------Poll拉模式
+
 
 #### 4.5.DStreams转换
 
