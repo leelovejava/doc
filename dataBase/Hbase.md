@@ -136,9 +136,16 @@ hbase.regionserver.port
     解决办法:关闭ZooKeeper，删除zookeeper的dataDir路径下的version-2文件夹，然后重启
 5. java.lang.NoSuchMethodException: org.apache.hadoop.fs.LocalFileSystem.setStoragePolicy(org.apache.hadoop.fs.Path, java.lang.String)
 
+6. ERROR: Can't get master address from ZooKeeper; znode data == null
+运行hbase(zookeeper)的用户无法写入zookeeper文件，导致znode data为空
+ <property>
+    <name>hbase.zookeeper.property.dataDir</name>
+    <value>/home/hadoop/app/tmp/zk</value>
+  </property>
+  
 ## hbase shell
 ### 开启
-/bin/hbase shell
+bin/hbase shell
 
 ### Create a table
 create 'test', 'cf'
