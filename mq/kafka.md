@@ -345,6 +345,7 @@ kafka-server-start.sh config/server.properties 1>/dev/null 2>&1 &
 #### 6）查看某个Topic的详情
 
 [atguigu@hadoop102 kafka]$ bin/kafka-topics.sh --topic first --describe --zookeeper 127.0.0.1:2181
+>> bin/kafka-console-consumer.sh --zookeeper 192.168.11.199:2181 --from-beginning --topic engine-person1
 
 ### 2.4 Kafka配置信息
 
