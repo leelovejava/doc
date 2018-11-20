@@ -39,3 +39,5 @@ https://blog.csdn.net/dancheren/article/details/73611878
 
 按日期截取日志
 sed -n '/2018-11-14 10:00:/,/2018-11-14 12:00:/p' intellif_monitor_info.log > 2018111414.log
+
+telnet
