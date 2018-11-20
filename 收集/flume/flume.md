@@ -6,6 +6,7 @@ http://archive.cloudera.com/cdh5/cdh/5/flume-ng-1.6.0-cdh5.7.0/
 [用户手册](http://flume.apache.org/FlumeUserGuide.html)
 [Flume-1-7-0中文用户手册](https://www.cnblogs.com/ximengchj/p/6423689.html)
 [Flume-1.8.0用户手册官方文档理解](https://blog.csdn.net/weixin_40483882/article/details/81227952)
+[flume学习系列](https://www.jianshu.com/p/bce1088eb8a6)
 
 ## 1.简介
 Flume is a distributed(分布式), reliable(可靠), and available(可用) service for efficiently collecting(收集), aggregating(聚合), and moving(移动) large amounts of log data. 
