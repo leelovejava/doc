@@ -268,7 +268,7 @@ HMaster失效
 
 ##Phoenix-HBase中间层
 
-####d oc
+####doc
 [Phoenix综述（史上最全Phoenix中文文档）](https://www.cnblogs.com/linbingdong/p/5832112.html)
 
 #### 简介
