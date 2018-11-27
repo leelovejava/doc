@@ -3,33 +3,33 @@
 
 ## 目录结构
 * [kafka概述](#一、Kafka概述)
-  * [Kafka是什么](#1.1 Kafka是什么)
-  * [Kafka内部实现原理](#1.2 Kafka内部实现原理)
-  * [为什么需要消息队列](#1.2为什么需要消息队列)
-  * [Kafka架构](#1.3 Kafka架构)
+  * [Kafka是什么](#1.1.Kafka是什么)
+  * [Kafka内部实现原理](#1.2.Kafka内部实现原理)
+  * [为什么需要消息队列](#1.3.为什么需要消息队列)
+  * [Kafka架构](#1.4.Kafka架构)
 * [kafka集群部署](#二、Kafka集群部署)
   * [环境准备](#2.1环境准备)
-  * [Kafka集群部署 ](#2.2 Kafka集群部署 )
-  * [Kafka命令行操作](#2.3 Kafka命令行操作)
-  * [Kafka配置信息](#2.4 Kafka配置信息)
+  * [Kafka集群部署 ](#2.2.Kafka集群部署 )
+  * [Kafka命令行操作](#2.3.Kafka命令行操作)
+  * [Kafka配置信息](#2.4.Kafka配置信息)
 * [kafka工作流程分析](#三、Kafka工作流程分析)
-  * [Kafka生产过程分析](#3.1 Kafka生产过程分析)
-  * [broker 保存消息](#3.2 broker保存消息)
-  * [Kafka消费过程分析](#3.3 Kafka消费过程分析)
+  * [Kafka生产过程分析](#3.1.Kafka生产过程分析)
+  * [broker 保存消息](#3.2.broker保存消息)
+  * [Kafka消费过程分析](#3.3.Kafka消费过程分析)
 * [kafka API实战](#四、Kafka API实战)
-  * [环境准备](#4.1环境准备)
-  * [Kafka生产者Java API](#4.2 Kafka生产者Java API)
-  * [Kafka消费者Java API](#4.3 Kafka消费者Java API)
+  * [环境准备](#4.1.环境准备)
+  * [Kafka生产者Java API](#4.2.Kafka生产者Java API)
+  * [Kafka消费者Java API](#4.3.Kafka消费者Java API)
 * [kafka producer拦截器](#五、Kafka producer拦截器(interceptor))
-  * [拦截器原理](#5.1拦截器原理)
-  * [拦截器案例](#5.2拦截器案例)
+  * [拦截器原理](#5.1.拦截器原理)
+  * [拦截器案例](#5.2.拦截器案例)
 * [kafka stream](#六、kafka Streams)
-  * [概述](#6.1概述)
-  * [Kafka Stream案例](#6.2 Kafka Stream案例)
+  * [概述](#6.1.概述)
+  * [Kafka Stream案例](#6.2.Kafka Stream案例)
 
 ## 一、Kafka概述
 
-### 1.1 Kafka是什么
+### 1.1.Kafka是什么
 
 在流式计算中，Kafka一般用来缓存数据，Storm通过消费Kafka的数据进行计算。
 
@@ -41,7 +41,7 @@
 
 4）无论是kafka集群，还是producer和consumer都依赖于zookeeper集群保存一些meta信息，来保证系统可用性。
 
-### 1.2 Kafka内部实现原理
+### 1.2.Kafka内部实现原理
 ![image](https://github.com/leelovejava/doc/blob/master/img/kafka/01.png)
  
 （1）点对点模式（一对一，消费者主动拉取数据，消息收到后消息清除）
@@ -50,7 +50,7 @@
 （2）发布/订阅模式（一对多，数据生产后，推送给所有订阅者）
 发布订阅模型则是一个基于推送的消息传送模型。发布订阅模型可以有多种不同的订阅者，临时订阅者只在主动监听主题时才接收消息，而持久订阅者则监听主题的所有消息，即使当前订阅者不可用，处于离线状态。
 
-### 1.2为什么需要消息队列
+### 1.3.为什么需要消息队列
 1）解耦：
 　　允许你独立的扩展或修改两边的处理过程，只要确保它们遵守同样的接口约束。
 
@@ -75,7 +75,7 @@
 8）异步通信：
 很多时候，用户不想也不需要立即处理消息。消息队列提供了异步处理机制，允许用户把一个消息放入队列，但并不立即处理它。想向队列中放入多少消息就放多少，然后在需要的时候再去处理它们。
 
-### 1.3 Kafka架构
+### 1.4.Kafka架构
 
  ![image](https://github.com/leelovejava/doc/blob/master/img/kafka/02.png)
  
@@ -95,7 +95,7 @@
 
 ## 二、Kafka集群部署
 
-### 2.1环境准备
+### 2.1.环境准备
 
 #### 2.1.1 集群规划
 
@@ -222,7 +222,7 @@ Using config: /opt/module/zookeeper-3.4.10/bin/../conf/zoo.cfg
 
 Mode: follower
 
-### 2.2 Kafka集群部署 
+### 2.2.Kafka集群部署 
 
 #### 1）解压安装包
 
@@ -300,7 +300,7 @@ export PATH=$PATH:$KAFKA_HOME/bin
 
 [atguigu@hadoop104 kafka]$ bin/kafka-server-start.sh config/server.properties &
 
-### 2.3 Kafka命令行操作
+### 2.3.Kafka命令行操作
 
 #### 0) 启动kafka
 
@@ -333,13 +333,16 @@ kafka-server-start.sh config/server.properties 1>/dev/null 2>&1 &
 
 #### 4）发送消息
 
+
+bin/kafka-console-producer.sh --broker-list=localhost:9093 --topic personfile-event-flow
+
 [atguigu@hadoop102 kafka]$ bin/kafka-console-producer.sh --broker-list 127.0.0.1:9092 --topic first
 
 >hello world
 >atguigu  atguigu
 
 #### 5）消费消息
-
+bin/kafka-console-consumer.sh --bootstrap-server localhost:2181  --topic personfile-event-flow --from-beginning
 [atguigu@hadoop103 kafka]$ bin/kafka-console-consumer.sh --zookeeper 127.0.0.1:2181 --from-beginning --topic first
 
 #### 6）查看某个Topic的详情
@@ -347,7 +350,7 @@ kafka-server-start.sh config/server.properties 1>/dev/null 2>&1 &
 [atguigu@hadoop102 kafka]$ bin/kafka-topics.sh --topic first --describe --zookeeper 127.0.0.1:2181
 >> bin/kafka-console-consumer.sh --zookeeper 192.168.11.199:2181 --from-beginning --topic engine-person1
 
-### 2.4 Kafka配置信息
+### 2.4.Kafka配置信息
 
 #### 2.4.1 Broker配置信息
 属性	                    默认值	                        描述
@@ -494,7 +497,7 @@ zookeeper.sync.time.ms	2000	How far a ZK follower can be behind a ZK leader
 
 ![image](https://github.com/leelovejava/doc/blob/master/img/kafka/04.png)
  
-### 3.1 Kafka生产过程分析
+### 3.1.Kafka生产过程分析
 
 #### 3.1.1 写入方式
 producer采用推（push）模式将消息发布到broker，每条消息都被追加（append）到分区（patition）中，属于顺序写磁盘（顺序写磁盘效率比随机写内存要高，保障kafka吞吐率）。
@@ -562,7 +565,7 @@ public int partition(String topic, Object key, byte[] keyBytes, Object value, by
 
 5）leader收到所有ISR中的replication的ACK后，增加HW（high watermark，最后commit 的offset）并向producer发送ACK
 
-### 3.2 broker保存消息
+### 3.2.broker保存消息
 
 #### 3.2.1 存储方式
 物理上把topic分成一个或多个patition（对应 server.properties 中的num.partitions=3配置），每个patition物理上对应一个文件夹（该文件夹存储该patition的所有消息和索引文件），如下：
@@ -592,7 +595,7 @@ drwxrwxr-x. 2 atguigu atguigu  4096 8月   6 14:37 first-2
  
 注意：producer不在zk中注册，消费者在zk中注册。
 
-### 3.3 Kafka消费过程分析
+### 3.3.Kafka消费过程分析
 
 kafka提供了两套consumer API：高级Consumer API和低级API。
 
@@ -666,7 +669,7 @@ push（推）模式很难适应消费速率不同的消费者，因为消息发�
 
 ### 四、Kafka API实战
 
-### 4.1环境准备
+### 4.1.环境准备
 
 1）在eclipse中创建一个java工程
 
@@ -895,7 +898,8 @@ public class PartitionerProducer {
 [atguigu@hadoop102 first-1]$ tail -f 00000000000000000000.log
 [atguigu@hadoop102 first-2]$ tail -f 00000000000000000000.log
 	（2）发现数据都存储到指定的分区了。
-### 4.3 Kafka消费者Java API
+
+### 4.3.Kafka消费者Java API
 0）在控制台创建发送者
 [atguigu@hadoop104 kafka]$ bin/kafka-console-producer.sh --broker-list hadoop102:9092 --topic first
 >hello world
@@ -989,7 +993,7 @@ public class CustomNewConsumer {
 
 ## 五、Kafka producer拦截器(interceptor)
 
-### 5.1拦截器原理
+### 5.1.拦截器原理
 Producer拦截器(interceptor)是在Kafka 0.10版本被引入的，主要用于实现clients端的定制化控制逻辑。
 对于producer而言，interceptor使得用户在消息发送前以及producer回调逻辑前有机会对消息做一些定制化需求，比如修改消息等。同时，producer允许用户指定多个interceptor按序作用于同一条消息从而形成一个拦截链(interceptor chain)。Intercetpor的实现接口是org.apache.kafka.clients.producer.ProducerInterceptor，其定义的方法包括：
 
@@ -1006,7 +1010,7 @@ Producer拦截器(interceptor)是在Kafka 0.10版本被引入的，主要用于�
 关闭interceptor，主要用于执行一些资源清理工作
 如前所述，interceptor可能被运行在多个线程中，因此在具体实现时用户需要自行确保线程安全。另外倘若指定了多个interceptor，则producer将按照指定顺序调用它们，并仅仅是捕获每个interceptor可能抛出的异常记录到错误日志中而非在向上传递。这在使用过程中要特别留意。
 
-### 5.2拦截器案例
+### 5.2.拦截器案例
 1）需求：
 实现一个简单的双interceptor组成的拦截链。第一个interceptor会在消息发送前将时间戳信息加到消息value的最前部；第二个interceptor会在消息发送后更新成功发送消息数或失败发送消息数。
 
@@ -1135,7 +1139,7 @@ public class InterceptorProducer {
 
 （1）在kafka上启动消费者，然后运行客户端java程序。
 
-[atguigu@hadoop102 kafka]$ in/kafka-console-consumer.sh --zookeeper hadoop102:2181 --from-beginning --topic first
+[atguigu@hadoop102 kafka]$ bin/kafka-console-consumer.sh --zookeeper hadoop102:2181 --from-beginning --topic first
 ```
 1501904047034,message0
 1501904047225,message1
@@ -1155,7 +1159,7 @@ public class InterceptorProducer {
 
 ## 六、kafka Streams
 
-### 6.1概述
+### 6.1.概述
 
 #### 6.1.1 Kafka Streams 
 Kafka Streams。Apache Kafka开源项目的一个组成部分。是一个功能强大，易于使用的库。用于在Kafka上构建高可分布式、拓展性，容错的应用程序。
@@ -1197,7 +1201,7 @@ Kafka Streams。Apache Kafka开源项目的一个组成部分。是一个功能�
 
 第六，由于Kafka Consumer Rebalance机制，Kafka Stream可以在线动态调整并行度。
 
-### 6.2 Kafka Stream案例
+### 6.2.Kafka Stream案例
 
 #### 6.2.1 eclipse打包插件安装 
 1）将net.sf.fjep.fatjar_0.0.32.jar拷贝到eclipse安装目录中的plugins目录下，然后重启eclipse即可。
@@ -1325,7 +1329,7 @@ atguigu
 hahaha
 ```
 
-### 6.3 Spring-cloud-stream+kafka
+### 6.3.Spring-cloud-stream+kafka
 https://blog.csdn.net/my_momo_csdn/article/details/81983553
 
 #### 6.3.1 消费者
