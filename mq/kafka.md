@@ -174,7 +174,9 @@ server.4=hadoop104:2888:3888
 ```
 
 （2）配置参数解读
+
 Server.A=B:C:D。
+
 A是一个数字，表示这个是第几号服务器；
 
 B是这个服务器的ip地址；
@@ -465,49 +467,91 @@ offsets.commit.required.acks	-1	            The number of acknowledgements that 
 offsets.commit.timeout.ms	    5000	        The offset commit will be delayed until this timeout or the required number of replicas have received the offset commit. This is similar to the producer request timeout.
 
 #### 2.4.2 Producer配置信息
+
 属性	默认值	描述
+
 metadata.broker.list		启动时producer查询brokers的列表，可以是集群中所有brokers的一个子集。注意，这个参数只是用来获取topic的元信息用，producer会从元信息中挑选合适的broker并与之建立socket连接。格式是：host1:port1,host2:port2。
+
 request.required.acks	0	参见3.2节介绍
+
 request.timeout.ms	10000	Broker等待ack的超时时间，若等待时间超过此值，会返回客户端错误信息。
+
 producer.type	sync	同步异步模式。async表示异步，sync表示同步。如果设置成异步模式，可以允许生产者以batch的形式push数据，这样会极大的提高broker性能，推荐设置为异步。
+
 serializer.class	kafka.serializer.DefaultEncoder	序列号类，.默认序列化成 byte[] 。
+
 key.serializer.class		Key的序列化类，默认同上。
+
 partitioner.class	kafka.producer.DefaultPartitioner	Partition类，默认对key进行hash。
+
 compression.codec	none	指定producer消息的压缩格式，可选参数为： “none”, “gzip” and “snappy”。关于压缩参见4.1节
+
 compressed.topics	null	启用压缩的topic名称。若上面参数选择了一个压缩格式，那么压缩仅对本参数指定的topic有效，若本参数为空，则对所有topic有效。
+
 message.send.max.retries	3	Producer发送失败时重试次数。若网络出现问题，可能会导致不断重试。
+
 retry.backoff.ms	100	Before each retry, the producer refreshes the metadata of relevant topics to see if a new leader has been elected. Since leader election takes a bit of time, this property specifies the amount of time that the producer waits before refreshing the metadata.
+
 topic.metadata.refresh.interval.ms	600 * 1000	The producer generally refreshes the topic metadata from brokers when there is a failure (partition missing, leader not available…). It will also poll regularly (default: every 10min so 600000ms). If you set this to a negative value, metadata will only get refreshed on failure. If you set this to zero, the metadata will get refreshed after each message sent (not recommended). Important note: the refresh happen only AFTER the message is sent, so if the producer never sends a message the metadata is never refreshed
+
 queue.buffering.max.ms	5000	启用异步模式时，producer缓存消息的时间。比如我们设置成1000时，它会缓存1秒的数据再一次发送出去，这样可以极大的增加broker吞吐量，但也会造成时效性的降低。
+
 queue.buffering.max.messages	10000	采用异步模式时producer buffer 队列里最大缓存的消息数量，如果超过这个数值，producer就会阻塞或者丢掉消息。
+
 queue.enqueue.timeout.ms	-1	当达到上面参数值时producer阻塞等待的时间。如果值设置为0，buffer队列满时producer不会阻塞，消息直接被丢掉。若值设置为-1，producer会被阻塞，不会丢消息。
+
 batch.num.messages	200	采用异步模式时，一个batch缓存的消息数量。达到这个数量值时producer才会发送消息。
+
 send.buffer.bytes	100 * 1024	Socket write buffer size
-client.id	“”	The client id is a user-specified string sent in each request to help trace calls. It should logically identify the application making the request.
+
+client.id	"" 	The client id is a user-specified string sent in each request to help trace calls. It should logically identify the application making the request.
 
 #### 2.4.3 Consumer配置信息
+
 属性	默认值	描述
+
 group.id		Consumer的组ID，相同goup.id的consumer属于同一个组。
+
 zookeeper.connect		Consumer的zookeeper连接串，要和broker的配置一致。
+
 consumer.id	null	如果不设置会自动生成。
+
 socket.timeout.ms	30 * 1000	网络请求的socket超时时间。实际超时时间由max.fetch.wait + socket.timeout.ms 确定。
+
 socket.receive.buffer.bytes	64 * 1024	The socket receive buffer for network requests.
+
 fetch.message.max.bytes	1024 * 1024	查询topic-partition时允许的最大消息大小。consumer会为每个partition缓存此大小的消息到内存，因此，这个参数可以控制consumer的内存使用量。这个值应该至少比server允许的最大消息大小大，以免producer发送的消息大于consumer允许的消息。
+
 num.consumer.fetchers	1	The number fetcher threads used to fetch data.
+
 auto.commit.enable	true	如果此值设置为true，consumer会周期性的把当前消费的offset值保存到zookeeper。当consumer失败重启之后将会使用此值作为新开始消费的值。
+
 auto.commit.interval.ms	60 * 1000	Consumer提交offset值到zookeeper的周期。
+
 queued.max.message.chunks	2	用来被consumer消费的message chunks 数量， 每个chunk可以缓存fetch.message.max.bytes大小的数据量。
+
 auto.commit.interval.ms	60 * 1000	Consumer提交offset值到zookeeper的周期。
+
 queued.max.message.chunks	2	用来被consumer消费的message chunks 数量， 每个chunk可以缓存fetch.message.max.bytes大小的数据量。
+
 fetch.min.bytes	1	The minimum amount of data the server should return for a fetch request. If insufficient data is available the request will wait for that much data to accumulate before answering the request.
+
 fetch.wait.max.ms	100	The maximum amount of time the server will block before answering the fetch request if there isn’t sufficient data to immediately satisfy fetch.min.bytes.
+
 rebalance.backoff.ms	2000	Backoff time between retries during rebalance.
+
 refresh.leader.backoff.ms	200	Backoff time to wait before trying to determine the leader of a partition that has just lost its leader.
+
 auto.offset.reset	largest	What to do when there is no initial offset in ZooKeeper or if an offset is out of range ;smallest : automatically reset the offset to the smallest offset; largest : automatically reset the offset to the largest offset;anything else: throw exception to the consumer
+
 consumer.timeout.ms	-1	若在指定时间内没有消息消费，consumer将会抛出异常。
+
 exclude.internal.topics	true	Whether messages from internal topics (such as offsets) should be exposed to the consumer.
+
 zookeeper.session.timeout.ms	6000	ZooKeeper session timeout. If the consumer fails to heartbeat to ZooKeeper for this period of time it is considered dead and a rebalance will occur.
+
 zookeeper.connection.timeout.ms	6000	The max time that the client waits while establishing a connection to zookeeper.
+
 zookeeper.sync.time.ms	2000	How far a ZK follower can be behind a ZK leader
 
 ## 三、Kafka工作流程分析
@@ -586,14 +630,14 @@ public int partition(String topic, Object key, byte[] keyBytes, Object value, by
 
 #### 3.2.1 存储方式
 物理上把topic分成一个或多个patition（对应 server.properties 中的num.partitions=3配置），每个patition物理上对应一个文件夹（该文件夹存储该patition的所有消息和索引文件），如下：
-[atguigu@hadoop102 logs]$ ll
+>> [atguigu@hadoop102 logs]$ ll
 drwxrwxr-x. 2 atguigu atguigu  4096 8月   6 14:37 first-0
 drwxrwxr-x. 2 atguigu atguigu  4096 8月   6 14:35 first-1
 drwxrwxr-x. 2 atguigu atguigu  4096 8月   6 14:37 first-2
 
-[atguigu@hadoop102 logs]$ cd first-0
+>>[atguigu@hadoop102 logs]$ cd first-0
 
-[atguigu@hadoop102 first-0]$ ll
+>>[atguigu@hadoop102 first-0]$ ll
 -rw-rw-r--. 1 atguigu atguigu 10485760 8月   6 14:33 00000000000000000000.index
 -rw-rw-r--. 1 atguigu atguigu      219 8月   6 15:07 00000000000000000000.log
 -rw-rw-r--. 1 atguigu atguigu 10485756 8月   6 14:33 00000000000000000000.timeindex
