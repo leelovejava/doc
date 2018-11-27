@@ -162,11 +162,10 @@ http://kafka.apache.org/downloads.html
 	mv zoo_sample.cfg zoo.cfg
 
 ##### 2）配置zoo.cfg文件
-	
-	（1）具体配置
+（1）具体配置
 ```	
-	dataDir=/opt/module/zookeeper-3.4.10/zkData
-	增加如下配置
+dataDir=/opt/module/zookeeper-3.4.10/zkData
+增加如下配置
 
 #######################cluster##########################
 server.2=hadoop102:2888:3888
