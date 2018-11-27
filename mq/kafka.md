@@ -3,6 +3,7 @@
 
 ## 目录结构
 * [kafka概述](#一、Kafka概述)
+  * [doc](#1.0.doc)
   * [Kafka是什么](#1.1.Kafka是什么)
   * [Kafka内部实现原理](#1.2.Kafka内部实现原理)
   * [为什么需要消息队列](#1.3.为什么需要消息队列)
@@ -28,6 +29,14 @@
   * [Kafka Stream案例](#6.2.Kafka Stream案例)
 
 ## 一、Kafka概述
+
+### 1.0.doc
+
+[史上最全、最详细的 kafka 学习笔记！](https://mp.weixin.qq.com/s/Vfo7fOoCi3jf0EhT4k3mMA)
+
+[Kafka全面进入2.x时代](https://mp.weixin.qq.com/s/25A8zmoPdPcoW3u1WOGEgA)
+
+[kafka系列文章-朱小厮](https://mp.weixin.qq.com/mp/homepage?__biz=MzU0MzQ5MDA0Mw==&hid=1&sn=9fb863ee0a215bf1a668ed727df61875)
 
 ### 1.1.Kafka是什么
 
@@ -83,15 +92,24 @@
 
 * 2）Consumer ：消息消费者，向kafka broker取消息的客户端
 
-* 3）Topic ：可以理解为一个队列。
+* 3）Topic ：主题，通过对消息指定主题可以将消息分类，消费者可以只关注自己需要的Topic中的消息;可理解为一个队列。
 
-* 4）Consumer Group （CG）：这是kafka用来实现一个topic消息的广播（发给所有的consumer）和单播（发给任意一个consumer）的手段。一个topic可以有多个CG。topic的消息会复制（不是真的复制，是概念上的）到所有的CG，但每个partion只会把消息发给该CG中的一个consumer。如果需要实现广播，只要每个consumer有一个独立的CG就可以了。要实现单播只要所有的consumer在同一个CG。用CG还可以将consumer进行自由的分组而不需要多次发送消息到不同的topic。
+* 4）Consumer Group （CG）：消费者组，可以并行消费Topic中的partition的消息.
+        是kafka用来实现一个topic消息的广播（发给所有的consumer）和单播（发给任意一个consumer）的手段。
+        一个topic可以有多个CG。topic的消息会复制（不是真的复制，是概念上的）到所有的CG，但每个partion只会把消息发给该CG中的一个consumer。
+        如果需要实现广播，只要每个consumer有一个独立的CG就可以了。
+        要实现单播只要所有的consumer在同一个CG。
+        用CG还可以将consumer进行自由的分组而不需要多次发送消息到不同的topic。
 
-* 5）Broker ：一台kafka服务器就是一个broker。一个集群由多个broker组成。一个broker可以容纳多个topic。
+* 5）Broker ：缓存代理,Kafka集群中的一台或多台服务器统称broker.一个broker可以容纳多个topic。
 
-* 6）Partition：为了实现扩展性，一个非常大的topic可以分布到多个broker（即服务器）上，一个topic可以分为多个partition，每个partition是一个有序的队列。partition中的每条消息都会被分配一个有序的id（offset）。kafka只保证按一个partition中的顺序将消息发给consumer，不保证一个topic的整体（多个partition间）的顺序。
+* 6）Partition：Topic物理上的分组，一个topic可以分为多个partion,每个partion是一个有序的队列。
+     partion中每条消息都会被分配一个有序的Id(offset),为了实现扩展性，一个非常大的topic可以分布到多个broker（即服务器）上，
+     kafka只保证按一个partition中的顺序将消息发给consumer，不保证一个topic的整体（多个partition间）的顺序。
 
 * 7）Offset：kafka的存储文件都是按照offset.kafka来命名，用offset做名字的好处是方便查找。例如你想找位于2049的位置，只要找到2048.kafka的文件即可。当然the first offset就是00000000000.kafka
+
+* 8) Message:消息，是通信的基本单位，每个producer可以向一个topic（主题）发布一些消息
 
 ## 二、Kafka集群部署
 
@@ -1343,7 +1361,7 @@ https://blog.csdn.net/my_momo_csdn/article/details/81983553
 ```
 
 消费者配置
-```properties
+```
 #kafka对应的地址
 spring.cloud.stream.kafka.binder.brokers = 192.168.xx.xxx:9092
 #kafka的zookeeper对应的地址
@@ -1399,7 +1417,7 @@ public class MqListener {
 
 kafka生产者配置
 
-```properties
+```
 #kafka对应的地址
 spring.cloud.stream.kafka.binder.brokers=192.168.11.199:9092
 #kafka的zookeeper对应的地址
