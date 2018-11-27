@@ -681,7 +681,7 @@ push（推）模式很难适应消费速率不同的消费者，因为消息发�
 
 [atguigu@hadoop102 kafka]$ bin/kafka-console-consumer.sh --zookeeper hadoop102:2181 --topic first
 
-### 4.2 Kafka生产者Java API
+### 4.2.Kafka生产者Java API
 
 #### 4.2.1 创建生产者（过时的API）
 ```java
