@@ -3,6 +3,8 @@
 ##doc
 https://www.jianshu.com/p/e35817bdc4a8
 
+[Hadoop如何将TB级大文件的上传性能优化上百倍？](https://mp.weixin.qq.com/s/2HM9NMRHizKTJoYjg8lZ1Q)
+
 ##Overview
 重点概念:block文件切块，副本存放，元数据
 
