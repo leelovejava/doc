@@ -1,5 +1,9 @@
 # Scala
 
+## doc
+
+[挑逗 Java 程序员的那些 Scala 绝技](https://mp.weixin.qq.com/s/gTCGSa6UkxpdaeO2qzWovw)
+
 ## 简介
     java语言的脚本化(JVM的高层次语言)
     面向对象+面向过程(函数式编程)
