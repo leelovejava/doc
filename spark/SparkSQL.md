@@ -17,6 +17,8 @@
 
 [奇虎360基于SparkSQL的海量数据仓库设计与实践](https://mp.weixin.qq.com/s/gCErgNcUiS4dBofkhvDLwQ)
 
+[Spark SQL 之 Join 实现](https://mp.weixin.qq.com/s/ilPfDMUuOzLyd-v5xoMZ2Q)
+
 ### 2.1.Spark SQL概述
 
 ### 2.1.1.什么是Spark SQL

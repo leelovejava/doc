@@ -7,6 +7,10 @@
 
 ##doc
 
+[HBase Procedure解读](https://mp.weixin.qq.com/s/mpG5Gte-7g_Ue0Sr8VLS6w)
+
+[HBase在人工智能场景的使用](https://mp.weixin.qq.com/s/zicVKfRH207b1Yw4NB315A)
+
 ###官方翻译文档
 http://abloz.com/hbase/book.html
 https://www.jianshu.com/p/dfa7488c5414

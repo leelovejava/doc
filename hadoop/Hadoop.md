@@ -1,4 +1,11 @@
 # hadoop
+
+## doc
+
+[用大白话告诉你小白都能看懂的Hadoop架构原理](https://mp.weixin.qq.com/s/mEk3m4MOuOrP5yub2onCGg)
+
+[亿级PV，常见性能优化策略总结与真实案例](https://mp.weixin.qq.com/s/rpSMOieVEQ9r3f55WlvkLQ)
+
 ## 简介
 [传智大数据](http://www.itcast.cn/subject/cloudzly/index.shtml)
 

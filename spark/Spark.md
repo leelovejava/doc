@@ -8,6 +8,10 @@ spark.apache.org
 ## 1.2.目标2：搭建Spark单机/集群
 ## 1.3.目标3：编写简单的Spark应用程序
 
+## doc
+
+[MongoDB + Spark: 完整的大数据解决方案](https://mp.weixin.qq.com/s/882OQN9Tne3vvoEJeooDgA)
+
 ## 2.Spark概述
 
 ### [Spark-survey](https://blog.csdn.net/lovehuangjiaju/article/details/48765165)

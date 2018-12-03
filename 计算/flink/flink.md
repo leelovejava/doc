@@ -4,8 +4,18 @@ Apache Flink is an open source stream processing framework with powerful stream-
 
 Learn more about Flink at [http://flink.apache.org/](http://flink.apache.org/)
 
+## doc
+[阿里巴巴为什么选择Apache Flink？](https://mp.weixin.qq.com/s/AoSDPDKbTbjH9rviioK-5Q)
 
-### Features
+[Apache Flink 干货合集打包](https://mp.weixin.qq.com/s/rsJlZEP_oVG3NiFRyeS8gw)
+
+[Apache Flink数据流容错机制](https://www.iteblog.com/archives/1987.html)
+
+[美团点评基于 Flink 的实时数仓建设实践](https://mp.weixin.qq.com/s/PJmdXkdUE5gtzcYAgAM8wQ)
+
+[四种优化 Apache Flink 应用程序的方法](https://www.iteblog.com/archives/2303.html)
+
+## Features
 
 * A streaming-first runtime that supports both batch processing and data streaming programs
 
@@ -32,7 +42,7 @@ Learn more about Flink at [http://flink.apache.org/](http://flink.apache.org/)
 * Integration with YARN, HDFS, HBase, and other components of the Apache Hadoop ecosystem
 
 
-### Streaming Example
+## Streaming Example
 ```scala
 case class WordWithCount(word: String, count: Long)
 
@@ -47,7 +57,7 @@ val windowCounts = text.flatMap { w => w.split("\\s") }
 windowCounts.print()
 ```
 
-### Batch Example
+## Batch Example
 ```scala
 case class WordWithCount(word: String, count: Long)
 
@@ -93,7 +103,7 @@ Minimal requirements for an IDE are:
 * Support for Maven with Java and Scala
 
 
-### IntelliJ IDEA
+## IntelliJ IDEA
 
 The IntelliJ IDE supports Maven out of the box and offers a plugin for Scala development.
 
@@ -102,7 +112,7 @@ The IntelliJ IDE supports Maven out of the box and offers a plugin for Scala dev
 
 Check out our [Setting up IntelliJ](https://github.com/apache/flink/blob/master/docs/internals/ide_setup.md#intellij-idea) guide for details.
 
-### Eclipse Scala IDE
+## Eclipse Scala IDE
 
 **NOTE:** From our experience, this setup does not work with Flink
 due to deficiencies of the old Eclipse version bundled with Scala IDE 3.0.3 or
