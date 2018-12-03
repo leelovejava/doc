@@ -5,6 +5,8 @@
 
 [SpringBoot整合elasticsearch](https://www.cnblogs.com/dalaoyang/p/8990989.html)
 
+[Elasticsearch 6.3 发布，你们要的 SQL 功能来了](https://www.iteblog.com/archives/2378.html?from=like)
+
 ## 下载历史版本
 https://www.elastic.co/downloads/past-releases
 

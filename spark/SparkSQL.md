@@ -19,6 +19,8 @@
 
 [Spark SQL 之 Join 实现](https://mp.weixin.qq.com/s/ilPfDMUuOzLyd-v5xoMZ2Q)
 
+[Spark SQL 内置函数列表](https://www.iteblog.com/archives/2336.html)
+
 ### 2.1.Spark SQL概述
 
 ### 2.1.1.什么是Spark SQL
