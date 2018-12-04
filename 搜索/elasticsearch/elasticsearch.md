@@ -7,6 +7,8 @@
 
 [Elasticsearch 6.3 发布，你们要的 SQL 功能来了](https://www.iteblog.com/archives/2378.html?from=like)
 
+[图解 Elasticsearch 原理](https://mp.weixin.qq.com/s/a68yVzZK7xju2GPoAftBAw)
+
 ## 下载历史版本
 https://www.elastic.co/downloads/past-releases
 

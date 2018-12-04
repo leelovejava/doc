@@ -41,3 +41,7 @@ https://blog.csdn.net/dancheren/article/details/73611878
 sed -n '/2018-11-14 10:00:/,/2018-11-14 12:00:/p' intellif_monitor_info.log > 2018111414.log
 
 telnet
+
+当前用户的环境变量
+
+vim ~/.bash_profile
