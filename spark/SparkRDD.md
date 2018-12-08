@@ -641,6 +641,10 @@ RDD通过persist方法或cache方法可以将前面的计算结果缓存，但�
 
 ### 2.6.DAG的生成
 
+DAG有向无环图:整个任务提交时,分成几个阶段计算
+
+宽依赖:数据的网络混写
+
 DAG(Directed Acyclic Graph)叫做有向无环图，原始的RDD通过一系列的转换就就形成了DAG，根据RDD之间的依赖关系的不同将DAG划分成不同的Stage，对于窄依赖，partition的转换处理在Stage中完成计算。对于宽依赖，由于有Shuffle的存在，只能在parent RDD处理完成后，才能开始接下来的计算，因此宽依赖是划分Stage的依据。
 
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-rdd/04.png?raw=true)
