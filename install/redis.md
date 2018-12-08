@@ -28,3 +28,8 @@ bind 127.0.0.1
 protected-mode yes 
 ## 3.重启服务
 redis-cli -h 127.0.0.1 -p 6379 shutdown
+
+[ubuntu安装redis](https://www.cnblogs.com/langtianya/p/5187681.html)
+
+sudo apt-get update
+sudo apt-get install redis-server

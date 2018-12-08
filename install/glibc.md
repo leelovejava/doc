@@ -17,3 +17,7 @@
 
 
 ./configure --prefix=/home/hadoop/app/glibc-2.14 --disable-profile --enable-add-ons --with-headers=/usr/include --with-binutils=/usr/bin
+
+make clean
+
+make distclean
