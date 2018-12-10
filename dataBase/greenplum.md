@@ -4,9 +4,26 @@
 ## doc
 [官网](https://greenplum.org/)
 
-## Overview
+Greenplum企业应用实战
 
-数据仓库中快速查询结果
+[Greenplum企业应用实战（笔记）：第一章 greenplum简介](https://www.jianshu.com/p/b5c85cadb362)
+[Greenplum企业应用实战（笔记）：第二章 greenplum 快速入门](https://www.jianshu.com/p/43de56ddcd7b)
+[Greenplum企业应用实战（笔记）：第三章 Greenplum 实战](https://www.jianshu.com/p/9be1439f5bd3)
+[Greenplum企业应用实战（笔记）：第四章 数据字典详解](https://www.jianshu.com/p/052009ed92a2)
+[Greenplum企业应用实战（笔记）：第五章 执行计划详解](https://www.jianshu.com/p/25ce3b0c930d)
+[Greenplum企业应用实战（笔记）：第六章 Greenplum 高级应用](https://www.jianshu.com/p/32701ff3ee2c)
+[Greenplum企业应用实战（笔记）：第七章 Greenplum 架构介绍](https://www.jianshu.com/p/105cb516a122)
+[Greenplum企业应用实战（笔记）：第八章 Greenplum 线上环境部署](https://www.jianshu.com/p/75e87b890a60)
+[Greenplum企业应用实战（笔记）：第九章 数据库管理](https://www.jianshu.com/p/105cb516a122)
+
+
+## Overview
+本质上讲，greenplum 是一个关系型数据库集群，是由数个独立的数据库服务组合成的逻辑数据库
+
+数据库的计算中心(数据仓库中快速查询结果)
+
+### 起源和发展
+针对数据密集型计算中的海量数据处理这一高效的数据管理功能。比较典型的解决方案有Teradata、Greenplum、Hadoop Hive、Oracle Exadata、IBM Netteza等
 
 基于PostgreSQL 8.2
 数据字典增强(并行处理)
