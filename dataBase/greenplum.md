@@ -124,10 +124,17 @@ greenplum的总体架构如下：
 数据库由Master Severs和Segment Severs通过Interconnect互联组成
   
   
-  Master主机负责：建立与客户端的连接和管理；SQL的解析并形成执行计划；执行计划向Segment的分发收集Segment的执行结果；Master不存储业务数据，只存储数据字典。  
+  Master主机负责：主节点
+                  建立与客户端的连接和管理；SQL的解析并形成执行计划
+                  执行计划向Segment的分发收集Segment的执行结果
+                  Master不存储业务数据，只存储数据字典
   
-  Segment主机负责：业务数据的存储和存取；用户查询SQL的执行
+  Segment主机负责：数据节点
+                   业务数据的存储和存取   
+                   用户查询SQL的执行
 
+   Client一般只能和Master节点进行交互,Client将SQL发给Master,然后Master对SQL进行分析后,再将其分配给所有的Segmen进行操作,并且将结果返回给客户端
+   
 greenplum使用mpp架构
 
 ![image](https://github.com/leelovejava/doc/blob/master/img/dataBase/greenplum/02.png)
