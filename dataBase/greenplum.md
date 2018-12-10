@@ -97,11 +97,14 @@ GP服务启停
 快速关闭
 >> gpstop -M fast
 
+维护模式启动
+>> gpstart -m
+
 重启
->> gpstop –r
+>> gpstop -r
 
 重新加载配置文件
->> gpstop –u
+>> gpstop -u
 
 登录与退出GP客户端
 登录:
@@ -114,6 +117,9 @@ GP服务启停
 
 查看系统库版本
  >> select version();
+ 
+连接
+>> psql -d gpdatabase -h master_host -p 5432 -U gpadmin
  
 ## 架构
 
