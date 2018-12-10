@@ -4,6 +4,8 @@
 ## doc
 [官网](https://greenplum.org/)
 
+[中文文档](https://gp-docs-cn.github.io/docs/common/gpdb-features.html)
+
 Greenplum企业应用实战
 
 [Greenplum企业应用实战（笔记）：第一章 greenplum简介](https://www.jianshu.com/p/b5c85cadb362)
