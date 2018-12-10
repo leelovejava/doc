@@ -15,6 +15,8 @@ Learn more about Flink at [http://flink.apache.org/](http://flink.apache.org/)
 
 [四种优化 Apache Flink 应用程序的方法](https://www.iteblog.com/archives/2303.html)
 
+[Flink on YARN部署快速入门指南](https://www.iteblog.com/archives/1620.html)
+
 ## Features
 
 * A streaming-first runtime that supports both batch processing and data streaming programs
