@@ -83,6 +83,8 @@ bind_ip:0.0.0.0
 启动:
 >> service mongod start
 
+>> bin/mongod -config data/mongodb.conf
+
 停止:
 >> service mongod stop
 
@@ -94,8 +96,12 @@ bind_ip:0.0.0.0
 
 chkconfig mongod on
 
+杀死进程
+>> pkill mongo
+
 ## 使用
 >> mongo
+>> bin/mongo
 
 查看数据库
 >> show dbs;
@@ -116,3 +122,49 @@ chkconfig mongod on
 
 rm -r /var/lib/mongo
 >> rm -r /var/lib/mongo
+
+
+tar安装包安装
+wget https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-rhel62-3.4.3.tgz
+// 在安装目录下创建data文件夹用于存放数据和日志
+// 在data文件夹下创建db文件夹，用于存放数据
+// 在data文件夹下创建logs文件夹，用于存放日志
+// 在logs文件夹下创建log文件
+>> touch /usr/local/mongodb/data/logs/ mongodb.log
+// 在data文件夹下创建mongodb.conf配置文件
+>> touch /usr/local/mongodb/data/mongodb.conf
+vim ./data/mongodb.conf
+```
+#端口号port = 27017
+#数据目录
+dbpath = /usr/local/mongodb/data/db
+#日志目录
+logpath = /usr/local/mongodb/data/logs/mongodb.log
+#设置后台运行
+fork = true
+#日志输出方式
+logappend = true
+#开启认证
+#auth = true
+```
+
+启动
+>> sudo /usr/local/mongodb/bin/mongod -config /usr/local/mongodb/data/mongodb.conf
+```
+about to fork child process, waiting until server is ready for connections.
+forked process: 2316
+child process started successfully, parent exiting
+```
+访问
+>> /usr/local/mongodb/bin/mongo
+停止
+>> sudo /usr/local/mongodb/bin/mongod -config /usr/local/mongodb/data/mongodb.conf
+
+## 使用
+
+创建用户
+
+>> bin/mongo
+>> use admin
+>> db.createUser({user:"userAdmin",pwd:"admin123456",roles:["userAdminAnyDatabase"]})
+>> db.createUser({user:"admin",pwd:"admin",roles:[{"role":"userAdminAnyDatabase","db":"admin"},{"role":"readWrite","db":"test"}]})
