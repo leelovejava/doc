@@ -53,6 +53,9 @@ su admin
  * 安装ik分词器
   https://github.com/medcl/elasticsearch-analysis-ik/releases
   https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v6.3.2/elasticsearch-analysis-ik-6.3.2.zip
+  
+>> bin/elasticsearch-plugin install https://github.com/medcl/elasticsearch-analysis-ik/releases/download/v5.6.2/elasticsearch-analysis-ik-5.6.2.zip
+
 ### kibana 使用
  #### 文档
    * 用户手册:https://www.elastic.co/guide/en/kibana/current/upgrade-standard.html

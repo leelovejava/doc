@@ -83,7 +83,7 @@ bind_ip:0.0.0.0
 启动:
 >> service mongod start
 
->> bin/mongod -config data/mongodb.conf
+>> sudo bin/mongod -config data/mongodb.conf
 
 停止:
 >> service mongod stop
