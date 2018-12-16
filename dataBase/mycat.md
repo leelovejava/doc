@@ -203,6 +203,7 @@ Function用于定义算法 mapFile 用于定义算法需要的数据，我们打
 数据库读写分离对于大型系统或者访问量很高的互联网应用来说，是必不可少的一个重要功能。对于MySQL来说，标准的读写分离是主从模式，一个写节点Master后面跟着多个读节点，读节点的数量取决于系统的压力，通常是1-3个读节点的配置
 
  ![image](https://github.com/leelovejava/doc/blob/master/img/dataBase/mycat/08.png)   
-  ![image](https://github.com/leelovejava/doc/blob/master/img/dataBase/mycat/09.png)   
-Mycat读写分离和自动切换机制，需要mysql的主从复制机制配合。
-具体配置步骤参见配套的扩展文档。
+ 
+ ![image](https://github.com/leelovejava/doc/blob/master/img/dataBase/mycat/09.png)   
+ 
+Mycat读写分离和自动切换机制，需要mysql的主从复制机制配合
