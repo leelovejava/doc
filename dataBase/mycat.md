@@ -48,7 +48,7 @@ GRANT ALL PRIVILEGES ON *.* TO 'root'@'%'IDENTIFIED BY '123456'  WITH GRANT OPTI
 1.2.2 MyCat安装及启动
 MyCat：
 MyCat的官方网站：
-http://www.mycat.org.cn/
+http://www.mycat.io/
 下载地址：
 https://github.com/MyCATApache/Mycat-download
 第一步：将Mycat-server-1.4-release-20151019230038-linux.tar.gz上传至服务器
