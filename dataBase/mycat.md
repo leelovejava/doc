@@ -2,6 +2,8 @@
 
 [官网](http://www.mycat.io/)
 
+[mycat-doc](https://github.com/MyCATApache/Mycat-doc)
+
 [mycat权威指南](http://www.mycat.io/document/mycat-definitive-guide.pdf)
 
 [mycat 2.0](https://github.com/MyCATApache/Mycat2)
@@ -16,6 +18,7 @@ Mycat 是基于 cobar 演变而来，对 cobar 的代码进行了彻底的重构
 简单的说，MyCAT就是：一个新颖的数据库中间件产品支持mysql集群，或者mariadb cluster，提供高可用性数据分片集群。你可以像使用mysql一样使用mycat。对于开发人员来说根本感觉不到mycat的存在。
 ![image](https://github.com/leelovejava/doc/blob/master/img/dataBase/mycat/01.png)
 
+适合处理千亿级以下的数据
 
 MyCat支持的数据库：
 
