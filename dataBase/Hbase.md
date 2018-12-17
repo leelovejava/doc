@@ -11,6 +11,9 @@
 
 [HBase在人工智能场景的使用](https://mp.weixin.qq.com/s/zicVKfRH207b1Yw4NB315A)
 
+[58HBase平台实践和应用—平台建设篇](https://mp.weixin.qq.com/s/Czx-tDEdN11srmGuA-4Jkw)
+多租户支持、数据读写接口、数据导入导出和平台优化四个方面重点讲解了58HBase平台的建设
+
 ###官方翻译文档
 http://abloz.com/hbase/book.html
 https://www.jianshu.com/p/dfa7488c5414
