@@ -12,6 +12,10 @@
 
 [6、【行走的Offer收割机】记一位朋友斩获BAT技术专家Offer的面试经历【石杉的架构笔记】](https://mp.weixin.qq.com/s/AENPcDuVdMAUDtlGM-X8zQ)
 
+[7、消息中间件在你们项目里是如何落地的？](https://mp.weixin.qq.com/s/ZAWPRToPQFcwzHBf47jZ-A)
+
+[8、扎心！线上服务宕机时，如何保证数据100%不丢失？](https://mp.weixin.qq.com/s/HwAc6o8jdIHQTnE3ghXhIA)
+
 石杉并发面试
 
 [大白话聊聊Java并发面试问题之volatile到底是什么？](https://mp.weixin.qq.com/s/MIsQv8ZWWBzfB-Qhg3l4lA)
@@ -23,3 +27,4 @@
 [大白话聊聊Java并发面试问题之公平锁与非公平锁是啥？](https://mp.weixin.qq.com/s/9SKmHeMu_1lNVEJPlEcpsA)
 
 [大白话聊聊Java并发面试问题之微服务注册中心的读写锁优化](https://mp.weixin.qq.com/s/9SKmHeMu_1lNVEJPlEcpsA)
+
