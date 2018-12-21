@@ -1,0 +1,1 @@
+[轻松搞定安全框架（Shiro）](https://blog.battcn.com/2018/07/03/springboot/v2-other-shiro/)

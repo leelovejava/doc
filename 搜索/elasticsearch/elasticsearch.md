@@ -79,6 +79,10 @@ ES存入数据和搜索数据机制
 3）文档（document）：一条数据记录，存在索引对象上 
 4）文档类型（type）：一个索引对象，存放多种类型数据，数据用文档类型进行标识  
 
+## 使用
+
+https://github.com/spring-projects/spring-data-elasticsearch
+
 ## 项目实战
 
 BAT大牛亲授 基于ElasticSearch的搜房网实战
