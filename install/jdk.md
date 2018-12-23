@@ -19,5 +19,8 @@ tar -xvf jdk-8u171-linux-x64.tar.gz -C /usr/local/jdk
         #set java environment
         export JAVA_HOME=/usr/local/jdk
         export PATH=$PATH:$JAVA_HOME/bin
+        
+        >export JAVA_HOME=/home/hadoop/app/jdk1.8.0_144
+        >export PATH=$JAVA_HOME/bin:$PATH
 ③source /etc/profile  使更改的配置立即生效
 ④java -version  查看JDK版本信息
