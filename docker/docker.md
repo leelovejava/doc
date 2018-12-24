@@ -1,3 +1,5 @@
+[Kubernetes 真的很复杂吗？](https://mp.weixin.qq.com/s/ElD_nbf5Eav8ZfKRHiLudw)
+
 ---------mysql------------------
 创建mysql容器
 --e 指定配置文件

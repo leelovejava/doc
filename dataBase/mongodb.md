@@ -6,6 +6,8 @@
 
 [百度云MongoDB产品的六大特性](https://baijiahao.baidu.com/s?id=1618343308382561681)
 
+[springboot集成mongodb](https://blog.csdn.net/u011095110/article/details/77887149)
+
 ## 安装:
 https://www.mongodb.com/download-center/community
 
