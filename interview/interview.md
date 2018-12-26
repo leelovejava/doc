@@ -1,4 +1,14 @@
 
+-[interviews](https://github.com/kdn251/interviews/blob/master/README-zh-cn.md)
+-[JCSprout](https://github.com/crossoverJie/JCSprout)
+-[JavaGuide](https://github.com/Snailclimb/JavaGuide)
+-[technology-talk](https://github.com/aalansehaiyang/technology-talk)
+-[fullstack-tutorial](https://github.com/frank-lam/fullstack-tutorial)
+-[java-bible](https://github.com/biezhi/java-bible)
+-[EasyJob](https://github.com/it-interview/EasyJob)
+-[advanced-java](https://github.com/doocs/advanced-java)
+-[3y](https://github.com/ZhongFuCheng3y/3y)
+
 石杉
 [1、互联网公司的面试官是如何360°无死角考察候选人的？（上篇）](https://mp.weixin.qq.com/s/vhP-2Jrd0Ow2wOqImavrIQ)
 
@@ -15,6 +25,8 @@
 [7、消息中间件在你们项目里是如何落地的？](https://mp.weixin.qq.com/s/ZAWPRToPQFcwzHBf47jZ-A)
 
 [8、扎心！线上服务宕机时，如何保证数据100%不丢失？](https://mp.weixin.qq.com/s/HwAc6o8jdIHQTnE3ghXhIA)
+
+[【Java进阶面试系列之五】消息中间件集群崩溃，如何保证百万生产数据不丢失？](https://mp.weixin.qq.com/s/AEn3j2lVJOHZx9yegwTsvw)
 
 石杉并发面试
 
