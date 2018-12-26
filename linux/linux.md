@@ -37,6 +37,30 @@ firewall-cmd --zone=public --add-port=1000-2000/tcp --permanent
 centos7安装网卡关闭的解决办法
 https://blog.csdn.net/dancheren/article/details/73611878
 
+安装wget
+> yum install wget
+
+安装tar
+> yum install -y tar
+
+安装vim
+> yum -y install vim*
+
+安装netstat
+> yum install net-tools
+
+安装telnet
+https://www.cnblogs.com/happyflyingpig/p/8127885.html
+> yum -y install telnet-server.x86_64 
+> yum -y install telnet.x86_64
+> yum -y install xinetd.x86_64
+
+授予root权限
+https://www.linuxidc.com/Linux/2012-07/64530.htm
+
+查看文件大小
+ls -lht
+
 按日期截取日志
 sed -n '/2018-11-14 10:00:/,/2018-11-14 12:00:/p' intellif_monitor_info.log > 2018111414.log
 
@@ -45,3 +69,11 @@ telnet
 当前用户的环境变量
 
 vim ~/.bash_profile
+
+错误:
+1).
+gzip: stdin: not in gzip format
+tar: Child returned status 1
+tar: Error is not recoverable: exiting now
+
+https://www.cnblogs.com/llxx07/p/6409384.html
