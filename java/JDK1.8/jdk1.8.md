@@ -1,6 +1,13 @@
+
+
+## stream
+http://ifeve.com/stream/
+
+##
 [optional](https://blog.battcn.com/2017/07/23/java/jdk8/optional/)
 
-## optional方法
+optional方法
+
 | 方法      |      描述      |
 |-----------|:-------------:|	        
 |empty	    |创建一个空的Optional对象|
