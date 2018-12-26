@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<configuration>
+    <!--默认文件系统-->
+    <property>
+        <name>fs.defaultFS</name>
+        <value>hdfs://hadoop000:8020</value>
+    </property>
+    <!--hadoop的临时目录-->
+    <property>
+        <name>hadoop.tmp.dir</name>
+        <value>/usr/local/tmp/hadoop</value>
+    </property>
+</configuration>
