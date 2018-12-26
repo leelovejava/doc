@@ -7,6 +7,10 @@ Learn more about Flink at [http://flink.apache.org/](http://flink.apache.org/)
 ## doc
 [阿里巴巴为什么选择Apache Flink？](https://mp.weixin.qq.com/s/AoSDPDKbTbjH9rviioK-5Q)
 
+[阿里重磅开源Blink：为什么我们等了这么久？](https://yq.aliyun.com/articles/680813)
+
+[基于 Apache Flink 的实时计算引擎 Blink 在阿里搜索中的应用](https://yq.aliyun.com/articles/183934)
+
 [Apache Flink 干货合集打包](https://mp.weixin.qq.com/s/rsJlZEP_oVG3NiFRyeS8gw)
 
 [Apache Flink数据流容错机制](https://www.iteblog.com/archives/1987.html)
