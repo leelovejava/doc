@@ -31,3 +31,5 @@
 [SpringBoot配置详解](https://blog.battcn.com/2018/04/22/springboot/v2-config-properties/)
 
 [Spring Boot配置多个DataSource](https://www.liaoxuefeng.com/article/001484212576147b1f07dc0ab9147a1a97662a0bd270c20000)
+
+[Spring Boot应用迁移到Java最新版（Java 11）](https://mp.weixin.qq.com/s/avhIEa0mSzj4qepai-hJcA)
