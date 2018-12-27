@@ -1,5 +1,7 @@
 https://blog.csdn.net/Ahri_J/article/details/79609444
 
+[分布式之elk日志架构的演进](https://mp.weixin.qq.com/s/KrLbLvCPk0rjsWhf0lfebA)
+
 ### elasticsearch
 
 >> wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.3.1.tar.gz
