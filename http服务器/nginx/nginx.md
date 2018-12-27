@@ -1,1 +1,3 @@
-[使用Nginx+Lua开发高性能Web应用](https://mp.weixin.qq.com/s/yTNSCTOvSsBZVYOKoedPpw)
+-[使用Nginx+Lua开发高性能Web应用](https://mp.weixin.qq.com/s/yTNSCTOvSsBZVYOKoedPpw)
+-[顺风详解Nginx系列—Ngx中的变量](https://mp.weixin.qq.com/s/_83bFalgPnngTX2PfPqtrQ)
+-[顺风详解Nginx系列—nginx变量实现原理(上)](https://mp.weixin.qq.com/s/wSnd-7XXFqElwGspuZltdQ)
