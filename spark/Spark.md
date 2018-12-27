@@ -22,6 +22,8 @@ spark.apache.org
 
 [基于Spark的公安大数据实时运维技术实践](https://www.iteblog.com/archives/1956.html)
 
+[阿里如何实现海量数据实时分析？](https://mp.weixin.qq.com/s/kt-xtvM77UZ3kD-3dpU7sw)
+
 ## 2.Spark概述
 
 ### [Spark-survey](https://blog.csdn.net/lovehuangjiaju/article/details/48765165)
