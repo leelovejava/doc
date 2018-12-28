@@ -40,3 +40,8 @@
 
 [大白话聊聊Java并发面试问题之微服务注册中心的读写锁优化](https://mp.weixin.qq.com/s/9SKmHeMu_1lNVEJPlEcpsA)
 
+
+### 设计模式
+
+[深入解析单例模式的七种实现](https://mp.weixin.qq.com/s/I1gpQHWLPFuxLl9Z7MLo4Q)
+
