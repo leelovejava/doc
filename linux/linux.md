@@ -77,3 +77,9 @@ tar: Child returned status 1
 tar: Error is not recoverable: exiting now
 
 https://www.cnblogs.com/llxx07/p/6409384.html
+
+
+xshell/xftp 永不过期
+https://zhangjia.tv/506.html
+官网注册个人Home and school use
+https://www.netsarang.com/products/xsh_overview.html
