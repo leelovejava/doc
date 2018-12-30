@@ -18,6 +18,8 @@ make install PREFIX=/usr/local/redis-cluster
 port 7000
 # 后台启动 yes,默认no
 daemonize yes
+# 修改为主机名
+bind hadoop001
 # 启动集群服务
 cluster-enabled yes
 # 集群配置文件  注意不同端口节点修改不同文件名称
@@ -41,3 +43,14 @@ bin/redis-cli --cluster create 127.0.0.1:7000 127.0.0.1:7001 127.0.0.1:7002 127.
 连接
 -c 连接集群
 > bin/redis-cli -h 127.0.0.1 -p 7000 -c
+
+关闭集群
+> pkill -9 redis
+
+> bin/redis-cli --cluster check 127.0.0.1:7000
+
+查看集群信息
+> cluster info
+
+问题:
+[redis集群报错Node is not empty](https://www.cnblogs.com/huxinga/p/6644226.html)
