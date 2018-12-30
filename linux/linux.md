@@ -37,6 +37,8 @@ firewall-cmd --zone=public --add-port=1000-2000/tcp --permanent
 centos7安装网卡关闭的解决办法
 https://blog.csdn.net/dancheren/article/details/73611878
 
+> vi /etc/sysconfig/network-scripts/ifcfg-ens33
+
 安装wget
 > yum install wget
 
@@ -54,6 +56,9 @@ https://www.cnblogs.com/happyflyingpig/p/8127885.html
 > yum -y install telnet-server.x86_64 
 > yum -y install telnet.x86_64
 > yum -y install xinetd.x86_64
+
+安装gcc
+> yum install gcc-c++
 
 授予root权限
 https://www.linuxidc.com/Linux/2012-07/64530.htm
