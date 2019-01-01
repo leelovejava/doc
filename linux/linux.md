@@ -98,6 +98,8 @@ https://www.netsarang.com/products/xsh_overview.html
 
 -[系统性能优化系列](http://www.jiangxinlingdu.com/thought/2018/09/15/linuxsys.html)
 
+-[常用性能监控指南](http://blog.720ui.com/2018/linux_performance_command/)
+
 -[线上操作与线上问题排查实战](http://www.jiangxinlingdu.com/practice/2018/09/13/operation.html)
 
 -[不停机图片升级迁移](http://www.jiangxinlingdu.com/thought/2018/08/15/images.html)
