@@ -64,16 +64,19 @@ https://www.cnblogs.com/happyflyingpig/p/8127885.html
 https://www.linuxidc.com/Linux/2012-07/64530.htm
 
 查看文件大小
-ls -lht
+> ls -lht
 
 按日期截取日志
-sed -n '/2018-11-14 10:00:/,/2018-11-14 12:00:/p' intellif_monitor_info.log > 2018111414.log
+> sed -n '/2018-11-14 10:00:/,/2018-11-14 12:00:/p' intellif_monitor_info.log > 2018111414.log
 
 telnet
 
 当前用户的环境变量
 
-vim ~/.bash_profile
+> vim ~/.bash_profile
+
+全局的环境变量
+> vim /etc/profile
 
 错误:
 1).
@@ -83,8 +86,18 @@ tar: Error is not recoverable: exiting now
 
 https://www.cnblogs.com/llxx07/p/6409384.html
 
-
+---------------------------
 xshell/xftp 永不过期
 https://zhangjia.tv/506.html
 官网注册个人Home and school use
 https://www.netsarang.com/products/xsh_overview.html
+---------------------------
+
+
+-[阿里java问题排查单](http://www.jiangxinlingdu.com/thought/2018/11/17/javatools.html)
+
+-[系统性能优化系列](http://www.jiangxinlingdu.com/thought/2018/09/15/linuxsys.html)
+
+-[线上操作与线上问题排查实战](http://www.jiangxinlingdu.com/practice/2018/09/13/operation.html)
+
+-[不停机图片升级迁移](http://www.jiangxinlingdu.com/thought/2018/08/15/images.html)
