@@ -1,3 +1,5 @@
+## [Markdown 语法整理大集合2017](https://www.jianshu.com/p/b03a8d7b1719)
+
 # java开发规范
 ## 二级标题
 ### 三级标题
@@ -83,3 +85,19 @@
  
 ### 链接
 [印象笔记markdown](https://mp.weixin.qq.com/s/1AUUThovTjQKdaK1Z34spg)   
+
+
+### 行内标记
+上面是 `JavaScript`，下面是 `php`：
+
+```php
+echo 'hello,world'
+```
+
+### 格式化文本
+保持输入排版格式不变
+<pre>
+hello world 
+         hi
+  hello world 
+</pre>
