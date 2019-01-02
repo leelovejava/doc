@@ -3,6 +3,7 @@
 ## doc
 -[Apache Phoenix 官方站点](https://phoenix.apache.org/)
 -[Phoenix支持的sql语句](https://phoenix.apache.org/language/index.html)
+-[HBase进化 | 从NoSQL到NewSQL，凤凰涅槃成就Phoenix](https://mp.weixin.qq.com/s/cqW94v4yWgekvCYC646hIw)
 -[Phoenix 支持的DataTypes](https://phoenix.apache.org/language/datatypes.html)
 -[Phoenix 支持的函数](https://phoenix.apache.org/language/functions.html)
 -[Phoenix综述（史上最全Phoenix中文文档）](https://www.cnblogs.com/linbingdong/p/5832112.html)

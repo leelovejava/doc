@@ -4,6 +4,9 @@
 ### 1.1.掌握Spark Streaming的原理
 ### 1.2.熟练使用Spark Streaming完成流式计算任务
 
+## doc
+[苏宁基于Spark Streaming的实时日志分析系统实践](https://mp.weixin.qq.com/s/cqW94v4yWgekvCYC646hIw)
+
 ## 离线计算与实时计算的对比
 1) 数据来源
    离线： HDFS 历史数据 数据量比较大
