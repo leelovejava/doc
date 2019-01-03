@@ -32,11 +32,11 @@
 
 ### 1.0.doc
 
-[史上最全、最详细的 kafka 学习笔记！](https://mp.weixin.qq.com/s/Vfo7fOoCi3jf0EhT4k3mMA)
-
-[Kafka全面进入2.x时代](https://mp.weixin.qq.com/s/25A8zmoPdPcoW3u1WOGEgA)
-
-[kafka系列文章-朱小厮](https://mp.weixin.qq.com/mp/homepage?__biz=MzU0MzQ5MDA0Mw==&hid=1&sn=9fb863ee0a215bf1a668ed727df61875)
+-[史上最全、最详细的 kafka 学习笔记！](https://mp.weixin.qq.com/s/Vfo7fOoCi3jf0EhT4k3mMA)
+-[Kafka全面进入2.x时代](https://mp.weixin.qq.com/s/25A8zmoPdPcoW3u1WOGEgA)
+-[kafka系列文章-朱小厮](https://mp.weixin.qq.com/mp/homepage?__biz=MzU0MzQ5MDA0Mw==&hid=1&sn=9fb863ee0a215bf1a668ed727df61875)
+-[SpringKafka文档地址](https://docs.spring.io/spring-kafka/reference/htmlsingle)
+-[kafka文档地址](http://kafka.apache.org/documentation)
 
 ### 1.1.Kafka是什么
 
@@ -1529,8 +1529,9 @@ org.apache.kafka.clients.consumer.CommitFailedException: Commit cannot be comple
 
 一次拉取数据太多,导致超时
 # consumer每次调用poll()时取到的records的最大数
-max.poll.records= 500
+spring.kafka.consumer.max-poll-records= 500
 # 最大的poll数据间隔
 max.poll.interval.ms = 300000
 ```
 [kafka consumer配置详解](https://www.cnblogs.com/rainwang/p/7493742.html)
+[Spring Kafka中关于Kafka的配置参数](https://blog.csdn.net/fenglibing/article/details/82117166)
