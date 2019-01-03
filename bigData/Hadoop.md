@@ -6,6 +6,8 @@
 
 [亿级PV，常见性能优化策略总结与真实案例](https://mp.weixin.qq.com/s/rpSMOieVEQ9r3f55WlvkLQ)
 
+[大数据学习笔记1000条](https://mp.weixin.qq.com/s/x3GYmbnHJvPmGbZfaXcJ7w)
+
 ## 简介
 [传智大数据](http://www.itcast.cn/subject/cloudzly/index.shtml)
 
