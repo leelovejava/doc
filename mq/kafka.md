@@ -1521,3 +1521,16 @@ public class ProducerController {
     }
 }
 ```
+
+### kakfa异常
+1).
+```
+org.apache.kafka.clients.consumer.CommitFailedException: Commit cannot be completed since the group has already rebalanced and assigned the partitions to another member. This means that the time between subsequent calls to poll() was longer than the configured max.poll.interval.ms, which typically implies that the poll loop is spending too much time message processing. You can address this either by increasing the session timeout or by reducing the maximum size of batches returned in poll() with max.poll.records
+
+一次拉取数据太多,导致超时
+# consumer每次调用poll()时取到的records的最大数
+max.poll.records= 500
+# 最大的poll数据间隔
+max.poll.interval.ms = 300000
+```
+[kafka consumer配置详解](https://www.cnblogs.com/rainwang/p/7493742.html)
