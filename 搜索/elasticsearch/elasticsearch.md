@@ -12,6 +12,8 @@
 
 [京东到家订单中心 Elasticsearch 演进历程](https://mp.weixin.qq.com/s/TrCJJtvhjB2m29fOOa3Rzg)
 
+[Elasticsearch搜索引擎性能调优看懂这一篇就够了](https://mp.weixin.qq.com/s/VHULA5vfDBxjGzukZyYJbg)
+
 ## 下载历史版本
 https://www.elastic.co/downloads/past-releases
 

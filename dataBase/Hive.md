@@ -1,6 +1,8 @@
 ###Hive
 ####Overview
 [官网](hive.apache.org)
+[Hive介绍与核心知识点](https://mp.weixin.qq.com/s/8D3pemhEwOWfSjDAZAkLNg)
+
 The Apache Hive ™ data warehouse software facilitates reading, writing, and managing large datasets residing in distributed storage using SQL. Structure can be projected onto data already in storage. A command line tool and JDBC driver are provided to connect users to Hive.
 apache的hive是一个数据参考的软件,它能方便提供非常方便的读、写和管理很大数据集,这个数据集是存储在分布式的存储系统上的，能够使用sql。已经存储在存储系统上的数据,可以用上结构化的东西,命令行的工具或jdbc的驱动能够连接到hive,
 

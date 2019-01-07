@@ -7,6 +7,8 @@
 ## doc
 [苏宁基于Spark Streaming的实时日志分析系统实践](https://mp.weixin.qq.com/s/cqW94v4yWgekvCYC646hIw)
 
+[Spark Streaming VS Flink](https://mp.weixin.qq.com/s/qamHUR8vDbxDOnLcUa4jLw)
+
 ## 离线计算与实时计算的对比
 1) 数据来源
    离线： HDFS 历史数据 数据量比较大
