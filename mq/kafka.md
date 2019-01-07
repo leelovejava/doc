@@ -37,6 +37,7 @@
 -[kafka系列文章-朱小厮](https://mp.weixin.qq.com/mp/homepage?__biz=MzU0MzQ5MDA0Mw==&hid=1&sn=9fb863ee0a215bf1a668ed727df61875)
 -[SpringKafka文档地址](https://docs.spring.io/spring-kafka/reference/htmlsingle)
 -[kafka文档地址](http://kafka.apache.org/documentation)
+-[Spring-Kafka（六）—— @KafkaListener的花式操作](https://www.jianshu.com/p/a64defb44a23)
 
 ### 1.1.Kafka是什么
 
@@ -1535,3 +1536,8 @@ max.poll.interval.ms = 300000
 ```
 [kafka consumer配置详解](https://www.cnblogs.com/rainwang/p/7493742.html)
 [Spring Kafka中关于Kafka的配置参数](https://blog.csdn.net/fenglibing/article/details/82117166)
+
+```
+#在使用Kafka的组管理时，用于检测消费者故障的超时
+spring.kafka.consumer.session.timeout-ms = 30000
+```
