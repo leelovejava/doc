@@ -254,6 +254,7 @@ Spark Streaming项目实战--->数据处理结果可视化
 
 netCat:网络工具
 
+1) 源码
 [安装](https://blog.csdn.net/bsunp/article/details/56484356?locationNum=11&fps=1)
 ```
 wget https://sourceforge.NET/projects/netcat/files/netcat/0.7.1/netcat-0.7.1.tar.gz/download
@@ -263,7 +264,7 @@ make && make install
 nc -help成功
 ```
 
-首先在一台Linux（ip：192.168.10.101）上用YUM安装nc工具
+2) yum
 yum install -y nc
 
 启动一个服务端并监听9999端口
