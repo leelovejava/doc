@@ -24,6 +24,8 @@ spark.apache.org
 
 [阿里如何实现海量数据实时分析？](https://mp.weixin.qq.com/s/kt-xtvM77UZ3kD-3dpU7sw)
 
+[如何成为大数据Spark高手](https://mp.weixin.qq.com/s/gEDrC9umCY_yA2f3ItzEug)
+
 ## 2.Spark概述
 
 ### [Spark-survey](https://blog.csdn.net/lovehuangjiaju/article/details/48765165)
