@@ -14,6 +14,8 @@
 
 [Elasticsearch搜索引擎性能调优看懂这一篇就够了](https://mp.weixin.qq.com/s/VHULA5vfDBxjGzukZyYJbg)
 
+[图解elasticsearch原理](https://mp.weixin.qq.com/s/5cY2XFcyTCBBH8RtsM18dA)
+
 ## 下载历史版本
 https://www.elastic.co/downloads/past-releases
 
