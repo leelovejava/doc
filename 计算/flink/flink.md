@@ -21,6 +21,8 @@ Learn more about Flink at [http://flink.apache.org/](http://flink.apache.org/)
 
 [Flink on YARN部署快速入门指南](https://www.iteblog.com/archives/1620.html)
 
+[flink的神奇分流器-sideoutput](https://mp.weixin.qq.com/s/nrBT2xkXpY8MmEksLessIw)
+
 ## Features
 
 * A streaming-first runtime that supports both batch processing and data streaming programs
