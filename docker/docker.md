@@ -1,5 +1,7 @@
 [Kubernetes 真的很复杂吗？](https://mp.weixin.qq.com/s/ElD_nbf5Eav8ZfKRHiLudw)
 
+[10分钟教你看懂 Docker 和 K8S](https://mp.weixin.qq.com/s/IxOtpmAUv6kEVSLLJgF0ZA)
+
 ---------mysql------------------
 创建mysql容器
 --e 指定配置文件
