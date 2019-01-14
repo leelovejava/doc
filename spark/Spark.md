@@ -26,6 +26,8 @@ spark.apache.org
 
 [如何成为大数据Spark高手](https://mp.weixin.qq.com/s/gEDrC9umCY_yA2f3ItzEug)
 
+[单表千亿电信大数据场景，使用Spark+CarbonData替换Impala案例](https://mp.weixin.qq.com/s/wTnHy1qT_UFgHjj7rVVr1Q)
+
 ## 2.Spark概述
 
 ### [Spark-survey](https://blog.csdn.net/lovehuangjiaju/article/details/48765165)
