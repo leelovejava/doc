@@ -23,6 +23,8 @@ Learn more about Flink at [http://flink.apache.org/](http://flink.apache.org/)
 
 [flink的神奇分流器-sideoutput](https://mp.weixin.qq.com/s/nrBT2xkXpY8MmEksLessIw)
 
+[Flink特异的迭代操作-bulkIteration](https://mp.weixin.qq.com/s/b5aCHqyhN1gO2OeYXdGG5g)
+
 ## Features
 
 * A streaming-first runtime that supports both batch processing and data streaming programs
