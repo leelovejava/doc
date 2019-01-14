@@ -16,7 +16,13 @@
 [58HBase平台实践和应用—平台建设篇](https://mp.weixin.qq.com/s/Czx-tDEdN11srmGuA-4Jkw)
 多租户支持、数据读写接口、数据导入导出和平台优化四个方面重点讲解了58HBase平台的建设
 
-项目实战 Hbase+Spring boot实战分布式文件存储
+[HBase实战 | 排查HBase堆外内存溢出](https://mp.weixin.qq.com/s/JDgtbulwfPgnjRbJ-zrfug)
+
+[HBase2实战之HBase Flink和Kafka整合](https://mp.weixin.qq.com/s/1UgPtCmP2t3vSfVsRX_OWA)
+
+[从MySQL到HBase：分库分表方案转型的演进](https://mp.weixin.qq.com/s/aPaty1t30TxrRHieS64OWw)
+
+[项目实战 Hbase+Spring boot实战分布式文件存储]()
 
 ###官方翻译文档
 http://abloz.com/hbase/book.html
