@@ -7,4 +7,8 @@
 
 [数据库分库分表后，如何部署上线？](https://mp.weixin.qq.com/s/fDNTMx1KCNsIwcbJPdHcwQ)
 
+[什么影响了 MySQL 性能？](https://mp.weixin.qq.com/s/7W0yQWUxNy_RFwWCnLA3-A)
+
+[什么影响了数据库查询速度?](https://mp.weixin.qq.com/s/6RsM_tXiDwbPrCTPDZAkLw)
+
 https://www.cnblogs.com/linjiqin/category/283837.html
