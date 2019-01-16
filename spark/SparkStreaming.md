@@ -9,6 +9,8 @@
 
 [Spark Streaming VS Flink](https://mp.weixin.qq.com/s/qamHUR8vDbxDOnLcUa4jLw)
 
+[Spark 踩坑记—Spark Streaming+Kafka](https://mp.weixin.qq.com/s/QrIWCggauOM7BTNFs9Hx7A)
+
 ## 离线计算与实时计算的对比
 1) 数据来源
    离线： HDFS 历史数据 数据量比较大
