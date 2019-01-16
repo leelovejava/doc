@@ -25,6 +25,8 @@ Learn more about Flink at [http://flink.apache.org/](http://flink.apache.org/)
 
 [Flink特异的迭代操作-bulkIteration](https://mp.weixin.qq.com/s/b5aCHqyhN1gO2OeYXdGG5g)
 
+[Flink Forward China 2018](https://github.com/zheniantoushipashi/2018-flink-forward-china)
+
 ## Features
 
 * A streaming-first runtime that supports both batch processing and data streaming programs
