@@ -38,6 +38,7 @@
 -[SpringKafka文档地址](https://docs.spring.io/spring-kafka/reference/htmlsingle)
 -[kafka文档地址](http://kafka.apache.org/documentation)
 -[Spring-Kafka（六）—— @KafkaListener的花式操作](https://www.jianshu.com/p/a64defb44a23)
+-[Kafka, RabbitMQ, ZeroMQ, RocketMQ, ActiveMQ 之间的差异](https://mp.weixin.qq.com/s/aUHEncqzES0VkcVnZjaJKw)
 
 ### 1.1.Kafka是什么
 
