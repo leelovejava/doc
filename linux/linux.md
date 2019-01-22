@@ -1,7 +1,6 @@
 windows的hosts目录
 c:\windows\system32\drivers\etc
 
-
 ------github------------
 192.30.253.112 github.com
 151.101.0.133 assets-cdn.github.com
@@ -14,6 +13,8 @@ cmd
 ipconfig /displaydns
 // 刷新所有 dns内容
 ipconfig /flushdns
+
+[Windows 下的文件被占用解决](https://www.cnblogs.com/lmsthoughts/p/8085931.html)
 
 
 
@@ -106,3 +107,14 @@ https://www.netsarang.com/products/xsh_overview.html
 -[线上操作与线上问题排查实战](http://www.jiangxinlingdu.com/practice/2018/09/13/operation.html)
 
 -[不停机图片升级迁移](http://www.jiangxinlingdu.com/thought/2018/08/15/images.html)
+
+-[shell在手分析服务器日志不愁?](https://segmentfault.com/a/1190000009745139)
+
+---------------------------
+查看有多少个IP访问：
+
+> awk '{print $1}' log_file|sort|uniq|wc -l
+
+查看访问前十个ip地址
+
+> awk '{print $1}' |sort|uniq -c|sort -nr |head -10 access_log
