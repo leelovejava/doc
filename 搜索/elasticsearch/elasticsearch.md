@@ -7,6 +7,8 @@
 
 -[史上超全面的Elasticsearch使用指南](https://www.javazhiyin.com/4588.html)
 
+-[BAT等一线大厂 Elasticsearch面试题解读](https://mp.weixin.qq.com/s/ShujBrEjZ4pXaFIM4pKqkA)
+
 -[SpringBoot整合elasticsearch](https://www.cnblogs.com/dalaoyang/p/8990989.html)
 
 -[Elasticsearch 6.3 发布，你们要的 SQL 功能来了](https://www.iteblog.com/archives/2378.html?from=like)
