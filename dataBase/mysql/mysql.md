@@ -1,6 +1,8 @@
 
 [MySQL 大表优化方案](https://segmentfault.com/a/1190000006158186)
 
+[MySQL 优化实施方案](https://www.cnblogs.com/clsn/p/8214048.html)
+
 [MySQL 索引优化](https://mp.weixin.qq.com/s/1jnwkifOGTYJhCCwu6zwHg)
 
 [MySQL常用命令，34道练习题](https://segmentfault.com/a/1190000013259974)

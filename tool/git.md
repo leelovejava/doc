@@ -1,4 +1,11 @@
-[Git常用命令速查表](https://mp.weixin.qq.com/s/k4tU8snvssyKJ2WkvkFrZA)
+# git
+
+## doc
+-[Git常用命令速查表](https://mp.weixin.qq.com/s/k4tU8snvssyKJ2WkvkFrZA)
+
+-[Git 使用规范流程](https://mp.weixin.qq.com/s/_safn17a6C6PP852IFkK-A)
+
+-[20 分钟教你搞懂 Git！](https://mp.weixin.qq.com/s/ShunINXYybKftmPUcQsrxA)
 
 还原上一次提交 
 > git reset HEAD~
