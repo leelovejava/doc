@@ -3,6 +3,7 @@
 
 -[程序员如何在百忙中更有效地利用时间](https://blog.battcn.com/2018/07/03/other/reasonable-use-of-time/)
 -[职业发展路线](https://mp.weixin.qq.com/s/xUJDzRax_TQ0pYiCIFhxSw)
+-[中小公司的Java工程师应该如何逆袭冲进BAT？](https://mp.weixin.qq.com/s/tTF4ITWc1BXPZtBKqmwx3g)
 
 -[软件开发中会用到的图](https://mp.weixin.qq.com/s/TRkj4OiPNMWH8x1Qi4fh_g)
 -[几分钟几张图教你学会如何使用UML](https://mp.weixin.qq.com/s/2SfqdYyHSJSLCH1TdBIb3A)
