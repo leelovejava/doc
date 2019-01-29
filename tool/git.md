@@ -10,6 +10,9 @@
 还原上一次提交 
 > git reset HEAD~
 
+git取消本地提交,未push
+> git push origin HEAD --force
+
 ---------
 
 git提交规范:
