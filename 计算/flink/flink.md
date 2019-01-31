@@ -29,6 +29,8 @@ Learn more about Flink at [http://flink.apache.org/](http://flink.apache.org/)
 
 [《从0到1学习Flink》—— Flink 写入数据到 ElasticSearch](https://segmentfault.com/a/1190000017874148)
 
+[写在阿里Blink正式开源之际](https://mp.weixin.qq.com/s/Sx2k0jS7bl6DZAlWlTAcsA)
+
 ## Features
 
 * A streaming-first runtime that supports both batch processing and data streaming programs
