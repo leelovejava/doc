@@ -44,19 +44,19 @@ https://blog.csdn.net/shujuelin/article/details/82851836
 
 ### 第四阶级:掌握基于Spark Streaming
 
-* Spark作为云计算大数据时代的集大成者，其中其组件spark Streaming在企业准实时处理也是基本是必备，所以作为大数据从业者熟练掌握也是必须且必要的：
+* <font color=#0099ff face="黑体">Spark作为云计算大数据时代的集大成者，其中其组件spark Streaming在企业准实时处理也是基本是必备，所以作为大数据从业者熟练掌握也是必须且必要的</font>
 
-* Spark Streaming是非常出色的实时流处理框架，要掌握其DStream、transformation和checkpoint等;
+* <font color=#0099ff face="黑体">Spark Streaming是非常出色的实时流处理框架，要掌握其DStream、transformation和checkpoint等</font>
 
-* 熟练掌握kafka 与spark Streaming结合的两种方式及调优方式
+* <font color=#0099ff face="黑体">熟练掌握kafka 与spark Streaming结合的两种方式及调优方式</font>
 
-* 熟练掌握Structured Streaming原理及作用并且要掌握其余kafka结合
+* <font color=#0099ff face="黑体">熟练掌握Structured Streaming原理及作用并且要掌握其余kafka结合</font>
 
-* 熟练掌握SparkStreaming的源码尤其是和kafka结合的两种方式的源码原理。
+* <font color=#0099ff face="黑体">熟练掌握SparkStreaming的源码尤其是和kafka结合的两种方式的源码原理</font>
 
-* 熟练掌握spark Streaming的web ui及各个指标，如：批次执行事件处理时间，调度延迟，待处理队列并且会根据这些指标调优。
+* <font color=#0099ff face="黑体">熟练掌握spark Streaming的web ui及各个指标，如：批次执行事件处理时间，调度延迟，待处理队列并且会根据这些指标调优</font>
 
-* 会自定义监控系统
+* <font color=#0099ff face="黑体">会自定义监控系统</font>
 
 ### 第五阶级:掌握基于Spark SQL
 
@@ -110,6 +110,179 @@ spark与TensorFlow结合
 * 根据不同的业务场景的需要提供Spark在不同场景的下的解决方案;
 
 * 根据实际需要，在Spark框架基础上进行二次开发，打造自己的Spark框架;
+
+--------------------------------
+### ⑴.SparkStreaming提纲复习
+
+#### ①、DStream
+Spark Streaming 是`微批次架构`，编程抽象是DStream(离散化流)。
+它是一个RDD 序列，每个 RDD 代表数据流中一个时间段内的数据
+Spark Streaming 为每个输入源启动对 应的接收器,接收器以任务的
+形式运行在应用的执行器进程中，从输入源收集数据并保存为 RDD。
+它们收集到输入数据后会把数据复制到另一个执行器进程来保障容错性(默认行为)。数据保存在执行器进程的内存中，和缓存 RDD 的方式一样。驱动器程序中的 StreamingContext 会周期性地运行 Spark 作业来处理这些数据，把数据与之前时间区间中的 RDD 进行整合
+
+#### ②、transformation
+
+㈠ 有状态转换
+
+01).map
+
+02).flatMap
+
+03).filter
+
+04).repartition
+
+05).union
+
+06).count
+
+07).reduce
+
+08).countByValue
+
+09).reduceByKey
+
+11).cogroup
+
+
+
+![image](https://github.com/leelovejava/doc/blob/master/img/spark/interview/11_trans.png)
+
+㈡ 无状态转换
+
+01).updateStateByKey 追踪状态变化
+```
+# 使用updateStateByKey来更新状态，统计从运行开始以来单词总的次数
+val pairs = ssc.socketTextStream("master01", 9999).flatMap(_.split(" ")).map(word => (word, 1))
+pairs.updateStateByKey[Int](updateFunc)
+//val wordCounts = pairs.reduceByKey(_ + _)
+```
+
+02).transform
+允许DStream上执行任意的RDD-to-RDD函数
+即使这些函数并没有在DStream的API中暴露出来，通过该函数可以方便的扩展Spark API
+
+```
+# RDD containing spam information
+val spamInfoRDD = ssc.sparkContext.newAPIHadoopRDD(...) 
+
+val cleanedDStream = wordCounts.transform { rdd =>
+  # join data stream with spam information to do data cleaning
+  # 在进行单词统计的时候，想要过滤掉spam的信息,本质是对DStream中的RDD应用转换
+  rdd.join(spamInfoRDD).filter(...) 
+  ...
+}
+```
+
+03).join 连接
+leftOuterJoin、rightOuterJoin、fullOuterJoin、Stream-Stream、windows-stream to windows-stream、stream-dataset
+
+Stream-Stream Joins
+```scala
+val stream1: DStream[String, String] = ...
+val stream2: DStream[String, String] = ...
+val joinedStream = stream1.join(stream2)
+
+val windowedStream1 = stream1.window(Seconds(20))
+val windowedStream2 = stream2.window(Minutes(1))
+val joinedStream = windowedStream1.join(windowedStream2)
+```
+
+Stream-dataset joins
+```scala
+val dataset: RDD[String, String] = ...
+val windowedStream = stream.window(Seconds(20))...
+val joinedStream = windowedStream.transform { rdd => rdd.join(dataset) }
+```
+
+
+#### ③、checkpoint
+检查点机制是我们在 Spark Streaming 中用来保障容错性的主要机制。与应
+用程序逻辑无关的错误（即系统错位，JVM 崩溃等）有迅速恢复的能力
+目的:
+1) 控制发生失败时需要重算的状态数。SparkStreaming 可以通 过转化图
+的谱系图来重算状态，检查点机制则可以控制需要在转化图中回溯多远。
+2) 提供驱动器程序容错。从检查点恢复
+
+> ssc.checkpoint("hdfs://...") 
+
+#### ④、[熟练掌握kafka 与spark Streaming结合的两种方式及调优方式](https://blog.csdn.net/weixin_39843430/article/details/80019519)
+[SparkStreaming+kafka的receiver模式与direct模式](https://blog.csdn.net/wyqwilliam/article/details/84430548)
+
+sparkStreaming读取kafka的两种方式
+①Receiver-base
+    先把数据从kafka中读取出来然后缓存到内存然后再定时处理
+    Spark1.3淘汰
+    kafkaUtils.createStream()
+   
+   问题:
+    数据丢失风险
+        开启WAL(write ahead log)预写日志机制
+            在接受过来数据备份到其他节点的时候，同时备份到HDFS上一份
+            数据持久化级别,降低到`MEMORY_AND_DISK`,提高数据安全性
+    提高并行度,`spark.streaming.blockInterval`,默认200ms
+
+②[Direct](https://github.com/apache/spark/blob/master/examples/src/main/scala/org/apache/spark/examples/streaming/DirectKafkaWordCount.scala)
+   延迟，action触发,官方推荐,Streaming负责追踪消费的offset,并保存到checkpoint
+   
+   问题:
+    ⑴提高成本
+    ⑵监视可视化 
+    
+    读取速度快:直接到kafka拿数据消费,不会存到内存再消费
+    简单并行读取:kafka和RDD分区之间有一对一的映射关系
+    高性能:要保证零数据丢失,在kafka做数据复制,副本恢复,减少receiver方式复制次数,提高性能
+
+```scala
+ val messages = KafkaUtils.createDirectStream[String, String](
+      ssc,
+      LocationStrategies.PreferConsistent,
+      ConsumerStrategies.Subscribe[String, String](topicsSet, kafkaParams))
+``` 
+
+#### ⑤、熟练掌握SparkStreaming的源码尤其是和kafka结合的两种方式的源码原理
+
+
+#### ⑥、熟练掌握Structured Streaming原理及作用并且要掌握与kafka结合
+①原理:把数据流当作一个没有边界的数据表来对待,在流上使用Spark SQL进行流处理
+
+②作用:
+* 同样能支持多种数据源的输入和输出
+* 以结构化的方式操作流式数据，能够像使用Spark SQL处理离线的批处理一样，处理流数据，代码更简洁，写法更简单
+* 基于Event-Time，相比于Spark Streaming的Processing-Time更精确，更符合业务场景
+* 解决了Spark Streaming存在的代码升级，DAG图变化引起的任务失败，无法断点续传的问题（Spark Streaming的硬伤！！！）
+
+
+#### ⑦、熟练掌握spark Streaming的web ui及各个指标，如：批次执行事件处理时间，调度延迟，待处理队列并且会根据这些指标调优
+
+①Processing Time:批数据处理的时间
+最优的最小批次间隔500毫秒
+②Scheduling Delay:前面的批处理完毕之后，当前批在队列中的等待时间。如果批处理时间比批间隔时间持续更长或者队列等待时间持续增加，这就预示系统无法以批数据产生的速度处理这些数据，整个处理过程滞后了。在这种情况下，考虑减少批处理时间
+
+性能调优
+①、设置合理的批处理时间
+②、增加Job并行度
+③、使用Kryo系列化
+http://www.iteblog.com/archives/1328 
+在Spark中自定义Kryo序列化输入输出API
+④、缓存需要经常使用的数据
+⑤、清除不需要的数据
+⑥、设置合理的GC
+⑦、设置合理的CPU资源数
+
+cpu使用（1）、用于接收数据；（2）、用于处理数据。足够的CPU资源用于接收和处理数据，才能及时高效地处理数据
+
+7、会自定义监控系统
+
+Spark Streaming程序的处理过程可以通过StreamingListener接口来监控，允许获得receiver状态和处理时间。
+自定义监听器，实现异常邮件或钉钉提醒
+
+通过可插拔的方式添加自己实现的listener
+> ssc.addStreamingListener()
+
+-------------------------
+# Spark面试题
 
 ## 1、SDD,DAG,Stage怎么理解?
 
@@ -187,3 +360,5 @@ mapPatitions：用于遍历操作RDD中的每一个分区，返回生成一个�
 foreachPatition：用于遍历操作RDD中的每一个分区，无返回值（action算子）
 
 总结：一般使用mapPatitions和foreachPatition算子比map和foreach更加高效，推荐使用
+
+## 19、<font color=#FF0000>RDD、DataFrame互相转换、DataSet</font>
