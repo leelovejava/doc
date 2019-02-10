@@ -242,7 +242,13 @@ sparkStreaming读取kafka的两种方式
 ``` 
 
 #### ⑤、熟练掌握SparkStreaming的源码尤其是和kafka结合的两种方式的源码原理
-
+```scala
+writeStream
+    .format("kafka")
+    .option("kafka.bootstrap.servers", "host1:port1,host2:port2")
+    .option("topic", "updates")
+    .start()
+```
 
 #### ⑥、熟练掌握Structured Streaming原理及作用并且要掌握与kafka结合
 ①原理:把数据流当作一个没有边界的数据表来对待,在流上使用Spark SQL进行流处理
