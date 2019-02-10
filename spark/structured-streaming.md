@@ -9,6 +9,8 @@
 
 [秒懂StructuredStreaming-手把手教你写StructuredStreaming + Kafka程序](https://blog.csdn.net/lovechendongxing/article/details/81748553)
 
+[Structured Streaming 源码解析系列](https://github.com/lw-lin/CoolplaySpark/tree/master/Structured%20Streaming%20%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90%E7%B3%BB%E5%88%97)
+
 ### 是什么?
 * 是一个建立在Spark SQL引擎之上可扩展且容错的流处理引擎。
 * 可以使用与静态数据批处理计算相同的方式来表达流计算。
