@@ -287,6 +287,15 @@ Spark Streaming程序的处理过程可以通过StreamingListener接口来监控
 通过可插拔的方式添加自己实现的listener
 > ssc.addStreamingListener()
 
+#### ⑧、Structured Streaming VS Flink
+
+#### ⑨、SparkStreaming与Storm的区别
+1.Storm是纯实时的流式处理框架，SparkStreaming是准实时的处理框架（微批处理）。因为微批处理，SparkStreaming的吞吐量比Storm要高。
+2.Storm 的事务机制要比SparkStreaming的要完善。
+3.Storm支持动态资源调度。(spark1.2开始和之后也支持)
+
+SparkStreaming擅长复杂的业务处理，Storm不擅长复杂的业务处理，擅长简单的汇总型计算
+
 -------------------------
 # Spark面试题
 
