@@ -22,7 +22,9 @@
 
 [从MySQL到HBase：分库分表方案转型的演进](https://mp.weixin.qq.com/s/aPaty1t30TxrRHieS64OWw)
 
-[项目实战 Hbase+Spring boot实战分布式文件存储]()
+项目实战 Hbase+Spring boot实战分布式文件存储
+
+[云HBase全文索引服务，增强HBase的检索能力](https://mp.weixin.qq.com/s/e6Zv8jVfzJfVKdHBlfyAFw)
 
 ###官方翻译文档
 http://abloz.com/hbase/book.html
