@@ -398,6 +398,10 @@ https://mp.weixin.qq.com/s/gWzFR_btIv4bxmTwFYnHsQ
 (3)Spark Streaming的数据可靠性
 checkpoint机制、write ahead log机制、Receiver缓存机器、可靠的Receiver（即数据接收并备份成功后会发送ack），可以保证无论是worker失效还是driver失效，都是数据0丢失。
 原因：如果没有Receiver服务的worker失效了，RDD数据可以依赖血统来重新计算；如果Receiver所在worker失败了，由于Reciever是可靠的，并有write ahead log机制，则收到的数据可以保证不丢；如果driver失败了，可以从checkpoint中恢复数据重新构建
+
+14).spark streming在实时处理时会发生什么故障，如何停止，解决?
+
+
 ----------------------------
 Spark Core
 
@@ -429,6 +433,14 @@ spark基于线程，线程直接从线程池中获取即可。
 MapReduce也可以基于内存，但有一定限度。
 
 很多框架都对spark做了兼容，使用起来很方便
+
+Spark为什么比mapreduce快?
+1）基于内存计算，减少低效的磁盘交互；
+
+2）高效的调度算法，基于DAG；
+
+3)容错机制Linage，精华部分就是DAG和Lingae
+
 
 2).Spark为什么快?
 
@@ -588,6 +600,7 @@ d.在handleJobSubmitted中首先创建finalStage，创建finalStage时候会建�
 
 总结：依赖是从代码的逻辑层面上来展开说的，可以简单点说：写介绍什么是RDD中的宽窄依赖，然后再根据DAG有向无环图进行划分，从当前job的最后一个算子往前推，遇到宽依赖，那么当前在这个批次中的所有算子操作都划分成一个stage，然后继续按照这种方式再继续往前推，如再遇到宽依赖，又划分成一个stage，一直到最前面的一个算子。最后整个job会被划分成多个stage，而stage之间又存在依赖关系，后面的stage依赖于前面的stage。
 -
+
 13).task
 
 理解?   
@@ -607,7 +620,20 @@ a. master：管理集群和节点，不参与计算。 
 b. worker：计算节点，进程本身不参与计算，和master汇报。 
 c. Driver：运行程序的main方法，创建spark context对象。 
 d. spark context：控制整个application的生命周期，包括dagsheduler和task scheduler等组件。 
-e. client：用户提交程序的入口。   
+e. client：用户提交程序的入口。  
+
+Spark中Work的主要工作是什么?
+主要功能：管理当前节点内存，CPU的使用状况，接收master分配过来的资源指令，通过ExecutorRunner启动程序分配任务，worker就类似于包工头，管理分配新进程，做计算的服务，相当于process服务。需要注意的是：
+
+1）worker会不会汇报当前信息给master，worker心跳给master主要只有workid，它不会发送资源信息以心跳的方式给mater，master分配的时候就知道work，只有出现故障的时候才会发送资源。
+
+2）worker不会运行代码，具体运行的是Executor是可以运行具体appliaction写的业务逻辑代码，操作代码的节点，它不会运行程序的代码的。
+
+
+Spark driver的功能是什么? 
+1）一个Spark作业运行时包括一个Driver进程，也是作业的主进程，具有main函数，并且有SparkContext的实例，是程序的人口点；
+2）功能：负责向集群申请资源，向master注册信息，负责了作业的调度，，负责作业的解析、生成Stage并调度Task到Executor上。包括DAGScheduler，TaskScheduler。
+
 
 14).血统
 
@@ -680,6 +706,8 @@ Spark不一定非要跑在hadoop集群，可以在本地，起多个线程的方
 画图，画Spark的工作模式，部署分布架构图
 
 spark on yarn 作业执行流程，yarn-client 和 yarn cluster 有什么区别
+
+spark-submit的时候如何引入外部jar包?
 
 26).Spark并行度怎么设置比较合适
 spark并行度，每个core承载2~4个partition,如，32个core，那么64~128之间的并行度，也就是
@@ -777,11 +805,13 @@ f. 采用parquet可以极大的优化spark的调度和执行。我们测试spark
 
 6).Spark如何处理结构化数据，Spark如何处理非结构话数据？
 
-7).spark sql为什么比hive快？
+7).讲讲列式存储的 parquet文件底层格式
 
-1.消除了冗余的HDFS读写
+8).spark sql为什么比hive快？
 
-2.消除了冗余的MapReduce阶段
+a.消除了冗余的HDFS读写
+
+b.消除了冗余的MapReduce阶段
 
 3.JVM的优化
 --------------------------
@@ -820,3 +850,28 @@ spark 图计算接触过没，能举例说明你用它做过什么吗?
 --------------------------
 scala
 1).scala中trait特征和用法？
+
+2).项目用什么语言写？ Scala？ Scala的特点？ 和Java的区别？
+3).Scala怎样声明变量与常量？
+var val
+
+4).什么是闭包？（******************）
+
+闭包是一个函数，返回值依赖于声明在函数外部的一个或多个变量。
+
+var factor = 3  
+val multiplier = (i:Int) => i * factor 
+
+闭包的实质就是代码与用到的非局部变量的混合，即：
+
+闭包 = 代码 + 用到的非局部变量
+
+5).什么是Scala的伴生类和伴生对象?(重点)
+[Scala单例对象与伴生对象](https://www.jianshu.com/p/1f3012b54e4a)
+----------------------------
+1).Hbase的设计有什么心得？
+2).Hbase的操作是用的什么API还是什么工具？
+3).有没有用过Zookeeper呢？ Zookeeper的适用场景是什么？ HA 状态维护 分布式锁 全局配置文件管理 操作Zookeeper是用的什么？
+4).做过hbase的二级索引吗？
+5).公司里集群规模。hbase数据量。数据规模
+6).hbase存数据用什么rowkey？加时间戳的话，会不会出现时间戳重复的问题，怎么做的呢？
