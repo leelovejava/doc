@@ -1,0 +1,754 @@
+mysql:select 列名 from 表名 limit 10,20
+
+oracle: SELECT * FROM
+(
+   SELECT A.*, ROWNUM RN
+   FROM (SELECT * FROM TABLE_NAME) A
+   WHERE ROWNUM <= 40
+)
+WHERE RN >= 21
+
+case when:
+--简单Case函数
+CASE sex
+         WHEN '1' THEN '男'
+         WHEN '2' THEN '女'
+ELSE '其他' END
+--Case搜索函数
+CASE WHEN sex = '1' THEN '男'
+     WHEN sex = '2' THEN '女'
+ELSE '其他' END
+
+SELECT   id, name, cj, (CASE WHEN cj < 60 THEN '不及格' WHEN cj BETWEEN 60 AND 90 THEN '良好' WHEN cj > 90 THEN '优秀' END) AS 状态 FROM stud
+
+1）插入排序（直接插入排序、希尔排序[最小增量排序]）
+
+2）交换排序（冒泡排序、快速排序）
+
+3）选择排序（直接选择排序、堆排序）
+
+4）归并排序
+
+5）分配排序（基数排序）
+
+所需辅助空间最多：归并排序
+
+所需辅助空间最少：堆排序
+
+平均速度最快：快速排序
+
+不稳定：快速排序，希尔排序，堆排序。
+
+
+冒泡排序：
+原理：比较两个相邻的元素，将值大的元素交换至右端。
+
+
+原生JAVASCRIPT:
+实现ajax之前必须要创建一个 XMLHttpRequest 对象。如果不支持创建该对象的浏览器，则需要创建 ActiveXObject
+var xmlHttp;
+function createxmlHttpRequest() {
+if (window.ActiveXObject) {
+xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+} else if (window.XMLHttpRequest) {
+xmlHttp=new XMLHttpRequest();
+}
+
+GET:
+function doGet(url){
+// 注意在传参数值的时候最好使用encodeURI处理一下，以防出现乱码
+createxmlHttpRequest();
+xmlHttp.open("GET",url);
+xmlHttp.send(null);
+xmlHttp.onreadystatechange = function() {
+if ((xmlHttp.readyState == 4) && (xmlHttp.status == 200)) {
+alert('success');
+} else {
+alert('fail');
+}
+}
+}
+
+POST:
+function doPost(url,data){
+// 注意在传参数值的时候最好使用encodeURI处理一下，以防出现乱码
+createxmlHttpRequest();
+xmlHttp.open("POST",url);
+xmlHttp.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+xmlHttp.send(data);
+xmlHttp.onreadystatechange = function() {
+if ((xmlHttp.readyState == 4) && (xmlHttp.status == 200)) {
+alert('success');
+} else {
+alert('fail');
+}
+}
+}
+
+
+数据库的三大范式：
+1.每一列只有一个值
+2.每一行都能被区分，也就是主键
+3.每一个表都不包含其他表已经包含的非主关键字信息
+
+数据库优化：
+1.不要用*号代替列名
+2.用EXISTS替代IN、用NOT EXISTS替代NOT IN
+2.尽量避免在 where 子句中对字段进行表达式操作，尽量避免在where子句中对字段进行函数操作
+2.表中允许适当冗余
+3.sql全部大写，特别是列名和表名
+4,索引
+
+页面间的跳转方式：转发forward和重定向redirect
+转发和重定向的区别：
+1.转发是服务端的跳转，重定向是客户端的跳转
+2.转发地址栏不变，后者地址栏改变，重新发送请求
+3.能传递参数，不能传递参数
+4.会发生重复提交的问题，可避免重复提交
+
+final关键字修饰一个变量时候是指引用变量不能变，引用变量所指向的对象中的内容还是可以改变的。
+
+&和&&的区别：
+&&有短路的功能，如果前面的表达式为false后面的就不会执行
+&还可以用作位运算符
+
+==是比较两个变量的值
+equals是比较两个对象的内容是否相等
+
+静态变量和实例变量的区别：
+静态变量前需要加static关键字，而实例变量前则不加
+实例变量属于某个对象的属性，需要实例化之后才可以被使用
+静态变量属于类变量，不需要创建就可以直接使用
+
+ceil 向上取整 Math.ceil(11.5) = 12
+floor 向下取整 Math.floor(11.5) = 11
+round 四舍五入 Math,round(11.5) = 12
+
+封装：把对象的属性和行为封装在一个模块中，属性私有化，提供对外的get，set方法。
+继承：子类共享父类的数据和方法，提高了重用性和扩展性
+抽象：找出事物的相似之处然后把这些归为一类。只考虑这些事物的相似之处。
+多态：一个引用变量到底会指向哪个类的实例对象，由程序在运行时候决定的。
+
+抽象类和接口的区别：
+抽象类有构造方法，属性，方法，可以包含多个抽象方法 is-a的关系（父类和子类的关系）
+接口则无构造方法，所有属性都是静态常量，所有方法都是抽象方法 can-do的关系，（能做什么）
+
+
+String不是基本数据类型
+基本数据类型包括byte、int、char、long、float、double、boolean和short。
+
+String和StringBuffer的区别：
+变量和常量的关系。StringBuffer（append，线程安全的）对象的内容可以修改；而String对象一旦产生后就不可以被修改，重新赋值其实是两个对象。
+
+
+final :用户申明属性，方法和类，属性不变，方法不可以覆盖，类不可继承。
+finally: 异常处理语句结构的一部分，表示总是被执行，除非遇到system.exit(init)；
+finalize:垃圾回收
+
+所有异常的根类 Throwable
+   1).error
+   2).Exception
+
+常用的Expcetion
+runtimeException
+NullPointException
+IllegalArgumentException 传递非法参数
+ClassCastException 强制转换
+IndexOutOfBoundsException 数组越界
+NumerFormatException
+
+throws 捕获并且向外抛出异常
+throw 抛出异常
+try catch 内部捕获异常并且做自定义处理
+finally 无论是否有异常都会被处理。除非程序结束
+
+多线程的两种实现方法。继承Thread类和implements（实现）Runnable接口
+同步的实现方法：synchronized,wait和notify。
+启用线程是调用start()方法。 run方法是执行该线程关联的代码、
+wait:使一个线程处于等待状态，并且释放所持有的对象的锁
+sleep：使一个正在运行的线程处于睡眠状态，不会释放所持有的对象锁
+notify：唤醒一个处于等待状态的线程。
+yield：线程让步
+
+newSingleThreadExecutor 创建一个单线程化的线程池，它只会用唯一的工作线程来执行任务，保证所有任务按照指定顺序(FIFO, LIFO, 优先级)执行。
+newFixedThreadPool 创建一个定长线程池，可控制线程最大并发数，超出的线程会在队列中等待。
+newCachedThreadPool创建一个可缓存线程池，如果线程池长度超过处理需要，可灵活回收空闲线程，若无可回收，则新建线程。
+newScheduledThreadPool 创建一个定长线程池，支持定时及周期性任务执行。
+
+
+同步和异步的区别：
+如果数据在共享，例如正在写的数据可能被另一个线程读到，或者正在读的数据已经被另一个线程写过了，那么这些数据必须进行同步存取
+如果在调用一些数据需要花费很长的时间，不希望程序在等待方法返回时，应该使用异步。
+
+
+collection和collections的区别:
+collection是集合类的上级接口，继承和他的接口主要有set和List
+Collections是针对集合类的一个帮助，提供了一些排序，搜索等方法
+
+List和Map的区别：
+一个是存储单列数据的集合，一个是存储键值对这样的双列集合
+List存储是有序且可以重复，Map存储没有顺序且键不可以重复，值可以重复。
+
+ArrayList和Vector的区别：
+1.同步性：Vector是线程安全的，ArrayList是线程不安全的，
+2.数据增长：Vector增长为原来的一倍，ArrayList增长为原来的0.5倍。
+
+HashMap和HashTable的区别
+1.同步性：HashTable是线程安全的，HashMap是线程不安全的。
+2.
+HashTable是基于Dictionary类，HashMap是实现Map接口
+HashMap允许空键值
+
+Set无法拥有重复元素，内部排序。
+
+ArrayList，Vector,LinkedList的存储性能
+ArrayList和Vector都是使用数组方式存储数据，他们可以直接按序号索引元素，插入元素涉及元素移动等内存操作，所以查询快，插入慢
+Vector是线程安全的，通常上比arrayList性能差一点
+LinkedList是基于双向链表实现存储，查询时候需要进行前向或者后向遍历，插入时候只需要记录本项的前后项。
+
+常用的类，包，接口
+类：String Integer Date System List
+包：io,lang,util,sql servlt
+接口：List, Map，HttpServletRequest,HttpServletResponse,HttpSession
+
+什么是java序列化：
+java对象变成字节流的形式传出去或者从一个字节流中恢复成一个java对象。（网络传输中可能会丢失信息）
+
+字节流和字符流的区别：
+字节流继承于inputStream,OutputStream 字符流继承于InputStreamReader OutputStreamWriter
+底层设备只接受字节数据，需要将字符串转成字节再写入底层设备。
+字符流是字节流的包装
+
+Singleton单例：保证一个类class只有一个实例存在
+饱汉模式：
+private Singleton(){
+}
+private final static Singleton instance = new SingleTon();
+private static SingleTon getInstance(){
+      return instance;
+}
+饥汗模式：
+private SingleTon(){}
+
+private static instance = null;
+public static synchronized SingleTon getInstance(){
+	if(instance == null)
+	   instance = new SingleTon();
+	return instance;
+}
+
+servlet的生命周期：加载和实例化，初始化，处理请求，服务结束，销毁
+
+页面间对象传递的方法：request，session，application,cookie等
+
+MVC: MODEL(实体)-Controller（对业务逻辑的处理）- view（视图）
+
+JSP和Servlet ：JSP是Servlet技术的扩展， 一个是在页面（jsp侧重于视图），一个是在java类
+
+JSP九大内置对象及四个作用域：(Request,Page,Session,Application)
+request 请求对象 pageContext 页面上下文对象 application 应用程序对象 exception
+response 响应对象 session 会话对象 out  输出对象 config 配置对象 page 页面对象
+
+springMVC的原理：
+http发起请求到dispatcherServlet,通过HanderMapping映射到指定的Controller上，Controller做一些业务代码的处理，返回到ModelAndView对象，然后通过视图解析器渲染出相应的view。
+
+Structs2的原理
+http发起请求根据web.xml配置，经过一系列的过滤器，再根据Struts.xml找到action类和方法，action调用业务逻辑组件处理，再根据Struct.xml找到对应结果，跳转到相应的页面。
+
+Hibernate中的update()和saveOrUpdate(), session的load和get()
+update(): 必须数据库有对应Id才更新，没有不发sql，即使不用update只要提交事务，就会脏数据检查，不一致也会发sql
+saveOrUpdate():对象存在id则update，对象没有则save
+
+get():先检查缓存，没有该对象立马发sql
+load():返回代理对象，需要用到的时候先检查缓存，没有才发sql，对象不存在就异常，session关闭后就异常。
+get常用
+
+Hibernate和jdbc的区别:
+是一个ORM框架（对象持久层框架），是对jdbc的轻量级的封装。
+相同点：都是数据库的中间件，都是线程安全的
+不同点：JDBC基于标准的sql语句，hibernate使用hql语句，JDBC操作数据，hibernate操作持久化对象
+
+Spring:
+AOP：面向切面编程，可以在项目中指定位置执行指定操作，进行事务，安全，日志等处理
+AOP容器会为目标对象动态地创建一个代理对象。SpringAOP就是以这种方式织入切面的。
+AOP实现的关键在于AOP框架自动创建的AOP代理，AOP代理主要分为静态代理和动态代理，静态代理的代表为AspectJ；而动态代理的代表spring AOP的JDK动态代理和CGLIB动态代理。
+静态代理是编译期实现，动态代理是运行期实现，
+前置通知（Before）：在目标方法被调用之前调用通知功能。
+后置通知（After）：在目标方法完成之后调用通知，此时不会关心方法的输出是什么。
+返回通知（After-returning）：在目标方法成功执行之后调用通知。
+异常通知（After-throwing）：在目标方法抛出异常后调用通知。
+环绕通知（Around）：通知包裹了被通知的方法，在被通知的方法调用之前和调用之后执行自定义的行为。
+IOC：依赖注入（控制反转）实例的工作通常由Spring容器来完成，然后注入调用者，
+所有的类都会在spring容器中登记，告诉spring这是个什么东西，你需要什么东西，然后spring会在系统运行到适当的时候，把你要的东西主动给你，
+同时也把你交给其他需要你的东西。所有的类的创建、销毁都由 spring来控制，也就是说控制对象生存周期的不再是引用它的对象，而是spring。
+对于某个具体的对象而言，以前是它控制其他对象，现在是所有对象都被spring控制，所以这叫控制反转。
+
+它是通过反射机制实现的，在实例化一个类时，它通过反射调用类中set方法将事先保存在HashMap中的类属性注入到类中
+
+spring用到的设计模式
+1.工厂模式，这个很明显，在各种BeanFactory以及ApplicationContext创建中都用到了；（专门将大量共同接口的类实例化，不必事先知道每次要实例化哪一个类）
+2.模版模式，这个也很明显，在各种BeanFactory以及ApplicationContext实现中也都用到了;
+3.代理模式，在Aop实现中用到了JDK的动态代理
+4.策略模式，第一个地方，加载资源文件的方式，使用了不同的方法，比如：ClassPathResourece，FileSystemResource，ServletContextResource，UrlResource但他们都有共同的借口Resource；第二个地方就是在Aop的实现中，采用了两种不同的方式，JDK动态代理和CGLIB代理;
+5.单例模式，这个比如在创建bean的时候。
+常用的设计模式： 工程模式，适配器模式，单例模式，装饰模式 ，策略模式，责任链模式，代理模式。观察者模式。
+
+高并发处理
+1、HTML静态化
+2、图片服务器分离
+3、数据库集群和库表散列
+4、缓存
+5、镜像
+6、负载均衡
+    1）硬件四层交换
+	2）软件四层交换
+
+JVM加载class文件的原理机制
+.Java中的所有类，必须被装载到jvm中才能运行，这个装载工作是由jvm中的类装载器完成的,类装载器所做的工作实质是把类文件从硬盘读取到内存中
+
+几种项目间数据交互方式 常用的http调用，Java远程调用、webservice方式主要AXIS、CXF及XFire比较多。
+一、ftp服务器共享方式
+三、webservice方式。
+四：message方式(MQ)
+五、远程url地址方式（可以是xml、json或自定义text格式）
+
+
+Linux 重启tomcat：首先，进入Tomcat下的bin目录,ps -ef|grep java  kill -9 7010  ./startup.sh
+
+dubbo:
+指定web服务名字，声明注册中心，指定传输层通信协议，暴漏你的服务地址
+
+
+如何优化tomcat配置(从内存、并发、缓存4个方面)优化
+Tomcat内存优化 服务器参数配置
+Tomcat并发优化 Tomcat连接相关参数 调整连接器connector的并发处理能力
+Tomcat缓存优化 打开压缩功能
+
+java中object方法
+clone(),equals(),wait(),notify(),notifyAll(),getClass(),hashCode(),toString()
+
+Http中get和post区别：
+GET请求的数据会附在URL之后（就是把数据放置在HTTP协议头中），以?分割URL和传输数据，参数之间以&相连，
+POST把提交的数据则放置在是HTTP包的包体中。
+GET请求会有长度限度限制问题，
+POST请求没有大小限制的，起限制作用的是服务器的处理程序的处理能力
+POST的安全性要比GET的安全性高
+Get是向服务器发索取数据的一种请求，而Post是向服务器提交数据的一种请求
+
+java集群之session共享解决方案
+1. 客户端cookie加密 2. application server的session复制 3. 使用数据库保存session 4. 使用共享存储来保存session
+
+你的接口服务数据被人截包了，你如何防止数据恶意提交？
+我们可以在接口传输参数里面设置一个业务编号，这个编号用来区分是否重复提交。这样即使数据被抓包了，对方也无法区分每个字段你的含义，这时，这个业务编号的作用就来了
+
+一条sql执行过长的时间，你如何优化，从哪些方面？
+1、查看sql是否涉及多表的联表或者子查询，如果有，看是否能进行业务拆分
+对相对应的查询条件做索引
+5、数据库主从分离，读写分离，降低读写针对同一表同时的压力，至于主从同步
+
+
+Hibernate与 MyBatis的比较
+
+Mybatis优势
+MyBatis可以进行更为细致的SQL优化，可以减少查询字段。
+MyBatis容易掌握，而Hibernate门槛较高。
+
+
+Hibernate优势
+Hibernate的DAO层开发比MyBatis简单，Mybatis需要维护SQL和结果映射。
+Hibernate对对象的维护和缓存要比MyBatis好，对增删改查的对象的维护要方便。
+Hibernate数据库移植性很好，MyBatis的数据库移植性不好，不同的数据库需要写不同SQL。
+Hibernate有更好的二级缓存机制，可以使用第三方缓存。MyBatis本身提供的缓存机制不佳。
+
+redis:为数据结构服务器，因为值（value）可以是字符串(String), 哈希(Map), 列表(list), 集合(sets) 和有序集合(sorted sets)等类型。
+
+
+JVM执行程序的过程 ：
+
+I.加载。class文件
+
+II.管理并分配内存
+
+III.执行垃圾收集
+
+
+需要循环数组结构的数据时，建议使用普通for循环，因为for循环采用下标访问，对于数组结构的数据来说，采用下标访问比较好。
+需要循环链表结构的数据时，一定不要使用普通for循环，这种做法很糟糕，数据量大的时候有可能会导致系统崩溃。
+
+一些基本类型的变量和对象的引用变量都是在函数的栈内存中分配
+堆内存用于存放由new创建的对象和数组
+
+js/mdata/olikes{floor}
+@PathVariable("floor") String floor
+
+	$.ajax({
+		url :"selectbasketcart.html",
+		type : "POST",
+		data : {"basketId":basketryId},
+		dataType : "json",
+		error : function(data) {
+			$("#pop-body1").popbox({
+				title : '提示'
+			});
+			$("#pop-body1").find("div[class='name']").html("请求失败！");
+		},
+		success : function(data) {
+
+		},
+		complete:function(){
+
+		}
+
+Java ArrayList遍历时删除一个元素
+第一种方法，用数组下标进行遍历，如果需要删除元素，我们从后向前遍历，这样不论有没有元素删除，我们都不会遗漏未被遍历的元素。
+
+第二种方法，我们使用迭代器。
+
+
+Iterator itr = list.iterator();
+while(itr.hasNext()) {
+      if(...) {
+        itr.remove();
+      }
+}
+
+
+
+   Spring Cloud为微服务架构开发涉及的配置管理，服务治理，熔断机制，智能路由，微代理，控制总线，一次性token，
+   全局一致性锁，leader选举，分布式session，集群状态管理等操作提供了一种简单的开发方式。
+
+   spring MVC与struts2的区别:
+1.Struts2是类级别的拦截,SpringMVC是方法级别的拦截
+2.拦截器实现机制上，Struts2有以自己的interceptor机制，SpringMVC用的是独立的AOP方式
+3.SpringMVC的入口是servlet，而Struts2是filter
+4.SpringMVC开发效率和性能高于Struts2
+
+
+32 位和 64 位的 JVM，int 类型变量的长度是多数？
+32 位和 64 位的 JVM 中，int 类型变量的长度是相同的，都是 32 位或者 4 个字节。
+
+
+　for(int i=0;i<arr.length-1;i++){//外层循环控制排序趟数
+　　　　　　for(int j=0;j<arr.length-1-i;j++){//内层循环控制每一趟排序多少次
+　　　　　　　　if(arr[j]>arr[j+1]){
+　　　　　　　　　　int temp=arr[j];
+　　　　　　　　　　arr[j]=arr[j+1];
+　　　　　　　　　　arr[j+1]=temp;
+　　　　　　　　}
+　　　　　　}
+　　　　}
+
+
+socket通信：
+
+这也是面试常见的问题，面试者最起码要知道基本流程：
+
+服务器：
+1.创建一个socket
+2.bind一个句柄（端口和地址）
+3.listen设置监听的客户数
+4.accept客户端的句柄
+5.读写。
+客户机：
+1.创建一个socket
+2.connect到服务器
+3.读写操作。
+
+线程和进程的区别：
+
+1.进程是系统进行资源分配和调度的一个独立单位。 线程是：是CPU调度和分派的基本单位。
+2.线程的开销比进程的开销小。
+3.一个进程里面可以创建多个线程。
+4.进程是独立的内存单元，线程可以多个线程共享一片资源，提高处理效率。
+野指针：指针指向一块不可用的地址。比如：动态分配了一块空间，你free后，没有置为NULL，然后又把指针指向被释放的地址，这就会产生野指针。
+
+进程间的通信方式有哪几种：
+管道，信号，socket，共享内存，消息队列
+
+
+深入比较TheadLocal模式与synchronized关键字
+
+　　ThreadLocal模式synchronized关键字都用于处理多线程并发访问变量的问题，只是二者处理问题的角度和思路不同。
+
+　　1）ThreadLocal是一个java类，通过对当前线程中的局部变量的操作来解决不同线程的变量访问的冲突问题。
+所以，ThreadLocal提供了线程安全的共享对象机制，每个线程都拥有其副本。
+
+　　2）Java中的synchronized是一个保留字，它依靠JVM的锁机制来实现临界区的函数或者变量的访问中的原子性。在同步机制中，通过对象的锁机制保证同一时间只有一个线程访问变量。此时，被用作“锁机制”的变量时多个线程共享的。
+
+　　同步机制(synchronized关键字)采用了“以时间换空间”的方式，提供一份变量，让不同的线程排队访问。而ThreadLocal采用了“以空间换时间”的方式，为每一个线程都提供一份变量的副本，从而实现同时访问而互不影响。
+
+MySQl查询前三名（包括并列）
+select aa.* from (
+  select DISTINCT name as n1,(select sum(mark) from te where name=n1)as g from te t) aa where aa.g in
+(select ta.grade as g from (select (select sum(mark) from te where name=t1.name)as grade from te t1 GROUP BY grade desc LIMIT 3) as ta)
+
+
+数据库的四大特性
+原子性（Atomicity）：事务是一个原子操作，由一系列动作组成。事务的原子性确保动作要么全部完成，要么完全不起作用。
+一致性（Consistency）：一旦事务完成（不管成功还是失败），系统必须确保它所建模的业务处于一致的状态，而不会是部分完成部分失败。在现实中的数据不应该被破坏。
+隔离性（Isolation）：可能有许多事务会同时处理相同的数据，因此每个事务都应该与其他事务隔离开来，防止数据损坏。
+持久性（Durability）：一旦事务完成，无论发生什么系统错误，它的结果都不应该受到影响，这样就能从任何系统崩溃中恢复过来。通常情况下，事务的结果被写到持久化存储器中。
+
+隔离级别：
+脏读：脏读是指在一个事务处理过程里读取了另一个未提交的事务中的数据。
+不可重复读：不可重复读是指在对于数据库中的某个数据，一个事务范围内多次查询却返回了不同的数据值，这是由于在查询间隔，被另一个事务修改并提交了。　　
+不可重复读和脏读的区别是，脏读是某一事务读取了另一个事务未提交的脏数据，而不可重复读则是读取了前一事务提交的数据。
+虚读(幻读)：当一个事务（T1）读取几行记录后，另一个并发事务（T2）插入了一些记录时，幻影读就发生了。在后来的查询中，第一个事务（T1）就会发现一些原来没有的额外记录。
+
+MySQL数据库为我们提供的四种隔离级别：
+① Serializable (串行化)：可避免脏读、不可重复读、幻读的发生。
+② Repeatable read (可重复读)：可避免脏读、不可重复读的发生。
+③ Read committed (读已提交)：可避免脏读的发生。
+④ Read uncommitted (读未提交)：最低级别，任何情况都无法保证。
+
+
+Spring事务传播机制&隔离级别
+spring事务传播属性：
+1. PROPAGATION_REQUIRED:支持当前事务，如果当前没有事务，就新建一个事务。这是最常见的选择。
+2. PROPAGATION_SUPPORTS:支持当前事务，如果当前没有事务，就以非事务方式执行。
+3. PROPAGATION_MANDATORY:支持当前事务，如果当前没有事务，就抛出异常。
+4. PROPAGATION_REQUIRES_NEW:新建事务，如果当前存在事务，把当前事务挂起。
+5. PROPAGATION_NOT_SUPPORTED:以非事务方式执行操作，如果当前存在事务，就把当前事务挂起。
+6. PROPAGATION_NEVER:以非事务方式执行，如果当前存在事务，则抛出异常。
+7. PROPAGATION_NESTED:支持当前事务,方法应当运行在一个嵌套式事务中,被嵌套的事务可以独立于封装事务进行提交或回滚。
+
+会导致
+脏读（Dirty read）-- 不可重复读（Nonrepeatable read）-- 幻影读（Phantom reads）
+
+隔离级别：
+ISOLATION_DEFAULT	使用后端数据库默认的隔离级别。
+ISOLATION_READ_UNCOMMITTED	允许读取尚未提交的更改。可能导致脏读、幻影读或不可重复读。
+ISOLATION_READ_COMMITTED	允许从已经提交的并发事务读取。可防止脏读，但幻影读和不可重复读仍可能会发生。
+ISOLATION_REPEATABLE_READ	对相同字段的多次读取的结果是一致的，除非数据被当前事务本身改变。可防止脏读和不可重复读，但幻影读仍可能发生。
+ISOLATION_SERIALIZABLE	完全服从ACID的隔离级别，确保不发生脏读、不可重复读和幻影读。这在所有隔离级别中也是最慢的，因为它通常是通过完全锁定当前事务所涉及的数据表来完成的。
+
+SpringBoot特性
+一、SpringBoot解决的问题
+1、使编码变得简单
+2、使配置变得简单
+3、使部署变得简单
+4、使监控变得简单
+二、springboot主要特性
+1、遵循习惯优于配置的原则。使用springboot我们只需要很少的配置，大多数使用默认配置即可
+2、项目快速搭建。springboot帮助开发者快速搭建spring框架，可无需配置的自动整合第三方框架
+3、可以完全不使用xml配置，只需要自动配置和Java config
+4、内嵌servlet容器，降低了对环境的要求，可用命令直接执行项目
+5、提供了starter POM，能够非常方便的进行包管理
+6、对主流框架无配置集成
+7、与云计算天然集成
+
+三、springboot的核心功能
+1、独立运行spring项目。springboot可以以jar包的形式进行独立运行，使用java -jar xx.jar 就可以成功运行项目。
+2、内嵌servlet容器。内嵌容器，使得我们可以执行运行项目的主程序main函数，使得项目可以快速运行。
+3、提供starter简化Maven配置。springboot提供了一系列的start pol用来简化maven依赖。如：常用的spring-boot-starter-web、spring-boot-starter-tomcat、spring-boot-starter-actuator等
+4、自动配置spring。springboot会根据我们项目中类路径的jar包，为jar包的类进行自动装配bean。
+5、应用监控。springboot提供了基于HTTP、ssh、telnet对运行时的项目进行监控。
+springboot提供了actuator组件，只需要在配置中加入spring-boot-starter-actuator依赖，通过继承AbstractHealthIndicator这个抽象类，然后在doHealthCheck()方法中检测服务健康的方法，就可以实现一个简单的监控。具体可参考该博客：https://www.jianshu.com/p/41c1026f2c9d
+
+四、springboot的缺点
+1、高度集成，使用的时候不知道底层实现
+2、由于不了解底层，导致项目出了问题会很难排查
+
+springCloud:
+什么是注册中心呢？
+注册中心，是服务的提供者发布自己服务的地方，传统手写的restful接口提供的服务会涉及到服务发布者的端口IP等等，通过注册中心可以直接调用已经发布在上面的服务，只需要通过服务名即可
+服务提供者将自己的服务发布到注册中心，消费者从注册中心取出服务，然后消费，
+这样生产者只需要关注自身的业务，将自己的服务发布到注册中心就行了，消费者无需关注生产者的内容，
+只需要从注册中心取出服务就行了，这样将生产者和消费者直接的耦合给断绝了
+
+为什么使用Restful?
+首先springcloud对比dubbo，最大的特点之一就是使用Restful的模式进行交互，dubbo是基于RPC进行通信的，
+而Restful是基于Http协议进行的，从协议的角度上来说Http和RPC都是基于TCP进行研发的协议，Http是最广泛的，
+不仅支持浏览器还支持各种APP通信，这么来说吧Http就是大家都在用的协议，
+而RPC是针对某一个平台某一个环节针对性开发的自定义协议，Http由于大众化，所以本身协议会有点笨重，
+解析起来自然也比RPC要慢，这也是RPC的优势之一，但是Http具有良好的跨平台性质
+
+SpringCloud服务的横向拓展
+使用SpringCloud的另一个目的就是便于服务的横向拓展，
+大家都知道，当某一个服务由于访问压力变成瓶颈的时候，我们常常希望这个服务能进行负载均衡，分摊压力，以便于更好的像外界提供服务
+
+SpringCloud熔断机制
+保险丝
+
+
+什么是restfull？
+通过规范约束接口的定义，规范接口的形式，利于调用者对接口的调用
+充分利用传输协议（这里是HTTP协议，也可以是其他协议），约定了请求类型GET。在HTTP协议中
+GET用来获取资源，DELETE用来删除资源，POST用来修改资源（非幂等），PUT用来更新资源（幂等的）。
+通过协议中的请求方式就很明确这个接口API是执行的（增删改查中的）什么操作。查询条件对应资源来说就是对资源的过滤。
+
+Dubbo和Spring Cloud有何不同？
+				Dubbo	        Spring Cloud
+服务注册中心	Zookeeper	    Spring Cloud Netflix Eureka
+服务调用方式	RPC	            REST API
+服务监控	    Dubbo-monitor	Spring Boot Admin
+断路器			不完善			Spring Cloud Netflix Hystrix
+服务网关		无				Spring Cloud Netflix Zuul
+分布式配置		无				Spring Cloud Config
+服务跟踪		无				Spring Cloud Sleuth
+消息总线		无				Spring Cloud Bus
+数据流			无				Spring Cloud Stream
+批量任务		无				Spring Cloud Task
+
+所以Dubbo专注于服务治理（在于服务的调用，流量分发、流量监控和熔断。）；Spring Cloud关注于微服务架构生态。
+
+
+map遍历的4种方式
+一、通过Map.keySet遍历key和value：
+二、通过Map.entrySet使用iterator遍历key和value：
+三。推荐，尤其是容量大时。通过Map.entrySet遍历key和value
+四、通过Map.values()遍历所有的value，但不能遍历key"
+
+volatile作用：保证内存可见性、禁止指令重排.可见性是指线程之间的可见性，一个线程修改的状态对另一个线程是可见的。也就是一个线程修改的结果，另一个线程马上就能看到。
+
+应用volatile变量的三个原则：
+（1）写入变量不依赖此变量的值，或者只有一个线程修改此变量
+（2）变量的状态不需要与其它变量共同参与不变约束
+（3）访问变量不需要加锁
+
+volatile 和synchronized的什么不同
+volatile比synchronized关键字更轻量级的同步机制
+volatile**无法同时保证内存可见性和原子性。加锁机制既可以确保可见性又可以确保原子性，而volatile变量只能确保可见性**。
+volatile屏蔽掉了JVM中必要的代码优化，所以在效率上比较低，因此一定在必要时才使用此关键字。
+
+
+关于工厂模式的作用。为什么要用工厂模式？
+工厂模式是为了解耦：把对象的创建和使用的过程分开。
+工厂模式可以降低代码重复，
+创建过程都由工厂统一管理，所以发生业务逻辑变化，不需要找到所有需要创建B的地方去逐个修正，只需要在工厂里修改即可，降低维护成本
+举个例子：
+一个数据库工厂：可以返回一个数据库实例，可以是mysql，oracle等。
+
+spring配置bean实例化的方式?
+Spring实例化bean的四种方式
+1) setter 方法
+2) 构造函数
+3) 静态工厂
+4) 实例工厂
+
+zookeeper？
+ZooKeeper是一种为分布式应用所设计的高可用、高性能且一致的开源协调服务，
+分布式应用程序可以基于 ZooKeeper 实现诸如数据发布/订阅、负载均衡、命名服务、分布式协调/通知、集群管理、Master 选举、分布式锁和分布式队列等功能。。
+
+Zookeeper的核心是原子广播，这个机制保证了各个Server之间的同步。实现这个机制的协议叫做Zab协议。
+Zab协议有两种模式，它们分 别是恢复模式（选主）和广播模式（同步）。
+当服务启动或者在领导者崩溃后，Zab就进入了恢复模式，当领导者被选举出来，且大多数Server完成了和 leader的状态同步以后，恢复模式就结束了。
+状态同步保证了leader和Server具有相同的系统状态。
+
+DOM解析还是SAX解析
+DOM解析适合于对文件进行修改和随机存取的操作，但是不适合于大型文件的操作；
+SAX采用部分读取的方式，所以可以处理大型文件，而且只需要从文件中读取特定内容，
+DOM解析适合于修改，SAX解析适合于读取大型文件
+
+一、乐观锁
+总是认为不会产生并发问题，每次去取数据的时候总认为不会有其他线程对数据进行修改，
+因此不会上锁，但是在更新时会判断其他线程在这之前有没有对数据进行修改，一般会使用版本号机制或CAS操作实现。
+   version方式：一般是在数据表中加上一个数据版本号version字段，表示数据被修改的次数，当数据被修改时，version值会加一。当线程A要更新数据值时，
+在读取数据的同时也会读取version值，在提交更新时，若刚才读取到的version值为当前数据库中的version值相等时才更新，否则重试更新操作，直到更新成功。
+   CAS操作方式：即compare and swap 或者 compare and set，涉及到三个操作数，数据所在的内存值，预期值，新值。当需要更新时，
+判断当前内存值与之前取到的值是否相等，若相等，则用新值更新，若失败则重试，一般情况下是一个自旋操作，即不断的重试。
+
+二、悲观锁
+总是假设最坏的情况，每次取数据时都认为其他线程会修改，所以都会加锁（读锁、写锁、行锁等），当其他线程想要访问数据时，都需要阻塞挂起。可以依靠数据库实现
+ ，如行锁、读锁和写锁等，都是在操作之前加锁，在Java中，synchronized的思想也是悲观锁。
+ 悲观锁：比较适合写入操作比较频繁的场景，如果出现大量的读取操作，每次读取的时候都会进行加锁，这样会增加大量的锁的开销，降低了系统的吞吐量。
+
+乐观锁：比较适合读取操作比较频繁的场景，如果出现大量的写入操作，数据发生冲突的可能性就会增大，为了保证数据的一致性，应用层需要不断的重新获取数据，这样会增加大量的查询操作，降低了系统的吞吐量。
+总结：两种所各有优缺点，读取频繁使用乐观锁，写入频繁使用悲观锁。
+
+
+HashMap实现原理，为什么是线程不安全的，如何解决
+HashMap由数组+链表组成的，
+HashMap的主干是一个Entry数组。Entry是HashMap的基本组成单元，每一个Entry包含一个key-value键值对。
+HashMap在每个链表节点中储存键值对对象,链表则是主要为了解决哈希冲突而存在的，
+
+哈希表（Hash table，也叫散列表），是根据关键码值(Key value)而直接进行访问的数据结构。
+也就是说，它通过把关键码值映射到表中一个位置来访问记录，以加快查找的速度。
+
+HashMap基于hashing原理，我们通过put()和get()方法储存和获取对象。
+当我们将键值对传递给put()方法时，它调用键对象的hashCode()方法来计算hashcode，让后找到bucket位置来储存值对象。
+当获取对象时，通过键对象的equals()方法找到正确的键值对，然后返回值对象。
+HashMap使用链表来解决碰撞问题，当发生碰撞了，对象将会储存在链表的下一个节点中。 。
+
+HashMap有4个构造器方法，当我们没有传入初始容量和负载因子这两个参数的时候，会使用默认值。
+
+//阈值，当table == {}时，该值为初始容量（初始容量默认为16）；当table被填充了，也就是为table分配内存空间后，
+threshold一般为 capacity*loadFactory。HashMap在进行扩容时需要参考threshold
+int threshold;
+
+/负载因子，代表了table的填充度有多少，默认是0.75,initialCapacity 初始容量：16
+final float loadFactor;
+
+modCount//用于快速失败，由于HashMap非线程安全，在对HashMap进行迭代时，如果期间其他线程的参与导致HashMap的结构发生变化了（比如put，remove等操作），
+需要抛出异常ConcurrentModificationException
+
+1. resize死循环
+我们都知道HashMap初始容量大小为16,一般来说，当有数据要插入时，都会检查容量有没有超过设定的thredhold，
+如果超过，需要增大Hash表的尺寸，但是这样一来，整个Hash表里的元素都需要被重算一遍。这叫rehash，这个成本相当的大。
+2. fail-fast
+如果在使用迭代器的过程中有其他线程修改了map，那么将抛出ConcurrentModificationException，这就是所谓fail-fast策略。
+
+为什么线程不安全
+个人觉得HashMap在并发时可能出现的问题主要是两方面,
+首先如果多个线程同时使用put方法添加元素，而且假设正好存在两个put的key发生了碰撞(hash值一样)，
+那么根据HashMap的实现，这两个key会添加到数组的同一个位置，这样最终就会发生其中一个线程的put的数据被覆盖。
+第二就是如果多个线程同时检测到元素个数超过数组大小*loadFactor，这样就会发生多个线程同时对Node数组进行扩容，都在重新计算元素位置以及复制数据，
+但是最终只有一个线程扩容后的数组会赋给table，也就是说其他线程的都会丢失，并且各自线程put的数据也丢失。
+关于HashMap线程不安全这一点，《Java并发编程的艺术》一书中是这样说的：
+
+HashMap在并发执行put操作时会引起死循环，导致CPU利用率接近100%。因为多线程会导致HashMap的Node链表形成环形数据结构，
+一旦形成环形数据结构，Node的next节点永远不为空，就会在获取Node时产生死循环。
+
+ConcurrentHashMap来解决hashMap安全性问题
+ConcurrentHashMap底层采用的锁机制，执行put方法的线程会获得锁
+除了具备线程安全外还增加了迭代器快速失败行为的异常处理，也就是说，通过ConcurrentHashMap对Iterator迭代器结构的修改不会抛出异常，而Hashtable会抛出异常，
+因而就Hashtable来说，如果迭代器修改了映射结构，那么遍历的结果是不确定的，而ConcurrentHashmap支持之允许一个线程对迭代器的映射结构进行修改。
+ConcurrentHashMap使用了线程锁分段技术，每次访问只允许一个线程修改哈希表的映射关系，所以是线程安全的
+
+jvm内存模型分哪些部分?
+堆：（对象）
+栈：（基本数据类型变量、对象的引用变量）
+方法区、Java堆、java栈、程序计数器、本地方法栈
+堆和方法区是所有线程共有的，而虚拟机栈，本地方法栈和程序计数器则是线程私有的
+
+
+(1) 基本概念：
+JVM是包括一套字节码指令集、一组寄存器、一个栈、堆、一个垃圾回收，和一个存储方法域。
+JVM是运行在操作系统之上的，它与硬件没有直接的交互。
+
+(2) 运行过程：
+① Java源文件—->编译器—->字节码文件
+② 字节码文件—->JVM—->机器码
+
+JVM调优主要就是优化 Heap堆 和 Method Area 方法区。
+
+JVM调优总结
+引用计数（Reference Counting）
+标记-清除（Mark-Sweep）
+复制（Copying）
+标记-整理（Mark-Compact）
+增量收集（Incremental Collecting）
+分代（Generational Collecting）
+目前的收集器主要有三种：串行收集器、并行收集器、并发收集器。
+
+年轻代大小选择
+响应时间优先的应用：尽可能设大，直到接近系统的最低响应时间限制（根据实际情况选择）。在此种情况下，年轻代收集发生的频率也是最小的。同时，减少到达年老代的对象。
+吞吐量优先的应用：尽可能的设置大，可能到达Gbit的程度。因为对响应时间没有要求，垃圾收集可以并行进行，一般适合8CPU以上的应用。
+年老代大小选择
+响应时间优先的应用：年老代使用并发收集器，所以其大小需要小心设置，一般要考虑并发会话率和会话持续时间等一些参数。如果堆设置小了，可以会造成内存碎片、高回收频率以及应用暂停而使用传统的标记清除方式；如果堆大了，则需要较长的收集时间。最优化的方案，一般需要参考以下数据获得：
+并发垃圾收集信息
+持久代并发收集次数
+传统GC信息
+花在年轻代和年老代回收上的时间比例
+减少年轻代和年老代花费的时间，一般会提高应用的效率
+
+吞吐量优先的应用：一般吞吐量优先的应用都有一个很大的年轻代和一个较小的年老代。原因是，这样可以尽可能回收掉大部分短期对象，减少中期的对象，而年老代尽存放长期存活对象。
+较小堆引起的碎片问题
+因为年老代的并发收集器使用标记、清除算法，所以不会对堆进行压缩。当收集器回收时，他会把相邻的空间进行合并，这样可以分配给较大的对象。但是，当堆空间较小时，运行一段时间以后，就会出现“碎片”，如果并发收集器找不到足够的空间，那么并发收集器将会停止，然后使用传统的标记、清除方式进行回收。如果出现“碎片”，可能需要进行如下配置：
+-XX:+UseCMSCompactAtFullCollection：使用并发收集器时，开启对年老代的压缩。
+-XX:CMSFullGCsBeforeCompaction=0：上面配置开启的情况下，这里设置多少次Full GC后，对年老代进行压缩
+
+jvm常用启动参数
+堆大小设置（堆 = 年轻代 + 年老代+ 持久代）
+垃圾回收器设置（串行收集器、并行收集器、并发收集器 ）
+辅助信息参数设置
