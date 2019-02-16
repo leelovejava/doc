@@ -1,0 +1,12 @@
+完美解决teamviewer检测到商业用途破解（亲测有效 windows xp win7 win8 win10都行）
+https://blog.csdn.net/changej/article/details/86612005
+
+1：解压后，将exe文件放在teamviewer的安装目录下，点击exe文件
+2：如果弹窗让你选择路径，选择teamviewer的安装目录就好（不弹窗的话，这步跳过）
+3：选择Free模式
+4：点击Start按钮，进度完成后关闭即可。
+
+注意事项：
+如果修复失败，卸载本地的teamviewer，并清空注册表（参考 https://blog.csdn.net/chengyq116/article/details/80480571）
+安装13版本的teamviewer，然后修复（13版本的teamview:https://pan.baidu.com/s/1rYBoiekNJz4R0Rv1HlvRaQ）
+修复后打开teamviewer，选择菜单帮助-》检查新版本，更新到最新版本即可。
