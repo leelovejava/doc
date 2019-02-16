@@ -748,6 +748,16 @@ join其实常见的就分为两类： map-side join 和  reduce-side join。当
 （2）小分区合并，过小的分区造成过多的切换任务开销，使用repartition
 
 34).简要描述Spark分布式集群搭建的步骤？ 
+
+a. 准备linux环境，设置集群搭建账号和用户组，设置ssh，关闭防火墙，关闭seLinux，配置host，hostname
+b. 配置jdk到环境变量
+c. 搭建hadoop集群，如果要做master ha，需要搭建zookeeper集群
+   修改hdfs-site.xml,hadoop_env.sh,yarn-site.xml,slaves等配置文件
+d. 启动hadoop集群，启动前要格式化namenode
+e. 配置spark集群，修改spark-env.xml，slaves等配置文件，拷贝hadoop相关配置到spark conf目录下
+f. 启动spark集群。
+
+
 35).spark 如何防止内存溢出 ？
 
 a. driver端的内存溢出 
@@ -868,6 +878,9 @@ val multiplier = (i:Int) => i * factor 
 
 5).什么是Scala的伴生类和伴生对象?(重点)
 [Scala单例对象与伴生对象](https://www.jianshu.com/p/1f3012b54e4a)
+
+6).使用shll和scala代码实现WordCount？
+
 ----------------------------
 1).Hbase的设计有什么心得？
 2).Hbase的操作是用的什么API还是什么工具？
