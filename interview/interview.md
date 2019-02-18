@@ -578,6 +578,9 @@ synchronized(DeadLock.obj1){
 ```
 
 ③java的锁?多线程锁的类型 对象锁和类锁的区别
+
+> [Java中15种锁的介绍](https://mp.weixin.qq.com/s/D3Lg-wzqRP_efV9kNZN4dw)
+
 锁类型:
     可重入锁.synchronized、ReentrantLock
     可中断锁.Lock
