@@ -31,6 +31,8 @@ Learn more about Flink at [http://flink.apache.org/](http://flink.apache.org/)
 
 [写在阿里Blink正式开源之际](https://mp.weixin.qq.com/s/Sx2k0jS7bl6DZAlWlTAcsA)
 
+[用Flink取代Spark Streaming！知乎实时数仓架构演进](https://mp.weixin.qq.com/s/kN93pMYTxeIRZv5wWu7-ug)
+
 ## Features
 
 * A streaming-first runtime that supports both batch processing and data streaming programs
