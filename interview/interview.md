@@ -582,18 +582,34 @@ synchronized(DeadLock.obj1){
 > [Java中15种锁的介绍](https://mp.weixin.qq.com/s/D3Lg-wzqRP_efV9kNZN4dw)
 
 锁类型:
-    可重入锁.synchronized、ReentrantLock
-    可中断锁.Lock
-    公平锁:尽量以请求锁的顺序来获取锁
-    读写锁:ReadWriteLock就是读写锁,readLock()获取读锁，writeLock()获取写锁
+
+    1.公平锁 / 非公平锁
+        公平锁:尽量以请求锁的顺序来获取锁
+    2.可重入锁 / 不可重入锁
+        可重入锁:可重复可递归调用的锁,synchronized、ReentrantLock
+    3.独享锁 / 共享锁
+        独享锁:该锁每一次只能被一个线程所持有.Synchronized
+    4.互斥锁 / 读写锁
+        ReadWriteLock是读写锁,readLock()获取读锁，writeLock()获取写锁
+    5.乐观锁 / 悲观锁
+    
+    6.分段锁
+        ConcurrentHashMap
+    7.偏向锁 / 轻量级锁 / 重量级锁
+        偏向锁:一段同步代码一直被一个线程所访问，那么该线程会自动获取锁。降低获取锁的代价
+    8.自旋锁
+        当一个线程在获取锁的时候，如果锁已经被其它线程获取，那么该线程将循环等待，然后不断的判断锁是否能够被成功获取，直到获取到锁才会退出循环
+        
+
 对象锁和类锁的区别?
     当一个对象中有synchronized method或synchronized block的时候调用此对象的同步方法或进入其同步区域时，就必须先获得对象锁。如果此对象的对象锁已被其他调用者占用，则需要等待此锁被释放。（方法锁也是对象锁）
     对象锁是用来控制实例方法之间的同步
     类锁是用来控制静态方法（或静态变量互斥体）之间的同步
+    
 ④乐观锁和悲观锁了解吗？JDK中涉及到乐观锁和悲观锁的内容？
 数据库的锁,悲观锁和乐观锁的理解?[深圳市海魅蓝科技]
-悲观锁假设数据肯定会冲突，所以在数据开始读取的时候就把数据锁定住。
-乐观锁就是认为数据一般情况下不会造成冲突，所以在数据进行提交更新的时候，才会正式对数据的冲突与否进行检测，如果发现冲突了，则让用户返回错误的信息，让用户决定如何去做
+悲观锁:假设数据肯定会冲突，所以在数据开始读取的时候就把数据锁定住。version版本
+乐观锁:认为数据一般情况下不会造成冲突，所以在数据进行提交更新的时候，才会正式对数据的冲突与否进行检测，如果发现冲突了，则让用户返回错误的信息，让用户决定如何去做
 
 ⑤synchronized 和 ReentranLock的区别？
 ⑥ThreadLocal？应用场景？
@@ -1200,7 +1216,7 @@ get方法，hibernate会确认一下该id对应的数据是否存在，首先在
 
 Spring配置文件如何写？
 
-Spring加载顺序?(软通动力2017)
+Spring加载顺序?[软通动力2017]
 A. 实例化;  
 B. 设置属性值;  
 C. 如果实现了BeanNameAware接口,调用setBeanName设置Bean的ID或者Name;  
@@ -1211,6 +1227,11 @@ G. 调用InitializingBean的afterPropertiesSet()方法;
 E. 调用定制init-method方法；  
 F. 调用BeanPostProcessor的后初始化方法; 
 G.Spring容器关闭,调用DisposableBean的destroy(),destroy-method方法;
+
+Spring常用注解?[面试]
+@Componen、@Service、@Repository、@Controller、@RestController
+@Autowired、@Resource、@Configuration、@Bean、@Configuration、@Aspect
+@Value、@RequestMapping、@PathVariable、@RequestMapping
 
 ***************************************框架整合*****************************************************************
 一、Struts + Spring + Hibernate
