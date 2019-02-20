@@ -2061,36 +2061,119 @@ webService
 	3.UDDI一个用来发布和搜索WEB服务的协议，应用程序可借由此协议在设计或运行时找到目标WEB服务。	
 
 dubbo
-dubbo:分布式服务框架，资源调度和治理中心的管理工具，实现线程之间通信，可以统计系统之间的调用关系和调用次数。
-dubbo架构:重点
+①理解:
+    分布式服务框架，资源调度和治理中心的管理工具，实现线程之间通信，可以统计系统之间的调用关系和调用次数。
+
+②架构:[重点]
     服务的提供者(例如查询商品的服务)
     服务的消费者，
     注册中心(使用zookeeper实现，相当于房产中介)
     监控中心
     启动时，服务的提供方，注册服务到注册中心，消费者(客户端)通过注册中心查找对应的服务，查询到后，调用服务。监控中心异步统计调用服务的次数和时间，根据次数作出下一步判断。
     比传统的多个查询，有利于管理调用之间的关系。
-
-Dubbbo软负载均衡算法有哪几种?[深圳市海魅蓝科技]
+    
+ ![image](https://github.com/leelovejava/doc/blob/master/img/interview/dubbo/01.png)
+    
+③dubbbo软负载均衡算法有哪几种?[深圳市海魅蓝科技]
     Random LoadBalanc:随机，按权重设置随机概率
     RoundRobin LoadBalance:轮循，按公约后的权重设置轮循比率
     LeastActive LoadBalance:最少活跃调用数，相同活跃数的随机，活跃数指调用前后计数差
     ConsistentHash LoadBalance:一致性Hash，相同参数的请求总是发到同一提供者
 
-zk节点类型有哪几种?[深圳市海魅蓝科技]
+④dubbo的实现原理？注册中心挂了可以继续通信吗？
+服务容器负责启动，加载，运行服务提供者。
+服务提供者在启动时，向注册中心注册自己提供的服务。
+服务消费者在启动时，向注册中心订阅自己所需的服务。
+注册中心返回服务提供者地址列表给消费者，如果有变更，注册中心将基于长连接推送变更数据给消费者。
+服务消费者，从提供者地址列表中，基于软负载均衡算法，选一台提供者进行调用，如果调用失败，再选另一台调用。
+服务消费者和提供者，在内存中累计调用次数和调用时间，定时每分钟发送一次统计数据到监控中心。
+dubbo 架构具的特点，连通性、健壮性、伸缩性、向未来架构的升级性。
+
+可以继续通信,dubboo有健壮性(注册中心对等集群,任意一台宕掉后,将自动切换到另一台 注册中心全部宕掉后,服务提供者和服务消费者任能通过本地缓存通讯)
+
+⑤dubbo支持哪些序列化协议?hessian协议的理解呢？说一下hessian的数据结构？pb知道吗？为什么pb效率是最高？
+  序列化协议:Dubbo协议 Hessian协议 HTTP协议 RMI协议 WebService协议 Thrift协议 Memcached协议 Redis协议
+  hessian协议的理解:Hessian协议和webservice常用的SOAP协议类似，也是将协议报文封装在HTTP封包中，通过HTTP信道进行传输的.
+		    因此传输同样的对象Hessian协议传输的数据量比SOAP协议低一个数量级
+  hession的数据结构:b-tree b+tree
+  PB:ProtocolBuff 是 google 提出的的一种数据交换格式，跨语言，跨平台，可扩展。基于这种特性广泛的用于网络数据通信
+  
+⑥为什么要进行系统拆分，拆分不用dubbo可以吗？dubbo和thift什么区别？
+
+谈单体架构的缺点
+
+可以不用dubbo，用其他rpc框架(hession)，dubbo拆分成服务调用者和服务消费者
+
+可扩展的跨语言的rpc框架,facebook,dubbo支持thift协议
+
+⑦Dubbo超时重试；Dubbo超时时间设置[京东]
+集群容错模式
+1).Dubbo消费端,全局超时配置
+> <dubbo:consumer timeout="5000" />
+    
+    指定接口以及特定方法超时配置
+    <dubbo:reference interface="com.foo.BarService" timeout="2000">
+        <dubbo:method name="sayHello" timeout="3000" />
+    </dubbo:reference>
+		
+2).Dubbo服务端,全局超时配置
+> <dubbo:provider timeout="5000" />
+			
+	指定接口以及特定方法超时配置
+	<dubbo:provider interface="com.foo.BarService" timeout="2000">
+        <dubbo:method name="sayHello" timeout="3000" />
+    </dubbo:provider>
+
+dubbo和springBoot集成方式?
+dubbo-spring-boot
+
+⑧dubbo 在 Zookeeper 存储了哪些信息？
+[Zookeeper 保存的Dubbo信息详解](https://blog.csdn.net/robin90814/article/details/86523502)
+
+Consumers、Providers、Routers、Configrators、权重
+			
+⑨zk节点类型有哪几种?[深圳市海魅蓝科技]
     持久节点（PERSISTENT）
     持久顺序节点（PERSISTENT_SEQUENTIAL） 
     临时节点（EPHEMERAL） 
     临时顺序节点（EPHEMERAL_SEQUENTIAL）     
+  
+⑩zk原理？做什么？paxos算法是什么，原理和实现？
+A、Zookeeper是一个分布式协调服务，是一个中间件。
+B、能提供主从协调、服务器节点控制、统一配置管理、分布式共享锁、统一名称服务等功能，比较有名的是大数据以及dubbo中服务的注册以及发现。
+C、本质上只是管理、读取用户提交的数据，并为数据提供监听服务
+
+场景:
+A、命名服务(HDFS)
+B、数据发布与订阅（配置中心）
+C、分布式通知/协调
+D、分布式锁
+   
 ***************************************消息队列***************************************    
-消息队列模式：
+①消息队列模式：
     订阅式和点对点
    1.1).点对点
     生产端发送一条消息通过路由投递到Queue，只有一个消费者能消费到。
    1.2).多订阅
    RabbitMQ需要支持多订阅时，发布者发送的消息通过路由同时写到多个Queue，不同订阅组消费不同的Queue。所以支持多订阅时，消息会多个拷贝
 
-MQ的对比?   
-rabbitMQ
+②消息队列好处:
+    异步处理 消息通讯 流量削峰 应用接口 日志处理
+    
+    项目中使用场景:一人一档中,将档案,有A服务发送到B服务
+
+③消息队列和http的区别?
+    消息队列:异步
+    http:同步
+        
+④MQ的对比?   
+
+![image](https://github.com/leelovejava/doc/blob/master/img/interview/mq/kafka&rabbit_comp.jpg?raw=true)
+
+> kafka是一种高吞吐量,广泛应用大数据领域
+> rabbitMQ功能完善
+
+⑤rabbitMQ
     rabbitmq的配置
 ```
 #rabbitmq
@@ -2100,14 +2183,18 @@ rabbit.password=123456
 rabbit.port=5672
 rabbit.exchange=mq-exchange
 ```
-   spring整合rabbitmq  
+
+⑥spring整合rabbitmq  
     connection-factory(连接工厂)、admin(MQ的管理，包括队列和交换器等)、queue(队列)、binding queue(定义交换机 topic~exchange，手动绑队列)
     1.定义连接工厂2. 定义队列 3.定义交换机并完成队列的绑定 4.定义模板5. 定义消费者的监听 6.MQ的管理，负责创建创建队列和交换机
+    
     @Autowired
 	private RabbitTemplate rabbitTemplate;
+	
 	rabbitTemplate.convertAndSend(topic,message);
+	
 ***************************************报表工具**********************************************************************
-JFreeChart
+☜JFreeChart
 1.什么是JFreeChart？
 JFreeChart 是一套免费开放源代码的报表框架，主要是 SourceForge.net 站点上的一个 JAVA 项目。
 
@@ -2115,10 +2202,31 @@ JFreeChart 是一套免费开放源代码的报表框架，主要是 SourceForge
 JFreeChart 功能强大、灵活易用的 Java 绘图 API，使用它可以生成多
 种通用性的报表，包括柱状图、饼图、 曲线图、甘特图等，这些不同式样的图表基本上可以满足目前的要求。
 
-poi jxl
-***************************************freemarker********************************************************************
-FreeMarker是一个用Java语言编写的[模板引擎]，它基于模板来生成文本输出。FreeMarker与Web容器无关，即在Web运行时，
-它并不知道Servlet或HTTP。它不仅可以用作表现层的实现技术，而且还可以用于生成XML，JSP或Java 等***************************************Linux**************************************************************************
+☜echart
+
+☜excel
+poi、jxl
+
+excel:
+阿里`easyexcel`,避免`OOM`
+
+***************************************模板********************************************************************
+FreeMarker:
+
+是一个用Java语言编写的`模板引擎`，它基于模板来生成文本输出。FreeMarker与Web容器无关，即在Web运行时，
+它并不知道Servlet或HTTP。它不仅可以用作表现层的实现技术，而且还可以用于生成XML，JSP或Java 等
+
+常用指令[面试题]
+compress
+import
+include
+function, return
+global 全局变量
+if, else, elseif
+
+thymeleaf:
+
+***************************************Linux**************************************************************************
 常用命令?
  1.如何查看当前的Linux服务器的运行级别？
    ‘who -r’ 和 ‘runlevel’
@@ -2147,6 +2255,14 @@ FreeMarker是一个用Java语言编写的[模板引擎]，它基于模板来生�
  18.ll | awk ‘{print $3,”owns”,$9}’:文件的文件名和它们的拥有者
  19.at:安排一个程序在未来的做一次一次性执行
  20.lspci:显示你的系统上PCI总线和附加设备的信息
+
+常用命令?[面试]
+rz、sz、cd、find、wget、chmod
+
+复制文件到另一台服务器?[面试]
+> scp
+
+tomcat部署?
                                                         
 ***************************************调优********************************************************************
 
