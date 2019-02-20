@@ -39,6 +39,7 @@
 -[kafka文档地址](http://kafka.apache.org/documentation)
 -[Spring-Kafka（六）—— @KafkaListener的花式操作](https://www.jianshu.com/p/a64defb44a23)
 -[Kafka, RabbitMQ, ZeroMQ, RocketMQ, ActiveMQ 之间的差异](https://mp.weixin.qq.com/s/aUHEncqzES0VkcVnZjaJKw)
+-[消息中间件Kafka与RabbitMQ谁更胜一筹？](https://mp.weixin.qq.com/s/7agqX9qQA48gFE1_tVId6w)
 
 ### 1.1.Kafka是什么
 
