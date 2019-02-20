@@ -2128,20 +2128,24 @@ dubbo 架构具的特点，连通性、健壮性、伸缩性、向未来架构�
     </dubbo:provider>
 
 dubbo和springBoot集成方式?
+
 dubbo-spring-boot
 
 ⑧dubbo 在 Zookeeper 存储了哪些信息？
+
 [Zookeeper 保存的Dubbo信息详解](https://blog.csdn.net/robin90814/article/details/86523502)
 
 Consumers、Providers、Routers、Configrators、权重
 			
 ⑨zk节点类型有哪几种?[深圳市海魅蓝科技]
+
     持久节点（PERSISTENT）
     持久顺序节点（PERSISTENT_SEQUENTIAL） 
     临时节点（EPHEMERAL） 
     临时顺序节点（EPHEMERAL_SEQUENTIAL）     
   
 ⑩zk原理？做什么？paxos算法是什么，原理和实现？
+
 A、Zookeeper是一个分布式协调服务，是一个中间件。
 B、能提供主从协调、服务器节点控制、统一配置管理、分布式共享锁、统一名称服务等功能，比较有名的是大数据以及dubbo中服务的注册以及发现。
 C、本质上只是管理、读取用户提交的数据，并为数据提供监听服务
@@ -2154,18 +2158,22 @@ D、分布式锁
    
 ***************************************消息队列***************************************    
 ①消息队列模式：
-    订阅式和点对点
+
+   订阅式和点对点
+   
    1.1).点对点
     生产端发送一条消息通过路由投递到Queue，只有一个消费者能消费到。
    1.2).多订阅
    RabbitMQ需要支持多订阅时，发布者发送的消息通过路由同时写到多个Queue，不同订阅组消费不同的Queue。所以支持多订阅时，消息会多个拷贝
 
 ②消息队列好处:
+
     异步处理 消息通讯 流量削峰 应用接口 日志处理
     
     项目中使用场景:一人一档中,将档案,有A服务发送到B服务
 
 ③消息队列和http的区别?
+
     消息队列:异步
     http:同步
         
@@ -2177,6 +2185,7 @@ D、分布式锁
 > rabbitMQ功能完善
 
 ⑤rabbitMQ
+
     rabbitmq的配置
 ```
 #rabbitmq
@@ -2188,6 +2197,7 @@ rabbit.exchange=mq-exchange
 ```
 
 ⑥spring整合rabbitmq  
+
     connection-factory(连接工厂)、admin(MQ的管理，包括队列和交换器等)、queue(队列)、binding queue(定义交换机 topic~exchange，手动绑队列)
     1.定义连接工厂2. 定义队列 3.定义交换机并完成队列的绑定 4.定义模板5. 定义消费者的监听 6.MQ的管理，负责创建创建队列和交换机
     
@@ -2197,7 +2207,8 @@ rabbit.exchange=mq-exchange
 	rabbitTemplate.convertAndSend(topic,message);
 	
 ***************************************报表工具***************************************
-☜JFreeChart
+### ☜JFreeChart
+
 1.什么是JFreeChart？
 JFreeChart 是一套免费开放源代码的报表框架，主要是 SourceForge.net 站点上的一个 JAVA 项目。
 
@@ -2205,9 +2216,9 @@ JFreeChart 是一套免费开放源代码的报表框架，主要是 SourceForge
 JFreeChart 功能强大、灵活易用的 Java 绘图 API，使用它可以生成多
 种通用性的报表，包括柱状图、饼图、 曲线图、甘特图等，这些不同式样的图表基本上可以满足目前的要求。
 
-☜echart
+### ☜echart
 
-☜excel
+### ☜excel
 poi、jxl
 
 excel:
