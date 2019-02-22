@@ -1990,6 +1990,27 @@ HTTP状态码分类
 
 [nginx服务之图解常见状态码](https://blog.csdn.net/weixin_43279032/article/details/85131354)
 
+### Netty
+1.BIO、NIO和AIO的区别？
+
+2.NIO的组成？
+
+3.Netty的特点？
+
+4.Netty的线程模型？
+
+5.TCP 粘包/拆包的原因及解决方法？
+
+6.了解哪几种序列化协议？
+
+7.如何选择序列化协议？
+
+8.Netty的零拷贝实现？
+
+9.Netty的高性能表现在哪些方面？
+
+10.NIOEventLoopGroup源码？
+
 ***************************************设计模式************************************************************************
 Factory（工厂模式），      Builder（建造模式），       Factory Method（工厂方法模式）， 
 Prototype（原始模型模式），Singleton（单例模式），    Facade（门面模式）， 
