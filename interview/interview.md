@@ -1992,6 +1992,7 @@ HTTP状态码分类
 
 ### Netty
 1.BIO、NIO和AIO的区别？
+[BIO,NIO,AIO 总结](https://mp.weixin.qq.com/s/F9WwcsFdCOwOeeDc0oc98w)
 
 2.NIO的组成？
 
