@@ -7,6 +7,7 @@
 
 -[软件开发中会用到的图](https://mp.weixin.qq.com/s/TRkj4OiPNMWH8x1Qi4fh_g)
 -[几分钟几张图教你学会如何使用UML](https://mp.weixin.qq.com/s/2SfqdYyHSJSLCH1TdBIb3A)
+-[程序员为什么会有职业瓶颈](http://www.cnblogs.com/jajian/p/10325884.html)
 
 ## 学习方法
 
