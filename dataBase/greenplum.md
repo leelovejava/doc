@@ -6,6 +6,8 @@
 
 [中文文档](https://gp-docs-cn.github.io/docs/common/gpdb-features.html)
 
+[从Greenplum搬迁到云HBase X-Pack](https://mp.weixin.qq.com/s/DeTJFPCuXe8dsILcVEERKA)
+
 Greenplum企业应用实战
 
 - [Greenplum企业应用实战（笔记）：第一章 greenplum简介](https://www.jianshu.com/p/b5c85cadb362)
