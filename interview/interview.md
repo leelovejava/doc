@@ -2292,6 +2292,12 @@ rabbit.exchange=mq-exchange
 	rabbitTemplate.convertAndSend(topic,message);
 
 ### kafka
+1).kafka重复消费?
+原因:已经消费了数据，但是offset没提交
+解决办法:维护offset(手动提交)、数据缓存+维护offset(记录已读取和已提交的偏移量)
+2).kafka丢失数据
+生产者、消费者、broker
+https://www.cnblogs.com/Alex-zqzy/p/9774706.html
 
 ***************************************报表工具***************************************
 ### ☜JFreeChart
