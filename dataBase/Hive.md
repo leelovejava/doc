@@ -229,8 +229,13 @@ select deptno, count(1) from emp group by deptno;
 解决方法
 
     hive设置hive.map.aggr=true和hive.groupby.skewindata=true
-    
-    有数据倾斜的时候进行负载均衡，当选项设定为true,生成的查询计划会有两个MR Job。第一个MR Job中，Map的输出结果集合会随机分布到Reduce中，每个Reduce做部分聚合操作，并输出结果，这样处理的结果是相同Group By Key有可能被分发到不同的Reduce中，从而达到负载均衡的目的；第二个MR Job在根据预处理的数据结果按照 Group By Key 分布到Reduce中(这个过程可以保证相同的 Group By Key 被分布到同一个Reduce中)，最后完成最终的聚合操作。
+        hive.map.aggr:
+        在map中会做部分聚集操作，效率更高但需要更多的内存
+        
+        hive.groupby.skewindata:
+        有数据倾斜的时候进行负载均衡，当选项设定为true,生成的查询计划会有两个MR Job。
+        第一个MR Job中，Map的输出结果集合会随机分布到Reduce中，每个Reduce做部分聚合操作，并输出结果，这样处理的结果是相同Group By Key有可能被分发到不同的Reduce中，从而达到负载均衡的目的；
+        第二个MR Job在根据预处理的数据结果按照 Group By Key 分布到Reduce中(这个过程可以保证相同的 Group By Key 被分布到同一个Reduce中)，最后完成最终的聚合操作。
     
     SQL语句调整: 
         A. 选用join key 分布最均匀的表作为驱动表。做好列裁剪和filter操作，以达到两表join的时候，数据量相对变小的效果。
