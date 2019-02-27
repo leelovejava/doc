@@ -228,7 +228,9 @@ select deptno, count(1) from emp group by deptno;
     
 解决方法
 
-    hive设置hive.map.aggr=true和hive.groupby.skewindata=true
+    1).参数调节
+        hive设置hive.map.aggr=true和hive.groupby.skewindata=true
+        
         hive.map.aggr:
         在map中会做部分聚集操作，效率更高但需要更多的内存
         
@@ -237,7 +239,7 @@ select deptno, count(1) from emp group by deptno;
         第一个MR Job中，Map的输出结果集合会随机分布到Reduce中，每个Reduce做部分聚合操作，并输出结果，这样处理的结果是相同Group By Key有可能被分发到不同的Reduce中，从而达到负载均衡的目的；
         第二个MR Job在根据预处理的数据结果按照 Group By Key 分布到Reduce中(这个过程可以保证相同的 Group By Key 被分布到同一个Reduce中)，最后完成最终的聚合操作。
     
-    SQL语句调整: 
+    2).SQL语句调整: 
         A. 选用join key 分布最均匀的表作为驱动表。做好列裁剪和filter操作，以达到两表join的时候，数据量相对变小的效果。
         
         B. 大小表Join： 使用map join让小的维度表（1000条以下的记录条数）先进内存。在Map端完成Reduce。
@@ -338,8 +340,24 @@ create + load、like + load、as 创建表的同时加载数据、create + inser
 row_number() 是没有重复值的排序(即使两天记录相等也是不重复的),可以利用它来实现分页
 dense_rank() 是连续排序,两个第二名仍然跟着第三名
 rank()       是跳跃排序的,两个第二名下来就是第四名
+
+9. 请谈一下hive的特点是什么？hive和RDBMS有什么异同？
+hive是基于Hadoop的一个数据仓库工具,将结构化的数据文件映射为一张数据库表,提供类SQL查询功能,可以将sql语句转换为MapReduce任务进行运行。
+
+优点是学习成本低，可以通过类SQL语句快速实现简单的MapReduce统计，不必开发专门的MapReduce应用
+ 
+hive具有sql数据库的外表，但应用场景完全不同,hive只适合用来做批量数据统计分析
+
+10. 简要描述数据库中的 null，说出null在hive底层如何存储，
+并解释select a.* from t1 a left outer join t2 b on a.id=b.id where b.id is null语句的含义
+ 
+null与任何值运算的结果都是null, 可以使用is null、is not null函数指定在其值为null情况下的取值。
+
+null在hive底层默认是用'\N'来存储的，可以通过alter table test SET SERDEPROPERTIES('serialization.null.format' = 'a');来修改。
+
+查询出t1表中与t2表中id相等的所有信息
     
-9. Hive优化
+11. Hive优化
 
 ①通用设置
     hive.optimize.cp=true：列裁剪 
