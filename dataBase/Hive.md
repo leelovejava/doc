@@ -210,17 +210,28 @@ select deptno, count(1) from emp group by deptno;
 [面试题整理(Hive)](https://blog.csdn.net/wxfghy/article/details/81361400)
 
 1. Hive数据倾斜
+
 原因
+
     key分布不均匀
+    
     业务数据本身的特性
+    
     SQL语句造成数据倾斜
+    
 解决方法
+
     hive设置hive.map.aggr=true和hive.groupby.skewindata=true
+    
     有数据倾斜的时候进行负载均衡，当选项设定为true,生成的查询计划会有两个MR Job。第一个MR Job中，Map的输出结果集合会随机分布到Reduce中，每个Reduce做部分聚合操作，并输出结果，这样处理的结果是相同Group By Key有可能被分发到不同的Reduce中，从而达到负载均衡的目的；第二个MR Job在根据预处理的数据结果按照 Group By Key 分布到Reduce中(这个过程可以保证相同的 Group By Key 被分布到同一个Reduce中)，最后完成最终的聚合操作。
+    
     SQL语句调整: 
         A. 选用join key 分布最均匀的表作为驱动表。做好列裁剪和filter操作，以达到两表join的时候，数据量相对变小的效果。
+        
         B. 大小表Join： 使用map join让小的维度表（1000条以下的记录条数）先进内存。在Map端完成Reduce。
+        
         C. 大表Join大表：把空值的Key变成一个字符串加上一个随机数，把倾斜的数据分到不同的reduce上，由于null值关联不上，处理后并不影响最终的结果。
+        
         D. count distinct大量相同特殊值：count distinct时，将值为空的情况单独处理，如果是计算count distinct，可以不用处理，直接过滤，在做后结果中加1。如果还有其他计算，需要进行group by，可以先将值为空的记录单独处理，再和其他计算结果进行union.
 
 2. Hive中的排序关键字有哪些
