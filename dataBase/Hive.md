@@ -16,8 +16,12 @@
 [Hive介绍与核心知识点](https://mp.weixin.qq.com/s/8D3pemhEwOWfSjDAZAkLNg)
 
 ①什么是Hive?
+
 The Apache Hive ™ data warehouse software facilitates reading, writing, and managing large datasets residing in distributed storage using SQL. Structure can be projected onto data already in storage. A command line tool and JDBC driver are provided to connect users to Hive.
-apache的hive是一个数据参考的软件,它能方便提供非常方便的读、写和管理很大数据集,这个数据集是存储在分布式的存储系统上的，能够使用sql。已经存储在存储系统上的数据,可以用上结构化的东西,命令行的工具或jdbc的驱动能够连接到hive,
+
+apache的hive是一个数据仓库的软件,它能方便提供非常方便的读、写和管理很大数据集,这个数据集是存储在分布式的存储系统上的，能够使用sql
+
+已经存储在存储系统上的数据,可以用上结构化的东西,命令行的工具或jdbc的驱动能够连接到hive,
 
 1. 大数据仓库,构建于Hadoop之上的数据仓库
 
@@ -79,6 +83,7 @@ Hive利用HDFS存储数据，利用MapReduce查询数据
 用户:发送sql->hive:处理,转换成MapReduce,提交作业到Hadoop->Hadoop,运行作业->hdfs:存储
 
 ### Hive与传统数据库对比
+
 ![image](https://github.com/leelovejava/doc/blob/master/img/dataBase/hive/02.png?raw=true)
 
 总结：hive具有sql数据库的外表，但应用场景完全不同，hive只适合用来做批量数据统计分析
@@ -119,6 +124,7 @@ UDF：自定义函数
 单机版、元数据库mysql版
 
 [quick start](https://cwiki.apache.org/confluence/display/Hive/GettingStarted)
+
 1）Hive下载：http://archive.cloudera.com/cdh5/cdh/5/
 > wget http://archive.cloudera.com/cdh5/cdh/5/hive-1.1.0-cdh5.7.0.tar.gz
 
@@ -158,6 +164,7 @@ UDF：自定义函数
 5）启动hive: $HIVE_HOME/bin/hive
 
 ## Hive使用
+
 创建表
 ```
 CREATE  TABLE table_name 
@@ -253,22 +260,27 @@ order by:全局排序
 distribute和sort:分组排序
 
 3. 海量数据分布在100台电脑中，想个办法高效统计出这批数据的TOP10
+
 方案1:
     在每台电脑上求出TOP10，可以采用包含10个元素的堆完成(TOP10小，用最大堆，TOP10大，用最小堆)。
+    
     比如求TOP10大，我们首先取前10个元素调整成最小堆，如果发现，然后扫描后面的数据，并与堆顶元素比较，如果比堆顶元素大，那么用该元素替换堆顶，然后再调整为最小堆。
+    
     最后堆中的元素就是TOP10大。
+
 方案2
     求出每台电脑上的TOP10后，然后把这100台电脑上的TOP10组合起来，共1000个数据
+    
     再利用上面类似的方法求出TOP10就可以了。
     
 4. Hive中追加导入数据的4种方式是什么？请写出简要语法
-    从本地导入： load data local inpath ‘/home/1.txt’ (overwrite)into table student;
+    从本地导入： load data local inpath '/home/1.txt' (overwrite)into table student;
     
-    从Hdfs导入： load data inpath ‘/user/hive/warehouse/1.txt’ (overwrite)into table student;
+    从Hdfs导入： load data inpath '/user/hive/warehouse/1.txt' (overwrite)into table student;
     
     查询导入： create table student1 as select * from student;(也可以具体查询某项数据)
     
-    查询结果导入：insert （overwrite）into table staff select * from track_log;
+    查询结果导入：insert (overwrite) into table staff select * from track_log;
     
 5. Hive导出数据有几种方式？如何导出数据
 
