@@ -107,14 +107,21 @@ Hive利用HDFS存储数据，利用MapReduce查询数据
 ## 底层执行引擎
 
 Hive底层的执行引擎有：MapReduce、Tez、Spark
+
 	Hive on MapReduce
+	
 	Hive on Tez
+	
 	Hive on Spark
+
+hive on Spark和Spark SQL的区别?
 	
 ## 压缩/存储格式
 
 压缩：GZIP、LZO、Snappy、BZIP2..
+
 存储：TextFile、SequenceFile、RCFile、ORC、Parquet
+
 UDF：自定义函数
 
     
