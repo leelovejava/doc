@@ -1,0 +1,89 @@
+show databases;
+show tables;
+desc test;
+
+-------------
+分桶表示例：
+
+set mapreduce.job.reduces=4;
+
+drop table stu_buck;
+create table stu_buck(Sno int,Sname string,Sex string,Sage int,Sdept string)
+clustered by(Sno) 
+sorted by(Sno DESC)
+into 4 buckets
+row format delimited
+fields terminated by ',';
+
+
+insert overwrite table student_buck
+select * from student cluster by(Sno) sort by(Sage);  报错,cluster 和 sort 不能共存
+
+
+
+insert into table stu_buck
+select Sno,Sname,Sex,Sage,Sdept from student distribute by(Sno) sort by(Sno asc);
+
+insert overwrite table stu_buck
+select * from student distribute by(Sno) sort by(Sno asc);
+
+insert overwrite table stu_buck
+select * from student cluster by(Sno);
+
+-------------
+多重插入：
+
+from student
+insert into table student_p partition(part='a')
+select * where Sno<95011;
+insert into table student_p partition(part='a')
+select * where Sno<95011;
+
+
+--------------
+导出数据到本地：
+
+insert overwrite local directory '/home/hadoop/student.txt'
+select * from student;
+
+-------------
+UDF案例：
+create table rat_json(line string) row format delimited;
+load data local inpath '/home/hadoop/rating.json' into table rat_json;
+
+drop table if exists t_rating;
+create table t_rating(movieid string,rate int,timestring string,uid string)
+row format delimited fields terminated by '\t';
+
+insert overwrite table t_rating
+select split(parsejson(line),',')[0]as movieid,split(parsejson(line),',')[1] as rate,split(parsejson(line),',')[2] as timestring,split(parsejson(line),',')[3] as uid from rat_json limit 10;
+
+
+-------
+内置jason函数
+select get_json_object(line,'$.movie') as moive,get_json_object(line,'$.rate') as rate  from rat_json limit 10;
+
+
+-----------
+transform案例:
+
+INSERT OVERWRITE TABLE u_data_new
+SELECT
+  TRANSFORM (movieid, rate, timestring,uid)
+  USING 'python weekday_mapper.py'
+  AS (movieid, rate, weekday,uid)
+FROM t_rating;
+
+select distinct(weekday) from u_data_new limit 10;
+
+
+
+
+
+
+
+
+
+
+
+
