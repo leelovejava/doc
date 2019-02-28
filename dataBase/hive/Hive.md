@@ -316,12 +316,30 @@ distribute和sort:分组排序
 
 ③Sqoop把hive数据导出到外部
 
-6. hive 内部表和外部表区别
+6. hive 内部表和外部表区别?Hive分区表和分桶表的区别?
 
-内部表：hive管理;加载数据到 hive 所在的 hdfs 目录，删除时，元数据和数据文件都删除
+内部表：
+      
+       默认内部表
+       hive管理(加载数据到 hive 所在的 hdfs 目录,删除时，元数据和数据都删除)
+       适用于:原始数据和比较重要的数据建表存储
 
-外部表：hdfs管理;不加载数据到 hive 所在的 hdfs 目录，删除时，只删除元数据
+外部表：
 
+       hdfs管理(不加载数据到 hive 所在的 hdfs 目录)
+       删除时，只删除元数据
+       使用于:日志文件进行分析,不会删除文件等
+
+分区表:
+
+        按照数据表的某列或某些列分为多个区存储，分区在HDFS上的表现形式是一个目录,可针对某个特定的时间做业务分析,不必扫描整个表
+        优点:细化数据管理，直接读对应目录,缩小mapreduce程序要扫描的数据量
+        
+分桶表:
+
+        对分区表更细粒度划分,分桶在HDFS上的表现形式是一个单独的文件,将整个数据内容按照某列属性值得hash值进行区分
+        优点:1、提高join查询的效率（用分桶字段做连接字段）(防止数据倾斜) 2、提高采样的效率
+        
 * 表类型
 
 内部表、外部表、分区表、桶表
@@ -330,38 +348,20 @@ distribute和sort:分组排序
 
 create + load、like + load、as 创建表的同时加载数据、create + insert
 
-7. 分区和分桶的区别
-
-分区
-
-    是指按照数据表的某列或某些列分为多个区，区从形式上可以理解为文件夹，比如我们要收集某个大型网站的日志数据，一个网站每天的日志数据存在同一张表上，由于每天会生成大量的日志，导致数据表的内容巨大，在查询时进行全表扫描耗费的资源非常多。
-    
-    可以按照日期对数据表进行分区，不同日期的数据存放在不同的分区，在查询时只要指定分区字段的值就可以直接从该分区查找
-
-分桶
-
-    分桶是相对分区进行更细粒度的划分。
-    
-    分桶将整个数据内容安装某列属性值得hash值进行区分，如要按照name属性分为3个桶，就是对name属性值的hash值对3取摸，按照取模结果对数据分桶。
-    
-    如取模结果为0的数据记录存放到一个文件，取模为1的数据存放到一个文件，取模为2的数据存放到一个文件
-
-分区作用:防止数据倾斜
-
-8. Hive的分组方式
+7. Hive的分组方式
 
 row_number() 是没有重复值的排序(即使两天记录相等也是不重复的),可以利用它来实现分页
 dense_rank() 是连续排序,两个第二名仍然跟着第三名
 rank()       是跳跃排序的,两个第二名下来就是第四名
 
-9. 请谈一下hive的特点是什么？hive和RDBMS有什么异同？
+8. 请谈一下hive的特点是什么？hive和RDBMS有什么异同？
 hive是基于Hadoop的一个数据仓库工具,将结构化的数据文件映射为一张数据库表,提供类SQL查询功能,可以将sql语句转换为MapReduce任务进行运行。
 
 优点是学习成本低，可以通过类SQL语句快速实现简单的MapReduce统计，不必开发专门的MapReduce应用
  
 hive具有sql数据库的外表，但应用场景完全不同,hive只适合用来做批量数据统计分析
 
-10. 简要描述数据库中的 null，说出null在hive底层如何存储，
+9 简要描述数据库中的 null，说出null在hive底层如何存储，
 并解释select a.* from t1 a left outer join t2 b on a.id=b.id where b.id is null语句的含义
  
 null与任何值运算的结果都是null, 可以使用is null、is not null函数指定在其值为null情况下的取值。
@@ -370,7 +370,7 @@ null在hive底层默认是用'\N'来存储的，可以通过alter table test SET
 
 查询出t1表中与t2表中id相等的所有信息
     
-11. Hive优化
+10. Hive优化
 
 ①通用设置
     hive.optimize.cp=true：列裁剪 
@@ -402,21 +402,23 @@ hive.mapred.mode=true，严格模式不允许执行以下查询：
     笛卡尔积：JOIN时没有ON语句
 
 ⑤动态分区
-hive.exec.dynamic.partition.mode=strict：该模式下必须指定一个静态分区 
-hive.exec.max.dynamic.partitions=1000 
-hive.exec.max.dynamic.partitions.pernode=100：在每一个mapper/reducer节点允许创建的最大分区数 
-DATANODE：dfs.datanode.max.xceivers=8192：允许DATANODE打开多少个文件
+
+    hive.exec.dynamic.partition.mode=strict：该模式下必须指定一个静态分区 
+    hive.exec.max.dynamic.partitions=1000 
+    hive.exec.max.dynamic.partitions.pernode=100：在每一个mapper/reducer节点允许创建的最大分区数 
+    DATANODE：dfs.datanode.max.xceivers=8192：允许DATANODE打开多少个文件
 
 ⑥推测执行
+
     mapred.map.tasks.speculative.execution=true 
     mapred.reduce.tasks.speculative.execution=true 
     hive.mapred.reduce.tasks.speculative.execution=true;
 
 ⑦多个group by合并
-hive.multigroupby.singlemar=true：当多个GROUP BY语句有相同的分组列，则会优化为一个MR任务
+    hive.multigroupby.singlemar=true：当多个GROUP BY语句有相同的分组列，则会优化为一个MR任务
 
 ⑧虚拟列
-hive.exec.rowoffset：是否提供虚拟列
+    hive.exec.rowoffset：是否提供虚拟列
 
 ⑨分组
 两个聚集函数不能有不同的DISTINCT列，以下表达式是错误的： 
