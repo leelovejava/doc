@@ -13,6 +13,15 @@
 git取消本地提交,未push
 > git push origin HEAD --force
 
+git忽略idea文件
+```
+git rm -r –cached .
+git add .	
+git commit -m "update .gitignore"
+
+git rm -r –cached .idea/ 
+git commit -m "remove .idea" 
+```
 ---------
 
 git提交规范:
