@@ -304,11 +304,11 @@ distribute和sort:分组排序
 
     A. 导出到本地： 
     
-    insert overwrite local directory ‘/home/robot/1/2’ rom format delimited fields terminated by ‘\t’ select * from staff;(递归创建目录)
+    insert overwrite local directory '/home/robot/1/2' rom format delimited fields terminated by ‘\t’ select * from staff;(递归创建目录)
 
     B. 导出到HDFS 
     
-    insert overwrite directory ‘/user/hive/1/2’ rom format delimited fields terminated by ‘\t’ select * from staff;
+    insert overwrite directory '/user/hive/1/2’ rom format delimited fields terminated by ‘\t’ select * from staff;
 
 ②Bash shell覆盖追加导出 
 
@@ -318,9 +318,9 @@ distribute和sort:分组排序
 
 6. hive 内部表和外部表区别
 
-内部表：加载数据到 hive 所在的 hdfs 目录，删除时，元数据和数据文件都删除
+内部表：hive管理;加载数据到 hive 所在的 hdfs 目录，删除时，元数据和数据文件都删除
 
-外部表：不加载数据到 hive 所在的 hdfs 目录，删除时，只删除表结构
+外部表：hdfs管理;不加载数据到 hive 所在的 hdfs 目录，删除时，只删除元数据
 
 * 表类型
 
