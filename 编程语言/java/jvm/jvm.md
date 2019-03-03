@@ -605,3 +605,25 @@ C.jvm常用启动参数
 堆大小设置（堆 = 年轻代 + 年老代+ 持久代）
 垃圾回收器设置（串行收集器、并行收集器、并发收集器 ）
 辅助信息参数设置
+
+---------------
+[讲讲jvm运行时数据区](https://mp.weixin.qq.com/s/li3ISdodGu2EK_Fo_4NJPA)
+[什么情况下会发生栈内存溢出](https://mp.weixin.qq.com/s/li3ISdodGu2EK_Fo_4NJPA)
+[JVM的内存结构，Eden和Survivor比例](https://blog.csdn.net/bluetjs/article/details/52874852)
+[JVM内存为什么要分成新生代，老年代，持久代。新生代中为什么要分为Eden和Survivor](https://blog.csdn.net/bluetjs/article/details/52874852)
+[JVM中一次完整的GC流程是怎样的，对象如何晋升到老年代，说说你知道的几种主要的JVM参数](https://www.jianshu.com/p/314272e6d35b)
+[讲下cms和G1，包括原理，流程，优缺点](https://blog.csdn.net/zhanggang807/article/details/45956325)
+[垃圾回收算法的实现原理](https://blog.csdn.net/zhanggang807/article/details/45956325)
+[G1，包括原理，流程，优缺点](http://www.cnblogs.com/xiaoxi/p/6486852.html)
+[CMS收集器学习笔记](https://mp.weixin.qq.com/s/OzE7WrvcGPEcf_UHj2a-lg)
+谈谈你的GC调优思路?
+[垃圾回收算法的实现原理](http://www.cnblogs.com/aspirant/p/8662690.html)
+[当出现了内存溢出，你怎么排错](https://blog.csdn.net/wtt945482445/article/details/52483944)
+[JVM内存模型的相关知识了解多少，比如重排序，内存屏障，happen-before，主内存，工作内存等](http://blog.csdn.net/javazejian/article/details/73413292)
+[简单说说你了解的类加载器，可以打破双亲委派么，怎么打破](http://blog.csdn.net/javazejian/article/details/73413292)
+[加载时机与加载过程](https://blog.csdn.net/justloveyou_/article/details/72466105)
+[Java类加载的方式](http://blog.csdn.net/justloveyou_/article/details/72466416)
+[Java对象的创建过程](http://blog.csdn.net/justloveyou_/article/details/72466416)
+[你们线上应用的JVM参数有哪些](https://blog.csdn.net/ZYC88888/article/details/80353357)
+[g1和cms区别,吞吐量优先和响应优先的垃圾收集器选择](https://blog.csdn.net/ZYC88888/article/details/80353357)
+[怎么打出线程栈信息](http://www.cnblogs.com/kongzhongqijing/articles/3630264.html)
