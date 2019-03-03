@@ -1,0 +1,249 @@
+﻿
+file
+segment（段，多个document组成）
+document（一条记录，一个对象实例）
+field（对象的属性）
+term（项，分词之后的词条）
+
+
+
+# 创建索引库
+curl -XPUT http://127.0.0.1:9200/bjsxt/ 
+curl -XDELETE http://127.0.0.1:9200/test2/
+curl -XDELETE http://127.0.0.1:9200/test3/
+
+#document：yes 
+curl -XPOST http://127.0.0.1:9200/bjsxt/employee -d '
+{
+ "first_name" : "bin",
+ "age" : 33,
+ "about" : "I love to go rock climbing",
+ "interests": [ "sports", "music" ]
+}'
+
+curl -XPOST http://127.0.0.1:9200/bjsxt/employee -d '
+{
+ "first_name" : "gob bin",
+ "age" : 43,
+ "about" : "I love to go rock climbing",
+ "interests": [ "sports", "music" ]
+}'
+
+curl -XPOST http://127.0.0.1:9200/bjsxt/employee/2 -d '
+{
+ "first_name" : "bin",
+ "age" : 45,
+ "about" : "I love to go rock climbing",
+ "interests": [ "sports", "music" ]
+}'
+
+
+#add field yes
+
+curl -XPOST http://127.0.0.1:9200/bjsxt/employee -d '
+{
+ "first_name" : "pablo2",
+ "age" : 33,
+ "about" : "I love to go rock climbing",
+ "interests": [ "sports", "music" ],
+ "sex": "man"
+}'
+
+curl -XPOST http://127.0.0.1:9200/bjsxt/employee/1 -d '
+{
+ "first_name" : "pablo2",
+ "age" : 35,
+ "about" : "I love to go rock climbing",
+ "interests": [ "sports", "music" ],
+ "sex": "man"
+}'
+
+
+----------------------------------------
+
+
+#修改
+
+
+curl -XPUT http://127.0.0.1:9200/bjsxt/employee/1 -d '
+{
+ "first_name" : "god bin",
+ "last_name" : "pang",
+ "age" : 42,
+ "about" : "I love to go rock climbing",
+ "interests": [ "sports", "music" ]
+}'
+
+curl -XPUT http://127.0.0.1:9200/bjsxt/employee -d '
+{
+ "first_name" : "god bin",
+ "last_name" : "bin",
+ "age" : 45,
+ "about" : "I love to go rock climbing",
+ "interests": [ "sports", "music" ]
+}'
+
+
+curl -XPUT http://127.0.0.1:9200/bjsxt/employee/2 -d '
+{
+ "first_name" : "god bin",
+ "last_name" : "bin",
+ "age" : 45,
+ "about" : "I love to go rock climbing",
+ "interests": [ "sports", "music" ]
+}'
+
+curl -XPUT http://127.0.0.1:9200/bjsxt/employee/1 -d '
+{
+ "first_name" : "god bin",
+ "last_name" : "pang",
+ "age" : 40,
+ "about" : "I love to go rock climbing",
+ "interests": [ "sports", "music" ]
+}'
+
+
+
+#根据document的id来获取数据：(without pretty)
+curl -XGET http://127.0.0.1:9200/bjsxt/employee/1?pretty
+
+#根据field来查询数据：
+curl -XGET http://127.0.0.1:9200/bjsxt/employee/_search?q=first_name="bin"
+
+#根据field来查询数据：match
+curl -XGET http://127.0.0.1:9200/bjsxt/employee/_search?pretty -d '
+{
+ "query":
+  {"match":
+   {"first_name":"bin"}
+  }
+}'
+
+
+
+#对多个field发起查询：multi_match
+curl -XGET http://127.0.0.1:9200/bjsxt/employee/_search?pretty -d '
+{
+ "query":
+  {"multi_match":
+   {
+    "query":"bin",
+    "fields":["last_name","first_name"],
+    "operator":"and"
+   }
+  }
+}'
+
+
+#多个term对多个field发起查询:bool（boolean） 
+# 组合查询，must，must_not,should 
+#  must + must : 交集
+#  must +must_not ：差集
+#  should+should  : 并集
+
+curl -XGET http://127.0.0.1:9200/bjsxt/employee/_search?pretty -d '
+{
+ "query":
+  {"bool" :
+   {
+    "must" : 
+     {"match":
+      {"first_name":"bin"}
+     },
+    "must" : 
+     {"match":
+      {"age":33}
+     }
+   }
+  }
+}'
+
+curl -XGET http://127.0.0.1:9200/bjsxt/employee/_search?pretty -d '
+{
+ "query":
+  {"bool" :
+   {
+    "must" : 
+     {"match":
+      {"first_name":"bin"}
+     },
+    "must_not" : 
+     {"match":
+      {"age":33}
+     }
+   }
+  }
+}'
+
+
+
+
+
+curl -XGET http://127.0.0.1:9200/bjsxt/employee/_search?pretty -d '
+{
+ "query":
+  {"bool" :
+   {
+    "must_not" : 
+     {"match":
+      {"first_name":"bin"}
+     },
+    "must_not" : 
+     {"match":
+      {"age":33}
+     }
+   }
+  }
+}'
+
+##查询first_name=bin的，或者年龄在20岁到33岁之间的
+
+curl -XGET http://127.0.0.1:9200/bjsxt/employee/_search -d '
+{
+ "query":
+  {"bool" :
+   {
+   "must" :
+    {"term" : 
+     { "first_name" : "bin" }
+    }
+   ,
+   "must_not" : 
+    {"range":
+     {"age" : { "from" : 20, "to" : 33 }
+    }
+   }
+   }
+  }
+}'
+
+
+#修改配置
+curl -XPUT 'http://127.0.0.1:9200/test2/' -d'{"settings":{"number_of_replicas":2}}'
+
+curl -XPUT 'http://127.0.0.1:9200/test3/' -d'{"settings":{"number_of_shards":3,"number_of_replicas":3}}'
+
+curl -XPUT 'http://127.0.0.1:9200/test4/' -d'{"settings":{"number_of_shards":6,"number_of_replicas":4}}'
+
+
+curl -XPOST http://127.0.0.1:9200/bjsxt/person/_mapping -d'
+{
+    "person": {
+        "properties": {
+            "content": {
+                "type": "string",
+                "store": "no",
+                "term_vector": "with_positions_offsets",
+                "analyzer": "ik_max_word",
+                "search_analyzer": "ik_max_word",
+                "include_in_all": "true",
+                "boost": 8
+            }
+        }
+    }
+}'
+
+
+
+
+
