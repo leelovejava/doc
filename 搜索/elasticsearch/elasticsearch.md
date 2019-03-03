@@ -234,6 +234,8 @@ https://www.elastic.co/downloads/past-releases
 
 PS:一个索引对应一个type,6.x默认对应doc
 
+[7.0移除:mapping types](https://github.com/elastic/elasticsearch/blob/6.5/docs/reference/mapping/removal_of_types.asciidoc)
+
 ### 常用框架：
     1、Lucene
         Apache下面的一个开源项目，高性能的、可扩展的工具库，提供搜索的基本架构；
