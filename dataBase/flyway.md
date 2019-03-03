@@ -148,7 +148,7 @@ http://hao.jobbole.com/flyway/
 http://blog.didispace.com/spring-boot-flyway-db-version/
 https://www.cnblogs.com/logsharing/p/7808713.html
 ### 现有数据库设置
-####清理包含您不介意丢失的数据的所有数据库(删除配置的模式中的所有对象),不要使用于生产环境
+#### 清理包含您不介意丢失的数据的所有数据库(删除配置的模式中的所有对象),不要使用于生产环境
 flyway clean
 #### Give these databases a baseline version 为数据库提供基准版本
 flyway baseline
@@ -156,8 +156,9 @@ flyway baseline
 flyway migrate
 #### 消息,打印有关所有迁移的详细信息和状态信息,信息可以让您知道自己的位置。一目了然，您将看到已经应用了哪些迁移，哪些迁移尚未处理，何时执行以及它们是否成功
 flyway info
+
 ### 配置文件
-~
+```
 # Settings are simple key-value pairs
 flyway.key=value
 # Single line comment start with a hash
@@ -166,10 +167,12 @@ flyway.key=value
 flyway.url=jdbc:mydb://mydatabaseurl
 flyway.schemas=schema1,schema2
 flyway.placeholders.keyABC=valueXYZ
-~
+```
 
 
 flyway的配置
+flyway.enabled:false
+    禁用
 flyway.baseline-description
     对执行迁移时基准版本的描述.
 flyway.baseline-on-migrate

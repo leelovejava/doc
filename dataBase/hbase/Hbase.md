@@ -26,6 +26,8 @@
 
 [云HBase全文索引服务，增强HBase的检索能力](https://mp.weixin.qq.com/s/e6Zv8jVfzJfVKdHBlfyAFw)
 
+[都是 HBase 上的 SQL 引擎，Kylin 和 Phoenix 有什么不同？](https://mp.weixin.qq.com/s/CQ9nlO14Do0Q0_Y6QU9jBw)
+
 ###官方翻译文档
 http://abloz.com/hbase/book.html
 https://www.jianshu.com/p/dfa7488c5414
