@@ -13,6 +13,9 @@
 git取消本地提交,未push
 > git push origin HEAD --force
 
+github SSL_connect: SSL_ERROR_SYSCALL in connection to github.com:443
+> git config --global --unset http.proxy
+
 git忽略idea文件
 ```
 git rm -r –cached .
