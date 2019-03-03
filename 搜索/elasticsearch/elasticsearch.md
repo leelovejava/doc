@@ -23,6 +23,127 @@
 
 -[ElasticSearch基础分布式架构讲解](https://mp.weixin.qq.com/s/HXWZW8_e5GRmTk23pRIYSQ)
 
+-[elasticsearch 铭毅天下](https://me.csdn.net/wojiushiwo987)
+
+## 提纲
+（1）掌握 Elasticsearch 的基本概念，主要包括：
+
+
+索引（index）->数据库
+
+文档（document）->行
+
+类型（type）->表
+
+字段 (filed)->列
+
+映射（mapping）->约束 字段类型、是否存储、是否分词
+
+倒排索引原理
+
+文档打分机制
+
+集群（cluster）——单节点、集群安装与部署
+
+健康状态（red/yellow/green）
+
+数据存储
+
+全文检索
+
+数据类型（long/date/text、keyword/nested等）
+
+数据展示（结合Head插件的基础可视化）
+
+
+（2）掌握 Elasitcsearch 的基本操作，主要包括：
+
+新增（insert）
+
+删除（delete/deletebyquery）
+
+修改（update/updatebyquery）
+
+查找（search）
+
+精确匹配检索（term、terms、range、exists）
+
+模糊匹配检索（wildcard、prefix、negix正则）
+
+分词全文检索（match/match_phrase等）
+
+多条件 bool 检索（must/must_not/should多重组合）
+
+分词（英文分词、拼音分词、中文分词）
+
+高亮
+
+分页查询
+
+指定关键词返回
+
+批量操作 bulk
+
+scroll 查询
+
+reindex 操作
+
+
+（3）掌握 Elasticsearch 高级操作，主要包括：
+
+聚合统计（数量聚合、最大值、最小值、平均值、求和等聚合操作）
+
+图像化展示（hisgram 按照日期等聚合）
+
+聚合后分页
+
+父子文档
+
+数组类型
+
+nested 嵌套类型
+
+ES 插件错误排查（集群问题、检索问题、性能问题）
+
+ES 性能调优（配置调优、集群调优等）
+
+ik热词更新
+……
+
+
+
+（4）掌握 Elasticsearch Java/Python 等API，主要包括：
+
+Elasticsearch 原生自带 API、JEST、Springboot 等 API 选型
+
+Elasticsearch 多条件 bool 复杂检索 API
+
+Elasticsearch 分页 API
+
+Elasticsearch 高亮 API
+
+Elasticsearch 聚合 API
+
+Elasticsearch 相关 JSON 数据解析
+
+……
+
+
+
+（5）Elasticsearch 结合场景开发实战，主要包括：
+
+数据可视化（Kibana、Grafana 等 其中 Grafana 比较适合监控类场景）
+
+通过 logstash/beats 等导入数据
+
+Elasticsearch 和 Kafka 结合的应用场景
+
+Elasticsearch 和 Mongo 结合的应用场景
+
+Elasticsearch 和 Hadoop(spark) 结合的应用场景
+
+结合业务需求的定制化应用场景（日志分析、文档检索、全文检索、金融等各行业检索）
+
 ## 下载历史版本
 https://www.elastic.co/downloads/past-releases
 
@@ -67,6 +188,16 @@ https://www.elastic.co/downloads/past-releases
 
 > open http://localhost:9100/
 
+
+### ik中文分词
+> https://github.com/medcl/elasticsearch-analysis-ik
+
+热更新 IK 分词使用方法
+（1）修改ik分词器源码，然后手动支持从mysql中每隔一定时间，自动加载新的词库
+（2）基于ik分词器原生支持的热更新方案，部署一个web服务器，提供一个http接口，通过modified和tag两个http响应头，来提供词语的热更新
+
+[ik修改源码,支持mysql更新分词](https://blog.csdn.net/jackcheng1117/article/details/87689449)
+
 ## Override
 
 ### 概念
@@ -101,6 +232,8 @@ https://www.elastic.co/downloads/past-releases
 
 约束 Schema	                映射Mapping
 
+PS:一个索引对应一个type,6.x默认对应doc
+
 ### 常用框架：
     1、Lucene
         Apache下面的一个开源项目，高性能的、可扩展的工具库，提供搜索的基本架构；
@@ -134,6 +267,14 @@ ES存入数据和搜索数据机制
     config: 核心配置文件
     lib: 依赖包
     plugins :插件
+
+### 安装部署
+
+1.添加用户
+> useradd es
+
+2.赋予文件夹权限
+> chown -R es:es /usr/local/elk/elasticsearch
 
 ### 命令
 
@@ -231,6 +372,47 @@ class EsJDBC{
     }
 }
 ```
+
+## 数据同步
+
+[Debezium实现Mysql到Elasticsearch高效实时同步](https://blog.csdn.net/laoyang360/article/details/87897886)
+
+## 性能优化
+[让Elasticsearch飞起来!——性能优化实践干货](https://blog.csdn.net/laoyang360/article/details/85109769)
+
+## 面试题
+[BAT等一线大厂 Elasticsearch面试题解读](https://blog.csdn.net/laoyang360/article/details/86558214)
+
+## 性能测试工具
+esrally
+
+## 数据同步
+mysql等->elasticsearch
+
+[Debezium实现Mysql到Elasticsearch高效实时同步](https://blog.csdn.net/laoyang360/article/details/87897886)
+
+Debezium
+捕获数据实时动态变化的开源的分布式同步平台。
+能实时捕获到数据源（Mysql、Mongo、PostgreSql）的：新增（inserts）、更新(updates)、删除(deletes)操作，实时同步到Kafka，稳定性强且速度非常快
+
+特点：
+
+1）简单。无需修改应用程序。可对外提供服务。
+2）稳定。持续跟踪每一行的每一处变动。
+3）快速。构建于kafka之上，可扩展，经官方验证可处理大容量的数据。
+
+步骤:
+步骤1： 基Debezium的binlog机制，将Mysql数据同步到Kafka。
+步骤2： 基于Kafka_connector机制，将kafka数据同步到Elasticsearch
+
+安装confluent
+	[使用confluent本地安装和使用kafka](https://blog.csdn.net/zzq900503/article/details/83419245)
+
+安装配置connector
+
+编写mysql-connector的配置信息
+	[debezium-mysql官网](https://debezium.io/docs/connectors/mysql/)
+
 ## 项目实战
 
 BAT大牛亲授 基于ElasticSearch的搜房网实战
