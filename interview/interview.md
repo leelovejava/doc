@@ -42,6 +42,7 @@
 
 [Java工程师如何在1个月内做好面试准备？【石杉的架构笔记】](https://mp.weixin.qq.com/s/P0U4KWx54k9vHnFsOtbyPw)
 
+[消息中间件如何实现每秒几十万的高并发写入？](https://mp.weixin.qq.com/s/sCRC5h0uw2DWD2MixI6pZw)
 
 ### 设计模式
 
@@ -2303,6 +2304,12 @@ D、分布式锁
 > rabbitMQ功能完善
 
 ⑤[如果让你设计一个消息中间件，你会怎么做？](https://mp.weixin.qq.com/s/4yi1F2_CTY2yum7CIRRiow)	
+
+⑥消息中间件如何实现每秒几十万的高并发写入？
+
+页缓存技术 + 磁盘顺序写
+
+零拷贝(拷贝描述符)
 
 ### rabbitMQ
 ①rabbitmq的配置
