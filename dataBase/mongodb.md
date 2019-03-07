@@ -10,6 +10,8 @@
 
 [golang的mongodb操作(mgo)](https://studygolang.com/articles/1737)
 
+[双刃剑MongoDB的学习和避坑](https://mp.weixin.qq.com/s/fTG-Wff0ZsWqakXtVDXsqg)
+
 ## 安装:
 https://www.mongodb.com/download-center/community
 
