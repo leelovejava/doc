@@ -2077,26 +2077,31 @@ HTTP状态码分类
 [nginx服务之图解常见状态码](https://blog.csdn.net/weixin_43279032/article/details/85131354)
 
 ### Netty
-1.BIO、NIO和AIO的区别？
+
+1. BIO、NIO和AIO的区别？
 [BIO,NIO,AIO 总结](https://mp.weixin.qq.com/s/F9WwcsFdCOwOeeDc0oc98w)
 
-2.NIO的组成？
+2. NIO的组成？
 
-3.Netty的特点？
+3. Netty的特点？
 
-4.Netty的线程模型？
+4. Netty的线程模型？[阿里巴巴]
 
-5.TCP 粘包/拆包的原因及解决方法？
+5. TCP 粘包/拆包的原因及解决方法？[阿里巴巴]
 
-6.了解哪几种序列化协议？
+6. 了解哪几种序列化协议？
 
-7.如何选择序列化协议？
+7. 如何选择序列化协议？
 
-8.Netty的零拷贝实现？
+8. Netty的零拷贝实现？[阿里巴巴]
 
-9.Netty的高性能表现在哪些方面？
+9. Netty的高性能表现在哪些方面？
 
-10.NIOEventLoopGroup源码？
+10. NIOEventLoopGroup源码？
+
+11. Netty 的认识，为什么要用。说说业务中，Netty 的使用场景。[阿里巴巴]
+
+12. Dubbo 在使用 Netty 作为网络通讯时候是如何避免粘包与半包问题？[阿里巴巴]
 
 ***************************************设计模式************************************************************************
 Factory（工厂模式），      Builder（建造模式），       Factory Method（工厂方法模式）， 
