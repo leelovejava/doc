@@ -59,7 +59,7 @@
 [为什么大公司要设置这么高的门槛？](https://mp.weixin.qq.com/s/YBOtHuVaES7N6BV-9znh7A)
 
 ---------如何阅读源码---------
-http://www.iocoder.cn/Architecture/how-to-read-source-code/
+
 1. 一般会先看官方文档
 2. 看完之后，把调试环境搭建起来，然后把感兴趣的流程，大体调试一遍
 3. 根据需要，详细调试一些细节。
@@ -68,11 +68,7 @@ http://www.iocoder.cn/Architecture/how-to-read-source-code/
 
 [视频：闲聊如何阅读源码](http://www.iocoder.cn/Architecture/how-to-read-source-code/)
 
-1. 一般会先看官方文档
-2. 看完之后，把调试环境搭建起来，然后把感兴趣的流程，大体调试一遍
-3. 根据需要，详细调试一些细节。
-4. 如果碰到流程比较复杂，我会自己画下图，手绘，或者用 uml 工具都有。
-5. 如果有地方看不懂，会尝试 google 找下，看看别人有没源码解析
+
 ---------如何阅读源码---------
 
 ----manager---
