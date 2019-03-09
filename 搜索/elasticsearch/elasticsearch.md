@@ -305,6 +305,10 @@ ES存入数据和搜索数据机制
     
 ### SQL Access
 
+#### 插件
+
+https://github.com/NLPchina/elasticsearch-sql
+
 [SQL Access](https://www.elastic.co/guide/en/elasticsearch/reference/current/xpack-sql.html)
 
 *1.安装
