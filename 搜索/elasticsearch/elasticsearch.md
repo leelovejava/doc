@@ -23,7 +23,9 @@
 
 -[ElasticSearch基础分布式架构讲解](https://mp.weixin.qq.com/s/HXWZW8_e5GRmTk23pRIYSQ)
 
--[elasticsearch 铭毅天下](https://me.csdn.net/wojiushiwo987)
+-[elasticsearch 铭毅天下 CSDN](https://me.csdn.net/wojiushiwo987)
+
+-[23个最有用的Elasticsearch检索技巧](https://juejin.im/post/5b7fe4a46fb9a019d92469a9)
 
 ## 提纲
 （1）掌握 Elasticsearch 的基本概念，主要包括：
@@ -345,6 +347,24 @@ curl -X POST "http:localhost:9200/_xpack/sql/translate" -H 'Content-Type: applic
 #### SQL JDBC
 [sql-jdbc](https://www.elastic.co/guide/en/elasticsearch/reference/current/sql-jdbc.html)
 
+[玩转 Elasticsearch 的 SQL 功能](https://elasticsearch.cn/article/687)
+
+RESTful下调用SQL
+```
+POST twitter/doc/
+{
+  "name":"medcl",
+  "twitter":"sql is awesome",
+  "date":"2018-07-27",
+  "id":123
+}
+
+POST /_xpack/sql?format=txt
+{
+    "query": "SHOW TABLES 'twit%'"
+}
+```
+
 ```xml
 <dependency>
   <groupId>org.elasticsearch.plugin</groupId>
@@ -418,3 +438,6 @@ Debezium
 ## 项目实战
 
 BAT大牛亲授 基于ElasticSearch的搜房网实战
+
+### 搜索联想
+[elasticsearch实现中文与拼音的搜索联想](https://www.jianshu.com/p/866b53a84033)
