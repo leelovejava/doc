@@ -259,7 +259,7 @@ select deptno, count(1) from emp group by deptno;
 
 sort by ，order by ，cluster by ，distribute by
 
-sort by ：不是全局排序，其在数据进入reducer前完成排序
+sort by ：reducer排序
 
 order by ：对输入做全局排序，因此只有一个reducer(多个reducer无法保证全局有序).只有一个reducer,会导致当输入规模较大时，需要较长的计算时间。
 
@@ -372,6 +372,8 @@ null在hive底层默认是用'\N'来存储的，可以通过alter table test SET
     
 10. Hive优化
 
+[Hive性能优化（全面）](https://mp.weixin.qq.com/s/9V99Dgz_yp-CPMtFFATtXw)
+
 ①通用设置
     hive.optimize.cp=true：列裁剪 
     hive.optimize.prunner：分区裁剪 
@@ -389,10 +391,11 @@ null在hive底层默认是用'\N'来存储的，可以通过alter table test SET
     hive.mapred.local.mem：本地模式启动的JVM内存大小
 
 ③并发执行
-hive.exec.parallel=true ，默认为false 
-hive.exec.parallel.thread.number=8
+    hive.exec.parallel=true ，默认为false 
+    hive.exec.parallel.thread.number=8
 
-④Strict Mode：
+④Strict Mode：开启严格模式
+
 hive.mapred.mode=true，严格模式不允许执行以下查询： 
     
     分区表上没有指定了分区
