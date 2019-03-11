@@ -261,11 +261,11 @@ sort by ，order by ，cluster by ，distribute by
 
 sort by ：reducer排序
 
-order by ：对输入做全局排序，因此只有一个reducer(多个reducer无法保证全局有序).只有一个reducer,会导致当输入规模较大时，需要较长的计算时间。
+order by ：reduce排序.输入规模较大时，需要较长的计算时间。
 
-distribute by ：按照指定的字段对数据进行划分输出到不同的reduce中
+distribute by ：分区排序
 
-cluster by：除了具有 distribute by 的功能外还兼具 sort by 的功能
+cluster by：相当于 Sort By + Distribute By,不能指定排序规则 ˈkləstər
 
 * sort by和order by之间的区别？
 
@@ -374,7 +374,45 @@ null在hive底层默认是用'\N'来存储的，可以通过alter table test SET
 
 [Hive性能优化（全面）](https://mp.weixin.qq.com/s/9V99Dgz_yp-CPMtFFATtXw)
 
+以下SQL不会转为Mapreduce来执行
+    select仅查询本表字段
+    where仅对本表字段做条件过滤
+
+Explain 显示执行计划
+    EXPLAIN [EXTENDED] query
+    
+hive运行方式:本地、集群,本地模式适用开发、数据量小
+    `hive.exec.mode.local.auto.inputbytes.max`默认值为128M,表示加载文件的最大值，若大于该配置仍会以集群方式来运行    
+
+严格模式:
+    查询限制：
+    1、对于分区表，必须添加where对于分区字段的条件过滤
+    2、order by语句必须包含limit输出限制
+    3、限制执行笛卡尔积的查询
+
+并行计算
+    
+Hive排序
+    Order By - 对于查询结果做全排序，只允许有一个reduce处理
+        （当数据量较大时，应慎用。严格模式下，必须结合limit来使用）
+    Sort By - 对于单个reduce的数据进行排序
+    Distribute By - 分区排序，经常和Sort By结合使用
+    Cluster By - 相当于 Sort By + Distribute By
+        （Cluster By不能通过asc、desc的方式指定排序规则；
+        可通过 distribute by column sort by column asc|desc 的方式）
+ 
+Hive join
+    join计算时,小表在前,大表在后
+    Map join,map端完成join(1.SQL添加mapJoin标记 2.开启自动的MapJoin)
+
+Hive Side:map端完成join
+
+控制Hive中Map以及Reduce的数量
+
+JVM重用:JVM重用,适用场景：1、小文件个数过多 2、task个数过多
+    
 ①通用设置
+ 
     hive.optimize.cp=true：列裁剪 
     hive.optimize.prunner：分区裁剪 
     hive.limit.optimize.enable=true：优化LIMIT n语句 
@@ -390,9 +428,11 @@ null在hive底层默认是用'\N'来存储的，可以通过alter table test SET
     hive.exec.mode.local.auto=true 
     hive.mapred.local.mem：本地模式启动的JVM内存大小
 
-③并发执行
+③并发计算
     hive.exec.parallel=true ，默认为false 
     hive.exec.parallel.thread.number=8
+    
+    前提:服务器资源够用,SQL支持并行计算
 
 ④Strict Mode：开启严格模式
 
@@ -424,13 +464,13 @@ hive.mapred.mode=true，严格模式不允许执行以下查询：
     hive.exec.rowoffset：是否提供虚拟列
 
 ⑨分组
-两个聚集函数不能有不同的DISTINCT列，以下表达式是错误的： 
-INSERT OVERWRITE TABLE pv_gender_agg SELECT pv_users.gender, count(DISTINCT pv_users.userid), count(DISTINCT pv_users.ip) FROM pv_users GROUP BY pv_users.gender;
-SELECT语句中只能有GROUP BY的列或者聚集函数。
+    两个聚集函数不能有不同的DISTINCT列，以下表达式是错误的： 
+    INSERT OVERWRITE TABLE pv_gender_agg SELECT pv_users.gender, count(DISTINCT pv_users.userid), count(DISTINCT pv_users.ip) FROM pv_users GROUP BY pv_users.gender;
+    SELECT语句中只能有GROUP BY的列或者聚集函数。
 
 ⑩Combiner聚合
-hive.map.aggr=true;在map中会做部分聚集操作，效率更高但需要更多的内存。 
-hive.groupby.mapaggr.checkinterval：在Map端进行聚合操作的条目数目
+    hive.map.aggr=true;在map中会做部分聚集操作，效率更高但需要更多的内存。 
+    hive.groupby.mapaggr.checkinterval：在Map端进行聚合操作的条目数目
 
 ⑪数据倾斜
 ㈠hive.groupby.skewindata=true：数据倾斜时负载均衡，当选项设定为true，生成的查询计划会有两个MRJob。
@@ -442,11 +482,14 @@ hive.groupby.mapaggr.checkinterval：在Map端进行聚合操作的条目数目
 
 ⑫排序
     ORDER BY colName ASC/DESC 
-    hive.mapred.mode=strict时需要跟limit子句 
-    hive.mapred.mode=nonstrict时使用单个reduce完成排序 
-    SORT BY colName ASC/DESC ：每个reduce内排序 
-    DISTRIBUTE BY(子查询情况下使用 )：控制特定行应该到哪个reducer，并不保证reduce内数据的顺序 
-    CLUSTER BY ：当SORT BY 、DISTRIBUTE BY使用相同的列时。
+        hive.mapred.mode=strict时需要跟limit子句 
+        hive.mapred.mode=nonstrict时使用单个reduce完成排序 
+    SORT BY colName ASC/DESC ：
+        每个reduce内排序 
+    DISTRIBUTE BY(子查询情况下使用 )：
+        控制特定行应该到哪个reducer，并不保证reduce内数据的顺序 
+    CLUSTER BY ：
+        当SORT BY 、DISTRIBUTE BY使用相同的列时。
 
 ⑬合并小文件
     hive.merg.mapfiles=true：合并map输出 
@@ -487,5 +530,5 @@ reducer数=min(参数2,总输入数据量/参数1)
 set mapred.reduce.tasks：每个任务默认的reduce数目。典型为0.99*reduce槽数，hive将其设置为-1，自动确定reduce数目。
 
 ⑮使用索引：
-hive.optimize.index.filter：自动使用索引 
-hive.optimize.index.groupby：使用聚合索引优化GROUP BY操作
+    hive.optimize.index.filter：自动使用索引 
+    hive.optimize.index.groupby：使用聚合索引优化GROUP BY操作
