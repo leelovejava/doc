@@ -124,7 +124,7 @@ hive on Spark和Spark SQL的区别?
 
 UDF：自定义函数
 
-    
+
 ## Hive环境搭建
 
 ### 方式
@@ -232,7 +232,7 @@ select deptno, count(1) from emp group by deptno;
     业务数据本身的特性
     
     SQL语句造成数据倾斜
-    
+
 解决方法
 
     1).参数调节
@@ -257,15 +257,15 @@ select deptno, count(1) from emp group by deptno;
 
 2. Hive中的排序关键字有哪些
 
-sort by ，order by ，cluster by ，distribute by
+order by ：查询结果全排序,限制单个reduce.严格模式下,必须加limit.
 
-sort by ：reducer排序
-
-order by ：reduce排序.输入规模较大时，需要较长的计算时间。
+sort by ：reduce排序
 
 distribute by ：分区排序
 
 cluster by：相当于 Sort By + Distribute By,不能指定排序规则 ˈkləstər
+
+通常：sort by+distribute by
 
 * sort by和order by之间的区别？
 
@@ -288,7 +288,7 @@ distribute和sort:分组排序
     求出每台电脑上的TOP10后，然后把这100台电脑上的TOP10组合起来，共1000个数据
     
     再利用上面类似的方法求出TOP10就可以了。
-    
+
 4. Hive中追加导入数据的4种方式是什么？请写出简要语法
     从本地导入： load data local inpath '/home/1.txt' (overwrite)into table student;
     
@@ -305,7 +305,7 @@ distribute和sort:分组排序
     A. 导出到本地： 
     
     insert overwrite local directory '/home/robot/1/2' rom format delimited fields terminated by ‘\t’ select * from staff;(递归创建目录)
-
+    
     B. 导出到HDFS 
     
     insert overwrite directory '/user/hive/1/2’ rom format delimited fields terminated by ‘\t’ select * from staff;
@@ -334,12 +334,12 @@ distribute和sort:分组排序
 
         按照数据表的某列或某些列分为多个区存储，分区在HDFS上的表现形式是一个目录,可针对某个特定的时间做业务分析,不必扫描整个表
         优点:细化数据管理，直接读对应目录,缩小mapreduce程序要扫描的数据量
-        
+
 分桶表:
 
         对分区表更细粒度划分,分桶在HDFS上的表现形式是一个单独的文件,将整个数据内容按照某列属性值得hash值进行区分
         优点:1、提高join查询的效率（用分桶字段做连接字段）(防止数据倾斜) 2、提高采样的效率
-        
+
 * 表类型
 
 内部表、外部表、分区表、桶表
@@ -358,12 +358,12 @@ rank()       是跳跃排序的,两个第二名下来就是第四名
 hive是基于Hadoop的一个数据仓库工具,将结构化的数据文件映射为一张数据库表,提供类SQL查询功能,可以将sql语句转换为MapReduce任务进行运行。
 
 优点是学习成本低，可以通过类SQL语句快速实现简单的MapReduce统计，不必开发专门的MapReduce应用
- 
+
 hive具有sql数据库的外表，但应用场景完全不同,hive只适合用来做批量数据统计分析
 
 9 简要描述数据库中的 null，说出null在hive底层如何存储，
 并解释select a.* from t1 a left outer join t2 b on a.id=b.id where b.id is null语句的含义
- 
+
 null与任何值运算的结果都是null, 可以使用is null、is not null函数指定在其值为null情况下的取值。
 
 null在hive底层默认是用'\N'来存储的，可以通过alter table test SET SERDEPROPERTIES('serialization.null.format' = 'a');来修改。
@@ -400,7 +400,7 @@ Hive排序
     Cluster By - 相当于 Sort By + Distribute By
         （Cluster By不能通过asc、desc的方式指定排序规则；
         可通过 distribute by column sort by column asc|desc 的方式）
- 
+
 Hive join
     join计算时,小表在前,大表在后
     Map join,map端完成join(1.SQL添加mapJoin标记 2.开启自动的MapJoin)
@@ -412,7 +412,7 @@ Hive Side:map端完成join
 JVM重用:JVM重用,适用场景：1、小文件个数过多 2、task个数过多
     
 ①通用设置
- 
+
     hive.optimize.cp=true：列裁剪 
     hive.optimize.prunner：分区裁剪 
     hive.limit.optimize.enable=true：优化LIMIT n语句 
