@@ -33,3 +33,44 @@
 [Spring Boot配置多个DataSource](https://www.liaoxuefeng.com/article/001484212576147b1f07dc0ab9147a1a97662a0bd270c20000)
 
 [Spring Boot应用迁移到Java最新版（Java 11）](https://mp.weixin.qq.com/s/avhIEa0mSzj4qepai-hJcA)
+
+
+---------------------------
+```
+spring:
+    # jackson时间格式化
+    jackson:****
+        time-zone: GMT+8
+        date-format: yyyy-MM-dd HH:mm:ss
+```        
+
+```
+spring.mvc.view.suffix=.jsp
+# jsp放在 webapp/WEB-INF/jsp/
+spring.mvc.view.prefix=/WEB-INF/jsp/
+```
+
+添加jsp支持
+```
+<dependency>
+    <groupId>javax.servlet</groupId>
+    <artifactId>jstl</artifactId>
+</dependency>
+<dependency>
+    <groupId>org.apache.tomcat.embed</groupId>
+    <artifactId>tomcat-embed-jasper</artifactId>
+</dependency>
+<dependency>
+    <groupId>org.apache.tomcat</groupId>
+    <artifactId>tomcat-jsp-api</artifactId>
+</dependency>
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-tomcat</artifactId>
+    <scope>provided</scope>
+</dependency>
+```
+
+[SpringBoot配置jsp](https://github.com/spring-projects/spring-boot/tree/v2.1.3.RELEASE/spring-boot-samples/spring-boot-sample-web-jsp)
+
+---------------------------
