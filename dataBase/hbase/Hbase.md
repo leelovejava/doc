@@ -32,6 +32,8 @@
 
 [HBase 读流程解析与优化的最佳实践](https://mp.weixin.qq.com/s/cj-HJNfZ2O7kCAFNL4l7Eg)
 
+[HBase基本概念与基本使用](https://www.cnblogs.com/swordfall/p/8737328.html)
+
 ### 官方翻译文档
 
 http://abloz.com/hbase/book.html
@@ -67,6 +69,28 @@ Hadoop Database，是一个高可靠性、高性能、面向列、可伸缩、�
 主要用来存储非结构化和半结构化的松散数据（列存 NoSQL 数据库）
 
 来源谷歌的三篇论文之big table
+
+## 数据模型
+
+row key:行键,相当于mysql主键
+        最关键的是row key的设计
+        决定一行数据
+        按照字典顺序排序
+        只能存储64k的字节数据
+
+timestamep:时间戳,是版本号
+            
+CF:  列族,HBASE表中的每个列，都归属于某个列族。
+     列族是表的schema的一部分(而列不是)，必须在使用表之前定义。
+     列名都以列族作为前缀。例如courses：history，courses：math 都属于courses这个列族
+     权限控制、存储以及调优都是在列族层面进行
+
+cell:单元格,由行、列的坐标交叉决定
+     实际保存数据
+     单元格的内容是未解析的字节数组
+     
+Hlog(WAL log)
+    记录操作和数据(可恢复数据)
 
 ## 配置
 1.
