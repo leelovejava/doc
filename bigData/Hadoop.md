@@ -8,6 +8,8 @@
 
 [大数据学习笔记1000条](https://mp.weixin.qq.com/s/x3GYmbnHJvPmGbZfaXcJ7w)
 
+[Apache Griffin：分布式系统的数据质量解决方案](https://www.iteblog.com/archives/2492.html)
+
 ## 简介
 [传智大数据](http://www.itcast.cn/subject/cloudzly/index.shtml)
 
