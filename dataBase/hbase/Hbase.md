@@ -1,13 +1,13 @@
 # Hbase
 
-##Overview
+## Overview
 [官网](http://hbase.apache.org/)
 [下载](http://hbase.apache.org/downloads.html)
 [学习时使用1.2.4版本,下载地址](http://archive.apache.org/dist/hbase/1.2.4/hbase-1.2.4-bin.tar.gz)
 
 [HBase 默认配置](https://blog.csdn.net/u011414200/article/details/50427529)
 
-##doc
+## doc
 
 [HBase Procedure解读](https://mp.weixin.qq.com/s/mpG5Gte-7g_Ue0Sr8VLS6w)
 
@@ -30,22 +30,45 @@
 
 [都是 HBase 上的 SQL 引擎，Kylin 和 Phoenix 有什么不同？](https://mp.weixin.qq.com/s/CQ9nlO14Do0Q0_Y6QU9jBw)
 
-###官方翻译文档
+[HBase 读流程解析与优化的最佳实践](https://mp.weixin.qq.com/s/cj-HJNfZ2O7kCAFNL4l7Eg)
+
+### 官方翻译文档
+
 http://abloz.com/hbase/book.html
+
 https://www.jianshu.com/p/dfa7488c5414
+
 [HBase原理和设计](https://www.toutiao.com/i6601011304679342596)
 
-###官方quick start翻译
+### 官方quick start翻译
+
 http://hbase.apache.org/book.html#quickstart
 https://www.cnblogs.com/LeslieXia/p/5743436.html
 
-##官方安装
+## 官方安装
+
 [quick start](http://hbase.apache.org/book.html#quickstart)
 
 [HBase完全分布式配置](https://m.imooc.com/article/details?article_id=27253)
 
 [hbase使用外部（非自带）zookeeper搭建伪分布式环境](https://blog.csdn.net/xuedingkai/article/details/78816862)  
-###配置
+
+## NoSQL
+
+Cassandra hbase mongodb 
+Couchdb，文件存储数据库
+Neo4j非关系型图数据库
+
+## 简介
+Hadoop Database，是一个高可靠性、高性能、面向列、可伸缩、实时读写的分布式数据库
+
+利用Hadoop HDFS作为其文件存储系统,利用Hadoop MapReduce来处理HBase中的海量数据,利用Zookeeper作为其分布式协同服务
+
+主要用来存储非结构化和半结构化的松散数据（列存 NoSQL 数据库）
+
+来源谷歌的三篇论文之big table
+
+## 配置
 1.
 ```
 # 配置Java环境
@@ -111,6 +134,7 @@ hbase-site.xml
 
 hbase.regionserver.port
 60020->16020
+
 #### 启动遇到的问题
 1. ERROR [main] master.HMasterCommandLine: Master exiting
    java.lang.NoClassDefFoundError: org/apache/htrace/SamplerBuilder
@@ -142,6 +166,7 @@ hbase.regionserver.port
   </property>
   
 ## hbase shell
+
 ### 开启
 bin/hbase shell
 
@@ -199,33 +224,39 @@ quit
 * Table中Family和Qualifier的关系与区别
 
 ### HBase过滤器
+
 #### 作用
  多个维度过滤数据(行、列、数据版本)
  
 #### 分类:
-#####基于行的过滤器 
+
+##### 基于行的过滤器 
+
 * PrefixFilter:行的前缀过滤器
 * PageFilter:基于行的分页
 
-#####基于列的过滤器
+##### 基于列的过滤器
+
 * ColumnPrefixFilter:列前缀匹配
 * FirstKeyOnlyFilter:只返回每一行的第一列
 
-#####基于单元值的过滤器
+##### 基于单元值的过滤器
+
 * KeyOnlyFilter:只返回的数据不包括单元值,只包含行键与列
 * TimestampsFilter:根据数据的时间戳版本进行过滤
 
-#####基于列和单元值的过滤器
+##### 基于列和单元值的过滤器
+
 * SingleColumnValueFilter:对该列的单元值进行比较过滤
 * SingleColumnValueExcludeFilter:对该值的单元值进行比较过滤
 
-#####比较过滤器
+##### 比较过滤器
 * 比较过滤器通常需要一个比较运算符以及一个比较器来实现过滤,比如说RowFilter、FamilyFilter、QualifierFilter、ValueFilter
 
-#####综合过滤器
+##### 综合过滤器
 * FilterList:综合使用多个过滤器
 
-#####自定义过滤器
+##### 自定义过滤器
 
 ### 原理
 ### 写流程
@@ -251,7 +282,7 @@ Client->RegionServer
 2).Client对RegionServer发起读请求
 3).当RegionServer收到client的读请求后,先扫描自己的MemStore,再扫描BlockCache(加速读内容缓存区)如果还没找到则StoreFile中读取数据,然后数据返回给Client
 
-##.Hbase的协作模块
+## Hbase的协作模块
 HMaster启动,注册到Zookeeper,等待RegionServer汇报,
 RegionServer注册到Zookeeper,并向HMaster汇报
 对各个RegionServer(包括失效的)的数据进行整理,分配Region和meta信息
