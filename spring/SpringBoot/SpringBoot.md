@@ -74,3 +74,79 @@ spring.mvc.view.prefix=/WEB-INF/jsp/
 [SpringBoot配置jsp](https://github.com/spring-projects/spring-boot/tree/v2.1.3.RELEASE/spring-boot-samples/spring-boot-sample-web-jsp)
 
 ---------------------------
+```
+
+// Springboot 集成jsp 以及多模块下jsp页面找不到问题解决
+// https://gitee.com/iBase4J/iBase4J/tree/master/iBase4J-SYS-Web   
+@Configuration
+public class WebJSPConfig  extends WebMvcConfigurerAdapter{
+	private static final Logger logger= Logger.getLogger(WebJSPConfig.class);
+
+	/**
+	 * 多模块的jsp访问，默认是src/main/webapp，但是多模块的目录只设置yml文件或propeerties文件不行
+	 * @return
+	*/
+	@Bean
+	public InternalResourceViewResolver viewResolver(){
+	        InternalResourceViewResolver viewResolver=new InternalResourceViewResolver();
+			viewResolver.setViewClass(JstlView.class);
+			viewResolver.setPrefix("/WEB-INF/jsp/");
+			viewResolver.setSuffix(".jsp");
+			logger.info("****************/WEB-INF/jsp/*****************************************");
+	        return viewResolver;
+	}
+
+
+    /** 指定默认文件的地址，jsp页面引入js和css的时候就不用管项目路径了 */
+	@Override
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
+	        registry.addResourceHandler("/static/**")
+	                .addResourceLocations(ResourceUtils.CLASSPATH_URL_PREFIX+"/static/");
+	        super.addResourceHandlers(registry);
+	}
+}     
+
+
+https://blog.csdn.net/herojuice/article/details/86527198
+@Configuration
+public class GlobalConfig {
+    @Bean
+    public WebServerFactoryCustomizer<TomcatServletWebServerFactory> customizer() {
+        return (factory) -> {
+            factory.addContextCustomizers((context) -> {
+                        //模块中webapp相对路径
+                        String relativePath = "tt-web/src/main/webapp";
+                        File docBaseFile = new File(relativePath);
+                        // 路径是否存在
+                        if (docBaseFile.exists()) {
+                            context.setDocBase(docBaseFile.getAbsolutePath());
+                        }
+                    }
+            );
+        };
+    }
+}
+
+
+<build>
+  <resources>
+      <!-- 打包时将jsp文件拷贝到META-INF目录下-->
+      <resource>
+          <!-- 指定resources插件处理哪个目录下的资源文件 -->
+          <directory>src/main/webapp</directory>
+          <!--注意此次必须要放在此目录下才能被访问到-->
+          <targetPath>META-INF/resources</targetPath>
+          <includes>
+              <include>**/**</include>
+          </includes>
+      </resource>
+      <resource>
+          <directory>src/main/resources</directory>
+          <includes>
+              <include>**/**</include>
+          </includes>
+          <filtering>false</filtering>
+      </resource>
+  </resources>
+</build>
+```
