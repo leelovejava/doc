@@ -28,6 +28,8 @@
 
 [HBase迁移 | HBase金融大数据乾坤大挪移](https://mp.weixin.qq.com/s/NmJBrGz_rTxR-spRtWTC8A)
 
+[HBase实战 | 不中断业务，腾讯10P+金融数据跨机房迁移实战](https://mp.weixin.qq.com/s/e7CRCaUVWU8mhuKeL7ge_w)
+
 [都是 HBase 上的 SQL 引擎，Kylin 和 Phoenix 有什么不同？](https://mp.weixin.qq.com/s/CQ9nlO14Do0Q0_Y6QU9jBw)
 
 [HBase 读流程解析与优化的最佳实践](https://mp.weixin.qq.com/s/cj-HJNfZ2O7kCAFNL4l7Eg)
@@ -283,6 +285,7 @@ quit
 ##### 自定义过滤器
 
 ### 原理
+
 ### 写流程
 client->zookeeper
 client->rgionServer->memStore->StoreFile
@@ -318,3 +321,47 @@ HMaster更新hbase:meta表以保证数据正常访问
 HMaster失效
 处于Backup状态的其他HMaster节点推选出一个转为Active状态
 数据能正常读写,但是不能创建删除表,也不能更改表结构
+
+
+### hbase+protobuf
+安装
+```
+tar -xzf protobuf-2.1.0.tar.gz 
+
+cd protobuf-2.1.0 
+
+./configure --prefix=$INSTALL_DIR 
+
+make & install
+```
+
+```
+package lm; 
+message helloworld 
+{ 
+    required int32     id = 1;  // ID 
+    required string    str = 2;  // str 
+    optional int32     opt = 3;  //optional field 
+}
+```
+
+嵌套 Message
+```
+message Person { 
+    required string name = 1; 
+    required int32 id = 2;        // Unique ID number for this person. 
+    optional string email = 3; 
+
+enum PhoneType { 
+    MOBILE = 0; 
+    HOME = 1; 
+    WORK = 2; 
+} 
+
+message PhoneNumber { 
+    required string number = 1; 
+    optional PhoneType type = 2 [default = HOME]; 
+} 
+    repeated PhoneNumber phone = 4; 
+}
+```
