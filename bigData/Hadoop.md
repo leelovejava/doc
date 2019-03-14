@@ -118,7 +118,8 @@ Apache Hadoop
 CDH:Cloudera Distributed		70%
 HDP:Hortonworks Data Platform	
 
-http://archive.cloudera.com/cdh5/cdh/5/
+[cdh](http://archive.cloudera.com/cdh5/cdh/5/)
+
 cdh-5.7.0
 生产或者测试环境选择对应CDH版本时，一定要采用尾号是一样的版本
 
@@ -189,9 +190,10 @@ cdh-5.7.0
 			SecondaryNameNode
 			NameNode
 
-		浏览器
+		可视化界面
 			http://hadoop001:50070/
-      3.0 http://hadoop001:9870/
+			
+       3.0  http://hadoop001:9870/
 
 
 7）停止HDFS
