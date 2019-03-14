@@ -36,6 +36,8 @@
 
 [HBase基本概念与基本使用](https://www.cnblogs.com/swordfall/p/8737328.html)
 
+[hbase的rowkey设计](http://www.cnblogs.com/kxdblog/p/4328699.html)
+
 ### 官方翻译文档
 
 http://abloz.com/hbase/book.html
