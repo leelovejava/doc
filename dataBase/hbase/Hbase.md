@@ -330,38 +330,43 @@ tar -xzf protobuf-2.1.0.tar.gz
 
 cd protobuf-2.1.0 
 
-./configure --prefix=$INSTALL_DIR 
+./configure
 
 make & install
+
+# 查看安装目录
+whereis protobuf
+
+protoc --help
 ```
 
+编译.proto文件
+> vim phone.proto
 ```
-package lm; 
-message helloworld 
+package com.leelovejava.hbase; 
+message PhoneDetail 
 { 
-    required int32     id = 1;  // ID 
-    required string    str = 2;  // str 
-    optional int32     opt = 3;  //optional field 
+    required string     dnum = 1; 
+    required string    length = 2; 
+    required string     type = 3; 
+    required string     date = 4; 
 }
 ```
+--java_out=OUT_DIR          Generate Java source file.
+PS: 类名不能和文件同名
+> protoc phone.proto --java_out=/home/hadoop/data/protobuf/
 
 嵌套 Message
 ```
-message Person { 
-    required string name = 1; 
-    required int32 id = 2;        // Unique ID number for this person. 
-    optional string email = 3; 
-
-enum PhoneType { 
-    MOBILE = 0; 
-    HOME = 1; 
-    WORK = 2; 
+package com.leelovejava.hbase;
+message PhoneDetail2 { 
+    required string dnum = 1; 
+    required string length = 2; 
+    required string type = 3;
+    required string date = 4;  
 } 
 
-message PhoneNumber { 
-    required string number = 1; 
-    optional PhoneType type = 2 [default = HOME]; 
-} 
-    repeated PhoneNumber phone = 4; 
+message dayPhoneDetail { 
+   repeated PhoneDetail2 dayPhoneDetail = 1;
 }
 ```
