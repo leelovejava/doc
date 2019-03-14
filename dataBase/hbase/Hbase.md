@@ -372,3 +372,13 @@ message dayPhoneDetail {
    repeated PhoneDetail2 dayPhoneDetail = 1;
 }
 ```
+
+## hbase优化
+
+[表的设计](https://www.cnblogs.com/panfeng412/archive/2012/03/08/hbase-performance-tuning-section1.html)
+
+[写表操作](https://www.cnblogs.com/panfeng412/archive/2012/03/08/hbase-performance-tuning-section2.html)
+
+[读表操作](https://www.cnblogs.com/panfeng412/archive/2012/03/08/hbase-performance-tuning-section3.html)
+
+[数据计算](https://www.cnblogs.com/panfeng412/archive/2012/03/08/hbase-performance-tuning-section4.html)
