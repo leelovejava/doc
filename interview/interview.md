@@ -558,6 +558,8 @@ newScheduledThreadPool 创建一个定长线程池，支持定时及周期性任
 
 线程池和并发并行?
 
+[Java并发编程75道面试题及答案](https://blog.csdn.net/qq_34039315/article/details/78549311)
+
 高并发?[医指通2017]
 
 减少数据库的请求次数
