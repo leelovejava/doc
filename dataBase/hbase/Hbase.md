@@ -382,3 +382,11 @@ message dayPhoneDetail {
 [读表操作](https://www.cnblogs.com/panfeng412/archive/2012/03/08/hbase-performance-tuning-section3.html)
 
 [数据计算](https://www.cnblogs.com/panfeng412/archive/2012/03/08/hbase-performance-tuning-section4.html)
+
+
+flush 'tableName'
+
+split 'tableName'
+
+1). 表设计
+    列族:1-2个
