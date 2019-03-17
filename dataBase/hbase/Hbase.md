@@ -74,6 +74,23 @@ Hadoop Database，是一个高可靠性、高性能、面向列、可伸缩、�
 
 来源谷歌的三篇论文之big table
 
+## 场景
+
+### 使用场景
+
+* 如果数据有很多列，且包含很多空字段
+* 数据包含了不定数量的列
+* 需要维护数据的版本
+* 需要很高的横向扩展性
+* 需要大量的压缩数据
+* 需要大量的I/O
+一般而言数百万行的数据和频率不高的读写操作，是不需要HBase的，如果有几十亿列数据，同时在单位时间内有数以千、万记的读写操作，可以考虑HBase
+
+### 不适用场景
+* 数据总量不大时（比如就几个G）
+* 当需要JOIN以及关系型数据库的一些特性时
+* 如果关系型数据库可以满足需求
+
 ## 数据模型
 
 row key:行键,相当于mysql主键
@@ -289,6 +306,7 @@ quit
 ### 原理
 
 ### 写流程
+
 client->zookeeper
 client->rgionServer->memStore->StoreFile
 
@@ -311,6 +329,20 @@ Client->RegionServer
 2).Client对RegionServer发起读请求
 3).当RegionServer收到client的读请求后,先扫描自己的MemStore,再扫描BlockCache(加速读内容缓存区)如果还没找到则StoreFile中读取数据,然后数据返回给Client
 
+![image](https://github.com/leelovejava/doc/blob/master/img/dataBase/hbase/05_wirter_read.png)
+
+### 机制
+
+#### flush机制
+    当MemStore达到阈值，将Memstore中的数据Flush进Storefile
+    
+#### compact机制
+    把小的Memstore文件合并成大的Storefile文件。
+    hbase.hregion.memstore.flush.size：134217728 默认128M
+    
+#### split机制
+    当Region达到阈值，会把过大的Region一分为二
+
 ## Hbase的协作模块
 HMaster启动,注册到Zookeeper,等待RegionServer汇报,
 RegionServer注册到Zookeeper,并向HMaster汇报
@@ -324,6 +356,38 @@ HMaster失效
 处于Backup状态的其他HMaster节点推选出一个转为Active状态
 数据能正常读写,但是不能创建删除表,也不能更改表结构
 
+## 角色
+
+### HMaster
+* 监控RegionServer
+* 处理RegionServer故障转移
+* 处理元数据的变更
+* 处理region的分配或移除
+* 在空闲时间进行数据的负载均衡
+* 通过Zookeeper发布自己的位置给客户端
+
+### RegionServer
+* 负责存储HBase的实际数据
+* 处理分配给它的Region
+* 刷新缓存到HDFS
+* 维护HLog
+* 执行压缩
+* 负责处理Region分片
+
+#### 包含组件
+* Write-Ahead logs
+    HBase的修改记录，当对HBase读写数据的时候，数据不是直接写进磁盘，它会在内存中保留一段时间（时间以及数据量阈值可以设定）。如果机器突然原地爆炸，把数据保存在内存中会引起数据丢失，为了解决这个问题，数据会先写在一个叫做Write-Ahead logfile的文件中，然后再写入内存中。所以在系统出现故障的时候，数据可以通过这个日志文件重建。
+* HFile
+    这是在磁盘上保存原始数据的实际的物理文件，是实际的存储文件。
+* Store
+    HFile存储在Store中，一个Store对应HBase表中的一个列族
+* MemStore
+    顾名思义，就是内存存储，位于内存中，用来保存当前的数据操作，所以当数据保存在WAL中之后，RegsionServer会在内存中存储键值对。
+* Region
+    Hbase表的分片，HBase表会根据RowKey值被切分成不同的region存储在RegionServer中，在一个RegionServer中可以有多个不同的region
+
+### Zookeeper
+ HMaster与HRegionServer 启动时会向ZooKeeper注册，存储所有HRegion的寻址入口，实时监控HRegionserver的上线和下线信息。并实时通知给HMaster，存储HBase的schema和table元数据，默认情况下，HBase 管理ZooKeeper 实例，Zookeeper的引入使得HMaster不再是单点故障。一般情况下会启动两个HMaster，非Active的HMaster会定期的和Active HMaster通信以获取其最新状态，从而保证它是实时更新的，因而如果启动了多个HMaster反而增加了Active HMaster的负担
 
 ### hbase+protobuf
 安装
