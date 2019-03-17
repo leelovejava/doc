@@ -331,6 +331,8 @@ Client->RegionServer
 
 ![image](https://github.com/leelovejava/doc/blob/master/img/dataBase/hbase/05_wirter_read.png)
 
+![image](https://github.com/leelovejava/doc/blob/master/img/dataBase/hbase/06.png)
+
 ### 机制
 
 #### flush机制
@@ -358,21 +360,31 @@ HMaster失效
 
 ## 角色
 
-### HMaster
-* 监控RegionServer
-* 处理RegionServer故障转移
-* 处理元数据的变更
-* 处理region的分配或移除
-* 在空闲时间进行数据的负载均衡
-* 通过Zookeeper发布自己的位置给客户端
+### Client
+
+包含访问HBase的接口并维护cache(memStore)来加快对HBase的访问
+
+### Zookeeper
+* 保证任何时候，集群中只有一个master(主节点)
+* 存贮所有Region的寻址入口。
+* 实时监控Region server的上线和下线信息。并实时通知Master(心跳检查)
+* 存储HBase的schema和table元数据
+
+### Master
+
+* 为Region server分配region
+* 负责Region server的负载均衡
+* 发现失效的Region server并重新分配其上的region
+* 管理用户对table的增删改操作(无改操作,有时间戳)
 
 ### RegionServer
 * 负责存储HBase的实际数据
-* 处理分配给它的Region
+* 维护Region,处理对region的IO请求
+* 负责处理Region分片
 * 刷新缓存到HDFS
 * 维护HLog
 * 执行压缩
-* 负责处理Region分片
+
 
 #### 包含组件
 * Write-Ahead logs
@@ -386,9 +398,28 @@ HMaster失效
 * Region
     Hbase表的分片，HBase表会根据RowKey值被切分成不同的region存储在RegionServer中，在一个RegionServer中可以有多个不同的region
 
-### Zookeeper
- HMaster与HRegionServer 启动时会向ZooKeeper注册，存储所有HRegion的寻址入口，实时监控HRegionserver的上线和下线信息。并实时通知给HMaster，存储HBase的schema和table元数据，默认情况下，HBase 管理ZooKeeper 实例，Zookeeper的引入使得HMaster不再是单点故障。一般情况下会启动两个HMaster，非Active的HMaster会定期的和Active HMaster通信以获取其最新状态，从而保证它是实时更新的，因而如果启动了多个HMaster反而增加了Active HMaster的负担
+### Memstore 与 storefile
 
+* 一个region由多个store组成，一个store对应一个CF（列族）
+
+* store包括位于内存中的memstore和位于磁盘的storefile写操作先写入memstore，当memstore中的数据达到某个阈值，hregionserver会启动flashcache进程写入storefile，每次写入形成单独的一个storefile
+
+* 当storefile文件的数量增长到一定阈值后，系统会进行合并（minor、major compaction），在合并过程中会进行版本合并和删除工作（majar），形成更大的storefile
+
+* 当一个region所有storefile的大小和数量超过一定阈值后，会把当前的region分割为两个，并由hmaster分配到相应的regionserver服务器，实现负载均衡
+
+* 客户端检索数据，先在memstore找，找不到再找storefile
+
+### Region
+
+* HBase自动把表水平划分成多个区域(region)，每个region会保存一个表里面某段连续的数据
+
+* 每个表一开始只有一个region，随着数据不断插入表，region不断增大，当增大到一个阀值的时候，region就会等分会两个新的region（裂变）
+
+* 当table中的行不断增多，就会有越来越多的region。这样一张完整的表被保存在多个Regionserver 上
+
+手绘hbase架构图
+ 
 ### hbase+protobuf
 安装
 ```
