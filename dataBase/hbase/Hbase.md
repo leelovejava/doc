@@ -38,6 +38,12 @@
 
 [hbase的rowkey设计](http://www.cnblogs.com/kxdblog/p/4328699.html)
 
+[基于HBase构建千亿级文本数据相似度计算与快速去重系统](https://mp.weixin.qq.com/s/UZmksFBTKFzF4jrXGnw2fg)
+
+[在 HBase 上使用 HGraphDB 进行二度好友推荐](https://mp.weixin.qq.com/s/AUn8qEaih9w--WbfxU46cQ)
+
+[HBase的region管理](https://mp.weixin.qq.com/s/mg6c_h38efILWo_HAWy9zQ)
+
 ### 官方翻译文档
 
 http://abloz.com/hbase/book.html
@@ -485,3 +491,9 @@ split 'tableName'
 
 1). 表设计
     列族:1-2个
+    
+## SQL引擎
+
+### Kylin
+
+[Kylin 实时流处理技术探秘](https://mp.weixin.qq.com/s/M8E7C9f1_ymshCNviriJyw)    

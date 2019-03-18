@@ -30,6 +30,8 @@ spark.apache.org
 
 [单表千亿电信大数据场景，使用Spark+CarbonData替换Impala案例](https://mp.weixin.qq.com/s/wTnHy1qT_UFgHjj7rVVr1Q)
 
+[浅析 Spark Shuffle 内存使用](https://mp.weixin.qq.com/s/YpcdjAfxDfDQ6EA5GzB57w)
+
 ## 2.Spark概述
 
 ### [Spark-survey](https://blog.csdn.net/lovehuangjiaju/article/details/48765165)
