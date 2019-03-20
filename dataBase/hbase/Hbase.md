@@ -395,12 +395,16 @@ HMaster失效
 #### 包含组件
 * Write-Ahead logs
     HBase的修改记录，当对HBase读写数据的时候，数据不是直接写进磁盘，它会在内存中保留一段时间（时间以及数据量阈值可以设定）。如果机器突然原地爆炸，把数据保存在内存中会引起数据丢失，为了解决这个问题，数据会先写在一个叫做Write-Ahead logfile的文件中，然后再写入内存中。所以在系统出现故障的时候，数据可以通过这个日志文件重建。
+
 * HFile
     这是在磁盘上保存原始数据的实际的物理文件，是实际的存储文件。
+
 * Store
     HFile存储在Store中，一个Store对应HBase表中的一个列族
+    
 * MemStore
     顾名思义，就是内存存储，位于内存中，用来保存当前的数据操作，所以当数据保存在WAL中之后，RegsionServer会在内存中存储键值对。
+
 * Region
     Hbase表的分片，HBase表会根据RowKey值被切分成不同的region存储在RegionServer中，在一个RegionServer中可以有多个不同的region
 
@@ -419,10 +423,13 @@ HMaster失效
 ### Region
 
 * HBase自动把表水平划分成多个区域(region)，每个region会保存一个表里面某段连续的数据
+(Region是HBase数据存储和管理的基本单位)
 
 * 每个表一开始只有一个region，随着数据不断插入表，region不断增大，当增大到一个阀值的时候，region就会等分会两个新的region（裂变）
+(一个表中可以包含一个或多个Region)
 
 * 当table中的行不断增多，就会有越来越多的region。这样一张完整的表被保存在多个Regionserver 上
+(一个regionServer保存一到多个region)
 
 手绘hbase架构图
  

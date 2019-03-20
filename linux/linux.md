@@ -90,11 +90,12 @@ tar: Error is not recoverable: exiting now
 
 https://www.cnblogs.com/llxx07/p/6409384.html
 
----------------------------
-xshell/xftp 永不过期
-https://zhangjia.tv/506.html
-官网注册个人Home and school use
-https://www.netsarang.com/products/xsh_overview.html
+------xshell---------------------
+
+- [xshell/xftp 永不过期](https://zhangjia.tv/506.html)
+
+- [官网注册个人Home and school use](https://www.netsarang.com/products/xsh_overview.html)
+
 ---------------------------
 
 
@@ -118,3 +119,11 @@ https://www.netsarang.com/products/xsh_overview.html
 查看访问前十个ip地址
 
 > awk '{print $1}' |sort|uniq -c|sort -nr |head -10 access_log
+
+```bash
+# 设置行号
+:set nu
+
+# 取消行号
+:set nonu
+```
