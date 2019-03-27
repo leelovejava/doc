@@ -258,3 +258,18 @@ HADOOP_USER_NAME:hadoop
 ## HDFS文件读写流程	 
 
 [通过漫画轻松掌握HDFS工作原理](https://blog.csdn.net/eric_sunah/article/details/41546863)
+
+1、三个部分: 客户端、nameserver（可理解为主控和文件索引,类似linux的inode）、datanode（存放实际数据）
+2、如何写数据过程
+3、读取数据过程
+4、容错：第一部分：故障类型及其检测方法（nodeserver 故障，和网络故障，和脏数据问题）
+5、容错第二部分：读写容错
+6、容错第三部分：dataNode 失效
+7、备份规则
+8、结束语
+
+中文翻译
+
+[翻译经典 HDFS 原理讲解漫画 之一----系统构成和写数据过程](https://blog.csdn.net/hudiefenmu/article/details/37655491)
+[翻译经典 HDFS 原理讲解漫画 之二----读数据和容错](https://blog.csdn.net/hudiefenmu/article/details/37694503)
+[翻译经典 HDFS 原理讲解漫画 之三---容错和副本布局策略](https://blog.csdn.net/hudiefenmu/article/details/37820789)
