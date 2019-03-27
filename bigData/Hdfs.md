@@ -75,17 +75,22 @@ replication factor：副本系数、副本因子
 All blocks in a file except the last block are the same size
 
 ##配置
-###伪分布式环境搭建:
+### 伪分布式环境搭建:
 [官网单机安装](http://hadoop.apache.org/docs/r3.1.1/hadoop-project-dist/hadoop-common/SingleCluster.html)
-####1) jdk安装
-####2) 安装ssh
-####3) 下载并解压hadoop
-####4) hadoop配置
-#####4-1） HADOP_HOME/etc/hadoop/hadoop-env.sh
+
+#### 1) jdk安装
+
+#### 2) 安装ssh
+
+#### 3) 下载并解压hadoop
+
+#### 4) hadoop配置
+
+##### 4-1） HADOP_HOME/etc/hadoop/hadoop-env.sh
 
 			export JAVA_HOME = /usr/local/jdk
 	
-#####4-2） HADOOP_HOME/etc/hadoop/core-site.xml
+##### 4-2） HADOOP_HOME/etc/hadoop/core-site.xml
 ```
 <configuration>
   <!--hdfs临时路径-->
@@ -105,7 +110,8 @@ All blocks in a file except the last block are the same size
   </property>
 </configuration>
 ```
-#######4-3）etc/hadoop/hdfs-site.xml
+####### 4-3）etc/hadoop/hdfs-site.xml
+
 ```
 <configuration> 
     <!-- 副本数-->
@@ -131,21 +137,26 @@ All blocks in a file except the last block are the same size
     </property>
 </configuration>
 ```
-#####5） 启动hdfs
+
+##### 5） 启动hdfs
+
     	格式化 Format the filesystem
     		bin/hdfs namenode -format (第一次)
 		启动 Start NameNode daemon and DataNode daemon
 			sbin/start-dfs.sh
 		验证   jps
 		停止   sbin/stop-dfs.sh
-#####6) 浏览器访问
+		
+##### 6) 浏览器访问
+
 		Browse the web interface for the NameNode; by default it is available at
 		NameNode - http://localhost:9870/
 			
 		管理界面
 			http://127.0.0.1:9000/  
 
-#####关闭防火墙:
+##### 关闭防火墙:
+
 		service iptables stop
 		chkconfig iptables off
 		systemctl stop firewalld
@@ -182,6 +193,7 @@ All blocks in a file except the last block are the same size
  	hadoop fs -setrep 3 /aaa/jdk.tar.gz
 
 ## hdfs工作机制
+
  namenode:NN
  1) 负责客户端响应
  2) 负责元数据(文件的名称、副本系数、Block存放的DN)的管理
@@ -194,7 +206,9 @@ All blocks in a file except the last block are the same size
  建议:NN和DN是部署在不同的节点上
 
 ##javaAPI操作HDFS
+
 1. IDEA+MAVEN创建java工程	 
+
 2. 添加HDFS相关的依赖
 ```
 <dependency>
