@@ -290,4 +290,8 @@ https://issues.apache.org/jira/browse/HDFS-9427
 
 [(九)- 前沿技术拓展Spark,Flink,Beam](https://www.jianshu.com/p/4d0341a4d7d7)
 
-[(十)-Hadoop3.x新特性](https://www.jianshu.com/p/984a1939d03c)
+(十)-Hadoop3.x新特性
+    
+- [Hadoop 3.x 新特性剖析系列1](https://www.cnblogs.com/smartloli/p/8827623.html)
+     
+- [Hadoop 3.x 新特性剖析系列2](https://www.cnblogs.com/smartloli/p/9028267.html)
