@@ -16,6 +16,12 @@ git取消本地提交,未push
 github SSL_connect: SSL_ERROR_SYSCALL in connection to github.com:443
 > git config --global --unset http.proxy
 
+设置全局提交的用户名 
+
+> git config user.name
+
+> git config --global user.name "Jack.Ma"
+
 git忽略idea文件
 ```
 git rm -r –cached .
