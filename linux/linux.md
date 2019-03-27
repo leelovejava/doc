@@ -1,3 +1,22 @@
+# linux
+
+## doc
+
+-[逼格高又实用的 Linux 命令，开发、运维一定要懂！](https://mp.weixin.qq.com/s/K0E0eU9gAFqfrlyohhnwzA)
+
+-[阿里java问题排查单](http://www.jiangxinlingdu.com/thought/2018/11/17/javatools.html)
+
+-[系统性能优化系列](http://www.jiangxinlingdu.com/thought/2018/09/15/linuxsys.html)
+
+-[常用性能监控指南](http://blog.720ui.com/2018/linux_performance_command/)
+
+-[线上操作与线上问题排查实战](http://www.jiangxinlingdu.com/practice/2018/09/13/operation.html)
+
+-[不停机图片升级迁移](http://www.jiangxinlingdu.com/thought/2018/08/15/images.html)
+
+-[shell在手分析服务器日志不愁?](https://segmentfault.com/a/1190000009745139)
+
+## windows
 windows的hosts目录
 c:\windows\system32\drivers\etc
 
@@ -97,21 +116,6 @@ https://www.cnblogs.com/llxx07/p/6409384.html
 - [官网注册个人Home and school use](https://www.netsarang.com/products/xsh_overview.html)
 
 ---------------------------
-
-
--[阿里java问题排查单](http://www.jiangxinlingdu.com/thought/2018/11/17/javatools.html)
-
--[系统性能优化系列](http://www.jiangxinlingdu.com/thought/2018/09/15/linuxsys.html)
-
--[常用性能监控指南](http://blog.720ui.com/2018/linux_performance_command/)
-
--[线上操作与线上问题排查实战](http://www.jiangxinlingdu.com/practice/2018/09/13/operation.html)
-
--[不停机图片升级迁移](http://www.jiangxinlingdu.com/thought/2018/08/15/images.html)
-
--[shell在手分析服务器日志不愁?](https://segmentfault.com/a/1190000009745139)
-
----------------------------
 查看有多少个IP访问：
 
 > awk '{print $1}' log_file|sort|uniq|wc -l
@@ -119,6 +123,18 @@ https://www.cnblogs.com/llxx07/p/6409384.html
 查看访问前十个ip地址
 
 > awk '{print $1}' |sort|uniq -c|sort -nr |head -10 access_log
+
+ps和kill组合使用
+
+> ps -ef |grep hello |awk '{print $2}'|xargs kill -9
+
+找出当前系统内存使用量较高的进程
+
+> ps -aux | sort -rnk 4  | head -20
+
+找出当前系统CPU使用量较高的进程
+
+> ps -aux | sort -rnk 3  | head -20
 
 ```bash
 # 设置行号
