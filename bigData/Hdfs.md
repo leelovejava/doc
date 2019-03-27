@@ -74,7 +74,15 @@ replication factor：副本系数、副本因子
 
 All blocks in a file except the last block are the same size
 
-##配置
+## hdfs副本机制
+容错(高可用)
+
+factor 副本系数(副本因子)
+
+### 副本存放策略
+
+## 配置
+
 ### 伪分布式环境搭建:
 [官网单机安装](http://hadoop.apache.org/docs/r3.1.1/hadoop-project-dist/hadoop-common/SingleCluster.html)
 
@@ -248,3 +256,5 @@ HDFS客户端的权限错误:
 HADOOP_USER_NAME:hadoop
 
 ## HDFS文件读写流程	 
+
+[通过漫画轻松掌握HDFS工作原理](https://blog.csdn.net/eric_sunah/article/details/41546863)
