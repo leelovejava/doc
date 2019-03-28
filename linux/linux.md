@@ -16,6 +16,8 @@
 
 -[shell在手分析服务器日志不愁?](https://segmentfault.com/a/1190000009745139)
 
+-[优雅停机的正确姿势，应该这样才对](https://mp.weixin.qq.com/s/BCJ7jaO6-R_Dr72wJsXn4A)
+
 ## windows
 windows的hosts目录
 c:\windows\system32\drivers\etc
