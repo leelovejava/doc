@@ -35,6 +35,8 @@ Learn more about Flink at [http://flink.apache.org/](http://flink.apache.org/)
 
 [从Storm到Flink，有赞五年实时计算效率提升实践](https://mp.weixin.qq.com/s/ZkVK9S-BSoQTo09ALBI9aA)
 
+[Flink+HBase场景化解决方案](https://mp.weixin.qq.com/s/3a_7_XLvJ6sLxu_jILdfpg)
+
 ## Features
 
 * A streaming-first runtime that supports both batch processing and data streaming programs
