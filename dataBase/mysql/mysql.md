@@ -1,4 +1,6 @@
 
+[数据库中间件详解](https://mp.weixin.qq.com/s/XisPkWGkB-a3dR2lrEjkwQ)
+
 [MySQL 大表优化方案](https://segmentfault.com/a/1190000006158186)
 
 [MySQL 优化实施方案](https://www.cnblogs.com/clsn/p/8214048.html)
