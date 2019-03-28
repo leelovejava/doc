@@ -1,31 +1,35 @@
 
 ## doc
 
--[官网](https://www.elastic.co/cn/webinars/getting-started-elasticsearch)
+- [官网](https://www.elastic.co/cn/webinars/getting-started-elasticsearch)
 
--[Elasticsearch权威指南](https://www.elastic.co/guide/cn/elasticsearch/guide/current/index.html)
+- [Elasticsearch权威指南](https://www.elastic.co/guide/cn/elasticsearch/guide/current/index.html)
 
--[史上超全面的Elasticsearch使用指南](https://www.javazhiyin.com/4588.html)
+- [史上超全面的Elasticsearch使用指南](https://www.javazhiyin.com/4588.html)
 
--[BAT等一线大厂 Elasticsearch面试题解读](https://mp.weixin.qq.com/s/ShujBrEjZ4pXaFIM4pKqkA)
+- [BAT等一线大厂 Elasticsearch面试题解读](https://mp.weixin.qq.com/s/ShujBrEjZ4pXaFIM4pKqkA)
 
--[SpringBoot整合elasticsearch](https://www.cnblogs.com/dalaoyang/p/8990989.html)
+- [SpringBoot整合elasticsearch](https://www.cnblogs.com/dalaoyang/p/8990989.html)
 
--[Elasticsearch 6.3 发布，你们要的 SQL 功能来了](https://www.iteblog.com/archives/2378.html?from=like)
+- [Elasticsearch 6.3 发布，你们要的 SQL 功能来了](https://www.iteblog.com/archives/2378.html?from=like)
 
--[京东到家订单中心 Elasticsearch 演进历程](https://mp.weixin.qq.com/s/TrCJJtvhjB2m29fOOa3Rzg)
+- [京东到家订单中心 Elasticsearch 演进历程](https://mp.weixin.qq.com/s/TrCJJtvhjB2m29fOOa3Rzg)
 
--[日均5亿查询量，京东到家订单中心ES架构演进](https://mp.weixin.qq.com/s/n8ZfAabQ2lmcSExXrgjpuw)
+- [日均5亿查询量，京东到家订单中心ES架构演进](https://mp.weixin.qq.com/s/n8ZfAabQ2lmcSExXrgjpuw)
 
--[Elasticsearch搜索引擎性能调优看懂这一篇就够了](https://mp.weixin.qq.com/s/VHULA5vfDBxjGzukZyYJbg)
+- [Elasticsearch搜索引擎性能调优看懂这一篇就够了](https://mp.weixin.qq.com/s/VHULA5vfDBxjGzukZyYJbg)
 
--[图解elasticsearch原理](https://mp.weixin.qq.com/s/5cY2XFcyTCBBH8RtsM18dA)
+- [图解elasticsearch原理](https://mp.weixin.qq.com/s/5cY2XFcyTCBBH8RtsM18dA)
 
--[ElasticSearch基础分布式架构讲解](https://mp.weixin.qq.com/s/HXWZW8_e5GRmTk23pRIYSQ)
+- [ElasticSearch基础分布式架构讲解](https://mp.weixin.qq.com/s/HXWZW8_e5GRmTk23pRIYSQ)
 
--[elasticsearch 铭毅天下 CSDN](https://me.csdn.net/wojiushiwo987)
+- [elasticsearch 铭毅天下 CSDN](https://me.csdn.net/wojiushiwo987)
 
--[23个最有用的Elasticsearch检索技巧](https://juejin.im/post/5b7fe4a46fb9a019d92469a9)
+- [23个最有用的Elasticsearch检索技巧](https://juejin.im/post/5b7fe4a46fb9a019d92469a9)
+
+- [Elasticsearch多表关联设计指南](https://mp.weixin.qq.com/s/j7YdtmyuzBFRK1BViDtp2w)
+
+- [倒排索引压缩技术在58搜索的实践](https://mp.weixin.qq.com/s/4GrR2cJRMgVSaMcdWdr9qg)
 
 ## 提纲
 （1）掌握 Elasticsearch 的基本概念，主要包括：
