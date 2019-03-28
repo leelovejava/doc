@@ -449,3 +449,7 @@ BAT大牛亲授 基于ElasticSearch的搜房网实战
 
 ### 搜索联想
 [elasticsearch实现中文与拼音的搜索联想](https://www.jianshu.com/p/866b53a84033)
+
+### 原理
+
+[ElasticSearch写入数据的工作原理是什么？](https://mp.weixin.qq.com/s/rw6vmDgXUh0SUUh7uo1APg)
