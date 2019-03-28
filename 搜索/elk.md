@@ -1,10 +1,14 @@
-https://blog.csdn.net/Ahri_J/article/details/79609444
+# elk
+
+[【ELK笔记】ELK的安装，快速搭建一个ELK日志分析平台](https://blog.csdn.net/Ahri_J/article/details/79609444)
 
 [分布式之elk日志架构的演进](https://mp.weixin.qq.com/s/KrLbLvCPk0rjsWhf0lfebA)
 
+[利用ELK分析Nginx日志生产实战(高清多图)](https://mp.weixin.qq.com/s/HdBUTcEfozemfbAzNGEvrw)
+
 ### elasticsearch
 
->> wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.3.1.tar.gz
+> wget https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-6.3.1.tar.gz
 
 Caused by: java.lang.RuntimeException: can not run elasticsearch as root
 https://blog.csdn.net/napoay/article/details/53237471
