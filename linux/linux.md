@@ -18,6 +18,8 @@
 
 -[优雅停机的正确姿势，应该这样才对](https://mp.weixin.qq.com/s/BCJ7jaO6-R_Dr72wJsXn4A)
 
+- [Linux 问题故障定位](https://mp.weixin.qq.com/s/5HpRa__Swn-qSyewXLpxPA)
+
 ## windows
 windows的hosts目录
 c:\windows\system32\drivers\etc

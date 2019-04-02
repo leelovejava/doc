@@ -48,6 +48,7 @@
 
 [深入解析单例模式的七种实现](https://mp.weixin.qq.com/s/I1gpQHWLPFuxLl9Z7MLo4Q)
 
+[互联网 Java 工程师进阶知识完全扫盲](https://mp.weixin.qq.com/s/abjdjuoNUobZr5Rv1RqkBA)
 
 ### Java知音
 
@@ -559,6 +560,8 @@ newScheduledThreadPool 创建一个定长线程池，支持定时及周期性任
 线程池和并发并行?
 
 [Java并发编程75道面试题及答案](https://blog.csdn.net/qq_34039315/article/details/78549311)
+
+[尴尬的面试现场：说说你们系统有多大QPS？系统到底怎么抗住高并发的？【石杉的架构笔记】](https://mp.weixin.qq.com/s/LhecLRq4OF90egpyob6nKA)
 
 高并发?[医指通2017]
 

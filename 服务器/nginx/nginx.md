@@ -7,6 +7,8 @@
 
 -[顺风详解Nginx系列—nginx变量实现原理(上)](https://mp.weixin.qq.com/s/wSnd-7XXFqElwGspuZltdQ)
 
+- [Nginx 搭建图片服务器](https://mp.weixin.qq.com/s/BKmFjFEsDXUx1voEPz5TvA)
+
 ## 配置
 
 include 引用vhost目录下所有以conf结尾的
