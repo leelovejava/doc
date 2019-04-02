@@ -81,6 +81,9 @@
           logger.debug("Processing trade with id: " + id + " and symbol: " + symbol);
        }
     * 谨慎记录日志,避免记录敏感数据   
+   
+    * [为什么阿里巴巴禁止直接使用日志系统(Log4j、Logback)中的 API](https://mp.weixin.qq.com/s/pkukoU-83H6YCSWw3abJXw)
+ 
  ### 单元测试
     * 独立性,不能调用其他单元测试用例
     * 自动化,不能用System.out,而用assert验证
