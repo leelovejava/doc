@@ -9,6 +9,10 @@
 
 - [Nginx 搭建图片服务器](https://mp.weixin.qq.com/s/BKmFjFEsDXUx1voEPz5TvA)
 
+- [1分钟搞定 Nginx 版本的平滑升级与回滚](https://mp.weixin.qq.com/s/8cUtSPiVK_8KuCGROifG6Q)
+
+- [基于 Nginx 的 HTTPS 性能优化实践](https://mp.weixin.qq.com/s/ZPF6rSJ9jjjCGXl99Q8sqQ)
+
 ## 配置
 
 include 引用vhost目录下所有以conf结尾的
