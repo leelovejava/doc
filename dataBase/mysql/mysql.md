@@ -17,4 +17,8 @@
 
 [什么影响了数据库查询速度?](https://mp.weixin.qq.com/s/6RsM_tXiDwbPrCTPDZAkLw)
 
+[Mysql高性能优化规范建议](https://mp.weixin.qq.com/s/AXvFIeehRBIk-mdVrKkKSA)
+
+[一条SQL语句在MySQL中如何执行的](https://mp.weixin.qq.com/s/QU4-RSqVC88xRyMA31khMg)
+
 https://www.cnblogs.com/linjiqin/category/283837.html
