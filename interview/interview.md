@@ -28,6 +28,8 @@
 
 [【Java进阶面试系列之五】消息中间件集群崩溃，如何保证百万生产数据不丢失？](https://mp.weixin.qq.com/s/AEn3j2lVJOHZx9yegwTsvw)
 
+[本科毕业3年的我，是如何薪资翻倍拿到38万年薪Offer的？](https://mp.weixin.qq.com/s/kGdtdDzUfEhVTi-gkwyCjA)
+
 石杉并发面试
 
 [大白话聊聊Java并发面试问题之volatile到底是什么？](https://mp.weixin.qq.com/s/MIsQv8ZWWBzfB-Qhg3l4lA)
