@@ -6,6 +6,8 @@
 
 [从Java5到Java12每个版本的新特性（2）](https://www.jianshu.com/p/e5fba5376371)
 
+[Oracle JDK和 OpenJDK 之间的区别](https://mp.weixin.qq.com/s/kpuCYqzQtpK7Fja6ZRbPZw)
+
 ## [jdk12](http://openjdk.java.net/jeps/326)
 
 [download](https://www.oracle.com/technetwork/java/javase/downloads/jdk12-downloads-5295953.html)
