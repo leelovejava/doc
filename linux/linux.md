@@ -39,7 +39,21 @@ ipconfig /flushdns
 
 [Windows 下的文件被占用解决](https://www.cnblogs.com/lmsthoughts/p/8085931.html)
 
+bat清除maven下载失败
+```bash
+set REPOSITORY_PATH=C:\Users\Administrator\.m2\repository
+rem 正在搜索...
 
+for /f "delims=" %%i in ('dir /b /s "%REPOSITORY_PATH%\*lastUpdated*"') do (
+    
+	del /s /q %%i
+
+)
+
+rem 搜索完毕
+
+pause
+```
 
  关闭防火墙
   https://blog.csdn.net/Post_Yuan/article/details/78603212  
