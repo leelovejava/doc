@@ -1,5 +1,12 @@
 # mysql安装
 
+[windows装mysql8](https://www.cnblogs.com/tangyb/p/8971658.html)
+
+[Navicat连接Mysql8.0.11出现1251错误](https://blog.csdn.net/qq_36068954/article/details/80175755)
+
+mysql8设置时区更改为东八区
+> set global time_zone = '+8:00';
+
 wget http://dev.mysql.com/get/mysql-community-release-el7-5.noarch.rpm 
 
 rpm -ivh mysql-community-release-el7-5.noarch.rpm

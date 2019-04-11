@@ -8,6 +8,16 @@
 
 [Oracle JDK和 OpenJDK 之间的区别](https://mp.weixin.qq.com/s/kpuCYqzQtpK7Fja6ZRbPZw)
 
+## 配置多版本的jdk
+
+windows版本：修改JAVA_HOME
+
+linux/macOS:
+ * 设置多版本环境变量: JAVA_8_HOME JAVA_11_HOME JAVA_12_HOME
+ * 配置默认的环境变量 export JAVA_HOME = $JAVA_11_HOME
+ * 设置命令别名,动态切换JDK版本: alias      alias jdk11 = "export JAVA_HOME=$JAVA_11_HOME"
+ * 查看JDK版本信息: java-version
+
 ## [jdk12](http://openjdk.java.net/jeps/326)
 
 [download](https://www.oracle.com/technetwork/java/javase/downloads/jdk12-downloads-5295953.html)
