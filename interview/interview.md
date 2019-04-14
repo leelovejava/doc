@@ -111,7 +111,7 @@ Java架构师主要需要做哪些工作呢？
 
 #### 项目
 
-[如何在面试中介绍自己的项目经验](https://www.jianshu.com/p/369e6c8b49eb)
+[如何在面试中介绍自己的项目经验](https://mp.weixin.qq.com/s/tlVeYY2sWdr1UsraLHnSXQ)
 
 Java架构师要学习哪些知识呢？
 

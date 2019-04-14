@@ -13,6 +13,8 @@
 
 - [Elasticsearch 6.3 发布，你们要的 SQL 功能来了](https://www.iteblog.com/archives/2378.html?from=like)
 
+- [Elasticsearch 7.0 正式发布](https://mp.weixin.qq.com/s/EJQilAy4pLS3fAqBgYZhDA)
+
 - [京东到家订单中心 Elasticsearch 演进历程](https://mp.weixin.qq.com/s/TrCJJtvhjB2m29fOOa3Rzg)
 
 - [日均5亿查询量，京东到家订单中心ES架构演进](https://mp.weixin.qq.com/s/n8ZfAabQ2lmcSExXrgjpuw)
