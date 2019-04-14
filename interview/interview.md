@@ -8,6 +8,7 @@
 -[EasyJob](https://github.com/it-interview/EasyJob)
 -[advanced-java](https://github.com/doocs/advanced-java)
 -[3y](https://github.com/ZhongFuCheng3y/3y)
+-[javaguide](https://snailclimb.gitee.io/javaguide/#/)
 
 石杉
 [1、互联网公司的面试官是如何360°无死角考察候选人的？（上篇）](https://mp.weixin.qq.com/s/vhP-2Jrd0Ow2wOqImavrIQ)
