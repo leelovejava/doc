@@ -703,6 +703,7 @@ currentHashMap优化:
    JVM的内存结构?
     方法区 堆 虚拟机栈 本地方法栈 程序计算器
    内存中堆 栈 静态区的作用
+      [内存区域](https://mp.weixin.qq.com/s/lryDeCfiacRxCMpzEmyoLA)
       堆区:heap
        1.存储的全部是对象，每个对象都包含一个与之对应的class的信息。(class的目的是得到操作指令)
        2.jvm只有一个堆区(heap)被所有线程共享，堆中不存放基本类型和对象引用，只存放对象本身.
