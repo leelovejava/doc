@@ -53,6 +53,8 @@
 
 [互联网 Java 工程师进阶知识完全扫盲](https://mp.weixin.qq.com/s/abjdjuoNUobZr5Rv1RqkBA)
 
+[Mybatis源码解读-设计模式总结](http://www.crazyant.net/2022.html)
+
 ### Java知音
 
 [Java岗 面试考点精讲（基础篇01期）](https://mp.weixin.qq.com/s/rXA_UjF52RGbT7bEykD4mA)
