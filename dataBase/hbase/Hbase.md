@@ -44,6 +44,8 @@
 
 [HBase的region管理](https://mp.weixin.qq.com/s/mg6c_h38efILWo_HAWy9zQ)
 
+[HBase实践 | 使用Spark SQL读写HBase,Apache Spark-Apache HBase Connector](https://mp.weixin.qq.com/s/295XcqqylBxmhajLWZ1KSQ)
+
 ### 官方翻译文档
 
 http://abloz.com/hbase/book.html
