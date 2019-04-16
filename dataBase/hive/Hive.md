@@ -36,24 +36,23 @@ apache的hive是一个数据仓库的软件,它能方便提供非常方便的读
 
 产生背景:
 
-1. MapReduce编程的不便性
-
-2. HDFS上的文件缺少Schema
+    1. MapReduce编程的不便性
+    
+    2. HDFS上的文件缺少Schema
 
 好处:
 
-1. 简单易上手(操作接口采用类SQL语法，提供快速开发的能力)
-
-2. 避免了去写MapReduce，减少开发人员的学习成本
-
-3. 为超大数据集设计的计算/存储扩展能力(MR计算、HDFS存储)
-
-4. 统一的元数据管理(可与Presto/Impala/Spark SQL等共享数据)
-    元数据管理(hive表名、表字段类型、分隔符等)
-
-5. 扩展功能很方便
-
-③可扩展(集群扩展)、延展性(自定义函数)、容错
+    1. 简单易上手(操作接口采用类SQL语法，提供快速开发的能力)
+    
+    2. 避免了去写MapReduce，减少开发人员的学习成本
+    
+    3. 为超大数据集设计的计算/存储扩展能力(MR计算、HDFS存储)
+    
+    4. 统一的元数据管理(可与Presto/Impala/Spark SQL等共享数据)
+        元数据管理(hive表名、表字段类型、分隔符等)
+    
+    5. 扩展功能很方便
+        可扩展(集群扩展)、延展性(自定义函数)、容错
 
 ## Hive架构
 
@@ -71,11 +70,17 @@ TaskTracker 相当于：  Nodemanager  +  yarnchild
 解释器、编译器、优化器、执行器
 
 ### 各组件的基本功能
-用户接口主要由三个：CLI、JDBC/ODBC和WebGUI。其中，CLI为shell命令行；JDBC/ODBC是Hive的JAVA实现，与传统数据库JDBC类似；WebGUI是通过浏览器访问Hive。
+用户接口主要由三个：CLI、Client(JDBC/ODBC)、WebGUI。
+        
+        最常用的是CLI(shell命令行),Cli启动的时候，会同时启动一个Hive副本；
+        JDBC/ODBC是Hive的JAVA实现，与传统数据库JDBC类似
+        WebGUI是通过浏览器访问Hive
 
 元数据存储：Hive 将元数据存储在数据库中。Hive 中的元数据包括表的名字，表的列和分区及其属性，表的属性（是否为外部表等），表的数据所在目录等。
 
 解释器、编译器、优化器完成 HQL 查询语句从词法分析、语法分析、编译、优化以及查询计划的生成。生成的查询计划存储在 HDFS 中，并在随后有 MapReduce 调用执行。
+    
+数据存储在HDFS中，大部分的查询、计算由MapReduce完成（包含*的查询，比如select * from tbl不会生成MapRedcue任务）
 
 ### Hive与Hadoop的关系
 Hive利用HDFS存储数据，利用MapReduce查询数据
@@ -128,9 +133,14 @@ UDF：自定义函数
 ## Hive环境搭建
 
 ### 方式
-单机版、元数据库mysql版
+单机版、元数据库mysql版、远程服务器模式
+
+用于非Java客户端访问元数据库，在服务器端启动MetaStoreServer，客户端利用Thrift协议通过MetaStoreServer访问元数据库
 
 [quick start](https://cwiki.apache.org/confluence/display/Hive/GettingStarted)
+
+0) yum  install mysql-server
+   GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '123' WITH GRANT OPTION;
 
 1）Hive下载：http://archive.cloudera.com/cdh5/cdh/5/
 > wget http://archive.cloudera.com/cdh5/cdh/5/hive-1.1.0-cdh5.7.0.tar.gz
@@ -170,9 +180,24 @@ UDF：自定义函数
 
 5）启动hive: $HIVE_HOME/bin/hive
 
-## Hive使用
+## hive的使用
 
-创建表
+### hive数据类型
+    : primitive_type
+      | array_type
+      | map_type
+      | struct_type
+    ：primitive_type
+      |TINYINT
+      | SMALLINT
+      | INT
+      | BIGINT
+      | BOOLEAN
+      | FLOAT
+      | DOUBLE
+      | STRING
+      
+### 创建表
 ```
 CREATE  TABLE table_name 
   [(col_name data_type [COMMENT col_comment])]
@@ -181,18 +206,82 @@ CREATE  TABLE table_name 
 create table hive_wordcount(context string);
 ```
 
-加载数据到hive表
+### Hive 查看表描述
+```
+DESCRIBE [EXTENDED|FORMATTED] table_name
+```
+
+### 加载数据到hive表
 ```
 LOAD DATA LOCAL INPATH 'filepath' INTO TABLE tablename 
 
 load data local inpath '/home/hadoop/data/hello.txt' into table hive_wordcount;
-
 
 select word, count(1) from hive_wordcount lateral view explode(split(context,'\t')) wc as word group by word;
 
 lateral view explode(): 是把每行记录按照指定分隔符进行拆解
 ```
 
+### 分区
+    Hive 分区partition
+    必须在表定义时指定对应的partition字段
+
+#### 单分区建表语句：
+    create table day_table (id int, content string) partitioned by (dt string);
+    单分区表，按天分区，在表结构中存在id，content，dt三列。
+    以dt为文件夹区分
+
+#### 双分区建表语句：
+    create table day_hour_table (id int, content string) partitioned by (dt string, hour string);
+    双分区表，按天和小时分区，在表结构中新增加了dt和hour两列。
+    先以dt为文件夹，再以hour子文件夹区分
+
+#### Hive添加分区表语法
+    （表已创建，在此基础上添加分区）：
+    ALTER TABLE table_name ADD [IF NOT EXISTS] PARTITION partition_spec  [LOCATION 'location1'] partition_spec [LOCATION 'location2'] ...;
+    
+    partition_spec:
+    : (partition_column = partition_col_value, partition_column = partition_col_value, ...)
+    例：
+    ALTER TABLE day_table ADD PARTITION (dt='2008-08-08', hour='08')
+
+#### Hive删除分区语法：
+
+    ALTER TABLE table_name DROP partition_spec, partition_spec,...
+    partition_spec:
+    : (partition_column = partition_col_value, partition_column = partition_col_value, ...)
+    
+    用户可以用 ALTER TABLE DROP PARTITION 来删除分区。
+    内部表中、对应分区的元数据和数据将被一并删除。
+    
+    例：
+    ALTER TABLE day_hour_table DROP PARTITION (dt='2008-08-08', hour='09');
+
+#### Hive向指定分区添加数据语法：
+     
+     LOAD DATA [LOCAL] INPATH 'filepath' [OVERWRITE] INTO TABLE tablename [PARTITION (partcol1=val1, partcol2=val2 ...)] 
+     
+     例：
+     LOAD DATA INPATH '/user/pv.txt' INTO TABLE day_hour_table PARTITION(dt='2008-08- 08', hour='08'); 
+     LOAD DATA local INPATH '/user/hua/*' INTO TABLE day_hour partition(dt='2010-07- 07');
+     
+     当数据被加载至表中时，不会对数据进行任何转换。Load操作只是将数据复制至Hive表对应的位置。数据加载时在表下自动创建一个目录
+     
+#### Hive查询执行分区语法
+     
+     SELECT day_table.* FROM day_table WHERE day_table.dt>= '2008-08-08'; 
+     
+     分区表的意义在于优化查询。查询时尽量利用分区字段。如果不使用分区字段，就会全部扫描。
+     
+     
+     Hive查询表的分区信息语法：
+     SHOW PARTITIONS day_hour_table; 
+     
+     预先导入分区数据，但是无法识别怎么办
+     Msck repair table tablename
+     直接添加分区
+     
+### 项目实战
 hive ql提交执行以后会生成mr作业，并在yarn上运行
 ```
 create table emp(
@@ -382,7 +471,7 @@ Explain 显示执行计划
     EXPLAIN [EXTENDED] query
     
 hive运行方式:本地、集群,本地模式适用开发、数据量小
-    `hive.exec.mode.local.auto.inputbytes.max`默认值为128M,表示加载文件的最大值，若大于该配置仍会以集群方式来运行    
+    `hive.exec.mode.local.auto.inputbytes.max` 默认值为128M,表示加载文件的最大值，若大于该配置仍会以集群方式来运行    
 
 严格模式:
     查询限制：
