@@ -31,6 +31,8 @@
 
 [本科毕业3年的我，是如何薪资翻倍拿到38万年薪Offer的？](https://mp.weixin.qq.com/s/kGdtdDzUfEhVTi-gkwyCjA)
 
+[三年努力，梦归阿里！](https://mp.weixin.qq.com/s/HuHFfjADMAX3-_OLPhYjaA)
+
 石杉并发面试
 
 [大白话聊聊Java并发面试问题之volatile到底是什么？](https://mp.weixin.qq.com/s/MIsQv8ZWWBzfB-Qhg3l4lA)
@@ -557,6 +559,8 @@ yield()让当前正在执行的线程暂停，该方法不会阻塞线程，而�
    3).如何实现线程安全?
         加synchronized
 ⑪线程池
+[面试官：你分析过线程池源码吗？](https://mp.weixin.qq.com/s/FVfuwIQ08mRrQy_PAd6WLw)
+
 newSingleThreadExecutor 创建一个单线程化的线程池，它只会用唯一的工作线程来执行任务，保证所有任务按照指定顺序(FIFO, LIFO, 优先级)执行。
 newFixedThreadPool 创建一个定长线程池，可控制线程最大并发数，超出的线程会在队列中等待。
 newCachedThreadPool创建一个可缓存线程池，如果线程池长度超过处理需要，可灵活回收空闲线程，若无可回收，则新建线程。
@@ -913,6 +917,9 @@ get方法，hibernate会确认一下该id对应的数据是否存在，首先在
   inverse:标记由哪一方来维护关联关系，双向关联中，默认值为false，如果设置为true，则表示由对方维护两者之间的关联关系
 
 **************************************Mybatis**************************************
+
+[面试官：你分析过mybatis工作原理吗？](https://mp.weixin.qq.com/s/YoNXGutxBWVxNeNsJGnGGQ)
+
 1.Mybatis
   mybatis是一个持久层的框架，是apache下的顶级项目。
   mybatis托管到goolecode下，再后来托管到github下(https://github.com/mybatis/mybatis-3/releases)。
@@ -1153,6 +1160,9 @@ get方法，hibernate会确认一下该id对应的数据是否存在，首先在
   token
   
 ***************************************框架-Spring***************************************
+
+[面试官：你分析过SpringMVC的源码吗？](https://mp.weixin.qq.com/s/nAXBHyNSQZdvCenUhTKtzw)
+
 1、谈谈你对Spring的理解？[上海极点信息科技有限公司]
 	spring是一个设计层面,轻量级的控制反转(IOC)和切面(AOP)非侵入式的开源框架，他解决的是业务逻辑层和其他各层的松耦合问题，因此它将面向接口的编程思想贯穿整个系统应用
 	
