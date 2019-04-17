@@ -41,6 +41,7 @@
 -[Kafka, RabbitMQ, ZeroMQ, RocketMQ, ActiveMQ 之间的差异](https://mp.weixin.qq.com/s/aUHEncqzES0VkcVnZjaJKw)
 -[消息中间件Kafka与RabbitMQ谁更胜一筹？](https://mp.weixin.qq.com/s/7agqX9qQA48gFE1_tVId6w)
 -[了解kafka的基本概念和使用](https://mp.weixin.qq.com/s/VnzjVhM2yBtfpDn4ddXv2Q)
+-[轻松理解Kafka中的延时操作](https://mp.weixin.qq.com/s/c8SsvfdPYHIY6hVlNjZDqg)
 
 #### 书
 [《深入理解Kafka:核心设计与实践原理》笔误及改进记录](https://blog.csdn.net/u013256816/article/details/87834419)
