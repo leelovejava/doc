@@ -21,4 +21,6 @@
 
 [一条SQL语句在MySQL中如何执行的](https://mp.weixin.qq.com/s/QU4-RSqVC88xRyMA31khMg)
 
-https://www.cnblogs.com/linjiqin/category/283837.html
+[深入理解数据库编程中的超时设置](https://mp.weixin.qq.com/s/eZvKBwXkB1H5HInC8HDyjA)
+
+[mysql系列文章](https://www.cnblogs.com/linjiqin/category/283837.html)
