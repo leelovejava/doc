@@ -20,6 +20,8 @@
 
 - [Linux 问题故障定位](https://mp.weixin.qq.com/s/5HpRa__Swn-qSyewXLpxPA)
 
+- [大数据工程师必须掌握的性能优化技术](https://mp.weixin.qq.com/s/MOIYKgovsxTllz-EQXGvMg)
+
 ## windows
 windows的hosts目录
 c:\windows\system32\drivers\etc
