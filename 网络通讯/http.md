@@ -18,3 +18,5 @@
 [【漫画】https 加密那点事](https://mp.weixin.qq.com/s/xzhfcRDwS7l6jLOUoze5rw)
 
 [为什么要进行URL编码](https://mp.weixin.qq.com/s/MZdymqTzKg7Jd93Ia7FM7A)
+
+[基于 HTTP 协议的 3 种实时数据获取技术](https://mp.weixin.qq.com/s/K89Z3cZuFc3lTw7pGzqMrw)
