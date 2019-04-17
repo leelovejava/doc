@@ -66,6 +66,12 @@
 
 [Java岗 面试考点精讲（基础篇02期）](https://mp.weixin.qq.com/s/wW0TXQqziCDrmFNqlfiyFg)
 
+### 架构设计
+
+[手把手带你设计一个百万级的消息推送系统](https://mp.weixin.qq.com/s/1z7tSrzffTrRMsKPPLn4_Q)
+
+[手写实现一个迷你版的Tomcat](https://mp.weixin.qq.com/s/p67s6MYVEMEPHQbUbDd9YQ)
+
 ### 面试准备
 
 #### 简历
