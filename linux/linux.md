@@ -34,8 +34,10 @@ c:\windows\system32\drivers\etc
 
 windows 修改hosts 立即生效的方法
 cmd 
+
 // 显示所有 dns内容
 ipconfig /displaydns
+
 // 刷新所有 dns内容
 ipconfig /flushdns
 
