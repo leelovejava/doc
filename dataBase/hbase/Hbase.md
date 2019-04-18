@@ -83,6 +83,7 @@ Hadoop Database，是一个高可靠性、高性能、面向列、可伸缩、�
 来源谷歌的三篇论文之big table
 
 ### 企业集群架构及版本选择
+
 #### 企业集群
 20- 小型集群
     无HA,1个zookeeper、hbase、hadoop
@@ -96,6 +97,7 @@ Hadoop Database，是一个高可靠性、高性能、面向列、可伸缩、�
 
 #### 集群规划
 
+![image](https://github.com/leelovejava/doc/blob/master/img/dataBase/hbase/07.png)
 
 #### 版本选择:
     apache/cloudera(CDH)
