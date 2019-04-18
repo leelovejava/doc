@@ -82,9 +82,34 @@ Hadoop Database，是一个高可靠性、高性能、面向列、可伸缩、�
 
 来源谷歌的三篇论文之big table
 
+### 企业集群架构及版本选择
+#### 企业集群
+20- 小型集群
+    无HA,1个zookeeper、hbase、hadoop
+    hReginServer、NodeManager(如40G,得分配20G)
+
+20-50 中型集群
+    hadoopHA、hbaseHA、3个zookeeper、3个Hmaster
+
+50+  大型集群    
+   5/7个zookeeper
+
+#### 集群规划
+
+
+#### 版本选择:
+    apache/cloudera(CDH)
+    推荐cloudear的CDH版本
+    
 ## 场景
 
 ### 使用场景
+* 用户画像
+* 消息/订单存储
+* 对象存储
+* 时序数据(随着时间变化而变化,例如温度)
+* Cube分析(Kylin)
+* Feeds流(内容聚合器,例如:抖音、西瓜视频)
 
 * 如果数据有很多列，且包含很多空字段
 * 数据包含了不定数量的列
