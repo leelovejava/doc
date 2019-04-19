@@ -20,6 +20,8 @@ https://github.com/Yampery/rdsmq
 
 [基于Redis实现延时队列服务](https://www.cnblogs.com/lylife/p/7881950.html)
 
+[分布式之延时任务方案解析](https://www.cnblogs.com/rjzheng/p/8972725.html)
+
 rabbitMQ延迟队列
 https://blog.csdn.net/zhu_tianwei/article/details/53563311
 
