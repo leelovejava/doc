@@ -9,11 +9,10 @@
 
 [史上最全 50 道 Redis 面试题](https://mp.weixin.qq.com/s/gB7oMjygGFF5M7WwTgrn4g)
 
-[Redis 开发设计规范及案例分享](https://mp.weixin.qq.com/s/NICQmkAoe7jEo6vAEZJQRQ)
-
 [Redis5：抛弃ruby基于redis-cli创建集群&集群模式的得与失](https://mp.weixin.qq.com/s/csQE3RV17uZsAXwS4mI1Tw)
 
-redis延迟队列
+
+## redis延迟队列
 
 https://blog.csdn.net/wizard_rp/article/details/79303623
 
