@@ -12,6 +12,8 @@
 -[程序员为什么会有职业瓶颈](http://www.cnblogs.com/jajian/p/10325884.html)
 -[记一位程序员从码农到大牛的成长之路](https://mp.weixin.qq.com/s/xR_UzRvrBRdrSD0OwWyiiA)
 -[Java学习必备书籍推荐终极版](https://mp.weixin.qq.com/s/l5hFq5gd2O1C7vRILSz0Iw)
+-[如何精确评估开发时间的 4 个小套路？](https://mp.weixin.qq.com/s/c9yxJDQaeT6FQjD-nBp2NQ)
+
 
 ## 学习方法
 

@@ -15,6 +15,8 @@
 
 [白话TCP为什么需要进行三次握手](https://mp.weixin.qq.com/s/jdNgy-iENDo9_yHiCaRYxA)
 
+[为什么 TCP 建立连接是三次握手，关闭连接确是四次挥手呢？](https://mp.weixin.qq.com/s/PltEXfYiGC-x-ufgPGoHmQ)
+
 [【漫画】https 加密那点事](https://mp.weixin.qq.com/s/xzhfcRDwS7l6jLOUoze5rw)
 
 [为什么要进行URL编码](https://mp.weixin.qq.com/s/MZdymqTzKg7Jd93Ia7FM7A)

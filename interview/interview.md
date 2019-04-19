@@ -1,13 +1,22 @@
 
 -[interviews](https://github.com/kdn251/interviews/blob/master/README-zh-cn.md)
+
 -[JCSprout](https://github.com/crossoverJie/JCSprout)
+
 -[JavaGuide](https://github.com/Snailclimb/JavaGuide)
+
 -[technology-talk](https://github.com/aalansehaiyang/technology-talk)
+
 -[fullstack-tutorial](https://github.com/frank-lam/fullstack-tutorial)
+
 -[java-bible](https://github.com/biezhi/java-bible)
+
 -[EasyJob](https://github.com/it-interview/EasyJob)
+
 -[advanced-java](https://github.com/doocs/advanced-java)
+
 -[3y](https://github.com/ZhongFuCheng3y/3y)
+
 -[javaguide](https://snailclimb.gitee.io/javaguide/#/)
 
 石杉
@@ -2522,6 +2531,8 @@ tomcat部署?
 ***************************************架构***************************************
 
 ***************************************分布式/微服务*************************************
+
+[面试必备的分布式事物方案](https://mp.weixin.qq.com/s/F5w7WxX5S21UhmjmjBCBwg)
 
 分布式服务中如何保证数据的正确性？ [深圳阿尔法2017]
 https://blog.csdn.net/g1607058603/article/details/81462162

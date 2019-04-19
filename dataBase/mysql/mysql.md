@@ -9,6 +9,8 @@
 
 [以MySQL为例，详解数据库索引原理及深度优化](https://mp.weixin.qq.com/s/29cvchKqQc7Ng4T_gT2J3A)
 
+[MySQL 索引B+树原理，以及建索引的几大原则](https://mp.weixin.qq.com/s/qvm5GEgLNv5dnbcVA-d5Ag)
+
 [MySQL常用命令，34道练习题](https://segmentfault.com/a/1190000013259974)
 
 [数据库分库分表后，如何部署上线？](https://mp.weixin.qq.com/s/fDNTMx1KCNsIwcbJPdHcwQ)
