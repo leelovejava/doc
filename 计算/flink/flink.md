@@ -37,8 +37,10 @@ Learn more about Flink at [http://flink.apache.org/](http://flink.apache.org/)
 
 [Flink+HBase场景化解决方案](https://mp.weixin.qq.com/s/3a_7_XLvJ6sLxu_jILdfpg)
 
-## Features
+[[Kylin 实时流处理技术探秘](https://mp.weixin.qq.com/s/ucdxocEP09YbF5zcDwMzLA)]
 
+## Features
+ 
 * A streaming-first runtime that supports both batch processing and data streaming programs
 
 * Elegant and fluent APIs in Java and Scala
