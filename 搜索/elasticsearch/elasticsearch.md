@@ -21,8 +21,6 @@
 
 - [Elasticsearch搜索引擎性能调优看懂这一篇就够了](https://mp.weixin.qq.com/s/VHULA5vfDBxjGzukZyYJbg)
 
-- [图解elasticsearch原理](https://mp.weixin.qq.com/s/5cY2XFcyTCBBH8RtsM18dA)
-
 - [ElasticSearch基础分布式架构讲解](https://mp.weixin.qq.com/s/HXWZW8_e5GRmTk23pRIYSQ)
 
 - [elasticsearch 铭毅天下 CSDN](https://me.csdn.net/wojiushiwo987)
@@ -454,4 +452,8 @@ BAT大牛亲授 基于ElasticSearch的搜房网实战
 
 ### 原理
 
-[ElasticSearch写入数据的工作原理是什么？](https://mp.weixin.qq.com/s/rw6vmDgXUh0SUUh7uo1APg)
+- [图解elasticsearch原理](https://mp.weixin.qq.com/s/5cY2XFcyTCBBH8RtsM18dA)
+
+- [漫画解读Elasticsearch原理](https://mp.weixin.qq.com/s/ySfjjd0R4H17IuqU_OmtmQ)
+
+- [ElasticSearch写入数据的工作原理是什么？](https://mp.weixin.qq.com/s/rw6vmDgXUh0SUUh7uo1APg)
