@@ -36,8 +36,6 @@
 
 [HBase基本概念与基本使用](https://www.cnblogs.com/swordfall/p/8737328.html)
 
-[hbase的rowkey设计](http://www.cnblogs.com/kxdblog/p/4328699.html)
-
 [基于HBase构建千亿级文本数据相似度计算与快速去重系统](https://mp.weixin.qq.com/s/UZmksFBTKFzF4jrXGnw2fg)
 
 [在 HBase 上使用 HGraphDB 进行二度好友推荐](https://mp.weixin.qq.com/s/AUn8qEaih9w--WbfxU46cQ)
@@ -408,17 +406,17 @@ Client->RegionServer
     当Region达到阈值，会把过大的Region一分为二
 
 ## Hbase的协作模块
-HMaster启动,注册到Zookeeper,等待RegionServer汇报,
-RegionServer注册到Zookeeper,并向HMaster汇报
-对各个RegionServer(包括失效的)的数据进行整理,分配Region和meta信息
+    HMaster启动,注册到Zookeeper,等待RegionServer汇报,
+    RegionServer注册到Zookeeper,并向HMaster汇报
+    对各个RegionServer(包括失效的)的数据进行整理,分配Region和meta信息
 
 RegionServer失效:
-HMaster将失效RegionServer上的Region分配到其他节点
-HMaster更新hbase:meta表以保证数据正常访问
+    HMaster将失效RegionServer上的Region分配到其他节点
+    HMaster更新hbase:meta表以保证数据正常访问
 
 HMaster失效
-处于Backup状态的其他HMaster节点推选出一个转为Active状态
-数据能正常读写,但是不能创建删除表,也不能更改表结构
+    处于Backup状态的其他HMaster节点推选出一个转为Active状态
+    数据能正常读写,但是不能创建删除表,也不能更改表结构
 
 ## 角色
 
@@ -546,6 +544,12 @@ message dayPhoneDetail {
 [读表操作](https://www.cnblogs.com/panfeng412/archive/2012/03/08/hbase-performance-tuning-section3.html)
 
 [数据计算](https://www.cnblogs.com/panfeng412/archive/2012/03/08/hbase-performance-tuning-section4.html)
+
+### 表设计之rowKey设计
+
+[hbase的rowkey设计](http://www.cnblogs.com/kxdblog/p/4328699.html)
+
+[HBase Rowkey 设计指南](https://mp.weixin.qq.com/s/ZotJ9dAudOT3e-aK6F-9AA)
 
 
 flush 'tableName'
