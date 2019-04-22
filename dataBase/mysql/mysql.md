@@ -13,8 +13,6 @@
 
 [MySQL常用命令，34道练习题](https://segmentfault.com/a/1190000013259974)
 
-[数据库分库分表后，如何部署上线？](https://mp.weixin.qq.com/s/fDNTMx1KCNsIwcbJPdHcwQ)
-
 [什么影响了 MySQL 性能？](https://mp.weixin.qq.com/s/7W0yQWUxNy_RFwWCnLA3-A)
 
 [什么影响了数据库查询速度?](https://mp.weixin.qq.com/s/6RsM_tXiDwbPrCTPDZAkLw)
@@ -26,3 +24,7 @@
 [深入理解数据库编程中的超时设置](https://mp.weixin.qq.com/s/eZvKBwXkB1H5HInC8HDyjA)
 
 [mysql系列文章](https://www.cnblogs.com/linjiqin/category/283837.html)
+
+[数据库分库分表后，如何部署上线？](https://mp.weixin.qq.com/s/fDNTMx1KCNsIwcbJPdHcwQ)
+
+[记一次生产中的【分表】踩坑经历！](https://mp.weixin.qq.com/s/tUtGgjVXuqeW3QM7t4LKdg)
