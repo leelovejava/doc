@@ -1986,10 +1986,15 @@ EasyUI的组件?[重点][平安科技 中国电信理想 上海弘昊化工]
  SwarmCache能够让典型的读操作大大超过写操作的这类应用提供更好的性能支持。 SwarmCache使用JavaGroups来管理从属关系和分布式缓存的通讯意思是面向方面编程
 7.WhirlyCache
 　　Whirlycache是一个快速的、可配置的、存在于内存中的对象的缓存。它能够通过缓存对象来加快网站或应用程序的速度，否则就必须通过查询数据库或其他代价较高的处理程序来建立。
-***************************************服务器**************************************************************************
+
+
+***************************************服务器***************************************
+[Tomcat相关面试题，看这篇就够了！保证能让面试官颤抖](https://mp.weixin.qq.com/s/GfmabCRV086OqIVNwj_-RA)
+
 1.Tomcat的优化经验
   去掉对web.xml的监视，把jsp提前编辑成Servlet。
   有富余物理内存的情况，加大tomcat使用的jvm的内存
+  
 2.Tomcat、Weblogic的区别
   Tomcat是一个免费开源的web应用服务器,是Apache软件基金会的Jakarta Sun和其他一些公司及个人共同开发而成
   WebLogic是美国Bean公司出品的一个application server,确切的说是一个基于jvaee架构的中间件,纯java开发
@@ -2002,14 +2007,17 @@ EasyUI的组件?[重点][平安科技 中国电信理想 上海弘昊化工]
             Tomcat扩展性差
     费用    Tomcat开源免费
             WebLogic不开源不免费
+
 3.weblogic中的密码丢失
 
 4.应用服务器有那些？
   BEA WebLogic Server，IBM WebSphere Application Server，Oracle9i Application Server，jBoss，Tomcat
+
 5.EJB的几种类型 
  会话（Session）Bean ，实体（Entity）Bean 消息驱动的（Message Driven）Bean 
  会话Bean又可分为有状态（Stateful）和无状态（Stateless）两种 
  实体Bean可分为Bean管理的持续性（BMP）和容器管理的持续性（CMP）两种 
+
 6.如何给weblogic指定大小的内存? 
   在启动Weblogic的脚本中（位于所在Domian对应服务器目录下的startServerName），增加set MEM_ARGS=-Xms32m -Xmx200m，可以调整最小内存为32M，最大200M 
 
@@ -2396,6 +2404,8 @@ D、分布式锁
 
 ⑤[如果让你设计一个消息中间件，你会怎么做？](https://mp.weixin.qq.com/s/4yi1F2_CTY2yum7CIRRiow)	
 
+  [中华石杉 面试官：如果让你设计一个消息中间件，如何将其网络通信性能优化10倍以上](https://mp.weixin.qq.com/s/AzNfb7b6MmNUdGcsrwj9Iw)  
+    
 ⑥消息中间件如何实现每秒几十万的高并发写入？
 
 页缓存技术 + 磁盘顺序写
