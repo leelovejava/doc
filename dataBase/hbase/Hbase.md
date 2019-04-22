@@ -48,15 +48,14 @@
 
 ### 官方翻译文档
 
-http://abloz.com/hbase/book.html
-
-https://www.jianshu.com/p/dfa7488c5414
+[官方文档中文版0.97](http://abloz.com/hbase/book.html)
 
 [HBase原理和设计](https://www.toutiao.com/i6601011304679342596)
 
 ### 官方quick start翻译
 
 http://hbase.apache.org/book.html#quickstart
+
 https://www.cnblogs.com/LeslieXia/p/5743436.html
 
 ## 官方安装
@@ -66,6 +65,34 @@ https://www.cnblogs.com/LeslieXia/p/5743436.html
 [HBase完全分布式配置](https://m.imooc.com/article/details?article_id=27253)
 
 [hbase使用外部（非自带）zookeeper搭建伪分布式环境](https://blog.csdn.net/xuedingkai/article/details/78816862)  
+
+
+部署模式: 单机 伪分布式 完全分布式
+
+[版本选择](http://hbase.apache.org/2.1/book.html#hadoop)
+
+[Advanced - Fully Distributed](http://hbase.apache.org/2.1/book.html#quickstart_fully_distributed)
+```
+conf/regionservers
+node2 node3
+
+conf/backup-masters
+node3
+
+conf/hbase-site.xml
+<property>
+  <name>hbase.zookeeper.quorum</name>
+  <value>node-a.example.com,node-b.example.com,node-c.example.com</value>
+</property>
+<property>
+  <name>hbase.zookeeper.property.dataDir</name>
+  <value>/usr/local/zookeeper</value>
+</property>
+<property>
+  <name>hbase.cluster.distributed</name>
+  <value>true</value>
+</property>
+```
 
 ## NoSQL
 
