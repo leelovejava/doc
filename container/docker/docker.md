@@ -2,6 +2,8 @@
 
 [10分钟教你看懂 Docker 和 K8S](https://mp.weixin.qq.com/s/IxOtpmAUv6kEVSLLJgF0ZA)
 
+[2019年最火的容器、K8S和DevOps入门都在这了](https://mp.weixin.qq.com/s/ExmE8zejcH70Erry0aozSQ)
+
 ---------mysql------------------
 创建mysql容器
 --e 指定配置文件
