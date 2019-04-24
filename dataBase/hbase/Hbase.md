@@ -11,8 +11,6 @@
 
 [HBase Procedure解读](https://mp.weixin.qq.com/s/mpG5Gte-7g_Ue0Sr8VLS6w)
 
-[HBase在人工智能场景的使用](https://mp.weixin.qq.com/s/zicVKfRH207b1Yw4NB315A)
-
 [58HBase平台实践和应用—平台建设篇](https://mp.weixin.qq.com/s/Czx-tDEdN11srmGuA-4Jkw)
 多租户支持、数据读写接口、数据导入导出和平台优化四个方面重点讲解了58HBase平台的建设
 
@@ -367,6 +365,8 @@ quit
 
 ### 写流程
 
+[Apache HBase 写数据流程说明](https://www.iteblog.com/archives/2502.html)
+
 client->zookeeper
 client->rgionServer->memStore->StoreFile
 
@@ -396,6 +396,8 @@ Client->RegionServer
 ### 机制
 
 #### flush机制
+[HBase 入门之数据刷写(Memstore Flush)详细说明](https://www.iteblog.com/archives/2497.html)
+    
     当MemStore达到阈值，将Memstore中的数据Flush进Storefile
     
 #### compact机制
@@ -545,11 +547,19 @@ message dayPhoneDetail {
 
 [数据计算](https://www.cnblogs.com/panfeng412/archive/2012/03/08/hbase-performance-tuning-section4.html)
 
-### 表设计之rowKey设计
+### 表设计
+
+[中国民生银行 HBase 读写设计与实践](https://www.iteblog.com/archives/2400.html)
+
+#### rowKey设计
 
 [hbase的rowkey设计](http://www.cnblogs.com/kxdblog/p/4328699.html)
 
 [HBase Rowkey 设计指南](https://mp.weixin.qq.com/s/ZotJ9dAudOT3e-aK6F-9AA)
+
+#### 列族2-3个
+
+[为什么不建议在 HBase 中使用过多的列族](https://mp.weixin.qq.com/s/skz5RvXgD6qACdPKL1mZbA)
 
 
 flush 'tableName'
@@ -558,7 +568,15 @@ split 'tableName'
 
 1). 表设计
     列族:1-2个
-    
+
+## 协处理器
+[HBase 协处理器入门及实战](https://www.iteblog.com/archives/2508.html)
+
+## 应用
+[HBase在新能源汽车监控系统中的应用](https://www.iteblog.com/archives/2466.html)
+
+[HBase在人工智能场景的使用](https://mp.weixin.qq.com/s/zicVKfRH207b1Yw4NB315A)
+  
 ## SQL引擎
 
 ### Kylin

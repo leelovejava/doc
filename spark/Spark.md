@@ -34,6 +34,8 @@ spark.apache.org
 
 [浅析 Spark Shuffle 内存使用](https://mp.weixin.qq.com/s/YpcdjAfxDfDQ6EA5GzB57w)
 
+[Apache Spark 黑名单(Blacklist)机制介绍](https://www.iteblog.com/archives/1907.html)
+
 ## 2.Spark概述
 
 ### [Spark-survey](https://blog.csdn.net/lovehuangjiaju/article/details/48765165)
