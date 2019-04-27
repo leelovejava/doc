@@ -120,6 +120,9 @@ telnet
 全局的环境变量
 > vim /etc/profile
 
+刷新环境变量
+> source /etc/profile
+
 rz/sz 文件上传/下载
 > sudo yum install lrzsz -y 
 
