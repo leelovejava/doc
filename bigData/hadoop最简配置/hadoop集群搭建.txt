@@ -1,0 +1,244 @@
+ssh-keygen (全部回车,无需输入)
+
+ssh-copy-id -i /root/.ssh/id_rsa.pub node1
+
+ssh-copy-id -i /root/.ssh/id_rsa.pub node2
+
+ssh-copy-id -i /root/.ssh/id_rsa.pub node3
+
+ssh-copy-id -i /root/.ssh/id_rsa.pub node4
+
+ssh-copy-id -i /root/.ssh/id_rsa.pub node5
+
+ssh node1
+
+
+https://stackoverflow.com/questions/23648373/severe-error-processing-tld-files-for-context-path-java-lang-illegalargumente
+sudo chmod -R a+w hdfs
+sudo chmod -R a+w tmp
+
+
+
+
+
+
+
+
+
+
+1、HDFS伪分布式搭建步骤：
+(1)配置免密登录  node01->node01
+①ssh-keygen -t rsa
+②ssh-copy-id -i ~/.ssh/id_rsa.pub root@node01
+(2)配置JDK
+①export JAVA_HOME=/opt/software/jdk/jdk1.8.0_151
+②export PATH=$PATH:$JAVA_HOME/bin
+(3)修改hdfs-site.xml配置文件
+①
+
+
+
+
+
+
+
+
+
+
+(4)修改core-site.xml配置文件
+
+
+
+
+
+
+
+
+
+
+(5)修改slaves配置文件
+	修改为node01
+(6)格式化NameNode(创建目录以及文件)     hdfs namenode -format
+(7)启动HDFS   start-dfs.sh
+(8)操作HDFS文件系统
+①创建目录 hdfs dfs -mkdir -p /user/root
+②上传文件 hdfs dfs -D dfs.blocksize=1048576 -put
+
+
+
+2、HDFS完全分布式搭建步骤：
+(1)时间同步
+①各个节点安装ntp命令yum install ntp
+②上网查找最新的时间服务器ntp1.aliyun.com
+③同步时间ntpdate ntp1.aliyun.com
+(2)配置免密登录
+node01->node01  node01->node02  node01->node03 node01->node04
+①所有节点执行  ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa
+②在node01节点执行，将node01的公钥加入到其他节点的白名单中  ssh-copy-id -i ~/.ssh/id_rsa.pub root@node01
+ssh-copy-id -i ~/.ssh/id_rsa.pub root@node02
+ssh-copy-id -i ~/.ssh/id_rsa.pub root@node03
+ssh-copy-id -i ~/.ssh/id_rsa.pub root@node04
+(3)所有节点配置JDK
+(4)修改hdfs-site.xml配置文件
+①
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(5)修改core-site.xml配置文件
+
+
+
+
+
+
+
+
+
+
+(6)修改slaves配置文件
+	修改为node02 node03 node04
+		将配置好的安装包分发到其他节点上
+	scp -r hadoop-2.6.5 root@node02:/opt/software/hadoop/
+(7)	将所有的HDFS相关的进程关闭
+(8)格式化NameNode(创建目录以及文件)在node01节点执行
+①hdfs namenode -format
+(9)启动HDFS   start-dfs.sh
+(10)操作HDFS文件系统
+①创建目录 hdfs dfs -mkdir -p /user/root
+②上传文件 hdfs dfs -D dfs.blocksize=1048576 -put
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+3、HDFS HA完全分布式搭建步骤：
+集群规划：
+	    NN-1	NN-2	DN	ZK	ZKFC	JNN
+node01	*				        *	    *
+node02	*	    *	    *	    *	    *
+node03			        *	*		    *
+node04			        *	*
+node04			        *	*
+
+
+
+
+
+(1)	配置免密登录
+node01->node01  node01->node02  node01->node03 node01->node04
+node02->node01
+①在node02节点执行，将node01的公钥加入到其他节点的白名单中  ssh-copy-id -i ~/.ssh/id_rsa.pub root@node01
+(2)所有节点配置JDK
+(3)修改hdfs-site.xml配置文件
+		<property>
+ 		    <name>dfs.nameservices</name>
+ 		    <value>mycluster</value>
+</property>
+<property>
+  <name>dfs.ha.namenodes.mycluster</name>
+  <value>nn1,nn2</value>
+</property>
+<property>
+  <name>dfs.namenode.rpc-address.mycluster.nn1</name>
+  <value>node01:8020</value>
+</property>
+<property>
+  <name>dfs.namenode.rpc-address.mycluster.nn2</name>
+  <value>node02:8020</value>
+</property>
+<property>
+  <name>dfs.namenode.http-address.mycluster.nn1</name>
+  <value>node01:50070</value>
+</property>
+<property>
+  <name>dfs.namenode.http-address.mycluster.nn2</name>
+  <value>node02:50070</value>
+</property>
+<property>
+  <name>dfs.namenode.shared.edits.dir</name>
+  <value>qjournal://node01:8485;node02:8485;node03:8485/mycluster</value>
+</property>
+<property>
+  <name>dfs.journalnode.edits.dir</name>
+  <value>/var/sxt/hadoop/ha/jn</value>
+</property>
+<property>
+  <name>dfs.client.failover.proxy.provider.mycluster</name>  	<value>org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider</value>
+</property>
+<property>
+  <name>dfs.ha.fencing.methods</name>
+  <value>sshfence</value>
+</property>
+<property>
+  <name>dfs.ha.fencing.ssh.private-key-files</name>
+  <value>/root/.ssh/id_rsa</value>
+</property>
+<property>
+   <name>dfs.ha.automatic-failover.enabled</name>
+   <value>true</value>
+ </property>
+
+(4)修改core-site.xml配置文件
+
+<property>
+        <name>fs.defaultFS</name>
+        <value>hdfs://node01:9000</value>
+</property>
+<property>
+        <name>hadoop.tmp.dir</name>
+        <value>/var/abc/hadoop/local</value>
+</property>
+
+(5)修改slaves配置文件
+①修改为 node02 node03 node04
+(6)将配置好的HDFS安装包拷贝到node02 node03 node04
+
+4、搭建zookeeper集群：
+(1)node02上解压
+(2)修改conf目录下的zoo_sample.cfg的名称，改为zoo.cfg
+①mv zoo_sample.cfg zoo.cfg
+(3)修改zoo.cfg
+①dataDir=/var/zfg/zookeeper
+②server.1=node02:2888:3888
+③server.2=node03:2888:3888
+④server.3=node04:2888:3888
+(4)在dataDir目录下创建一个myid文件，在这个文件中写上当前节点ID号
+echo “1” >  dataDir/myid
+(5)将配置好的zookeeper安装包拷贝到node03 node04
+(6)拷贝完毕后，在各自节点上创建myid号，ID号要依次递增
+(7)zk节点bin下执行./zkServer.sh start
+
+(8)格式化NameNode(创建目录以及文件)
+①在node01、node02、node03分别执行如下命令
+1) sbin/hadoop-daemon.sh start journalnode
+②随机选择一台NameNode执行：
+1) hdfs namenode -format
+2) sbin/hadoop-daemon.sh start namenode
+③另外一台NameNode节点执行：
+1)hdfs namenode  -bootstrapStandby
+(9)hdfs zkfc -formatZK
+(10)关闭所有节点上的进程  stop-dfs.sh
+(11)启动HDFS   start-dfs.sh
+(12)操作HDFS文件系统
+①创建目录 hdfs dfs -mkdir -p /user/root
+②上传文件 hdfs dfs -D dfs.blocksize=1048576 -put
