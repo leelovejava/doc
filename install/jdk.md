@@ -6,6 +6,8 @@ jdk rpm安装
 
 yum -y install java
 
+yum install java-1.8.0-openjdk* -y
+
 http://download.csdn.net/download/aqtata/9410831
 http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html
 
