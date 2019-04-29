@@ -25,6 +25,10 @@
 
 [mysql系列文章](https://www.cnblogs.com/linjiqin/category/283837.html)
 
+## 分库分表
+
+[sharding-jdbc源码解析](https://github.com/YunaiV/sharding-jdbc)
+
 [数据库分库分表后，如何部署上线？](https://mp.weixin.qq.com/s/fDNTMx1KCNsIwcbJPdHcwQ)
 
 [记一次生产中的【分表】踩坑经历！](https://mp.weixin.qq.com/s/tUtGgjVXuqeW3QM7t4LKdg)
