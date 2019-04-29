@@ -69,6 +69,8 @@
 
 [Mybatis源码解读-设计模式总结](http://www.crazyant.net/2022.html)
 
+[JDK源码中，都有哪些NB的设计模式？](https://mp.weixin.qq.com/s/h88UxB9F2MkTbHqck3KQiQ)
+
 ### Java知音
 
 [Java岗 面试考点精讲（基础篇01期）](https://mp.weixin.qq.com/s/rXA_UjF52RGbT7bEykD4mA)
