@@ -58,6 +58,7 @@ Spark得到了众多大数据公司的支持，这些公司包括Hortonworks、I
 腾讯Spark集群达到8000台的规模，是当前已知的世界上最大的Spark集群。
 
 #### 产生背景
+
 ##### MapReduce局限性
 1）代码繁琐
 2）只能够支持map和reduce方法 
@@ -1781,3 +1782,7 @@ withColumnRenamed(existingName: String, newName: String): DataFrame
 * 7、SparkClient会通过AppMaster获取作业运行状态。  
 
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/42-spark-on-yarn.png)
+
+## 数据倾斜
+
+[spark面试必问|碰到数据倾斜你该咋办](https://mp.weixin.qq.com/s/OT-VAS2gMlBjJvFP93J0Nw)
