@@ -30,20 +30,30 @@ MySQL：推荐mysql是5.5以上版本
 MySQL安装与启动步骤如下：( 步骤1-5省略 )
 （1）将MySQL的服务端和客户端安装包（RPM）上传到服务器
 ![image](https://github.com/leelovejava/doc/blob/master/img/dataBase/mycat/03.png)
+
 （2）查询之前是否安装过MySQL
 rpm -qa|grep -i mysql
+
 （3）卸载旧版本MySQL
+
 rpm -e --nodeps  软件名称
+
 （4）安装服务端
+
 rpm -ivh MySQL-server-5.5.49-1.linux2.6.i386.rpm
+
 （5）安装客户端
 rpm -ivh MySQL-client-5.5.49-1.linux2.6.i386.rpm
+
 （6）启动MySQL服务
 service mysql start
+
 （7）登录MySQL 
 mysql -u root
+
 （8）设置远程登录权限
 GRANT ALL PRIVILEGES ON *.* TO 'root'@'%'IDENTIFIED BY '123456'  WITH GRANT OPTION;
+
 在本地SQLyog 连接远程MySQL进行测试  
 1.2.2 MyCat安装及启动
 MyCat：
