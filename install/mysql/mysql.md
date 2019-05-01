@@ -2,7 +2,11 @@
 
 [windows装mysql8](https://www.cnblogs.com/tangyb/p/8971658.html)
 
+[linux安装mysql8](https://www.cnblogs.com/wlwl/p/9686809.html)
+
 [Navicat连接Mysql8.0.11出现1251错误](https://blog.csdn.net/qq_36068954/article/details/80175755)
+
+> sudo mysqld --skip-grant-tables  --skip-networking &
 
 mysql8设置时区更改为东八区
 > set global time_zone = '+8:00';
@@ -66,3 +70,34 @@ grant all privileges on *.* to 'root'@'%' identified by '密码';
 ## 刷新权限 重启服务
 
 ## 开放3306端口或者关闭防火墙
+
+
+-------------------
+yum localinstall https://repo.mysql.com//mysql80-community-release-el7-1.noarch.rpm
+yum clean all
+yum makecache
+
+yum install mysql-community-server
+
+systemctl start mysqld.service
+
+卸载
+rpm -qa|grep -i mysql
+rm -rf /etc/my.cnf
+
+
+rpm -ev mysql80-community-release-el7-1.noarch --nodeps
+rpm -ev mysql-community-server-8.0.16-1.el7.x86_64 --nodeps
+rpm -ev mysql-community-common-8.0.16-1.el7.x86_64 --nodeps
+rpm -ev mysql-community-client-8.0.16-1.el7.x86_64 --nodeps
+rpm -ev mysql-community-libs-8.0.16-1.el7.x86_64 --nodeps
+
+
+grep "password" /var/log/mysqld.log
+
+
+rpm -ev mysql-devel-5.1.73-7.el6.x86_64 --nodeps
+rpm -ev perl-DBD-MySQL-4.013-3.el6.x86_64 --nodeps
+rpm -ev mysql-5.1.73-7.el6.x86_64 --nodeps
+rpm -ev mysql-libs-5.1.73-7.el6.x86_64 --nodeps
+rpm -ev mysql-server-5.1.73-7.el6.x86_64 --nodeps
