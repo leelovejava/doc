@@ -35,13 +35,18 @@ sqoop-1.4.6 或者 sqoop-1.4.7 它是 sqoop1
 
 4). 加入 mysql 驱动包到 sqoop/lib 目录下
 常用的驱动:
+    
     mysql 
         com.mysql.jdbc.Driver 
         http://central.maven.org/maven2/mysql/mysql-connector-java/8.0.12/mysql-connector-java-8.0.12.jar
+    
     oracle
         oracle.jdbc.OracleDriver
         http://www.datanucleus.org/downloads/maven2/oracle/ojdbc6/11.2.0.3/ojdbc6-11.2.0.3.jar
-
+    
+    hive
+        http://central.maven.org/maven2/org/apache/hive/hive-jdbc/3.1.1/hive-jdbc-3.1.1.jar
+    
 ## 命令
 * sqoop 帮助
 > ./sqoop help
