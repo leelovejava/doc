@@ -40,7 +40,7 @@ rpm -e --nodeps  软件名称
 
 （4）安装服务端
 
-rpm -ivh MySQL-server-5.5.49-1.linux2.6.i386.rpm
+rpm -ivh MySQL-server-并发编程5.5.49-1.linux2.6.i386.rpm
 
 （5）安装客户端
 rpm -ivh MySQL-client-5.5.49-1.linux2.6.i386.rpm
