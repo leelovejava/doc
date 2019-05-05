@@ -101,3 +101,8 @@ rpm -ev perl-DBD-MySQL-4.013-3.el6.x86_64 --nodeps
 rpm -ev mysql-5.1.73-7.el6.x86_64 --nodeps
 rpm -ev mysql-libs-5.1.73-7.el6.x86_64 --nodeps
 rpm -ev mysql-server-5.1.73-7.el6.x86_64 --nodeps
+
+### mysql升级
+wget http://dev.mysql.com/get/mysql-community-release-el7-5.noarch.rpm
+sudo yum install mysql-community-release-el7-5.noarch.rpm
+sudo yum update mysql-server
