@@ -196,20 +196,98 @@ UDF：自定义函数
       | FLOAT
       | DOUBLE
       | STRING
-      
-### 创建表
-```
-CREATE  TABLE table_name 
-  [(col_name data_type [COMMENT col_comment])]
-  
 
-create table hive_wordcount(context string);
+### 删除表
+```
+DROP (DATABASE|SCHEMA) [IF EXISTS] database_name [RESTRICT|CASCADE];
+
+create database test;
 ```
 
 ### Hive 查看表描述
 ```
 DESCRIBE [EXTENDED|FORMATTED] table_name
+
+desc formatted psn;
 ```
+
+### 创建表
+```
+CREATE (DATABASE|SCHEMA) [IF NOT EXISTS] database_name
+  [COMMENT database_comment]
+  [LOCATION hdfs_path]
+  [WITH DBPROPERTIES (property_name=property_value, ...)];
+  
+CREATE  TABLE table_name 
+  [(col_name data_type [COMMENT col_comment])]
+
+1) create table
+create table psn (
+id int,
+name string,
+likes ARRAY <string>,
+address MAP <string, string>
+)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+COLLECTION ITEMS TERMINATED BY '-'
+MAP KEYS TERMINATED BY ':';
+
+2). load data
+1,Lilei,book-tv-code,beijing:chaoyang-shanghai:pudong
+2,Hanmeimei,book-Lilei-code,beijing:haidian-shanghai:huangpu
+
+LOAD DATA [LOCAL] INPATH 'filepath' [OVERWRITE] INTO TABLE tablename [PARTITION (partcol1=val1, partcol2=val2 ...)]
+
+load data local inpath '/home/hadoop/data/hive/psn' into table psn;
+
+3) select data
+select * from psn;
+
+1	Liei	["book","tv","code"]	{"beijing":"chaoyang","shanghai":"pudong"}
+2	Hanmeimei	["book","Lilei","code"]	{"beijing":"haidian","shanghai":"huangpu"}
+
+```
+
+### 创建外部表
+[LOCATION hdfs_path];
+
+create EXTERNAL table psn2 (
+id int,
+name string,
+likes ARRAY <string>,
+address MAP <string, string>
+)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+COLLECTION ITEMS TERMINATED BY '-'
+MAP KEYS TERMINATED BY ':'
+location '/user/hive/warehouse/test.db/psn2/';
+
+load data local inpath '/home/hadoop/data/hive/psn2' into table psn2;
+
+### 创建分区表
+[PARTITIONED BY (col_name data_type [COMMENT col_comment], ...)]
+
+create table psn3 (
+id int,
+name string,
+likes ARRAY <string>,
+address MAP <string, string>
+)
+PARTITIONED BY(age int)
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY ','
+COLLECTION ITEMS TERMINATED BY '-'
+MAP KEYS TERMINATED BY ':';
+
+load data local inpath '/home/hadoop/data/hive/psn3' into table psn3 partition (age=10);
+
+添加分区
+alter table psn3 add partition(age=20,sex='man');
+
+删除分区
+alter table psn3 dro partition (age=10);
 
 ### 加载数据到hive表
 ```
@@ -288,6 +366,50 @@ lateral view explode(): 是把每行记录按照指定分隔符进行拆解
 
 使用场景:
     数据抽样(samping)、map-join 
+
+### 函数
+内置运算符: 关系运算符、算术运算符、逻辑运算符、复杂类型函数、对复杂类型函数操作
+
+内置函数: 数学函数、收集函数、类型转换函数、日期函数、条件函数、字符函数、 
+
+内置的聚合函数(UDAF): count()、sum()、min()、max()....
+
+内置表生成函数(UDTF) : explode(array<TYPE> a)、json_tuple
+```
+explode(array<TYPE> a)
+数组一条记录中有多个参数，将参数拆分，每个参数生成一列
+select explode(likes) from psn3;
+
+book
+tv
+code
+book
+Lilei
+code
+```
+
+自定义函数:UDF、UDAF
+```
+自定义UDF函数
+1、UDF函数可以直接应用于select语句，对查询结构做格式化处理后，再输出内容。
+2、编写UDF函数的时候需要注意一下几点：
+    a）自定义UDF需要继承org.apache.hadoop.hive.ql.UDF。
+    b）需要实现evaluate函数，evaluate函数支持重载。
+3、步骤
+    a）把程序打包放到目标机器上去；
+    b）进入hive客户端，添加jar包：hive>add jar /run/jar/udf_test.jar;
+       
+    c）创建临时函数：
+        add_example: 函数名 hive.udf.Add: 包名
+        hive>CREATE TEMPORARY FUNCTION add_example AS 'hive.udf.Add';
+    d）查询HQL语句：
+        SELECT add_example(8, 9) FROM scores;
+        SELECT add_example(scores.math, scores.art) FROM scores;
+        SELECT add_example(6, 7, 8, 6.8) FROM scores;
+    e）销毁临时函数：
+        hive> DROP TEMPORARY FUNCTION add_example;
+```
+
      
 ### 项目实战
 hive ql提交执行以后会生成mr作业，并在yarn上运行
