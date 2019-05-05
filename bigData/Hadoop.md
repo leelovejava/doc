@@ -151,9 +151,25 @@ cdh-5.7.0
 		192.168.199.200 hadoop001
 		127.0.0.1 localhost
 	4. ssh免密码登陆(本步骤可以省略，但是后面你重启hadoop进程时是需要手工输入密码才行)
+```
+ssh-keygen (全部回车,无需输入)
+
+ssh-copy-id -i /root/.ssh/id_rsa.pub node1
+
+ssh-copy-id -i /root/.ssh/id_rsa.pub node2
+
+ssh-copy-id -i /root/.ssh/id_rsa.pub node3
+
+ssh-copy-id -i /root/.ssh/id_rsa.pub node4
+
+ssh-copy-id -i /root/.ssh/id_rsa.pub node5
+
+ssh node1
+```        
 		> ssh-keygen -t dsa -P '' -f ~/.ssh/id_dsa
         > cat ~/.ssh/id_dsa.pub >> ~/.ssh/authorized_keys
         > ssh localhost
+
 4）Hadoop配置文件修改: ~/app/hadoop-2.6.0-cdh5.7.0/etc/hadoop
 	1. hadoop-env.sh
 		export JAVA_HOME=/home/hadoop/app/jdk1.7.0_51
