@@ -1559,3 +1559,10 @@ max.poll.interval.ms = 300000
 #在使用Kafka的组管理时，用于检测消费者故障的超时
 spring.kafka.consumer.session.timeout-ms = 30000
 ```
+
+### kafka源码
+
+#### 缓冲池
+- [Kafka如何通过精妙的架构设计优化JVM GC问题？](https://mp.weixin.qq.com/s/XheJNFr5iEVCptZNw6c2oQ)
+
+- [kafka扫盲---(7)kafka源码阅读之生产者客户端缓冲池](https://blog.csdn.net/zhaoyaxuan001/article/details/83242482)
