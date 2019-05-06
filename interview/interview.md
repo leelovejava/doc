@@ -2444,55 +2444,99 @@ rabbit.exchange=mq-exchange
 https://www.cnblogs.com/Alex-zqzy/p/9774706.html
 
 * Kafka的用途有哪些？使用场景如何？
+    总结下来就几个字:异步处理、日常系统解耦、削峰、提速、广播
+    如果再说具体一点例如:消息,网站活动追踪,监测指标,日志聚合,流处理,事件采集,提交日志等
 
 * Kafka中的ISR、AR又代表什么？ISR的伸缩又指什么
-
+    ISR:In-Sync Replicas 副本同步队列
+    AR:Assigned Replicas 所有副本
+    ISR是由leader维护，follower从leader同步数据有一些延迟（包括延迟时间replica.lag.time.max.ms和延迟条数replica.lag.max.messages两个维度, 当前最新的版本0.10.x中只支持replica.lag.time.max.ms这个维度），任意一个超过阈值都会把follower剔除出ISR, 存入OSR（Outof-Sync Replicas）列表，新加入的follower也会先存放在OSR中。AR=ISR+OSR。
+    
 * Kafka中的HW、LEO、LSO、LW等分别代表什么？
+    HW:High Watermark 高水位，取一个partition对应的ISR中最小的LEO作为HW，consumer最多只能消费到HW所在的位置上一条信息。
+    LEO:LogEndOffset 当前日志文件中下一条待写信息的offset
+    HW/LEO这两个都是指最后一条的下一条的位置而不是指最后一条的位置。
+    LSO:Last Stable Offset 对未完成的事务而言，LSO 的值等于事务中第一条消息的位置(firstUnstableOffset)，对已完成的事务而言，它的值同 HW 相同
+    LW:Low Watermark 低水位, 代表 AR 集合中最小的 logStartOffset 值
 
 * Kafka中是怎么体现消息顺序性的？
-
+    kafka每个partition中的消息在写入时都是有序的，消费时，每个partition只能被每一个group中的一个消费者消费，保证了消费时也是有序的。
+    整个topic不保证有序。如果为了保证topic整个有序，那么将partition调整为1.
+    
 * Kafka中的分区器、序列化器、拦截器是否了解？它们之间的处理顺序是什么？
-
+    拦截器->序列化器->分区器
+    
 * Kafka生产者客户端的整体结构是什么样子的？
-
+    
 * Kafka生产者客户端中使用了几个线程来处理？分别是什么？
-
+    2个，主线程和Sender线程。主线程负责创建消息，然后通过分区器、序列化器、拦截器作用之后缓存到累加器RecordAccumulator中。Sender线程负责将RecordAccumulator中消息发送到kafka中.
+    
 * Kafka的旧版Scala的消费者客户端的设计有什么缺陷？
-
+    不正确
+    
 * “消费组中的消费者个数如果超过topic的分区，那么就会有消费者消费不到数据”这句话是否正确？如果不正确，那么有没有什么hack的手段？
 
 * 消费者提交消费位移时提交的是当前消费到的最新消息的offset还是offset+1?
-
+    offset+1
+    
 * 有哪些情形会造成重复消费？
-
+    消费者消费后没有commit offset(程序崩溃/强行kill/消费耗时/自动提交偏移情况下unscrible)
+    
 * 哪些情景下会造成消息漏消费？
-
+    消费者没有处理完消息 提交offset(自动提交偏移 未处理情况下程序异常结束)
+    
 * KafkaConsumer是非线程安全的，那么怎么样实现多线程消费？
-
+    1.在每个线程中新建一个KafkaConsumer
+    2.单线程创建KafkaConsumer，多个处理线程处理消息（难点在于是否要考虑消息顺序性，offset的提交方式）
+    
 * 简述消费者与消费组之间的关系
-
+    消费者从属与消费组，消费偏移以消费组为单位。每个消费组可以独立消费主题的所有数据，同一消费组内消费者共同消费主题数据，每个分区只能被同一消费组内一个消费者消费。
+    
 * 当你使用kafka-topics.sh创建（删除）了一个topic之后，Kafka背后会执行什么逻辑？
-
+    创建:在zk上/brokers/topics/下节点 kafkabroker会监听节点变化创建主题
+    删除:调用脚本删除topic会在zk上将topic设置待删除标志，kafka后台有定时的线程会扫描所有需要删除的topic进行删除
+    
 * topic的分区数可不可以增加？如果可以怎么增加？如果不可以，那又是为什么？
-
+    可以
+    
 * topic的分区数可不可以减少？如果可以怎么减少？如果不可以，那又是为什么？
-
+    不可以
+    
 * 创建topic时如何选择合适的分区数？
-
+    根据集群的机器数量和需要的吞吐量来决定适合的分区数
+    
 * Kafka目前有那些内部topic，它们都有什么特征？各自的作用又是什么？
-
+    __consumer_offsets 以下划线开头，保存消费组的偏移
+    
 * 优先副本是什么？它有什么特殊的作用？
-
+    优先副本 会是默认的leader副本 发生leader变化时重选举会优先选择优先副本作为leader
+    
 * Kafka有哪几处地方有分区分配的概念？简述大致的过程及原理
-
+    创建主题时
+    如果不手动指定分配方式 有两种分配方式
+    消费组内分配
+    
 * 简述Kafka的日志目录结构
-
+    每个partition一个文件夹，包含四类文件.index .log .timeindex leader-epoch-checkpoint
+    .index .log .timeindex 三个文件成对出现 前缀为上一个segment的最后一个消息的偏移 log文件中保存了所有的消息 index文件中保存了稀疏的相对偏移的索引 timeindex保存的则是时间索引
+    leader-epoch-checkpoint中保存了每一任leader开始写入消息时的offset 会定时更新
+    follower被选为leader时会根据这个确定哪些消息可用
+    
 * Kafka中有那些索引文件？
-
+    1.通过文件名前缀数字x找到该绝对offset 对应消息所在文件
+    2.offset-x为在文件中的相对偏移
+    3.通过index文件中记录的索引找到最近的消息的位置
+    4.从最近位置开始逐条寻找
+    
 * 如果我指定了一个offset，Kafka怎么查找到对应的消息？
-
+    原理同上 但是时间的因为消息体中不带有时间戳 所以不精确
+    
 * 如果我指定了一个timestamp，Kafka怎么查找到对应的消息？
-
+    kafka留存策略包括 删除和压缩两种
+    删除: 根据时间和大小两个方式进行删除 大小是整个partition日志文件的大小
+    超过的会从老到新依次删除 时间指日志文件中的最大时间戳而非文件的最后修改时间
+    压缩: 相同key的value只保存一个 压缩过的是clean 未压缩的dirty 压缩之后的偏移量不连续 未压缩时连续
+    
 * 聊一聊你对Kafka的Log Retention的理解
 
 * 聊一聊你对Kafka的Log Compaction的理解
@@ -2506,16 +2550,28 @@ https://www.cnblogs.com/Alex-zqzy/p/9774706.html
 * 消费再均衡的原理是什么？（提示：消费者协调器和消费组协调器）
 
 * Kafka中的幂等是怎么实现的
-
+    PID 和 Sequence Number
+    PID。每个新的Producer在初始化的时候会被分配一个唯一的PID，这个PID对用户是不可见的。
+    Sequence Numbler。（对于每个PID，该Producer发送数据的每个<Topic, Partition>都对应一个从0开始单调递增的Sequence Number
+    
+    [Kafka生产者事务和幂等](https://blog.csdn.net/mlljava1111/article/details/81180351)
+    
 * Kafka中的事务是怎么实现的（这题我去面试6家被问4次，照着答案念也要念十几分钟，面试官简直凑不要脸。实在记不住的话...只要简历上不写精通Kafka一般不会问到，我简历上写的是“熟悉Kafka，了解RabbitMQ....”）
-
+    
+    [Kafka生产者事务和幂等](https://blog.csdn.net/mlljava1111/article/details/81180351)
+    
 * Kafka中有那些地方需要选举？这些地方的选举策略又有哪些？
 
 * 失效副本是指什么？有那些应对措施？
-
+    follower副本进程卡住，在一段时间内根本没有向leader副本发起同步请求，比如频繁的Full GC。
+    follower副本进程同步过慢，在一段时间内都无法追赶上leader副本，比如IO开销过大
+    [Kafka解析之失效副本](https://blog.csdn.net/u013256816/article/details/78851989)
+    
 * 多副本下，各个副本中的HW和LEO的演变过程
 
 * 为什么Kafka不支持读写分离？
+
+[为什么Kafka不支持读写分离？](https://blog.csdn.net/qq_42046105/article/details/89368978)
 
 * Kafka在可靠性方面做了哪些改进？（HW, LeaderEpoch）
 
@@ -2532,23 +2588,53 @@ https://www.cnblogs.com/Alex-zqzy/p/9774706.html
 * Kafka中有那些命名比较有意思？聊一聊你的看法
 
 * Kafka有哪些指标需要着重关注？
-
+    ProducerRequest Count ：生产者请求总数量
+    ProducerRequest EventType：生产者请求事件类型
+    ProducerRequestRateAndTimeMs 50thPercentile ：生产者请求速率耗时（50%）
+    ProducerRequestRateAndTimeMs 75thPercentile ：生产者请求速率耗时（75%）
+    ProducerRequestRateAndTimeMs 95thPercentile ：生产者请求速率耗时（95%）
+    ProducerRequestRateAndTimeMs Max：生产者请求耗时最大值
+    ProducerRequestRateAndTimeMs Mean：生产者平均请求字节数
+    ProducerRequestRateAndTimeMs MeanRate：生产者平均请求速率
+    ProducerRequestRateAndTimeMs Min：生产者请求耗时最小值
+    ProducerRequestRateAndTimeMs StdDev：不理解
+    ProducerRequestRate FifteenMinuteRate ：生产者15分钟内平均请求速率
+    ProducerRequestRate FiveMinuteRate：生产者5分钟内平均请求速率
+    ProducerRequestRate OneMinuteRate：生产者1分钟内平均请求速率
+    
 * 怎么计算Lag？(注意read_uncommitted和read_committed状态下的不同)
 
 * Kafka的那些设计让它有如此高的性能？
-
+    
+    高吞吐:
+        ①分区； 
+        ②网络传输上减少开销； 
+        ③顺序读写： 
+        ④零拷贝技术； 
+        ⑤优秀的文件存储机制；
+        
 * Kafka有什么优缺点？
+    解耦
+    冗余
+    扩展性
+    灵活性 & 峰值处理能力
+    可恢复性
+    顺序保证
+    缓冲
+    异步通信
 
 * 还用过什么同质类的其它产品，与Kafka相比有什么优缺点？
 
 * 为什么选择Kafka?
-
+    [为什么使用kafka](https://blog.csdn.net/haoxin963/article/details/83245632)
+    
 * 在使用Kafka的过程中遇到过什么困难？怎么解决的？
 
 * 怎么样才能确保Kafka极大程度上的可靠性？
 
 * 聊一聊你对Kafka生态的理解
-
+    confluent全家桶(connect/kafka stream/ksql/center/rest proxy等)，开源监控管理工具kafka-manager,kmanager等
+    
 ***************************************报表工具***************************************
 ### ☜JFreeChart
 
