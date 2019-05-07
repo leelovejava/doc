@@ -13,6 +13,9 @@
 git取消本地提交,未push
 > git push origin HEAD --force
 
+git还原远程提交
+> git reset --hard commit_id
+
 github SSL_connect: SSL_ERROR_SYSCALL in connection to github.com:443
 > git config --global --unset http.proxy
 
