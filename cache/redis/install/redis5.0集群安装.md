@@ -7,9 +7,9 @@
 
 ### 编译源码
 ```
-yum install gcc-c++
-make MALLOC=libc
-make install PREFIX=/usr/local/redis-cluster
+# 安装依赖
+yum -y install gcc gcc-c++ tcl
+make & make install PREFIX=/usr/local/redis-cluster
 ```
 
 ### 修改redis.conf
@@ -54,3 +54,17 @@ bin/redis-cli --cluster create 127.0.0.1:7000 127.0.0.1:7001 127.0.0.1:7002 127.
 
 问题:
 [redis集群报错Node is not empty](https://www.cnblogs.com/huxinga/p/6644226.html)
+
+
+#### 集群模式的得与失
+
+redis cluster的出现，并不意味着其完全碾压redis sentinel模式。相反，如果不到万不得已，更建议使用redis sentinel而不是redis cluster
+
+集群模式和哨兵模式对比:
+
+| 模式     | 高可用| 存储能力|吞吐能力|运维成本|弹性扩展|命令覆盖率|
+|----------|:-----:|--------:|-------:|-------:|-------:|---------:|
+| sentinel |  满足 | 弱      |一般    | 低     | 不支持 | 所有 |
+| cluster  |  满足 | 强      | 大     | 高     | 支持   | 阉割 |
+
+选集群模式还是哨兵模式，还是取决于你的业务。如果你的业务的天花板完全可预见在20G以内，那么建议哨兵模式
