@@ -1,0 +1,31 @@
+1. 安装版本  redis-2.8.18.tar.gz
+
+2. 过程
+
+3. 解压 tar xf xxx
+
+4. 下载gcc，tcl 命令编译器 yum -y install gcc tcl (命令名字别写错)
+
+5. 编译、创建目录、拷贝make && make PREFIX=/opt/sxt/redis install
+
+6. 配置环变： EXPORT REDIS_PREFIX=/opt/sxt/redis
+
+7. 重新加载配置文件: . /etc/profile
+
+8. 测试 re+table
+
+9. utils 目录，服务脚本安装：./install_server.sh
+
+10.端口、实例、配置文件、日志、持久化数据目录、执行路径配置
+
+11.enter执行 、ctrl+c退出
+
+12.启动客户端：redis-cli
+
+13.使用帮助：
+	utils目录下： redis-cli -h
+		      redis-server -h
+
+14.启动客户端： redis -cli （6379）
+	帮助： 直接输入 help
+	

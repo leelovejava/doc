@@ -26,6 +26,7 @@ cluster-enabled yes
 cluster-config-file nodes-7000.conf
 # 集群节点超时是指一个节点必须达到的毫秒数
 cluster-node-timeout 5000
+# 开启aof的持久化
 appendonly yes
 ```
 
