@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<configuration>  
+    <!--指定hive数据仓库的数据存储在hdfs上的目录-->
+    <property>  
+          <name>hive.metastore.warehouse.dir</name>  
+          <value>/user/hive_remote/warehouse</value>  
+    </property>  
+    <!-- 元数据库的链接地址 mysql -->
+    <property>  
+          <name>javax.jdo.option.ConnectionURL</name>  
+          <value>jdbc:mysql://node01:3306/hive_remote?createDatabaseIfNotExist=true</value>  
+    </property>  
+     <!-- 指定mysql驱动 -->
+    <property>  
+          <name>javax.jdo.option.ConnectionDriverName</name>  
+          <value>com.mysql.jdbc.Driver</value>  
+    </property>  
+    <!-- 指定mysql用户名 -->
+    <property>  
+          <name>javax.jdo.option.ConnectionUserName</name>  
+          <value>hive</value>  
+    </property>  
+    <!-- 指定mysql密码-->   
+    <property>  
+          <name>javax.jdo.option.ConnectionPassword</name>  
+          <value>password</value>  
+    </property>  
+
+    <!--metastore不在同一台服务器  
+    <property>   
+      <name>hive.metastore.local</name>  
+      <value>false</value>  
+    </property>-->
+</configuration>

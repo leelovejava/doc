@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<configuration>  
+    <property>  
+           <name>hive.metastore.warehouse.dir</name>  
+           <value>/user/hive/warehouse</value>  
+    </property>  
+       
+    <property>  
+          <name>hive.metastore.local</name>  
+          <value>false</value>  
+    </property>  
+       
+    <property>  
+          <name>javax.jdo.option.ConnectionURL</name>  
+          <value>jdbc:mysql://localhost/hive?createDatabaseIfNotExist=true</value>  
+    </property>  
+       
+    <property>  
+          <name>javax.jdo.option.ConnectionDriverName</name>  
+          <value>com.mysql.jdbc.Driver</value>  
+    </property>  
+       
+    <property>  
+          <name>javax.jdo.option.ConnectionUserName</name>  
+          <value>hive</value>  
+    </property>  
+       
+    <property>  
+          <name>javax.jdo.option.ConnectionPassword</name>  
+          <value>password</value>  
+    </property>  
+</configuration>
