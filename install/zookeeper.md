@@ -106,6 +106,8 @@ echo 2 > data/myid
 130 data/myid修改如下：
 echo 3 > data/myid
 最后使用1.4的命令把三个zookeeper都启动即可，启动顺序随意没要求。
+
+id约大,成为leader几率越大
  
 ## 四、报错及处理
 应用连接zookeepr报错：Session 0x0 for server 192.168.220.128/192.168.220.128:2181,unexpected error,closing socket connection and attempting reconnect；
@@ -115,3 +117,7 @@ bin/zookeeper.out中报错：Cannot open channel to 2 at election address /192.1
 参考：
 http://coolxing.iteye.com/blog/1871009
 https://zookeeper.apache.org/doc/r3.4.10/zookeeperStarted.html
+
+## 应用
+
+分布式锁 [基于 Zookeeper 的分布式锁实现](https://mp.weixin.qq.com/s/CUReuX_rLb4IfQOtTwS_yQ)

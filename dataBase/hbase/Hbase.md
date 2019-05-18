@@ -159,7 +159,7 @@ row key:行键,相当于mysql主键
 
 timestamep:时间戳,是版本号
             
-CF:  列族,HBASE表中的每个列，都归属于某个列族。
+CF:  列族,Hbase表中的每个列，都归属于某个列族。
      列族是表的schema的一部分(而列不是)，必须在使用表之前定义。
      列名都以列族作为前缀。例如courses：history，courses：math 都属于courses这个列族
      权限控制、存储以及调优都是在列族层面进行
