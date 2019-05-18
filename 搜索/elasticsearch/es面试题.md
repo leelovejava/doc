@@ -236,3 +236,7 @@ Lucene是有索引和搜索的两个过程，包含索引创建，索引，搜�
 
 > node.master: false 
 > node.data: true
+
+### 15、ES和solr的区别？
+
+https://www.cnblogs.com/jajian/p/9801154.html

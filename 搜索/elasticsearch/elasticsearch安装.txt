@@ -1,0 +1,72 @@
+1). 只允许普通用户操作，不允许root用户
+    注意：因为elasticsearch有远程执行脚本的功能所以容易中木马病毒，所以不允许用root用户启动，root用户是起不来的，赋权限，用一般的用户启动
+    要配置network.host才能别的机器或者网卡访问，否则只能是127.0.0.1或者localhost访问，这里配置成自己的局域网ip
+    注意配置yml结尾的配置文件都需要冒号后面加空格才行
+
+共享模式下：
+
+useradd sxt
+echo sxt | passwd --stdin sxt
+
+su sxt
+
+root 用户创建 /home/hadoop/es(普通用户无法创建)
+
+mkdir -p /home/hadoop/es (注意：此时的目录权限属于root)
+
+chown sxt:sxt es
+
+
+单节点模式下root用户：
+安装解压程序
+
+ftp拷贝至根目录下，或者software目录下（备用，可选）
+
+
+切换回sxt用户（共享模式，可以看到software内容）
+
+单节点模式：
+
+使用sxt用户解压es2.2.1zip包至es目录，保证es文件属于用户sxt：
+
+unzip elasticsearch-2.2.1.zip -d /home/hadoop/es
+
+进入es/conf, 修改elastic配置文件：
+修改：
+---------------cluster-------------------------
+# 集群名
+cluster.name: bjsxt-es
+----------------node-------------------------------
+node.name: node06 (分发后各节点修改)
+
+----------------network--------------------------------
+network.host: 192.168.133.6 (分发后修改)
+
+http.port:9200 (放开)
+
+末尾增加防脑裂：
+discovery.zen.ping.multicast.enabled: false
+discovery.zen.ping.unicast.hosts: ["192.168.133.6","192.168.133.7", "192.168.133.8"]
+discovery.zen.ping_timeout: 120s
+client.transport.ping_timeout: 60s
+
+
+增加图形可视化插件：
+
+[root@node06 software]# cp -abr plugins/ /home/hadoop/es/elasticsearch-2.2.1/
+
+分发其他节点：
+scp -r ./elasticsearch-2.2.1/ sxt@node07:`pwd`
+scp -r ./elasticsearch-2.2.1/ sxt@node08:`pwd`
+
+修改配置文件
+
+
+进入bin目录，启动脚本：
+[root@node06 bin]# ./elasticsearch
+
+
+
+
+
+

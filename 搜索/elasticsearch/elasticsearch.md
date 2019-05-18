@@ -31,6 +31,10 @@
 
 - [倒排索引压缩技术在58搜索的实践](https://mp.weixin.qq.com/s/4GrR2cJRMgVSaMcdWdr9qg)
 
+- [Elasticsearch 在腾讯的大规模实践](https://mp.weixin.qq.com/s/N2DRvNtk1ZdSumy4NFzOSQ)
+
+- [滴滴Elasticsearch多集群架构实践](https://mp.weixin.qq.com/s/K44-L0rclaIM40hma55pPQ)
+
 ## 提纲
 （1）掌握 Elasticsearch 的基本概念，主要包括：
 
@@ -241,6 +245,17 @@ https://www.elastic.co/downloads/past-releases
 PS:一个索引对应一个type,6.x默认对应doc
 
 [7.0移除:mapping types](https://github.com/elastic/elasticsearch/blob/6.5/docs/reference/mapping/removal_of_types.asciidoc)
+```
+The columns in one table have no bearing on columns with the same name in another table. This is not the case for fields in a mapping type
+数据库,一个表中的列与另一个表中具有相同名称的列无关。映射类型中的字段不是这种情况
+
+In an Elasticsearch index, fields that have the same name in different mapping types are backed by the same Lucene field internally
+在Elasticsearch索引中，不同映射类型中具有相同名称的字段在内部由相同的Lucene字段支持
+
+user类型中user_name字段与tweet类型中的字段完全相同的，并且两个user_name字段在两种类型中必须具有相同的映射
+
+在同一索引中存储具有很少或没有共同字段的不同实体会导致稀疏数据并干扰Lucene有效压缩文档的能力
+```
 
 ### 常用框架：
     1、Lucene
@@ -409,6 +424,8 @@ class EsJDBC{
 
 ## 性能优化
 [让Elasticsearch飞起来!——性能优化实践干货](https://blog.csdn.net/laoyang360/article/details/85109769)
+
+[让Elasticsearch飞起来！百亿级实时查询优化实战](https://mp.weixin.qq.com/s/sPNt7J9JZET1Uixd09q1Cg)
 
 ## 面试题
 [BAT等一线大厂 Elasticsearch面试题解读](https://blog.csdn.net/laoyang360/article/details/86558214)
