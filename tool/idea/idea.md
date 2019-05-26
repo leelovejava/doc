@@ -334,8 +334,8 @@ idea有很多的代码自动补全功能，有两个地方可以设置：
  打开路径`C:\Windows\System32\drivers\etc`,修改host文件，在末尾追加域名
 
 ```
-	0.0.0.0 account.jetbrains.com
-	0.0.0.0 www.jetbrains.com
+0.0.0.0 account.jetbrains.com
+0.0.0.0 www.jetbrains.com
 ```
 
 ## 2. 访问lanyus地址：http://idea.lanyus.com/
