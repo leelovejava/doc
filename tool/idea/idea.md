@@ -318,4 +318,25 @@ idea有很多的代码自动补全功能，有两个地方可以设置：
     </option>
 </component>
 ```
+
+# 7.常用插件
+`sonarlint`、`mybatis-helper`、`grep console`、
+
+`alibaba-java-coding-guidelines(阿里巴巴规范)`、`FindBugs-IDEA`
+
+# 8.激活
+ 使用lanyus大神的注册码（推荐）
+ 
+[IntelliJ IDEA最新2019注册码/可激活至2020年/激活/破解](https://blog.csdn.net/wdy_2099/article/details/89164387)
+
+## 1. 打开路径C:\Windows\System32\drivers\etc，
+    修改host文件，在末尾追加域名
 ```
+	0.0.0.0 account.jetbrains.com
+	0.0.0.0 www.jetbrains.com
+```
+
+## 2. 访问lanyus地址：http://idea.lanyus.com/
+    点击获得注册码
+
+
