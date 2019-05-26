@@ -111,6 +111,10 @@ https://www.linuxidc.com/Linux/2012-07/64530.htm
 按日期截取日志
 > sed -n '/2018-11-14 10:00:/,/2018-11-14 12:00:/p' intellif_monitor_info.log > 2018111414.log
 
+按行数截取日志
+
+> tail -2000 catalina.out > catalinna-log-hbp.txt
+
 telnet
 
 当前用户的环境变量
