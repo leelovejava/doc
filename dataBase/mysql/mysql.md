@@ -29,11 +29,17 @@
 
 [sharding-jdbc源码解析](https://github.com/YunaiV/sharding-jdbc)
 
+[Sharding-Sphere实战：实现类多租户分库分表](https://mp.weixin.qq.com/s/X34qKPAs2aHQTvE_6VStiQ)
+
 [数据库分库分表后，如何部署上线？](https://mp.weixin.qq.com/s/fDNTMx1KCNsIwcbJPdHcwQ)
 
 [记一次生产中的【分表】踩坑经历！](https://mp.weixin.qq.com/s/tUtGgjVXuqeW3QM7t4LKdg)
 
 [一次分表踩坑实践的探讨](https://mp.weixin.qq.com/s/HmUHfFedd7kEW37vnuY1sA)
+
+## 读写分离
+
+[SpringBoot + MyBatis + MySQL 读写分离实战](https://www.cnblogs.com/cjsblog/p/9712457.html)
 
 ### 一次分库踩坑
 1、临时方案
