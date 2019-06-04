@@ -1,5 +1,8 @@
 # SpringSecurity
 
+## doc
+[权限管理模块设计](https://www.cnblogs.com/myindex/p/9116177.html)
+
 ## Spring Boot+Spring Security
 
 [Spring Security：概述](https://mp.weixin.qq.com/s/Pha3a85R8zeyTXNVWHnZuQ)
