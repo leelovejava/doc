@@ -41,6 +41,8 @@ ipconfig /displaydns
 // 刷新所有 dns内容
 ipconfig /flushdns
 
+[win10修改hosts](https://www.cnblogs.com/lwh-note/p/9005953.html)
+
 [Windows 下的文件被占用解决](https://www.cnblogs.com/lmsthoughts/p/8085931.html)
 
 bat清除maven下载失败
