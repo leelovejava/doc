@@ -58,11 +58,17 @@ Storm能实现高频数据和大规模的实时处理
 
 
 ### 1.3 Storm对比Hadoop  
+ 
                    Hadoop                          Storm
+                   
 数据源/处理领域    离线                             实时
-处理过程           map、reduce              Spout(水龙头 数据源) Bolt(水桶 逻辑处理)     
+
+处理过程           map、reduce              DAG-Spout(水龙头 数据源) Bolt(水桶 逻辑处理)     
+
 进程是否结束       是                                否
+
 处理速度           慢                                快
+
 适用场景           离线批计算               实时数据处理、分布式RPC、ETL 
 
 ### 1.4 Spark Streaming对比Storm  
@@ -153,12 +159,47 @@ Spark:
 流（Streams）: 数据流,水流;没有边界的tuple构成
 
 数据源（Spouts）: 产生数据/水的东西 小溪流的源头Topology的消息生产者
-
-数据流处理组件（Bolts）: 处理数据/水的东西 水壶/水桶 消息处理单元，可以做过滤、聚合、查询、写数据库的操作
+    
+    拓扑中数据流的来源。一般会从指定外部的数据源读取元组（Tuple）发送到拓扑（Topology）中
+    
+    一个Spout可以发送多个数据流（Stream）
+        可先通过OutputFieldsDeclarer中的declare方法声明定义的不同数据流，发送数据时通过SpoutOutputCollector中的emit方法指定数据流Id（streamId）参数将数据发送出去
+    
+    Spout中最核心的方法是nextTuple，该方法会被Storm线程不断调用、主动从数据源拉取数据，再通过emit方法将数据生成元组（Tuple）发送给之后的Bolt计算
+    
+数据流处理组件（Bolts）: 
+  
+  处理数据/水的东西 水壶/水桶 消息处理单元，可以做过滤、聚合、查询、写数据库的操作
+                         
+  数据流处理组件
+  
+  拓扑中数据处理均有Bolt完成。对于简单的任务或者数据流转换，单个Bolt可以简单实现；更加复杂场景往往需要多个Bolt分多个步骤完成
+  
+  一个Bolt可以发送多个数据流（Stream）
+    可先通过OutputFieldsDeclarer中的declare方法声明定义的不同数据流，
+    发送数据时通过SpoutOutputCollector中的emit方法指定数据流Id（streamId）参数将数据发送出去
+  
+  Bolt中最核心的方法是execute方法，该方法负责接收到一个元组（Tuple）数据、真正实现核心的业务逻辑
+                    
 
 数据(Tuple)            : 水;消息/数据 传递的基本单位
 
-数据流分组（Stream groupings）
+数据流分组（Stream groupings）:
+    数据流分组（即数据分发策略）
+    
+    1、Shuffle Grouping：随机分组，随机派发stream里面的tuple，保证每个bolt接收到的tuple数目相同。
+    
+    2、Fields Grouping：按字段分组，比如按userid来分组，具有同样userid的tuple会被分到相同的Bolts，而不同的userid则会被分配到不同的Bolts。
+    
+    3、All Grouping：广播发送，对于每一个tuple，所有的Bolts都会收到。
+    
+    4、Global Grouping: 全局分组，这个tuple被分配到storm中的一个bolt的其中一个task。再具体一点就是分配给id值最低的那个task。
+    
+    5、Non Grouping：不分组，这个分组的意思是说stream不关心到底谁会收到它的tuple。目前这种分组和Shuffle grouping是一样的效果，有一点不同的是storm会把这个bolt放到这个bolt的订阅者同一个线程里面去执行。
+    
+    6、Direct Grouping：直接分组, 这是一种比较特别的分组方法，用这种分组意味着消息的发送者指定由消息接收者的哪个task处理这个消息。只有被声明为Direct Stream的消息流可以声明这种分组方法。而且这种消息tuple必须使用emitDirect方法来发射。消息处理者可以通       过TopologyContext来获取处理它的消息的taskid (OutputCollector.emit方法也会返回taskid)
+    
+    7、Local or shuffle grouping：如果目标bolt有一个或者多个task在同一个工作进程中，tuple将会被随机发生给这些tasks。否则，和普通的Shuffle Grouping行为一致
 
 可靠性（Reliability）
 
@@ -167,4 +208,37 @@ Spark:
 工作进程（Workers）  
 
 ![image](https://github.com/leelovejava/doc/blob/master/img/storm/01-storm-flow.png?raw=true)
+
+## 架构
+
+架构
+    Nimbus: 主节点,用于提供任务、分配集群任务、集群监控
+    Supervisor: 从节点
+    Worker: 工作进程
+    
+    用户提交作业给nimbus， nimbus把任务分配给supervisor，这些提交的任务就是topology（拓扑）
+    运行的作业分为两种 spout 和 bolt
+    Spout生产tuple（元组）发送给bolt处理，bolt处理过的tuple也可以再次发送给其他的tuple处理，最后存入容器
+    
+编程模型
+    DAG （Topology）
+    Spout
+    Bolt
+
+数据传输
+    ZMQ（twitter早期产品）
+        ZeroMQ 开源的消息传递框架，并不是一个MessageQueue
+    Netty
+        Netty是基于NIO的网络框架，更加高效。（之所以Storm 0.9版本之后使用Netty，是因为ZMQ的license和Storm的license不兼容。）
+        
+高可靠性:
+   异常处理
+   
+   消息可靠性保障机制(ACK)     
+   
+   [消息可靠性保证](http://ifeve.com/storm-guaranteeing-message-processing/)
+
+实时:
+    异步、同步(drpc)
+
   
