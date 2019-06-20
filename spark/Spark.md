@@ -927,6 +927,69 @@ hdfs dfs -cat hdfs://node1.itcast.cn:9000/out/part-00000
 (kitty,2)
 (jerry,1)
 ```
+
+### Spark集群搭建
+1).下载安装包，解压
+
+2).改名
+> mv slaves.template slaves
+
+3).进入安装包的conf目录下，修改slaves.template文件，添加从节点。保存。
+> vim slaves
+```
+node02
+node03
+```
+
+4).修改spark-env.sh
+```bash
+# master的ip
+export SPARK_MASTER_IP=node01
+# 提交任务的端口，默认是7077
+export SPARK_MASTER_PORT= 7077
+# 每个worker从节点能够支配的core的个数
+export SPARK_WORKER_CORES=2
+# 每个worker从节点能够支配的内存数
+export SPARK_WORKER_MEMORY=3g
+```
+
+5).同步到其他节点上
+> scp -r spark root@node02:`pwd`
+
+6).启动集群
+进入sbin目录下，执行当前目录下的./start-all.sh
+> ./start-all.sh
+
+7).搭建客户端
+将spark安装包原封不动的拷贝到一个新的节点上，然后，在新的节点上提交任务即可
+
+注意：
+    8080是Spark WEBUI界面的端口，7077是Spark任务提交的端口。
+    修改master的WEBUI端口：
+      修改start-master.sh即可
+```bash
+SPARK_MASTER_WEBUI_PORT=9999
+```
+
+8). 提交任务
+```bash
+./spark-submit 
+--master spark://node01:7077 
+--class org.apache.spark.examples.SparkPi ../lib/spark-examples-2.3.1-hadoop2.6.0.jar 10000
+``` 
+
+yarn
+1). 1，2，3，4，5，7步同standalone。
+2).在客户端中配置
+> export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
+
+3. 提交任务
+```bash
+./spark-submit 
+--master yarn
+--class org.apache.spark.examples.SparkPi ../lib/spark-examples-1.6.0-hadoop2.6.0.jar 10000
+```
+
 ### 6.运行模式
 #### local(本地模式)
 * 采用单节点多线程（cpu)方式运行,是一种OOTB（开箱即用）的方式,只需要在spark-env.sh导出JAVA_HOME,无需其他任何配置即可使用，因而常用于开发和学习
