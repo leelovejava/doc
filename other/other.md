@@ -15,6 +15,7 @@
 -[Java学习必备书籍推荐终极版](https://mp.weixin.qq.com/s/l5hFq5gd2O1C7vRILSz0Iw)
 -[如何精确评估开发时间的 4 个小套路？](https://mp.weixin.qq.com/s/c9yxJDQaeT6FQjD-nBp2NQ)
 -[JAVA复习的最佳敏捷实践](https://mp.weixin.qq.com/s/CMgDvERY8dLD9dy2rh6Qrg)
+-[升级这十点认知，你就是大佬！](https://mp.weixin.qq.com/s/jx7K4_Xtw_Yiuq97En2YtA)
 
 ## 学习方法
 
@@ -150,3 +151,24 @@
 目标引发行为，结果巩固行为
 
 团队里的一切都会往好的方向迈进
+
+### 源码
+
+地址：http://svip.iocoder.cn
+
+账号：yudaoyuanma
+
+密码：ydym1024
+
+
+### 升级这十点认知，你就是大佬！
+* 第一：没有人一下就是大佬
+* 第二：爷爷都是从孙子做起的
+* 三：成为大佬的时机随时都有，你把握了吗？
+* 第四：争取成为细分领域的大佬
+* 第五：大佬，很大一方面是以o(1)时间复杂度解决复杂问题
+* 第六：大佬，是敢于第一个吃螃蟹的人
+* 第七：大佬，都善于习得第一手资料
+* 第八：大佬，都善于总结与思考
+* 第九：大佬，都善于底层思维
+* 第十：大佬，也要1万个小时+刻意练习

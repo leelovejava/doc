@@ -317,7 +317,8 @@ scala> val b = sc.textFile("README.md")
 #### You can get values from Dataset directly, by calling some actions, or transform the Dataset to get a new one. For more details, please read the API doc.
 
 *我们可以直接调用方法从DataSet里得出某些值，也可以把一个DataSet转换成一个新的Dataset。更多信息，请看DataSet [API文档](http://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.sql.Dataset)*
-```
+
+```scala
 scala> textFile.count() // Number of items in this Dataset
 res0: Long = 126 // May be different from yours as README.md will change over time, similar to other outputs
 
@@ -338,15 +339,15 @@ res1: String = # Apache Spark
 #### Now let’s transform this Dataset to a new one. We call filter to return a new Dataset with a subset of the items in the file.
 
 *现在让我们转换这个Dataset到一个新的Dataset。我们调用filter来返回一个新的Dataset。*
-```
+```scala
 scala> val linesWithSpark = textFile.filter(line => line.contains("Spark"))
 linesWithSpark: org.apache.spark.sql.Dataset[String] = [value: string]
 
 filter(func: (T) ⇒ Boolean): Dataset[T]
 filter(conditionExpr: String): Dataset[T]
 filter(condition: Column): Dataset[T]
-根据条件过滤行
-e.g.
+//根据条件过滤行
+//e.g.
 peopleDs.filter("age > 15")
 peopleDs.filter($"age" > 15)
 ```
@@ -593,7 +594,7 @@ Lines with a: 46, Lines with b: 23
 Congratulations on running your first Spark application!
 
 *祝贺您运行您的第一个Spark应用程序！*
-  
+
 For an in-depth overview of the API, start with the [RDD programming guide](http://spark.apache.org/docs/latest/rdd-programming-guide.html) and the SQL programming guide, or see “Programming Guides” menu for other components.
 
 *有关API的深入概述，请从[RDD编程指南](http://blog.csdn.net/zuolovefu/article/details/79117926)和[SQL编程指南](http://spark.apache.org/docs/latest/sql-programming-guide.html)开始，或者参阅其他组件的“编程指南”菜单*
@@ -1020,13 +1021,13 @@ A Dataset can be constructed from JVM objects and then manipulated using functio
 The Dataset API is available in Scala and Java. 
 Python does not have the support for the Dataset API. But due to Python’s dynamic nature, many of the benefits of the Dataset API are already available (i.e. you can access the field of a row by name naturally row.columnName). 
 The case for R is similar.
-```  
-  
-  
+```
+
+
 #### 7.1.3.DataFrame 
   A DataFrame is a Dataset organized into named columns.
   * DataFrame：以列（列名，列的类型，列值）的形式构成的分布式数据集*
-  
+
   DataFrame:思想来源于Python的pandas库，RDD是一个数据集，DataFrame在RDD的基础上加了Schema（描述数据的信息，可以认为是元数据，DataFrame曾经就有个名字叫SchemaRDD）
 
 #### 7.2.对比
@@ -1154,7 +1155,7 @@ object DataFrameApp {
 ```
 
 2）运行结果 
- 
+
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/24.png)
 
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/25.png)
@@ -1170,7 +1171,7 @@ object DataFrameApp {
 
 ### 7.3.DataFrame与RDD互操作
   Spark SQL supports two different methods for converting existing RDDs into Datasets. The first method uses reflection to infer the schema of an RDD that contains specific types of objects. This reflection based approach leads to more concise code and works well when you already know the schema while writing your Spark application.
-  
+
   The second method for creating Datasets is through a programmatic interface that allows you to construct a schema and then apply it to an existing RDD. While this method is more verbose, it allows you to construct Datasets when the columns and their types are not known until runtime.
 
 
@@ -1366,7 +1367,7 @@ numRows=20 truncate=20
 返回一个所有行的迭代器
 The iterator will consume as much memory as the largest partition in this Dataset.
 
-     
+
 ### 8.2.基本函数（Basic Dataset functions)
 ### 8.2.1.as[U](implicit arg0: Encoder[U]): Dataset[U]
 将数据映射成指定类型U，返回新的Dataset
@@ -1696,14 +1697,14 @@ na: DataFrameNaFunctions
 ``` 
 stat: DataFrameStatFunctions
 见DataFrameStatFunctions
-``` 
+```
 
 #### 8.5.10 rollup
 ``` 
 rollup(col1: String, cols: String*): RelationalGroupedDataset
 rollup(cols: Column*): RelationalGroupedDataset
 使用指定列进行rollup聚合。//TODO
-``` 
+```
 
 #### 8.5.11 select 
 ``` 
@@ -1711,19 +1712,19 @@ select(col: String, cols: String*): DataFrame
 select(cols: Column*): DataFrame
 selectExpr(exprs: String*): DataFrame
 选取指定列、SQL表达式。
-``` 
+```
 
 #### 8.5.12 withColumn 
 ``` 
 withColumn(colName: String, col: Column): DataFrame
 新增或替换一列。
-``` 
+```
 
 #### 8.5.13 withColumnRenamed 
 ``` 
 withColumnRenamed(existingName: String, newName: String): DataFrame
 将指定列更名。
-``` 
+```
 
 ### 8.6.未分组（Ungrouped）
 
@@ -1732,16 +1733,16 @@ withColumnRenamed(existingName: String, newName: String): DataFrame
 
 #### 8.6.2.sparkSession: SparkSession
      创建该dataset的SparkSession
-     
+
 #### 8.6.3.sqlContext: SQLContext
      dataset的SQLContext
-     
+
 #### 8.6.4.toJSON:Dataset[String]
      每行数据转成JSON字符串。
-     
+
 #### 8.6.5.toString(): String
      Any的toString
-     
+
 ## 9.Spark组件(Components)
 
 ![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/42-spark-on-yarn.png)
