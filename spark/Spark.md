@@ -959,7 +959,7 @@ export SPARK_WORKER_MEMORY=3g
 6).启动集群
 进入sbin目录下，执行当前目录下的./start-all.sh
 > ./start-all.sh
-
+t
 7).搭建客户端
 将spark安装包原封不动的拷贝到一个新的节点上，然后，在新的节点上提交任务即可
 
