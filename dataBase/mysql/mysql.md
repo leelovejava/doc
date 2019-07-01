@@ -195,3 +195,5 @@ UUID，生成简单，但没法做排序。
 
 
 [mysql官方下载](https://dev.mysql.com/downloads/mysql/)
+
+[win10安装mysql8](https://www.cnblogs.com/tangyb/p/8971658.html)
