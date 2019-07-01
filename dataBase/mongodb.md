@@ -12,6 +12,8 @@
 
 [双刃剑MongoDB的学习和避坑](https://mp.weixin.qq.com/s/fTG-Wff0ZsWqakXtVDXsqg)
 
+[MongoDB 4.2 新特性解读](http://www.mongoing.com/archives/26774)
+
 ## 安装:
 https://www.mongodb.com/download-center/community
 
