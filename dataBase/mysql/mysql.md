@@ -197,3 +197,12 @@ UUID，生成简单，但没法做排序。
 [mysql官方下载](https://dev.mysql.com/downloads/mysql/)
 
 [win10安装mysql8](https://www.cnblogs.com/tangyb/p/8971658.html)
+
+mysql8设置时区,my.ini
+
+com.mysql.cj.exceptions.InvalidConnectionAttributeException: The server time zone value 'ÖÐ¹ú±ê×¼Ê±¼ä' is unrecognized or represents more than one time zone
+
+```
+[mysqld]
+default-time-zone='+08:00'
+```
