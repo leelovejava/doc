@@ -10,8 +10,14 @@ spark.apache.org
 
 ## doc
 
+### 源码
 [Spark-2.3.1源码解读](https://github.com/CrestOfWave/Spark-2.3.1)
 
+[spark-1.6源码阅读](https://github.com/6high/spark-1.6)
+
+[spark-2.2源码阅读](https://github.com/6high/spark-2.2)
+
+### other
 [Apache Spark 2.4 回顾以及 3.0 展望](https://mp.weixin.qq.com/s/uPoePesjhFvRuYi60c7dhQ)
 
 [MongoDB + Spark: 完整的大数据解决方案](https://mp.weixin.qq.com/s/882OQN9Tne3vvoEJeooDgA)
