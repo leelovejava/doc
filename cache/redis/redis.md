@@ -14,6 +14,8 @@
 
 [数据库排名](https://db-engines.com/en/ranking)
 
+[window的redis](https://github.com/microsoftarchive/redis/releases)
+
 ## redis大纲
 当下的NoSQL经典应用
 Redis入门介绍
