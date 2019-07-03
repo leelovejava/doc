@@ -160,3 +160,8 @@ Try: apt install <selected package>
 
 解决:
 sudo apt-get install build-essential
+
+
+----
+查看容器端口映射信息
+docker container port CONTAINER_ID
