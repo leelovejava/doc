@@ -35,6 +35,8 @@
 ## 架构
 
 [阿里云 大数据架构如何做到流批一体？(lambda架构)](https://mp.weixin.qq.com/s/waoNAf7bFKgkyHbCMIMy_Q)
+
+[如何设计一个超级牛牛牛逼的 Feed 流系统](https://mp.weixin.qq.com/s/vRjLfVHyKGX35N_mYjDD7A)
     
 ## Overview 
 [hadoop官网](http://hadoop.apache.org)
