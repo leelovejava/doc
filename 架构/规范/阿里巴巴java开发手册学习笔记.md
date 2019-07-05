@@ -1,4 +1,12 @@
 ## 阿里巴巴java开发手册的学习笔记
+ ### doc
+ 
+ [为什么阿里代码规约要求避免使用 Apache BeanUtils 进行属性复制](https://mp.weixin.qq.com/s/PHdYfAWzGOLojGAeOFTCLQ)
+ 
+ [为什么阿里巴巴不建议在for循环中使用"+"进行字符串拼接](https://mp.weixin.qq.com/s/8g8zey7ulQ05BhQH1ET3QQ)
+ 
+ [《阿里巴巴Java工作手册》学习笔记](https://mp.weixin.qq.com/s/billJO4dFRlOhH21SCZpIw)
+ 
  ### 编程规约
    #### 命名风格
     * 禁止符号开头
