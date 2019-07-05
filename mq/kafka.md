@@ -58,6 +58,8 @@
 
 [2019年50个Kafka面试题](https://mp.weixin.qq.com/s/HYD_KyolHj7TtxjDUfIQxg)
 
+[慕课网 Kafka流处理平台](https://www.imooc.com/learn/1043)
+
 #### 书
 [《深入理解Kafka:核心设计与实践原理》笔误及改进记录](https://blog.csdn.net/u013256816/article/details/87834419)
 
