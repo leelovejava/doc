@@ -14,6 +14,8 @@
 
 [MongoDB 4.2 新特性解读](http://www.mongoing.com/archives/26774)
 
+[2019年一线大厂20个长问mongo面试题和答案](https://mp.weixin.qq.com/s/vz0uiK9IR6V1fe7SDdNjfw)
+
 ## 安装:
 https://www.mongodb.com/download-center/community
 

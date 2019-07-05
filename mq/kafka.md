@@ -54,6 +54,10 @@
 
 - [大规模使用 Apache Kafka 的20个最佳实践](https://mp.weixin.qq.com/s/28aFEjKC9_sPufUyx8_lcg)
 
+[快手万亿级别Kafka集群应用实践与技术演进之路](https://mp.weixin.qq.com/s/X-Nn6fJX4Kgqh9H8_1TQhQ)
+
+[2019年50个Kafka面试题](https://mp.weixin.qq.com/s/HYD_KyolHj7TtxjDUfIQxg)
+
 #### 书
 [《深入理解Kafka:核心设计与实践原理》笔误及改进记录](https://blog.csdn.net/u013256816/article/details/87834419)
 

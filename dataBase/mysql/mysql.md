@@ -41,6 +41,8 @@
 
 [一次分表踩坑实践的探讨](https://mp.weixin.qq.com/s/HmUHfFedd7kEW37vnuY1sA)
 
+[“分库分表" ？选型和流程要慎重，否则会失控](https://mp.weixin.qq.com/s/ibU8DUpDgyBjbaN52UdtiQ)
+
 ## 读写分离
 
 [SpringBoot + MyBatis + MySQL 读写分离实战](https://www.cnblogs.com/cjsblog/p/9712457.html)
