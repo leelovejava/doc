@@ -10,6 +10,8 @@
 
 [Apache Griffin：分布式系统的数据质量解决方案](https://www.iteblog.com/archives/2492.html)
 
+[大数据平台常用组件端口号](https://blog.csdn.net/jenrey/article/details/80719552)
+
 ## 简介
 [传智大数据](http://www.itcast.cn/subject/cloudzly/index.shtml)
 
