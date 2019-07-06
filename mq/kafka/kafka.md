@@ -54,11 +54,13 @@
 
 - [大规模使用 Apache Kafka 的20个最佳实践](https://mp.weixin.qq.com/s/28aFEjKC9_sPufUyx8_lcg)
 
-[快手万亿级别Kafka集群应用实践与技术演进之路](https://mp.weixin.qq.com/s/X-Nn6fJX4Kgqh9H8_1TQhQ)
+- [快手万亿级别Kafka集群应用实践与技术演进之路](https://mp.weixin.qq.com/s/X-Nn6fJX4Kgqh9H8_1TQhQ)
 
-[2019年50个Kafka面试题](https://mp.weixin.qq.com/s/HYD_KyolHj7TtxjDUfIQxg)
+- [2019年50个Kafka面试题](https://mp.weixin.qq.com/s/HYD_KyolHj7TtxjDUfIQxg)
 
-[慕课网 Kafka流处理平台](https://www.imooc.com/learn/1043)
+- [慕课网 Kafka流处理平台](https://www.imooc.com/learn/1043)
+
+- [为了追求极致的性能，Kafka掌控了这11项要领](https://mp.weixin.qq.com/s/JyQaohyDPndFJDrw4AOWww)
 
 #### 书
 [《深入理解Kafka:核心设计与实践原理》笔误及改进记录](https://blog.csdn.net/u013256816/article/details/87834419)
@@ -1572,3 +1574,35 @@ spring.kafka.consumer.session.timeout-ms = 30000
 - [Kafka如何通过精妙的架构设计优化JVM GC问题？](https://mp.weixin.qq.com/s/XheJNFr5iEVCptZNw6c2oQ)
 
 - [kafka扫盲---(7)kafka源码阅读之生产者客户端缓冲池](https://blog.csdn.net/zhaoyaxuan001/article/details/83242482)
+
+#### kafka
+零拷贝
+1、简介
+场景:网络传输持久化日志块(消费的消息是日志块)，本身很消耗性能
+java:Nio chanel transforTo()方法
+linux:sendfile系统调用
+
+2、过程
+文件传输到网络的公共数据路径，步骤
+①操作系统将数据从磁盘读入到内核空间的页缓存(相当于页缓存是基于磁盘之上的第一层缓存，只有读到这层缓存，系统才能非常快速的将数据拷贝到其他地方)
+②应用程序将内核空间读入到用户空间缓存中(因为对于redis来说，内核空间是应用程序无法直接操作的，那应用程序只能读取当前的用户空间)
+③应用程序将数据写回到内核空间的socket缓存中(因为要将数据发送到网络中，所以要将数据写到网络中)
+④操作系统将数据从socket缓冲区复制到网卡缓冲区，以便将数据经网络发出(其实我们可以这样去理解，操作系统可以操作内核空间，应用程序可以操作用户空间，系统将磁盘中的数据读入到内核空间中，然后应用程序才能将它拷贝到用户空间中，因为要将它发送到网络中，所以要将它重新写回到内核空间。经历了四次拷贝，第一次拷贝:磁盘读入到页缓存，第二次拷贝:内核空间读入到用户空间的缓存中，第三次拷贝:数据写回到内核空间到socket缓冲区，第四次拷贝:socket缓冲区复制到网卡缓冲区)
+
+零拷贝过程
+①操作系统将数据从磁盘读入到内核空间的页缓存
+②将数据的位置和长度信息的描述符增加至内核空间(socket缓冲区)
+③操作系统将数据从内核拷贝到网卡缓冲区，以便将数据经网络发出
+零拷贝是指，用户空间和内核的交互拷贝次数为0
+
+3、演变
+![img](assets/zero_cope.jpg) 
+
+4、kafka的零拷贝
+[什么是Zero-Copy？](https://mp.weixin.qq.com/s/aInxpcCC6k_R_tNzzURByg)
+
+Kafka使用了Zero Copy技术提升了消费的效率。
+
+前面所说的Kafka将消息先写入页缓存，如果消费者在读取消息的时候如果在页缓存中可以命中，那么可以直接从页缓存中读取，这样又节省了一次从磁盘到页缓存的copy开销。
+
+另外对于读写的概念可以进一步了解一下什么是写放大和读放大
