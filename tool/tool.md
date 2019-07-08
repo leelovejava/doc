@@ -39,6 +39,9 @@ http://139.199.89.239:1008/961b283f-db32-499c-9ee4-1b48370e5320
 
 260f6d17-ffe2-4c15-8a9c-be9dae4775a4
 
+2019-07-08
+http://jrebel.pyjuan.com/36931214-7bb6-42d4-afd7-26eb5628e004
+
 过期,重新生成guid
 
 https://www.guidgen.com/
