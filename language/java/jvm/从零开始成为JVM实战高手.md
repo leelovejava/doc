@@ -79,7 +79,7 @@ https://pc-shop.xiaoe-tech.com/apppuKyPtrl1086/columnist_detail?id=p_5d0ef9900e8
 
 
 
-但是问题在于，博客往往是作者自己记录的经历，面向的是自己，一切站在自己的角度出发。
+但是问题在于，博客往往是作者自己记录的r经历，面向的是自己，一切站在自己的角度出发。
 
 
 
