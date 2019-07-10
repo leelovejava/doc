@@ -2,16 +2,16 @@
 
 ## 1.课程目标
 
-### 1.1.掌握Spark SQL的原理
+* 掌握Spark SQL的原理
 
-### 1.2.掌握DataFrame数据结构和使用方式
+* 掌握DataFrame数据结构和使用方式
 
-### 1.3.类型转换
+* 类型转换
 
-### 1.4.熟练使用Spark SQL完成计算任务
+* 熟练使用Spark SQL完成计算任务
 
 
-## 2.Spark SQL
+## 2. Override
 
 ### doc
 
@@ -23,42 +23,57 @@
 
 ### 2.1.Spark SQL概述
 
-### 2.1.1.什么是Spark SQL
+#### 2.1.1. 什么是Spark SQL
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-sql/01.png)
+![image](assets/sql/01.png)
 Spark SQL是Spark用来处理结构化数据的一个模块，它提供了一个编程抽象叫做DataFrame并且作为分布式SQL查询引擎的作用。
 
 将数据的计算任务通过SQL的形式转化为RDD的计算,类似于Hive通过SQl的形式将数据的计算任务转换成MapReduce
 
-### 2.1.2.为什么要学习Spark SQL
+#### 2.1.2. 为什么要学习Spark SQL
 
 我们已经学习了Hive，它是将Hive SQL转换成MapReduce然后提交到集群上执行，大大简化了编写MapReduce的程序的复杂性，由于MapReduce这种计算模型执行效率比较慢。所有Spark SQL的应运而生，它是将Spark SQL转换成RDD，然后提交到集群执行，执行效率非常快！
 
-#### 1.易整合
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-sql/02.png)
+
+1.易整合
+
+![image](assets/sql/02.png)
 
 和Spark core的无缝整合,写RDD的应用时,配置Spark SQL实现逻辑
 
-#### 2.统一的数据访问方式
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-sql/03.png)
+
+2.统一的数据访问方式
+
+![image](assets/sql/03.png)
 
 Spark 提供了标准化的SQL查询
 
-#### 3.兼容Hive
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-sql/04.png)
+
+3.兼容Hive
+
+![image](assets/sql/04.png)
 
 Hive的继承,Spark SQL通过内嵌Hive或者连接外部已经部署好的hive实例,实现对Hive语法的继承和操作
 
-#### 4.标准的数据连接
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-sql/05.png)
+
+4.标准的数据连接
+
+![image](assets/sql/05.png)
 
 Spark SQL可以通过thrift Server来支持JDBC、ODBC的访问,将自己作为一个BI Server使用
 
+
+
+#### 2.1.3 底层架构
+
+首先拿到sql解析一批未解决的逻辑计划,再经过分析得到分析后的逻辑计划,再经过一批最佳优化的逻辑计划,再经过SparkPlanner的策略转化成一批物理计划,随后经过消费模型转换成一个个的Spark任务执行
+
 ### 2.2.DataFrames
+
 #### 2.2.1.什么是DataFrames
 
 Spark SQL的数据抽象
@@ -69,12 +84,12 @@ Spark SQL的数据抽象
 从API易用性的角度上 看，DataFrame API提供的是一套高层的关系操作，比函数式的RDD API要更加友好，门槛更低。
 由于与R和Pandas的DataFrame类似，Spark DataFrame很好地继承了传统单机数据分析的开发体验。
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-sql/06.png)
+![image](assets/sql/06.png)
             
 
 #### 2.2.3 RDD vs DataFrames vs DataSet
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-sql/17.png)     
+![image](assets/sql/17.png)     
 
 版本的产生
 Spark Core->RDD(Spark 1.0)
@@ -88,28 +103,28 @@ Spark SQL-> DataSet(Spark 1.6)
 * RDD的最大好处就是简单，API的人性化程度很高。
 * RDD的劣势是性能限制，它是一个JVM驻内存对象，这也就决定了存在GC的限制和数据增加时Java序列化成本的升高
 
-##### Dataframe
+##### DataFrame
 
-1).性能比RDD要高(定制化内存管理、优化的执行计划);DataSet包含了DataFrame所有的优化机制
+1). 性能比RDD要高(定制化内存管理、优化的执行计划);DataSet包含了DataFrame所有的优化机制
 
-2).DataFrame和DataSet都有可控的内存管理机制,所有数据都保存在非堆上,使用了catalyst进行SQL优化
+2). DataFrame和DataSet都有可控的内存管理机制,所有数据都保存在非堆上,使用了catalyst进行SQL优化
 
-3).RDD+Schema,二维表格；编译期间不进行类型检查,运行期间检查
+3). RDD+Schema,二维表格；编译期间不进行类型检查,运行期间检查
 
-4).DataFrame = DataSet[Row]
+4). DataFrame = DataSet[Row] **底层封装的是RDD,只不过是Row类型**
 
 
 ##### Dataset
 
-1)是Dataframe API的一个扩展，是Spark最新的数据抽象;
+1) 是Dataframe API的一个扩展，是Spark最新的数据抽象;
 
-2)用户友好的API风格，具有**类型安全检查**和Dataframe的查询优化特性。
+2) 用户友好的API风格，具有**类型安全检查**和Dataframe的查询优化特性。
 
-3)Dataset支持编解码器，当需要访问非堆上的数据时可以避免反序列化整个对象，提高了效率。
+3) Dataset支持编解码器，当需要访问非堆上的数据时可以避免反序列化整个对象，提高了效率。
 
-4)样例类被用来在Dataset中定义数据的结构信息，样例类中每个属性的名称直接映射到DataSet中的字段名称。
+4) 样例类被用来在Dataset中定义数据的结构信息，样例类中每个属性的名称直接映射到DataSet中的字段名称。
 
-5)Dataframe是Dataset的特列，DataFrame=Dataset[Row] ，所以可以通过as方法将Dataframe转换为Dataset。Row是一个类型，跟Car、Person这些的类型一样，所有的表结构信息我都用Row来表示。
+5) Dataframe是Dataset的特列，DataFrame=Dataset[Row] ，所以可以通过as方法将Dataframe转换为Dataset。Row是一个类型，跟Car、Person这些的类型一样，所有的表结构信息我都用Row来表示。
 
 6)DataSet是强类型的。比如可以有Dataset[Car]，Dataset[Person].
 
@@ -119,7 +134,7 @@ DataFrame只是知道字段，但是不知道字段的类型，所以在执行�
 
 1)、RDD、DataFrame、Dataset全都是spark平台下的分布式弹性数据集，为处理超大型数据提供便利
 2)、三者都有惰性机制，在进行创建、转换，如map方法时，不会立即执行，只有在遇到Action如foreach时，三者才会开始遍历运算，极端情况下，如果代码里面有创建、转换，但是后面没有在Action中使用对应的结果，在执行时会被直接跳过.
-```
+```scala
 val sparkconf = new SparkConf().setMaster("local").setAppName("test").set("spark.port.maxRetries","1000")
 val spark = SparkSession.builder().config(sparkconf).getOrCreate()
 val rdd=spark.sparkContext.parallelize(Seq(("a", 1), ("b", 1), ("a", 1)))
@@ -138,7 +153,7 @@ import spark.implicits._
 ```
 7)、DataFrame和Dataset均可使用模式匹配获取各个字段的值和类型
 DataFrame:
-```
+```scala
 testDF.map{
       case Row(col1:String,col2:Int)=>
         println(col1);println(col2)
@@ -148,7 +163,7 @@ testDF.map{
     }
 ```
 Dataset:
-```
+```scala
 case class Coltest(col1:String,col2:Int)extends Serializable //定义字段名和类型
     testDS.map{
       case Coltest(col1:String,col2:Int)=>
@@ -250,7 +265,7 @@ spark.sql("SELECT * FROM persons where age > 21").show()
 // 将DataFrame注册为一个临时表的方式,来通过Spark.sql方式运行标准的SQL语句来查询
 ```
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-sql/18.png)
+![image](assets/sql/18.png)
 
 ## 3.以编程方式执行Spark SQL查询
 ### 3.1.编写Spark SQL查询程序
@@ -265,7 +280,7 @@ spark.sql("SELECT * FROM persons where age > 21").show()
 ```
 #### 3.1.1.通过反射推断Schema
 创建一个object为cn.itcast.spark.sql.InferringSchema
-```
+```scala
 package com.atguigu.sparksql
 
 import org.apache.spark.sql.SparkSession
@@ -314,7 +329,7 @@ object HelloWorld {
 }
 ```
 将程序打成jar包，上传到spark集群，提交Spark任务
-```
+```scala
 /home/hadoop/app/spark-2.2.0-bin-2.6.0-cdh5.7.0/bin/spark-submit \
 --class cn.itcast.spark.sql.InferringSchema \
 --master spark://hadoop:7077 \
@@ -325,7 +340,7 @@ hdfs://hadoop:9000/out
 
 #### 3.1.2.通过StructType直接指定Schema
 创建一个object为cn.itcast.spark.sql.SpecifyingSchema
-```
+```scala
 package cn.itcast.spark.sql
 
 import org.apache.spark.sql.{Row, SQLContext}
@@ -369,7 +384,7 @@ object SpecifyingSchema {
 }
 ```
 将程序打成jar包，上传到spark集群，提交Spark任务
-```
+```scala
 /home/hadoop/app/spark-2.2.0-bin-2.6.0-cdh5.7.0/bin/spark-submit \
 --class cn.itcast.spark.sql.InferringSchema \
 --master spark://hadoop.cn:7077 \
@@ -386,14 +401,14 @@ Spark SQL可以通过JDBC从关系型数据库中读取数据的方式创建Data
 #### 1.启动Spark Shell，必须指定mysql连接驱动jar包
 启动spark
 sbin/start-master.sh 
-```
+```scala
 /usr/local/spark-1.5.2-bin-hadoop2.6/bin/spark-shell \
 --master spark://node1.itcast.cn:7077 \
 --jars /usr/local/spark-1.5.2-bin-hadoop2.6/mysql-connector-java-5.1.35-bin.jar \
 --driver-class-path /usr/local/spark-1.5.2-bin-hadoop2.6/mysql-connector-java-5.1.35-bin.jar 
 ```
 #### 2.从mysql中加载数据
-```
+```scala
 val jdbcDF = sqlContext.read.format("jdbc").options(Map("url" -> "jdbc:mysql://192.168.10.1:3306/bigdata", "driver" -> "com.mysql.jdbc.Driver", "dbtable" -> "person", "user" -> "root", "password" -> "123456")).load()
 ```
 ##### 3.执行查询
@@ -401,7 +416,7 @@ jdbcDF.show()
 
 ### 4.1.2.将数据写入到MySQL中（打jar包方式）
 #### 1.编写Spark SQL程序
-```
+```scala
 package cn.itcast.spark.sql
 
 import java.util.Properties
@@ -443,7 +458,7 @@ object JdbcRDD {
 #### 2.用maven将程序打包
 
 #### 3.将Jar包提交到spark集群
-```
+```scala
 /usr/local/spark-1.5.2-bin-hadoop2.6/bin/spark-submit \
 --class cn.itcast.spark.sql.JdbcRDD \
 --master spark://node1.itcast.cn:7077 \
@@ -457,7 +472,7 @@ object JdbcRDD {
 ### 5.1.DataFrame的创建
 
 #### 5.1.1.数据源的创建(通过Spark的数据源进行创建)
-```
+```scala
 val df = spark.read.json("examples/src/main/resources/people.json")
 // Displays the content of the DataFrame to stdout
 df.show()
@@ -471,7 +486,7 @@ df.show()
 ```
 
 ### 5.1.2.RDD的创建(从一个存在的RDD进行转换)
-```
+```scala
 /**
 Michael, 29
 Andy, 30
@@ -501,7 +516,7 @@ scala> peopleDF.show()
 
 **前提:引入隐式转换import spark.implicits._**
 
-```
+```scala
 // This import is needed to use the $-notation
 import spark.implicits._
 // Print the schema in a tree format
@@ -552,7 +567,7 @@ df.groupBy("age").count().show()
 
 **前提:注册一张临时表**
 
-```
+```scala
 // Register the DataFrame as a SQL temporary view
 df.createOrReplaceTempView("people")
 
@@ -604,7 +619,7 @@ toDF("name","age")
 
 var peopleDF=peopleRDD.map(_.split(",")).map(para=>(para(0).trim(),para(1).trim().toInt)).toDF("name","age")
 
-```
+```scala
 scala>peopleDF.show
 +-------+---+
 |   name|age|
@@ -616,7 +631,7 @@ scala>peopleDF.show
 ```
 
 **一般用元组把一行的数据写在一起，然后在toDF中指定字段名**
-```
+```sc
 import spark.implicits._
 val testDF = rdd.map {line=>
       (line._1,line._2)
@@ -647,7 +662,7 @@ var peopleDS=Seq(Person("Lucy",25)).toDS
 peopleDS.show
 
 
-```
+```scala
 import spark.implicits._
 case class Coltest(col1:String,col2:Int)extends Serializable //定义字段名和类型
 val testDS = rdd.map {line=>
@@ -661,7 +676,7 @@ val testDS = rdd.map {line=>
 
 dataSet.toDF
 
-```
+```scala
 scala>peopleDS.toDF.show
 +----+---+
 |name|age|
@@ -679,12 +694,12 @@ val testDF = testDS.toDF
 
 dataFrame.as[Person]
 
-```
+```scala
 scala> peopleDF.as[Person].collect
 res11: Array[Person] = Array(Person(Michael,29), Person(Andy,30), Person(Justin,19))
 ```
 
-```
+```scala
 import spark.implicits._
 case class Coltest(col1:String,col2:Int)extends Serializable //定义字段名和类型
 val testDS = testDF.as[Coltest]
@@ -699,7 +714,7 @@ SparkSQL能够自动将包含有case类的RDD转换成DataFrame，case类定义�
 
 Case类可以包含诸如Seqs或者Array等复杂的结构。
 
-```
+```scala
 map(attributes => Person(attributes(0), attributes(1).trim.toInt)).toDF()
 
 // RDD->DataFrame
@@ -720,7 +735,7 @@ teenagersDF.map(teenager => "Name: " + teenager.getAs[String]("name")).show()
 
 3).通过SparkSession提供的createDataFrame方法来应用Schema
 
-```
+```scala
 // 1).创建一个多行结构的RDD
 val peopleRDD = spark.sparkContext.textFile("examples/src/main/resources/people.txt")
 
@@ -742,7 +757,7 @@ val peopleDF = spark.createDataFrame(rowRDD, schema)
 通过spark.udf功能用户可以自定义函数
 
 ##### 5.5.1.用户自定义UDF函数
-```
+```scala
 scala> val df = spark.read.json("examples/src/main/resources/people.json")
 df: org.apache.spark.sql.DataFrame = [age: bigint, name: string]
 
@@ -790,7 +805,7 @@ df.select("name", "favorite_color").write.save("namesAndFavColors.parquet")
 当数据源格式不是parquet格式文件时,需要手动指定数据源的格式(json, parquet, jdbc, orc, libsvm, csv, text)
 
 read.load:加载通用数据,使用write和save保存数据
-```
+```scala
 val peopleDF = spark.read.format("json").load("examples/src/main/resources/people.json")
 peopleDF.write.format("parquet").save("hdfs://hadoop000:8020/namesAndAges.parquet")
 
@@ -832,11 +847,11 @@ SaveMode执行存储操作(非原子操作,不会锁定)
 
 Parquet是一种流行的列式存储格式，可以高效地存储具有嵌套字段的记录。
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-sql/19-parquet.png)
+![image](assets/sql/19-parquet.png)
 
 #### 6.2.1.Parquet读写
 Parquet格式经常在Hadoop生态圈中被使用，它也支持Spark SQL的全部数据类型。Spark SQL 提供了直接读取和存储 Parquet 格式文件的方法
-```
+```scala
 // Encoders for most common types are automatically provided by importing spark.implicits._
 import spark.implicits._
 
@@ -893,9 +908,9 @@ classPath中有配好的hdfs-site.xml,默认的文件系统就是 HDFS,否则本
 
 用默认的hive,会在当前工作目录创建(Hive元数据仓库:metastore_db)
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-sql/20-hive.png)
+![image](assets/sql/20-hive.png)
 
-```
+```scala
 spark.sql("show tables").show
 spark.sql("CREATE TABLE IF NOT EXISTS src(key INT,value STRING)")
 spark.sql("show tables").show
@@ -907,7 +922,7 @@ spark.sql("SELECT * FROM src").show
 #### 6.3.2.外部Hive
 复制 hive-site.xml 到spark_home/conf
 
->> bin/spark-shell --master spark://hadoop000:7077 --jars jars/mysql-connector-java-5.1.27-bin.jar
+>  bin/spark-shell --master spark://hadoop000:7077 --jars jars/mysql-connector-java-5.1.27-bin.jar
 
 HiveContext
 
@@ -919,7 +934,7 @@ HiveContext
 >bin/spark-shell --jars jars/mysql-connector-java-5.1.27.jar
 
 
-```
+```scala
 val jdbcDF = spark.read.format("jdbc").option("url", "jdbc:mysql://hadoop000:3306/mysql").option("dbtable", "db").option("user", "root").option("password", "root").load()
 
 val connectionProperties = new Properties()
