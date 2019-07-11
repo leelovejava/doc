@@ -37,6 +37,8 @@
 
 - [滴滴Elasticsearch多集群架构实践](https://mp.weixin.qq.com/s/K44-L0rclaIM40hma55pPQ)
 
+- [Elastic认证考试](https://mp.weixin.qq.com/s/dze7OZOUYuRwvfdCxN01yQ)
+
 ## 提纲
 （1）掌握 Elasticsearch 的基本概念，主要包括：
 
