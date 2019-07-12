@@ -31,6 +31,18 @@ docker rmi <image id>
 docker删除容器
 
 docker rm <容器id>
+```
+# 复制
+docker cp [OPTIONS] CONTAINER:SRC_PATH DEST_PATH|-
+docker cp [OPTIONS] SRC_PATH|- CONTAINER:DEST_PATH
+
+# 将主机/www/runoob目录拷贝到容器96f7f14e99ab的/www目录下。
+docker cp /www/runoob 96f7f14e99ab:/www/
+# 将容器96f7f14e99ab的/www目录拷贝到主机的/tmp目录中。
+docker cp  96f7f14e99ab:/www /tmp/
+```
+
+docker exec -i [nginx容器名/id] nginx -s reload
 
 
 
