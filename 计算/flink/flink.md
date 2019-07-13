@@ -4,6 +4,68 @@ Apache Flink is an open source stream processing framework with powerful stream-
 
 Learn more about Flink at [http://flink.apache.org/](http://flink.apache.org/)
 
+## 大纲
+
+### Flink入门
+* 流处理技术的演变
+* 初识Flink
+* 批处理与流处理
+* Flink基本架构
+* JobManager与TaskManager
+* 无界数据流与有界数据流
+* 数据流编程模型
+* Flink集群搭建
+* Standalone模式安装
+* Yarn模式安装
+
+### Flink运行架构
+* 任务提交流程
+* 任务调度原理
+* Worker与Slots
+* 程序与数据流
+* 并行数据流
+* task与operator chains
+* Flink DataStream API
+* Flink运行模型
+* Flink程序架构
+* 执行环境
+
+### Flink source & sink
+* 基于File的数据源
+* 基于Socket的数据源
+* 基于集合（Collection）的数据源
+* writeAsText
+* WriteAsCsv
+* print/printToErr
+* writeUsingOutputFormat
+* writeToSocket
+* Transformation
+* Map
+
+### Flink Transformation
+* FlatMap、Filter
+* Connect
+* CoMap,CoFlatMap
+* Split、Select
+* Union、KeyBy
+* Reduce、Fold
+* Aggregations
+* Time、Window
+* CountWindow
+* TimeWindow
+
+### Time与Window
+* Window Reduce
+* Window Fold
+* Aggregation on Window
+* EventTime的引入
+* Watermark
+* EvnetTimeWindow API
+* 滚动窗口
+* 滑动窗口
+* 会话窗口
+* 总结
+
 ## doc
 [阿里巴巴为什么选择Apache Flink？](https://mp.weixin.qq.com/s/AoSDPDKbTbjH9rviioK-5Q)
 

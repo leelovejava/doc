@@ -10,6 +10,167 @@
 
 4、具备hive应用实战能力
 
+### Hive入门&安装
+* 什么是Hive
+* Hive的优缺点
+* Hive架构原理
+* Hive和数据库比较
+* Hive安装地址
+* Hive安装部署
+* 将本地文件导入Hive案例
+* MySql安装
+* 安装MySql服务器
+* 安装MySql客户端
+
+### Hive远程连接
+* MySql中user表中主机配置
+* Hive元数据配置到MySql
+* 驱动拷贝
+* 配置Metastore到MySql
+* 多窗口启动Hive测试
+* HiveJDBC访问
+* 启动hiveserver2服务
+* 启动beeline
+* 连接hiveserver2
+* Hive常用交互命令
+
+### Hive命令 & 数据类型
+* Hive其他命令操作
+* Hive常见属性配置
+* Hive数据仓库位置配置
+* Hive查询后信息显示配置
+* Hive运行日志信息配置
+* 参数配置方式
+* Hive数据类型
+* Hive基本数据类型
+* Hive集合数据类型
+* 类型转化
+
+### Hive DDL数据定义
+* 创建数据库
+* 查询数据库
+* 修改数据库
+* 删除数据库
+* 创建管理表
+* 创建外部表
+* 管理表与外部表的互相转换
+* 分区表基本操作
+* 分区表注意事项
+* 修改表、删除表
+* 
+
+### Hive DML数据操作
+* 向表中装载数据（Load）
+* 通过查询语句向表中插入数据（Insert）
+* 查询语句中创建表并加载数据（as select）
+* 创建表时通过location指定加载数据路径
+* Import数据到指定hive表中
+* Insert导出
+* Hadoop命令导出到本地
+* Hive Shell 命令导出
+* Export导出到HDFS上
+* 清除表中数据（Truncate） 
+* 
+
+### Hive查询
+* 全表和特定列查询
+* 列别名
+* 算术运算符、常用函数
+* LIMIT语句
+* WHERE语句
+* 比较运算符（BETWEEN/IN/ IS NULL）
+* LIKE和RLIKE
+* 逻辑运算符（AND/OR/NOT）
+* 分组、GROUP BY语句
+* HAVING语句
+* 
+
+### Hive JOIN & 排序
+* 等值JOIN & 表的别名
+* 内连接
+* 左外连接、右外连接
+* 满外连接、多表连接
+* 笛卡尔积 JOIN
+* 全局排序（Order By）
+* 按照别名排序、多个列排序
+* 每个MapReduce内部排序（Sort By）
+* 分区排序（Distribute By）
+* CLUSTER BY
+* 
+
+### Hive分桶 & 函数
+* 分桶表数据存储
+* 分桶抽样查询
+* 常用查询函数
+* 空字段赋值
+* CASE WHEN
+* 行转列
+* 列转行
+* 窗口函数
+* Rank
+* 系统内置函数
+* 
+
+### ive函数 & 压缩 & 存储
+* 自定义UDF、UDAF、UDTF函数
+* 压缩和存储
+* 源码编译支持Snappy压缩
+* 开启Map输出阶段压缩
+* 开启Reduce输出阶段压缩
+* 列式存储和行式存储
+* TextFile格式、Orc格式
+* Parquet格式
+* 主流文件存储格式对比实验
+* 存储和压缩结合案例
+
+### 企业级调优
+* Fetch抓取
+* 本地模式
+* 表的优化
+* 小表、大表Join
+* 大表Join大表
+* MapJoin
+* Group By
+* Count(Distinct) 去重统计
+* 笛卡尔积
+* 行列过滤
+
+### Hive企业级调优（二）
+* 动态分区调整
+* 分桶、分区
+* Map数
+* 小文件进行合并
+* 复杂文件增加Map数
+* Reduce数
+* 并行执行、严格模式
+* JVM重用、推测执行
+* 压缩
+* EXPLAIN（执行计划）
+
+### 企业级调优 & 项目实战
+* 项目视频表
+* 项目用户表
+* 项目技术选型
+* 数据清洗
+* 数据分析
+* ETL之ETLUtil
+* ETL之Mapper
+* ETL之Runner
+* 执行ETL
+* 项目数据准备
+
+### Hive项目实战&企业真题
+* 统计视频观看数Top10
+* 统计视频类别热度Top10
+* 统计出视频观看数最高的20个视频的所属类别以及类别包含Top20视频的个数
+* 统计视频观看数Top50所关联视频的所属类别Rank
+* 统计每个类别中的视频热度Top10，以Music为例
+* 统计每个类别中视频流量Top10，以Music为例
+* 统计上传视频最多的用户Top10以及他们上传的观看次数在前20的视频
+* 统计每个类别视频观看数Top10
+* 项目总结
+* 企业高频真题讲解2道
+
 ## Overview
 [官网](http://hive.apache.org/)
 

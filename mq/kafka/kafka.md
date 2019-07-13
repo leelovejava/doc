@@ -28,6 +28,28 @@
   * [概述](#6.1.概述)
   * [Kafka Stream案例](#6.2.Kafka Stream案例)
 
+### Kafka（一）
+* Kafka概述
+* 定义
+* 消息队列（Message Queue）
+* Kafka基础架构
+* Kafka快速入门
+* 安装部署
+* Kafka命令行操作
+* Kafka架构深入
+* Kafka工作流程及文件存储机
+
+### Kafka（二）
+* Kafka 高效读写数据
+* Zookeeper在Kafka中的作用
+* Kafka API
+* Producer API
+* Consumer API
+* 自定义Interceptor
+* Flume对接Kafka
+* Kafka监控
+* Kafka Monitor、Manager
+
 ## 一、Kafka概述
 
 ### 1.0.doc

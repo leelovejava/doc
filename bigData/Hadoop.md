@@ -1,5 +1,76 @@
 # hadoop
 
+## 大纲
+
+### 大数据概论 & Hadoop生态
+* 大数据概念
+* 大数据的特点（4V）
+* 大数据应用场景
+* 大数据发展前景
+* 大数据部门业务流程分析
+* 大数据部门组织结构（重点）
+* Hadoop是什么
+* Hadoop发展历史
+* Hadoop三大发行版本
+* Hadoop的优势（4高）
+
+### Hadoop入门
+* Hadoop组成
+* HDFS架构概述
+* YARN架构概述
+* MapReduce架构概述
+* 大数据技术生态体系
+* 推荐系统框架图
+* Hadoop运行环境搭建
+* 虚拟机环境准备
+* 安装JDK、安装Hadoop
+* Hadoop目录结构
+
+### Hadoop运行模式 
+Hadoop运行模式
+本地运行模式
+官方Grep案例
+官方WordCount案例
+伪分布式运行模式
+启动HDFS并运行MapReduce程序
+启动YARN并运行MapReduce程序
+配置历史服务器
+配置日志的聚集
+配置文件说明
+完全分布式运行模式
+
+### 完全分布式模式&源码编译
+* 虚拟机准备
+* 编写集群分发脚本xsync
+* 集群配置
+* 集群单点启动
+* SSH无密登录配置
+* 群起集群
+* 集群启动/停止方式总结
+* 集群时间同步
+* Hadoop编译源码
+* 常见错误及解决方案
+
+### Hadoop 3.x新特性
+* Hadoop 3.x和2.x主要区别
+* 最低Java版本需求由7升级为8
+* 引入纠删码
+* Yarn 时间线服务升级到V2
+* 重写了Shell脚本
+* 引入了新的API依赖
+* MapReduce 任务的本地化优化
+* 支持超过两个NN
+* 许多服务的默认端口改变了
+
+### Hadoop3.x安装使用
+* DataNode内部实现Balancer
+* 重做的后台和任务堆内存管理
+* HDFS实现服务器级别的Federation分流
+* 容量调度器实现API级别的配置
+* Yarn实现更多种资源类型的管理
+* 配置环境变量
+* 配置Hadoop核心文件
+
 ## doc
 
 [用大白话告诉你小白都能看懂的Hadoop架构原理](https://mp.weixin.qq.com/s/mEk3m4MOuOrP5yub2onCGg)

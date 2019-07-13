@@ -8,6 +8,19 @@ http://archive.cloudera.com/cdh5/cdh/5/flume-ng-1.6.0-cdh5.7.0/
 [Flume-1.8.0用户手册官方文档理解](https://blog.csdn.net/weixin_40483882/article/details/81227952)
 [flume学习系列](https://www.jianshu.com/p/bce1088eb8a6)
 
+## 大纲
+
+### Flume概述/基础架构
+* Flume快速入门
+* Flume案例实操
+* Flume进阶案例
+* Flume事务、Agent内部原理
+* Flume拓扑结构
+* Flume企业开发案例
+* 自定义Interceptor、Source、Sink
+* Flume数据流监控-Ganglia
+* 企业真实面试题（重点）
+
 ## 1.简介
 Flume is a distributed(分布式), reliable(可靠), and available(可用) service for efficiently collecting(收集), aggregating(聚合), and moving(移动) large amounts of log data. 
 

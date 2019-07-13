@@ -55,6 +55,8 @@ SequenceDiagram
 
 Plantuml(uml)
 
+### 在线pdf转word
+https://smallpdf.com/cn/pdf-to-word
 
 wind10教育版激活码
 XFPNF-X94XM-J8TVJ-3V72K-C7JWD

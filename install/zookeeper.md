@@ -1,8 +1,38 @@
+# zookeeper
+
+## 大纲
+
+### Zookeeper原理
+* Zookeeper概述、特点
+* Zookeeper数据结构
+* Zookeeper应用场景
+* Zookeeper下载地址
+* Zookeeper本地模式安装
+* 配置参数解读
+* Zookeeper内部原理
+* Zookeeper选举机制
+* Zookeeper节点类型
+* Stat结构体
+ 
+### Zookeeper原理&实战
+* 监听器原理、写数据流程
+* 分布式安装部署
+* 客户端命令行操作
+* API应用环境搭建
+* 创建ZooKeeper客户端案例
+* 创建子节点案例
+* 获取子节点并监听节点变化案例
+* 判断Znode是否存在案例
+* 监听服务器节点动态上下线案例
+* 企业高频真题讲解3道
+ 
+## 安装
+
 zookeeper有单机、伪集群、集群三种部署方式
  
- wget https://apache.org/dist/zookeeper/zookeeper-3.4.10/zookeeper-3.4.10.tar.gz
+> wget https://apache.org/dist/zookeeper/zookeeper-3.4.10/zookeeper-3.4.10.tar.gz
  
-## 一、单机安装
+一、单机安装
 
 ### 1.1 下载
 进入要下载的版本的目录，选择.tar.gz文件下载

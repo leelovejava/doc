@@ -1,14 +1,90 @@
 # 分布式文件系统HDFS
 
-##doc
+## 大纲
+
+### HDFS入门
+* HDFS概述
+* HDFS产出背景及定义
+* HDFS优缺点
+* HDFS组成架构
+* HDFS文件块大小
+* HDFS的Shell操作
+* HDFS客户端操作
+* HDFS客户端环境准备
+* HDFS的API操作
+* HDFS文件上传
+
+### HDFS的API操作
+* HDFS文件下载
+* HDFS文件夹删除
+* HDFS文件名更改
+* HDFS文件详情查看
+* HDFS文件和文件夹判断
+* HDFS的I/O流操作
+* HDFS文件上传
+* HDFS文件下载
+
+### HDFS的框架原理
+* 定位文件读取
+* HDFS的数据流
+* HDFS写数据流程
+* 剖析文件写入
+* 网络拓扑-节点距离计算
+* 机架感知
+* 副本存储节点选择
+* HDFS读数据流程
+
+### NN & DN工作机制
+* NameNode&2NN工作机制
+* Fsimage和Edits解析
+* CheckPoint时间设置
+* NameNode故障处理
+* 集群安全模式
+* NameNode多目录配置
+* DataNode工作机制
+* 数据完整性
+
+### DN工作机制&新特性
+* 掉线时限参数设置
+* 服役新数据节点
+* 退役旧数据节点
+* 添加白名单
+* 黑名单退役
+* Datanode多目录配置
+* HDFS 2.X新特性
+* 集群间数据拷贝
+
+### 新特性& HA框架原理
+* 小文件存档
+* 回收站
+* 快照管理
+* HA概述
+* HDFS-HA工作机制
+* HDFS-HA工作要点
+* HDFS-HA自动故障转移工作机制
+* HDFS-HA集群配置
+
+### HDFS-HA集群配置
+* 环境准备
+* 规划集群
+* 配置Zookeeper集群
+* 配置HDFS-HA集群
+* 启动HDFS-HA集群
+* 配置HDFS-HA自动故障转移
+* YARN-HA配置
+* YARN-HA工作机制
+* 配置YARN-HA集群
+* HDFS Federation架构设计
+
+## doc
 https://www.jianshu.com/p/e35817bdc4a8
 
 [Hadoop如何将TB级大文件的上传性能优化上百倍？](https://mp.weixin.qq.com/s/2HM9NMRHizKTJoYjg8lZ1Q)
 
-##Overview
+## Overview
 重点概念:block文件切块，副本存放，元数据
 
-##特点:
+## 特点:
 * 分布式文件系统
 * 分块存储,默认128M,参数指定块的大小df.blocksize
 * 统一的抽象目录树
@@ -18,19 +94,19 @@ https://www.jianshu.com/p/e35817bdc4a8
 	集群从节点,副本数(dfs.replication)
 * 场景:一次写入,多次读出,不支持的文件的修改	,适合做数据分析，不适合做网盘,因为不便于修改,延迟大,网络开销大,成本高
 
-##优缺点
+## 优缺点
 
-###优点:
+### 优点:
 1.高容错(副本)
 2.批处理
 3.适合大数据处理
 4.构建在廉价机器上
 
-###缺点：
+### 缺点：
 1.低延迟的数据访问
 2.小文件存储(分块)->FastDFS
 
-###win7 hadoop 本地库
+### win7 hadoop 本地库
 2.8.3
 https://download.csdn.net/download/mollywangran/10438972
 
