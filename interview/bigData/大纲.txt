@@ -1,0 +1,62 @@
+大数据技术之技术大纲
+1.Java阶段
+    1.1 Java基础
+        1. JavaEE基础
+        2. SQL与MySQL
+        3. JDBC
+        4. HTML基础与CSS
+        5. JavaScript DOM 与 jQuery
+        6. XML与tomcat
+        7. HTTP协议
+        8. servlet
+        9. EL表达式
+        10. JSTL
+        11. 会话控制
+        12. Ajax
+    1.2 Java高级
+        1. Spring
+        2. SpringMVC
+        3. Mybatis
+        4. Maven
+        5. Log4j
+        6. GIT & GitHub & SVN
+        7. Redis
+        8. WebService
+        9. Tomcat高级
+        10. MySQL高级
+        11. JVM
+2. Linux阶段
+	1. linux命令
+	2. linux shell 脚本
+3. Hadoop生态体系
+	1. Hadoop
+	2. ZooKeeper
+	3. Hive
+	4. Sqoop
+	5. Flume
+	6. HBase
+	7. Oozie
+	8. Hue
+	9. Kafka
+	10. Storm
+	11. Elasticsearch
+4. Spark
+	1. Scala
+	2. Spark Core
+	3. Spark SQL
+	4. Spark Streaming
+	5. Spark GraphX
+6. Spark 内核源码解析
+7. Spark调优解析
+8. Spark 机器学习
+5. 项目
+	1. YouToBE项目			Hive
+	2. 微博项目				HBase
+	3. 公安局项目			Hadoop
+	4. 电信项目				Hadoop
+	5. 滴滴项目				Kafka+Storm
+	6. Spark电影推荐项目		Spark
+	7. Spark电商项目			Spark
+	8. 友盟统计				Hive
+可选项目类型：
+    各种统计类、电影类、电商类、电信类、出行类、公安局类、推荐类、音乐类、医药类、旅游类、广告类。
