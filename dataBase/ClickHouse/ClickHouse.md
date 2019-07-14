@@ -18,6 +18,8 @@
 
 [每天十亿级数据更新，秒出查询结果，ClickHouse在携程酒店的应用](https://mp.weixin.qq.com/s/BPRGyF1WFcGOeSISJTSRow)
 
+[官网](https://clickhouse.yandex)
+
 [clickhouse中国社区](http://www.clickhouse.com.cn/)
 
 `ClickHouse`是一款用于大数据实时分析的列式数据库管理系统，而非数据库。通过向量化执行以及对cpu底层指令集（SIMD）的使用，它可以对海量数据进行并行处理，从而加快数据的处理速度
@@ -311,6 +313,26 @@ DataX现在支持hive到ClickHouse，我们部分数据是通过DataX直接导�
 > Clickhouse快是因为采用了并行处理机制，即使一个查询，也会用服务器一半的cpu去执行，所以ClickHouse不能支持高并发的使用场景，默认单查询使用cpu核数为服务器核数的一半，安装时会自动识别服务器核数，可以通过配置文件修改该参数
 >
 > 
+
+## 安装
+> https://packagecloud.io/altinity/clickhouse
+
+> https://github.com/Altinity/clickhouse-rpm-install
+
+检查一下是否支持SSE 4.2指令集
+> grep -q sse4_2 /proc/cpuinfo && echo "SSE 4.2 supported" || echo "SSE 4.2 not supported"
+
+curl -s https://packagecloud.io/install/repositories/Altinity/clickhouse/script.rpm.sh | sudo bash
+
+sudo yum list 'clickhouse*'
+
+sudo yum install -y clickhouse-server clickhouse-client
+
+sudo yum list installed 'clickhouse*'
+
+sudo /etc/init.d/clickhouse-server restart
+
+clickhouse-client
 
 ## 5. 常见的SQL用法
 
