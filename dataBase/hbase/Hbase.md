@@ -42,6 +42,8 @@
 
 [HBase实践 | 使用Spark SQL读写HBase,Apache Spark-Apache HBase Connector](https://mp.weixin.qq.com/s/295XcqqylBxmhajLWZ1KSQ)
 
+[HBase 原理 | 漫谈HBase Filter](https://mp.weixin.qq.com/s/c8L5Uu7IG_H6uGK2ytgd_A)
+
 ### 官方翻译文档
 
 [官方文档中文版0.97](http://abloz.com/hbase/book.html)
