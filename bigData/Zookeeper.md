@@ -1,6 +1,8 @@
 # 分布式协调服务Zookeeper
 <http://zookeeper.apache.org/>
 
+[ZooKeeper 客户端之 Curator](https://mp.weixin.qq.com/s/05RPa9RBD1FnHWBE4B2i2Q)
+
 ## Welcome to Apache ZooKeeper
 Apache ZooKeeper is an effort to develop and maintain an open-source server which enables highly reliable distributed coordination.
 
