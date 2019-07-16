@@ -18,6 +18,8 @@
 
 [每天十亿级数据更新，秒出查询结果，ClickHouse在携程酒店的应用](https://mp.weixin.qq.com/s/BPRGyF1WFcGOeSISJTSRow)
 
+[微博基于ClickHouse灵活监控百亿流量下的业务指标](https://mp.weixin.qq.com/s/lx5BaREb0uVXwzTWJdWrcg)
+
 [官网](https://clickhouse.yandex)
 
 [clickhouse中国社区](http://www.clickhouse.com.cn/)
