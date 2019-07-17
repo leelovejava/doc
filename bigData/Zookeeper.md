@@ -356,7 +356,7 @@ Master 选举可以说是 ZooKeeper 最典型的应用场景了。比如 HDFS �
 但是，如果当前选举出的 Master 挂了，那么该如何处理？谁来告诉我 Master 挂了呢？
 显然，关系型数据库无法通知我们这个事件。但是，ZooKeeper 可以做到！
 
-利用 ZooKeepr 的强一致性，能够很好地保证在分布式高并发情况下节点的创建一定能够
+利用 ZooKeeper 的强一致性，能够很好地保证在分布式高并发情况下节点的创建一定能够
 保证全局唯一性，即 ZooKeeper 将会保证客户端无法创建一个已经存在的 数据单元节点。
 
 也就是说，如果同时有多个客户端请求创建同一个临时节点，那么最终一定只有一个客户端
@@ -375,13 +375,16 @@ Master 选举可以说是 ZooKeeper 最典型的应用场景了。比如 HDFS �
 
 ##### 排它锁 
    ZooKeeper如何实现排它锁？
+
 定义锁 
-ZooKeeper 上的一个 机器节点 可以表示一个锁
+  ZooKeeper 上的一个 机器节点 可以表示一个锁
+
 获得锁 
  把ZooKeeper上的一个节点看作是一个锁，获得锁就通过创建临时节点的方式来实现。 
  ZooKeeper 会保证在所有客户端中，最终只有一个客户端能够创建成功，那么就可以 
  认为该客户端获得了锁。同时，所有没有获取到锁的客户端就需要到/exclusive_lock 
  节点上注册一个子节点变更的Watcher监听，以便实时监听到lock节点的变更情况。
+
 释放锁 
  因为锁是一个临时节点，释放锁有两种方式
     当前获得锁的客户端机器发生宕机或重启，那么该临时节点就会被删除，释放锁
@@ -402,7 +405,7 @@ ZooKeeper 上的一个 机器节点 可以表示一个锁
 // 会话超时
 private static final int SESSION_TIMEOUT = 2000;
 // zookeeper集群地址
-private String hosts = "mini1:2181,mini2:2181,mini3:2181";
+private String hosts = "node01:2181,node02:2181,node03:2181";
 private String groupNode = "locks";
 private String subNode = "sub";
 private boolean haveLock = false;
@@ -473,6 +476,7 @@ private void doSomething() throws Exception {
     }
 }
 ```
+
 ## 14.命令行操作
 #### 启动
 ```sh
