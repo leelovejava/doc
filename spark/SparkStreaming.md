@@ -4,6 +4,19 @@
 ### 1.1.掌握Spark Streaming的原理
 ### 1.2.熟练使用Spark Streaming完成流式计算任务
 
+* Spark Streaming是什么
+* Spark Streaming特点
+* SparkStreaming架构
+* WordCount案例实操及解析
+* Dstream创建
+* 文件数据源
+* RDD队列（了解）
+* 自定义数据源
+* Kafka数据源（重点）
+* DStream转换、输出
+* 无状态、有状态转化操作
+* Window Operations
+
 ## doc
 [苏宁基于Spark Streaming的实时日志分析系统实践](https://mp.weixin.qq.com/s/cqW94v4yWgekvCYC646hIw)
 

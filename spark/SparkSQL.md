@@ -10,6 +10,33 @@
 
 * 熟练使用Spark SQL完成计算任务
 
+SparkSQL应用解析（一）
+* 什么是Spark SQL
+* Spark SQL的特点
+* 什么是DataFrame
+* 什么是DataSet
+* SparkSQL编程
+* DataFrame
+* DataSet
+* DataFrame与DataSet的互操作
+* RDD、DataFrame、DataSet
+* IDEA创建SparkSQL程序
+* 用户自定义函数
+
+SparkSQL应用解析（二）
+* SparkSQL数据源
+* 通用加载/保存方法
+* Parquet文件
+* JSON文件
+* JDBC
+* Hive数据库
+* Spark SQL实战
+* 数据说明
+* 加载数据
+* 计算所有订单每年最大金额订单的销售额案例
+* 计算所有订单中每年最畅销货品案例
+* 计算所有订单中每年的销售
+
 
 ## 2. Override
 
