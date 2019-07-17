@@ -1,11 +1,13 @@
 # JVM
+
+## doc
 [Java虚拟机案例](https://github.com/JeffLi1993/jvm-core-learning-example)
 
 [java g1笔记](https://mp.weixin.qq.com/s/vuzXjtB2-g2hRXauN0H36Q)
 
 [必知必会的5道JVM面试题](https://mp.weixin.qq.com/s/l8VH8bRHamiZNgBWNId3_w)
               
-### jvm调优工具
+## jvm调优工具
 
 一、JVM调优工具
 
@@ -247,22 +249,23 @@ CPU热点：检查系统哪些方法占用的大量CPU时间
 解决：
 
     1. 重新设计系统减少线程数量。
-
+    
     2. 线程数量不能减少的情况下，通过-Xss减小单个线程大小。以便能生产更多的线程。
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+
+​    
+​    
+​    
+​    
+​    
+​    
+​    
+​    
+​    
+​    
+​    
+​    
+​    
 ------------------------------------------------
 JVM学习
 
@@ -331,10 +334,18 @@ jdk1.8
 
 ## 监控
 VisualVM
-	集成命令行JDK工具和轻量级分析功能的可视化工具
-	jvisualvm.exe
-	Debug with VisualVM
-	[性能分析神器VisualVM](http://www.cnblogs.com/wade-xu/p/4369094.html)
+	
+
+​	集成命令行JDK工具和轻量级分析功能的可视化工具
+​	
+
+​	jvisualvm.exe
+​	
+
+​	Debug with VisualVM
+​	
+
+​    [性能分析神器VisualVM](http://www.cnblogs.com/wade-xu/p/4369094.html)
 
 
 ## JVM性能调优
@@ -352,15 +363,135 @@ Classloader的知识详细、默认全盘负责机制、从JDK源码来理解双
 
 JVM执行子系统、类文件结构、类加载机制、字节码执行引擎、字节码编译模式、如何改变字节码编译模式？
 
+## Java 垃圾回收机制，13张图给你讲清楚！
 
-面试题?
-01).基本概念
+- 什么是自动垃圾回收？
+- 第一步：标记
+- 第二步：清除
+- 压缩
+- 为什么需要分代垃圾收集？
+- JVM 分代
+- 世代垃圾收集过程
+
+------
+
+### 什么是自动垃圾回收？
+
+自动垃圾回收是一种在堆内存中找出哪些对象在被使用，还有哪些对象没被使用，并且将后者删掉的机制。
+
+所谓使用中的对象（已引用对象），指的是程序中有指针指向的对象；而未使用中的对象（未引用对象），则没有被任何指针给指向，因此占用的内存也可以被回收掉。
+
+在用 C 之类的编程语言时，程序员需要自己手动分配和释放内存。而 Java 不一样，它有垃圾回收器，释放内存由回收器负责。本文接下来将介绍垃圾回收机制的基本过程。
+
+#### 第一步：标记
+
+垃圾回收的第一步是标记。垃圾回收器此时会找出哪些内存在使用中，还有哪些不是。
+
+![img](https://mmbiz.qpic.cn/mmbiz_jpg/vnOqylzBGCSbMZa00RlH0R3mlbUom7IdxVfh5Vym7AqxT4ucFIjKONoq2sQHpZMwfa6edpaL3URNhibVN3m8Vqg/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+
+上图中，蓝色表示已引用对象，橙色表示未引用对象。垃圾回收器要检查完所有的对象，才能知道哪些有被引用，哪些没。如果系统里所有的对象都要检查，那这一步可能会相当耗时间。
+
+#### 第二步：清除
+
+这一步会删掉标记出的未引用对象。
+
+![img](https://mmbiz.qpic.cn/mmbiz_jpg/vnOqylzBGCSbMZa00RlH0R3mlbUom7IdGItuyrViaAkf45A6C3rr9DoZDQp1tfIC5rXtwrCnTlgqAeuhPgNX7QQ/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+
+内存分配器会保留指向可用内存的引用，以供分配新对象。
+
+#### 压缩
+
+为了提升性能，删除了未引用对象后，还可以将剩下的已引用对象放在一起（压缩），这样就能更简单快捷地分配新对象了。
+
+![img](https://mmbiz.qpic.cn/mmbiz_jpg/vnOqylzBGCSbMZa00RlH0R3mlbUom7IdAlicxBFwoiaRia3tjQw9bKLjX2TibZXqQMf4bDZ0xeGa1Pm9aeRl2piaFkQ/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+
+### 为什么需要分代垃圾收集？
+
+之前说过，逐一标记和压缩 Java 虚拟机里的所有对象非常低效：分配的对象越多，垃圾回收需时就越久。
+
+不过，根据统计，大部分的对象，其实用没多久就不用了。
+
+来看个例子吧。（下图中，竖轴代表已分配的字节，而横轴代表程序运行时间）
+
+![img](https://mmbiz.qpic.cn/mmbiz_png/vnOqylzBGCSbMZa00RlH0R3mlbUom7IdHNNPEmOWKzZcgPWtXccwsRTDr6zY2pSasZaSBapjp5ibCTWhvLURZAw/640?wx_fmt=png&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+
+上图可见，存活（没被释放）的对象随运行时间越来越少。而图中左侧的那些峰值，也表明了大部分对象其实都挺短命的。
+
+### JVM 分代
+
+根据之前的规律，就可以用来提升 JVM 的效率了。方法是，把堆分成几个部分（就是所谓的分代），分别是新生代、老年代，以及永生代。
+
+![img](https://mmbiz.qpic.cn/mmbiz_jpg/vnOqylzBGCSbMZa00RlH0R3mlbUom7Idy3nal3icjYwp9VM9f7wEu2WIGL8HsnbniaRZic3efJzYZzDgJdMguILsg/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+
+新对象会被分配在新生代内存。一旦新生代内存满了，就会开始对死掉的对象，进行所谓的小型垃圾回收过程。
+
+一片新生代内存里，死掉的越多，回收过程就越快；至于那些还活着的对象，此时就会老化，并最终老到进入老年代内存。
+
+Stop the World 事件 —— 小型垃圾回收属于一种叫 "Stop the World" 的事件。
+
+在这种事件发生时，所有的程序线程都要暂停，直到事件完成（比如这里就是完成了所有回收工作）为止。
+
+老年代用来保存长时间存活的对象。通常，设置一个阈值，当达到该年龄时，年轻代对象会被移动到老年代。
+
+最终老年代也会被回收。这个事件成为 Major GC。
+
+Major GC 也会触发STW（Stop the World）。通常，Major GC会慢很多，因为它涉及到所有存活对象。
+
+所以，对于响应性的应用程序，应该尽量避免Major GC。还要注意，Major GC的STW的时长受年老代垃圾回收器类型的影响。
+
+永久代包含JVM用于描述应用程序中类和方法的元数据。永久代是由JVM在运行时根据应用程序使用的类来填充的。此外，Java SE类库和方法也存储在这里。
+
+如果JVM发现某些类不再需要，并且其他类可能需要空间，则这些类可能会被回收。
+
+### 世代垃圾收集过程
+
+现在你已经理解了为什么堆被分成不同的代，现在是时候看看这些空间是如何相互作用的。后面的图片将介绍JVM中的对象分配和老化过程。
+
+首先，将任何新对象分配给 eden 空间。两个 survivor 空间都是空的。
+
+![img](https://mmbiz.qpic.cn/mmbiz_jpg/vnOqylzBGCSbMZa00RlH0R3mlbUom7Id1u9hgjNzo8lnsvPzib5s5Cp28ich1WpdOTEibVKqn1wVVmgOkY3qzDicRQ/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+
+当 eden 空间填满时，会触发轻微的垃圾收集。
+
+![img](https://mmbiz.qpic.cn/mmbiz_jpg/vnOqylzBGCSbMZa00RlH0R3mlbUom7Id37ibMibibVaQiczSKWvvY9pafPC5fzDXTPrCjIaDe5riaZgcrBbx5PZ7mzA/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+
+引用的对象被移动到第一个 survivor 空间。清除 eden 空间时，将删除未引用的对象。
+
+![img](https://mmbiz.qpic.cn/mmbiz_jpg/vnOqylzBGCSbMZa00RlH0R3mlbUom7Idq9KRGiayf5hBWqiaDibMXia6R88V0GGn7OfsSBqV75R2gfQbUEmGrNQLQg/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+
+在下一次Minor GC中，Eden区也会做同样的操作。删除未被引用的对象，并将被引用的对象移动到Survivor区。然而，这里，他们被移动到了第二个Survivor区（S1）。
+
+此外，第一个Survivor区（S0）中，在上一次Minor GC幸存的对象，会增加年龄，并被移动到S1中。
+
+待所有幸存对象都被移动到S1后，S0和Eden区都会被清空。注意，Survivor区中有了不同年龄的对象。
+
+![img](https://mmbiz.qpic.cn/mmbiz_jpg/vnOqylzBGCSbMZa00RlH0R3mlbUom7IdaBVr3V74wYcQTxCDb40Q6wNsAEDjibEeGdY0ly0PnvDWocyTkUQJtag/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+
+在下一次Minor GC中，会重复同样的操作。不过，这一次Survivor区会交换。被引用的对象移动到S0,。幸存的对象增加年龄。Eden区和S1被清空。
+
+![img](https://mmbiz.qpic.cn/mmbiz_jpg/vnOqylzBGCSbMZa00RlH0R3mlbUom7IdBIPsHqnZiaqUPt0TNPYZSUY0272qhtLcZcLQFhBLiciaX3Th1cV057Vbg/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+
+此幻灯片演示了 promotion。在较小的GC之后，当老化的物体达到一定的年龄阈值（在该示例中为8）时，它们从年轻一代晋升到老一代。
+
+![img](https://mmbiz.qpic.cn/mmbiz_jpg/vnOqylzBGCSbMZa00RlH0R3mlbUom7IdHsiaO6Wl90LYicJ2sj8nmKIjSlCdFyRGce1GB4O27Cn9Fz5bJtenJ2eQ/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+
+随着较小的GC持续发生，物体将继续被推广到老一代空间。
+
+![img](https://mmbiz.qpic.cn/mmbiz_jpg/vnOqylzBGCSbMZa00RlH0R3mlbUom7IdDlcYfsbuwWBbXEjvQJR9PAsn76O3MyYA0KwkK08W8nrRPibqsGDh7iaA/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+
+所以这几乎涵盖了年轻一代的整个过程。最终，将主要对老一代进行GC，清理并最终压缩该空间。
+
+![img](https://mmbiz.qpic.cn/mmbiz_jpg/vnOqylzBGCSbMZa00RlH0R3mlbUom7IdnLwQ3BaUQliasiadlZc3o7tUSxdmoepRibldkobXmicPZ1ibUsV3NAwIOYQ/640?wx_fmt=jpeg&tp=webp&wxfrom=5&wx_lazy=1&wx_co=1)
+
+## 面试题?
+
+### 01). 基本概念
 
 JVM是包括一套字节码指令集、一组寄存器、一个栈、堆、一个垃圾回收，和一个存储方法域。
 
 JVM是运行在操作系统之上的，它与硬件没有直接的交互。
 
-02).谈谈你对解析与分派的认识。
+### 02). 谈谈你对解析与分派的认识。
 
 1.方法在程序真正运行之前就有一个可确定的调用版本，并且这个方法的调用版本在运行期间是不可变的，即“编译时可知，运行不可以变”，这类目标的方法的调用称之为解析
 
@@ -372,14 +503,13 @@ JVM是运行在操作系统之上的，它与硬件没有直接的交互。
 
 显然这里不可能根据静态类型来决定调用那个方法。导致这个现象很明显的原因是因为这两个变量的实际类型不一样，jvm根据实际类型来分派方法执行版本。
 
-
-03).你知道哪些或者你们线上使⽤什么GC策略？它有什么优势，适⽤于什么场景？
+### 03). 你知道哪些或者你们线上使⽤什么GC策略？它有什么优势，适⽤于什么场景？
 
 参考 触发JVM进行Full GC的情况及应对策略。
 
 https://blog.csdn.net/chenleixing/article/details/46706039/
 
-04).Java类加载器包括⼏种？它们之间的⽗⼦关系是怎么样的？双亲委派机制是什么意思？有什么好处？
+### 04). Java类加载器包括⼏种？它们之间的⽗⼦关系是怎么样的？双亲委派机制是什么意思？有什么好处？
 
 如何⾃定义⼀个类加载器？你使⽤过哪些或者你在什么场景下需要⼀个⾃定义的类加载器吗？
 
@@ -415,7 +545,7 @@ B.保证类来源的安全性
 A. 继承ClassLoader    
 
 B. 重写findClass()方法  
- 
+
 C. 调用defineClass（）方法
 
 自定义类加载的意义
@@ -426,13 +556,14 @@ B. 加载一个加密的网络class文件.网络的输入流中读取类(不从�
 
 C. 热部署加载class文件.定义类的实现机制，实现类的热部署
 
+### 05). 堆内存设置的参数是什么？
 
-05).堆内存设置的参数是什么？
 -Xmx 设置堆的最大空间大小
 
 -Xms 设置堆的最小空间大小
 
-06).Perm Space中保存什么数据？会引起OutOfMemory吗？
+### 06). Perm Space中保存什么数据？会引起OutOfMemory吗？
+
 加载class文件
 
 会引起，出现异常可以设置 -XX:PermSize 的大小。JDK 1.8后，字符串常量不存放在永久带，而是在堆内存中，JDK8以后没有永久代概念，而是用元空间替代，元空间不存在虚拟机中，二是使用本地内存。
@@ -441,7 +572,7 @@ C. 热部署加载class文件.定义类的实现机制，实现类的热部署
 
 https://www.cnblogs.com/paddix/p/5309550.html/
 
-07).做GC时，⼀个对象在内存各个Space中被移动的顺序是什么？
+### 07). 做GC时，⼀个对象在内存各个Space中被移动的顺序是什么？
 
 标记清除法，复制算法，标记整理、分代算法。
 
@@ -455,7 +586,8 @@ CMS（Current Mark Sweep）收集器是一种以获取最短回收停顿时间�
 
 http://www.cnblogs.com/dolphin0520/p/3783345.htmll/
 
-08).你有没有遇到过OutOfMemory问题？你是怎么来处理这个问题的？处理 过程中有哪些收获？
+### 08). 你有没有遇到过OutOfMemory问题？你是怎么来处理这个问题的？处理 过程中有哪些收获？
+
 permgen space、heap space 错误。
 
 常见的原因
@@ -472,11 +604,11 @@ permgen space、heap space 错误。
 
 http://outofmemory.cn/c/java-outOfMemoryError/
 
-09).StackOverflow异常有没有遇到过？⼀般你猜测会在什么情况下被触发？如何指定⼀个线程的堆栈⼤⼩？⼀般你们写多少？
+### 09). StackOverflow异常有没有遇到过？⼀般你猜测会在什么情况下被触发？如何指定⼀个线程的堆栈⼤⼩？⼀般你们写多少？
 
 栈内存溢出，一般由栈内存的局部变量过爆了，导致内存溢出。出现在递归方法，参数个数过多，递归过深，递归没有出口。
 
-10).内存模型以及分区，需要详细到每个区放什么?
+### 10). 内存模型以及分区，需要详细到每个区放什么?
 
 方法区:存储类的信息、常量、静态变量、方法名、访问权限、返回值
 
@@ -491,42 +623,45 @@ http://outofmemory.cn/c/java-outOfMemoryError/
 堆和方法区是所有线程共有的，而虚拟机栈、本地方法栈和程序计数器是线程私有的
 
 JVM结构
-类加载器、运行时数据区(方法区、Java堆、本地方法栈、堆、程序计数器)、执行引擎、本地接口、本地库
+ 类加载器、运行时数据区(方法区、Java堆、本地方法栈、堆、程序计数器)、执行引擎、本地接口、本地库
 
-JVM中堆 栈 静态区的作用?[深圳阿尔法2017]
-堆区:heap
+ JVM中堆 栈 静态区的作用?[深圳阿尔法2017]
 
-1.存储的全部是对象(new)，每个对象都包含一个与之对应的class的信息。(class的目的是得到操作指令)
+    堆区:heap
+    
+        1.存储的全部是对象(new)，每个对象都包含一个与之对应的class的信息。(class的目的是得到操作指令)
+        
+        2.堆区(heap)线程共享，堆中不存放基本类型和对象引用，只存放对象本身
+        
+        3.一般由程序员分配释放， 若程序员不释放，程序结束时可能由OS回收
+    
+    栈区:stack
+    
+        1.每个线程包含一个栈区，栈中只保存基础数据类型的对象和自定义对象的引用(不是对象)，对象都存放在堆区中
+        
+        2.每个栈中的数据(原始类型和对象引用)都是私有的，其他栈不能访问。
+        
+        3.栈分为3个部分：基本类型变量区、执行环境上下文、操作指令区(存放操作指令)。
+        
+        4.由编译器自动分配释放 ，存放函数的参数值，局部变量的值等
+    
+    静态区/方法区:method
+    
+        1.方法区又叫静态区，跟堆一样，被所有的线程共享。方法区包含所有的class和static变量。
+        
+        2.方法区中包含的都是在整个程序中永远唯一的元素，如class，static变量。
+        
+        3.全局变量和静态变量的存储是放在一块的，初始化的全局变量和静态变量在一块区域， 未初始化的全局变量和未初始化的静态变量在相邻的另一块区域
 
-2.堆区(heap)线程共享，堆中不存放基本类型和对象引用，只存放对象本身
+### 11). 分派：静态分派与动态分派。
 
-3.一般由程序员分配释放， 若程序员不释放，程序结束时可能由OS回收
-
-栈区:stack
-1.每个线程包含一个栈区，栈中只保存基础数据类型的对象和自定义对象的引用(不是对象)，对象都存放在堆区中
-
-2.每个栈中的数据(原始类型和对象引用)都是私有的，其他栈不能访问。
-
-3.栈分为3个部分：基本类型变量区、执行环境上下文、操作指令区(存放操作指令)。
-
-4.由编译器自动分配释放 ，存放函数的参数值，局部变量的值等
-
-静态区/方法区:method
-1.方法区又叫静态区，跟堆一样，被所有的线程共享。方法区包含所有的class和static变量。
-
-2.方法区中包含的都是在整个程序中永远唯一的元素，如class，static变量。
-
-3.全局变量和静态变量的存储是放在一块的，初始化的全局变量和静态变量在一块区域， 未初始化的全局变量和未初始化的静态变量在相邻的另一块区域
-
-11).分派：静态分派与动态分派。
-
-12).虚拟机在运行时有哪些优化策略
+### 12). 虚拟机在运行时有哪些优化策略
 
 [JVM(1)---虚拟机在运行期的优化策略](https://www.cnblogs.com/kubidemanong/p/9457004.html)
-公共子表达式消除
-数组范围检查消除
-方法内联
-逃逸分析
+    公共子表达式消除
+    数组范围检查消除
+    方法内联
+    逃逸分析
 
 13).请解释`StackOverflowError`和`OutOfMemeryError`的区别？
 `StackOverflowError`:线程栈的溢出
@@ -571,16 +706,18 @@ jvisualvm : 监控内存泄露，跟踪垃圾回收、执行时内存、cpu分�
 
 [线上FullGC频繁的排查](https://blog.csdn.net/wilsonpeng3/article/details/70064336/)
 
-17).如果对象的引用被置为null，垃圾收集器是否会立即释放对象占用的内存？
+### 17). 如果对象的引用被置为null，垃圾收集器是否会立即释放对象占用的内存？
+
 不会，在下一个垃圾回收周期中，这个对象将是可被回收的。
 
 也就是说当一个对象的引用变为 null 时，并不会被垃圾收集器立刻回收，而是在下一次垃圾回收时才会释放其占用的内存
 
+### 18). JVM加载class文件的原理机制
 
-18).JVM加载class文件的原理机制
 类装载到jvm中运行,实质是把类文件从硬盘读取到内存中
 
-19).JVM执行程序的过程
+### 19). JVM执行程序的过程
+
 A.加载.class文件
 
 B.管理并分配内存
@@ -593,7 +730,7 @@ JVM运行过程
 
 ② 字节码文件—->JVM—->机器码
 
-21).JVM调优
+### 20). JVM调优
 
 A.堆大小设置
 
@@ -602,7 +739,7 @@ B.回收器选择
 1、吞吐量优先的并行收集器
 
 2、响应时间优先的并发收集器
- 
+
 C.jvm常用启动参数
 
 堆大小设置（堆 = 年轻代 + 年老代+ 持久代）
@@ -619,6 +756,7 @@ C.jvm常用启动参数
 [垃圾回收算法的实现原理](https://blog.csdn.net/zhanggang807/article/details/45956325)
 [G1，包括原理，流程，优缺点](http://www.cnblogs.com/xiaoxi/p/6486852.html)
 [CMS收集器学习笔记](https://mp.weixin.qq.com/s/OzE7WrvcGPEcf_UHj2a-lg)
+
 谈谈你的GC调优思路?
 [垃圾回收算法的实现原理](http://www.cnblogs.com/aspirant/p/8662690.html)
 [当出现了内存溢出，你怎么排错](https://blog.csdn.net/wtt945482445/article/details/52483944)
