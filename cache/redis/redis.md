@@ -17,14 +17,14 @@
 [window的redis](https://github.com/microsoftarchive/redis/releases)
 
 ## redis大纲
-当下的NoSQL经典应用
-Redis入门介绍
-Redis数据类型
-解析配置文件 redis.conf
-redis的持久化
-Redis的事务
-Redis的复制(Master/Slave)
-Redis的Java客户端Jedis
+* 当下的NoSQL经典应用
+* Redis入门介绍
+* Redis数据类型
+* 解析配置文件 redis.conf
+* redis的持久化
+* Redis的事务
+* Redis的复制(Master/Slave)
+* Redis的Java客户端Jedis
 
 ## redis延迟队列
 
@@ -37,8 +37,11 @@ https://github.com/Yampery/rdsmq
 [分布式之延时任务方案解析](https://www.cnblogs.com/rjzheng/p/8972725.html)
 
 ## 1、NoSQL分类与概况
+
 - [当下的NoSQL经典应用学习](https://blog.csdn.net/andy2019/article/details/71775207)
+
 - [NoSQL经典详解](https://www.cnblogs.com/12yang-ting/p/7494122.html)
+
 
 | 类型   |      主要产品      |  简介 |
 |----------|:-------------:|------:|
@@ -227,3 +230,74 @@ $13
 
 过期键策略: 记录过期时间的毫秒时间戳
 ```
+
+## 7、Scan
+
+### 7.1 前言
+
+有时候我们需要知道线上的redis的使用情况，尤其需要知道一些前缀的key值，那我们怎么去查看呢？
+事故产生
+
+因为我们的用户token缓存是采用了【user_token:userid】格式的key，保存用户的token的值。
+
+我们运维为了帮助开发小伙伴们查一下线上现在有多少登录用户，直接用了keys user_token*方式进行查询。
+
+事故就此发生了。导致redis不可用，假死。
+
+### 7.2 分析原因
+
+我们线上的登录用户有几百万，数据量比较多；keys算法是遍历算法，复杂度是O(n)，也就是数据越多，时间复杂度越高。
+
+数据量达到几百万，keys这个指令就会导致 Redis 服务卡顿
+
+因为 Redis 是单线程程序，顺序执行所有指令，其它指令必须等到当前的 keys 指令执行完了才可以继续。
+
+### 7.3 解决方案
+
+那我们如何去遍历大数据量呢？
+
+这个也是面试经常问的。我们可以采用redis的另一个命令scan。我们看一下scan的特点
+
+1、复杂度虽然也是 O(n)，但是它是通过游标分步进行的，不会阻塞线程
+2、提供 count 参数，不是结果数量，是redis单次遍历字典槽位数量(约等于)
+3、同 keys 一样，它也提供模式匹配功能;
+4、服务器不需要为游标保存状态，游标的唯一状态就是 scan 返回给客户端的游标整数;
+5、返回的结果可能会有重复，需要客户端去重复，这点非常重要;
+6、单次返回的结果是空的并不意味着遍历结束，而要看返回的游标值是否为零
+
+一、scan命令格式
+
+> SCAN cursor [MATCH pattern] [COUNT count]
+
+二、命令解释：scan 游标 MATCH <返回和给定模式相匹配的元素> count 每次迭代所返回的元素数量
+
+SCAN命令是增量的循环，每次调用只会返回一小部分的元素。所以不会让redis假死
+SCAN命令返回的是一个游标，从0开始遍历，到0结束遍历
+
+三、举例
+```
+redis > scan 0 match user_token* count 5
+ 1) "6"
+ 2) 1) "user_token:1000"
+ 2) "user_token:1001"
+ 3) "user_token:1010"
+ 4) "user_token:2300"
+ 5) "user_token:1389"
+```
+从0开始遍历，返回了游标6，又返回了数据，继续scan遍历，就要从6开始
+
+```
+redis > scan 6 match user_token* count 5
+ 1) "10"
+ 2) 1) "user_token:3100"
+ 2) "user_token:1201"
+ 3) "user_token:1410"
+ 4) "user_token:5300"
+ 5) "user_token:3389"
+```
+
+#### 7.4 总结
+
+这个是面试经常会问到的，在工作的过程经常用的
+
+一般小公司，不会有什么问题，但数据量多的时候...
