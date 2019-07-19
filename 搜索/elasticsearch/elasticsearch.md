@@ -478,3 +478,7 @@ BAT大牛亲授 基于ElasticSearch的搜房网实战
 - [漫画解读Elasticsearch原理](https://mp.weixin.qq.com/s/ySfjjd0R4H17IuqU_OmtmQ)
 
 - [ElasticSearch写入数据的工作原理是什么？](https://mp.weixin.qq.com/s/rw6vmDgXUh0SUUh7uo1APg)
+
+### 系列课程
+
+[Elasticsearch 核心技术与实战](https://github.com/geektime-geekbang/geektime-ELK)
