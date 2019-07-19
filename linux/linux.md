@@ -22,6 +22,8 @@
 
 - [大数据工程师必须掌握的性能优化技术](https://mp.weixin.qq.com/s/MOIYKgovsxTllz-EQXGvMg)
 
+- [Linux进程内存用量分析之内存映射篇](https://mp.weixin.qq.com/s/u_S32WoBmBjbfhfg3N7GCQ)
+
 ## windows
 windows的hosts目录
 c:\windows\system32\drivers\etc
