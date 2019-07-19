@@ -63,6 +63,12 @@ XFPNF-X94XM-J8TVJ-3V72K-C7JWD
 
 [web开发者工具](https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html)
 
+[Toolfk在线工具箱](https://www.toolfk.com/)
+
+[在线转换pdf&翻译](https://www.onlinedoctranslator.com/)
+
+[十分钟搞懂Java效率工具Lombok使用与原理](https://mp.weixin.qq.com/s/MgkmgZ-WyXopEbPnr8-flg)
+
 -----------------
 maven清除下载失败的jar
 ```
