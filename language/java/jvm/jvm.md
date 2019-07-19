@@ -6,12 +6,25 @@
 [java g1笔记](https://mp.weixin.qq.com/s/vuzXjtB2-g2hRXauN0H36Q)
 
 [必知必会的5道JVM面试题](https://mp.weixin.qq.com/s/l8VH8bRHamiZNgBWNId3_w)
+
+[JVM 发生 OOM 的 8 种原因、及解决办法](https://mp.weixin.qq.com/s/WgO-j7oOML5bF2jqpmZPqw)
               
 ## jvm调优工具
 
 一、JVM调优工具
 
+深入浅出-VisualVM
+[【深入浅出-VisualVM】（1）：远程调试](https://mp.weixin.qq.com/s/Ldet8x7ifsJWYcJW2JtyEw)
 
+[【深入浅出-VisualVM】（2）：分析堆内存OOM](https://mp.weixin.qq.com/s/FTSj8xGvkDtPKw1qjFpFXA)
+
+[【深入浅出-VisualVM】（3）：分析PermGenOOM](https://mp.weixin.qq.com/s/PbfdJqKFaBUdfQZ-Hl--EQ)
+
+[【深入浅出-VisualVM】（4）：分析CPU](https://mp.weixin.qq.com/s/Uyfy31uDNTWcGqNzGruoBg)
+
+[【深入浅出-VisualVM】（5）：分析线程](https://mp.weixin.qq.com/s/sUyb4dnuzBN9BTYQoZeITw)
+
+[【深入浅出-VisualVM】（6）：检测死锁](https://mp.weixin.qq.com/s/YmJN1ciWgTgWSS-pgGEWUA)
 
 > Jconsole，jProfile，VisualVM。
 
