@@ -11,3 +11,6 @@
 * 配置Presto连接Hive
 * Presto案例实操
 * Presto优化
+
+## doc
+[龙果 Presto快速入门](https://www.roncoo.com/view/1078184624714186754)
