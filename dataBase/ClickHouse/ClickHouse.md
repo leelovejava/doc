@@ -332,9 +332,12 @@ sudo yum install -y clickhouse-server clickhouse-client
 
 sudo yum list installed 'clickhouse*'
 
-sudo /etc/init.d/clickhouse-server restart
+启动服务
+> sudo /etc/init.d/clickhouse-server restart
+> sudo service clickhouse-server start
 
-clickhouse-client
+> clickhouse-client
+> clickhouse-client -h 127.0.0.1
 
 ## 5. 常见的SQL用法
 
@@ -900,3 +903,15 @@ CollapsingMergeTree 在创建时与 MergeTree 基本一样，除了最后多了�
 ```sql
 create table test.collapsingmergetree(sign Int8, sdt Date, name String, cnt UInt16) ENGINE=CollapsingMergeTree(sdt, (sdt, name), 8192, sign);
 ```
+
+## 测试数据
+维基访问数据
+https://clickhouse.yandex/docs/zh/getting_started/example_datasets/wikistat/
+```bash
+#!/bin/sh
+for i in {2007..2016}; do for j in {01..12}; do echo $i-$j >&2; curl -sSL "http://dumps.wikimedia.org/other/pagecounts-raw/$i/$i-$j/" | grep -oE 'pagecounts-[0-9]+-[0-9]+\.gz'; done; done | sort | uniq | tee links.txt
+cat links.txt | while read link; do wget http://dumps.wikimedia.org/other/pagecounts-raw/$(echo $link | sed -r 's/pagecounts-([0-9]{4})([0-9]{2})[0-9]{2}-[0-9]+\.gz/\1/')/$(echo $link | sed -r 's/pagecounts-([0-9]{4})([0-9]{2})[0-9]{2}-[0-9]+\.gz/\1-\2/')/$link; done
+ls -1 /opt/clickhouse/wikistat/ | grep gz | while read i; do echo $i; gzip -cd /opt/wikistat/$i | ./wikistat-loader --time="$(echo -n $i | sed -r 's/pagecounts-([0-9]{4})([0-9]{2})([0-9]{2})-([0-9]{2})([0-9]{2})([0-9]{2})\.gz/\1-\2-\3 \4-00-00/')" | clickhouse-client --query="INSERT INTO wikistat FORMAT TabSeparated"; done
+```
+
+CREATE TABLE wikistat(project String,title String,rquest_size UInt64,response_size UInt64,create_time Date DEFAULT now()) ENGINE=SummingMergeTree(create_time, (create_time, project), 8192);
