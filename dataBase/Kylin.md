@@ -11,3 +11,5 @@
 * Zepplin
 * Kylin的案例实操
 * 常见问题解答
+
+[Kylin 在满帮集团千亿级用户访问行为分析中的应用](https://mp.weixin.qq.com/s/77fveA9q_AQWBYYxpdpgYg)
