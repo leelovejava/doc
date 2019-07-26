@@ -44,7 +44,11 @@ docker cp  96f7f14e99ab:/www /tmp/
 
 docker exec -i [nginx容器名/id] nginx -s reload
 
+查看日志
+docker log 容器名 --tail=1000
 
+
+docker log 容器名 -f --tail=1000
 
 -----------jdk----------------
 
