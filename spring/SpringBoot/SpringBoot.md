@@ -34,6 +34,7 @@
 
 [Spring Boot应用迁移到Java最新版（Java 11）](https://mp.weixin.qq.com/s/avhIEa0mSzj4qepai-hJcA)
 
+[spring boot 配置文件配置项前缀为0的数字特殊处理](https://blog.csdn.net/ly20116/article/details/86608152)
 
 ---------------------------
 ```
