@@ -90,3 +90,5 @@
 
 ## doc
 [用Python告诉你深圳房租有多高](http://www.imooc.com/article/258729)
+
+[神器！视频网站一行Python代码任意（下载）爬](https://mp.weixin.qq.com/s/DAvL-IqZ4RM72Sl69nUlwg)
