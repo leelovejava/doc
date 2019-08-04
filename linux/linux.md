@@ -63,15 +63,40 @@ rem 搜索完毕
 pause
 ```
 
- 关闭防火墙
-  https://blog.csdn.net/Post_Yuan/article/details/78603212  
-  systemctl stop firewalld
-  systemctl disable firewalld
+### 切换yum源
 
- //临时关闭
- service iptables stop
- //禁止开机启动
- chkconfig iptables off
+[linux yum下载慢问题解决](https://blog.csdn.net/baiyan3212/article/details/81175192)
+
+--备份
+mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak
+
+--下载
+wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+
+--清除缓存
+yum clean all
+ 
+--生成缓存
+yum makecache
+
+### 其他
+### 关闭防火墙
+  
+  centos7 firewalld
+      
+      https://blog.csdn.net/Post_Yuan/article/details/78603212  
+      
+      systemctl stop firewalld
+      
+      systemctl disable firewalld
+  
+  centos6 iptables
+     
+     //临时关闭
+     service iptables stop
+     
+     //禁止开机启动
+     chkconfig iptables off
 
 开放端口
  // --permanent 永久生效,没有此参数重启后失效
@@ -86,7 +111,7 @@ https://blog.csdn.net/dancheren/article/details/73611878
 > vi /etc/sysconfig/network-scripts/ifcfg-ens33
 
 安装wget
-> yum install wget
+> yum install wget -y
 
 安装tar
 > yum install -y tar
@@ -95,16 +120,14 @@ https://blog.csdn.net/dancheren/article/details/73611878
 > yum -y install vim*
 
 安装netstat
-> yum install net-tools
+> yum install net-tools -y
 
 安装telnet
 https://www.cnblogs.com/happyflyingpig/p/8127885.html
-> yum -y install telnet-server.x86_64 
-> yum -y install telnet.x86_64
-> yum -y install xinetd.x86_64
+> yum -y install telnet-server.x86_64 telnet.x86_64 xinetd.x86_64
 
 安装gcc
-> yum install gcc-c++
+> yum install gcc-c++ -y
 
 授予root权限
 https://www.linuxidc.com/Linux/2012-07/64530.htm
@@ -177,3 +200,45 @@ ps和kill组合使用
 # 取消行号
 :set nonu
 ```
+
+### centos6.5升级
+1. 解压： 
+> tar xvf glibc-2.14.tar.gz
+
+2. 进入glibc-2.14目录：
+cd glibc-2.14
+
+3. 创建build文件夹：
+mkdir build
+
+4. 进入build目录：
+> cd build
+> ../configure --prefix=/app/glibc-2.14
+
+5. 执行：make编译
+> make install
+
+6. 重建软件
+LD_PRELOAD=/app/glibc-2.14/lib/libc-2.14.so ln -s /app/glibc-2.14/lib/libc-2.14.so/lib64/libc.so.6
+
+１、 cd /lib64
+２、 LD_PRELOAD=/lib64/libc-2.12.so rm libc.so.6
+３、 LD_PRELOAD=/lib64/libc-2.2.5.so ln -s /lib64/libc-2.2.5.so libc.so.6
+
+
+export LD_LIBRARY_PATH=/app/glibc-2.14/lib
+
+7. 失败还原
+LD_PRELOAD=/lib64/libc-2.12.so ln-s/lib64/libc-2.12.so/lib64/libc.so.6/libc-2.12.so 
+
+### rpm安装
+ldd --version
+
+rpm -Uvh glibc-2.14.1-6.x86_64.rpm --nodeps
+rpm -Uvh glibc-common-2.14.1-6.x86_64.rpm  --nodeps
+rpm -Uvh glibc-devel-2.14.1-6.x86_64.rpm --nodeps
+rpm -Uvh glibc-headers-2.14.1-6.x86_64.rpm
+rpm -Uvh glibc-static-2.14.1-6.x86_64.rpm
+rpm -Uvh glibc-utils-2.14.1-6.x86_64.rpm
+rpm -Uvh glibc-utils-2.14.1-6.x86_64.rpm --nodeps
+rpm -Uvh nscd-2.14.1-6.x86_64.rpm --nodeps
