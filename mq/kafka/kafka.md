@@ -1571,7 +1571,14 @@ public class ProducerController {
 }
 ```
 
-### kakfa异常
+### kafka日志清理
+
+[kafka日志清理策略](https://mp.weixin.qq.com/s/o2WQ34iZoPI6BpIQLSjbCw)
+log compaction
+1). compact 
+2). delete 
+
+### kafka异常
 1).
 ```
 org.apache.kafka.clients.consumer.CommitFailedException: Commit cannot be completed since the group has already rebalanced and assigned the partitions to another member. This means that the time between subsequent calls to poll() was longer than the configured max.poll.interval.ms, which typically implies that the poll loop is spending too much time message processing. You can address this either by increasing the session timeout or by reducing the maximum size of batches returned in poll() with max.poll.records
@@ -1597,8 +1604,11 @@ spring.kafka.consumer.session.timeout-ms = 30000
 
 - [kafka扫盲---(7)kafka源码阅读之生产者客户端缓冲池](https://blog.csdn.net/zhaoyaxuan001/article/details/83242482)
 
-#### kafka
+#### kafka高性能
+[消息中间件如何实现每秒几十万的高并发写入？](https://mp.weixin.qq.com/s/sCRC5h0uw2DWD2MixI6pZw)
+
 零拷贝
+
 1、简介
 场景:网络传输持久化日志块(消费的消息是日志块)，本身很消耗性能
 java:Nio chanel transforTo()方法
@@ -1628,3 +1638,19 @@ Kafka使用了Zero Copy技术提升了消费的效率。
 前面所说的Kafka将消息先写入页缓存，如果消费者在读取消息的时候如果在页缓存中可以命中，那么可以直接从页缓存中读取，这样又节省了一次从磁盘到页缓存的copy开销。
 
 另外对于读写的概念可以进一步了解一下什么是写放大和读放大
+
+高性能
+    
+    按照数据的传输顺序
+    
+    首先producer 在往kafka发消息的时候往往是批量的发送，这样减少网络io请求次数，提升性能，
+    
+    批量发送的消息往往可以进行压缩，然后减少数据大小，接着就是往往数据传输的时候需要高效的序列化，序列化又可以减少数据的体积。
+    
+    到kafka这里，数据并没有直接落地而是落到了page cache，只要消费者速度快，也是直接从page cache里读，所以速度快，
+    
+    然后落地本地磁盘过程那实际上是以append的形式追加，减少了磁盘随机写带来的性能开销。
+    
+    最后，在数据网络传输的过程中，当然包括副本同步，是通过zero-copy，也即零拷贝技术来实现的，进而减少了内核空间往用户空间拷贝数据用户空间往内核空间拷贝数据的过程提升了性能。
+    
+    当然消费消息的时候也是批量的。
