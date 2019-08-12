@@ -3,10 +3,11 @@
 ## doc
 [年终总结](https://mp.weixin.qq.com/s/wDU8mEaeNx.2x0hQWxZOqwQ)
 
--[程序员如何在百忙中更有效地利用时间](https://blog.battcn.com/2018/07/03/other/reasonable-use-of-time/)
--[职业发展路线](https://mp.weixin.qq.com/s/xUJDzRax_TQ0pYiCIFhxSw)
--[中小公司的Java工程师应该如何逆袭冲进BAT？](https://mp.weixin.qq.com/s/tTF4ITWc1BXPZtBKqmwx3g)
+- [程序员如何在百忙中更有效地利用时间](https://blog.battcn.com/2018/07/03/other/reasonable-use-of-time/)
+- [职业发展路线](https://mp.weixin.qq.com/s/xUJDzRax_TQ0pYiCIFhxSw)
+- [中小公司的Java工程师应该如何逆袭冲进BAT？](https://mp.weixin.qq.com/s/tTF4ITWc1BXPZtBKqmwx3g)
 - [如何在工作中快速成长？致工程师的10个简单技巧](https://mp.weixin.qq.com/s/wqb_Vwv-r6Aj-LEm_EWJXQ)
+- [【我命由我不由天】30多岁的大龄程序员，应该如何保持职场竞争力？](https://mp.weixin.qq.com/s/w8Oy3b8f-0rlw_CQnmgkqg)
 
 -[软件开发中会用到的图](https://mp.weixin.qq.com/s/TRkj4OiPNMWH8x1Qi4fh_g)
 -[几分钟几张图教你学会如何使用UML](https://mp.weixin.qq.com/s/2SfqdYyHSJSLCH1TdBIb3A)
