@@ -7,6 +7,8 @@
  
  [《阿里巴巴Java工作手册》学习笔记](https://mp.weixin.qq.com/s/billJO4dFRlOhH21SCZpIw)
  
+ 
+ [枚举很好用啊，为啥阿里不建议返回值用枚举？](https://mp.weixin.qq.com/s/lkZzglR7tNlKZ0lwOK8HYg)
 
 ### 编程规约
 
