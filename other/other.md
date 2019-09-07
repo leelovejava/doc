@@ -98,6 +98,8 @@
 
 [阿里 如何成为优秀的技术主管？你要做到这三点](https://mp.weixin.qq.com/s/0LVj1IcWMWAuUeY6U7r4hg)
 
+[一个合格的技术面试官是怎么样的？](https://mp.weixin.qq.com/s/34aPEHtJYrcdRmlswLqY0A)
+
 开发规范、开发流程、技术管理与规划
 
 如何为团队小伙伴设定目标，如何小小激励小伙伴，如何提醒小伙伴不足，是新晋leader可能会困惑的三件事。
