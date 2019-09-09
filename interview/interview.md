@@ -87,6 +87,8 @@
 
 [手写实现一个迷你版的Tomcat](https://mp.weixin.qq.com/s/p67s6MYVEMEPHQbUbDd9YQ)
 
+[如何设计一个短小精悍、可拓展的RPC框架？(含实现代码)](https://mp.weixin.qq.com/s/MLnAuXOA8LtYXLUWjSpTmg)
+
 ### 面试准备
 
 #### 简历
