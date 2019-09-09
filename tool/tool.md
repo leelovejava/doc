@@ -45,6 +45,11 @@ http://jrebel.pyjuan.com/36931214-7bb6-42d4-afd7-26eb5628e004
 过期,重新生成guid
 
 https://www.guidgen.com/
+
+自己搭建服务器
+下载代理服务器 https://github.com/ilanyu/ReverseProxy/releases
+http://127.0.0.1:8888?UUID
+
  
 ### freemind
 
