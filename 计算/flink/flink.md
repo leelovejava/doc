@@ -105,6 +105,10 @@ Learn more about Flink at [http://flink.apache.org/](http://flink.apache.org/)
 
 [Apache Flink 1.9 重大特性提前解读](https://mp.weixin.qq.com/s/ZcjKRlmRtD_-tSVaTL4j7Q)
 
+[如何使用 Flink 每天实时处理百亿条日志？](https://mp.weixin.qq.com/s/Xr1H637zXGfGXqQk0cus1Q)
+
+[基于 Flink 实现的商品实时推荐系统](https://mp.weixin.qq.com/s/pF8mr4AeUwWWpGEAKmJW2w)
+
 ## Features
  
 * A streaming-first runtime that supports both batch processing and data streaming programs
