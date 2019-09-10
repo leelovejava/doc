@@ -63,8 +63,12 @@ Plantuml(uml)
 ### 在线pdf转word
 https://smallpdf.com/cn/pdf-to-word
 
-wind10教育版激活码
-XFPNF-X94XM-J8TVJ-3V72K-C7JWD
+### windows激活码
+win10教育版激活码
+    XFPNF-X94XM-J8TVJ-3V72K-C7JWD
+
+win10专业版激活码
+    Q46NJ-8QDW6-8W9MV-X4G3K-9HJXG
 
 [web开发者工具](https://developers.weixin.qq.com/miniprogram/dev/devtools/download.html)
 
@@ -74,7 +78,8 @@ XFPNF-X94XM-J8TVJ-3V72K-C7JWD
 
 [十分钟搞懂Java效率工具Lombok使用与原理](https://mp.weixin.qq.com/s/MgkmgZ-WyXopEbPnr8-flg)
 
------------------
+
+### maven
 maven清除下载失败的jar
 ```
 @echo off  
