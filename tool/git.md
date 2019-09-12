@@ -39,6 +39,9 @@ git Authentication failed
 
 解决办法: 控制面板\用户帐户\凭据管理器\Windows凭据->删除对应的账号->检出时自动重新输入
 
+Can't update: no tracked branch
+git branch --set-upstream-to origin/master master
+
 ---------
 
 git提交规范:
