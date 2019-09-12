@@ -91,7 +91,7 @@ sink
 
     写入数据源,flume的sink,常用的包括avro、logger、HDFS、Hbase以及file-roll等，其他如thrift、IRC、custom等
 
-![image](https://github.com/leelovejava/doc/blob/master/img/collect/flume/01.png?raw=true)
+![image](assets/01.png)
 
 webServer作为一个客户端，会产生数据，将数据发送到 一个叫 source 的组件
 
