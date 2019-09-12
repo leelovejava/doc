@@ -29,6 +29,8 @@
 
 [mysql系列文章](https://www.cnblogs.com/linjiqin/category/283837.html)
 
+[1000行MySQL命令](https://mp.weixin.qq.com/s/t-DHR6nqUIpqsHX_O4npOA)
+
 ## 分库分表
 
 [sharding-jdbc源码解析](https://github.com/YunaiV/sharding-jdbc)
