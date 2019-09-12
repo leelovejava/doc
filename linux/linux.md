@@ -201,6 +201,9 @@ ps和kill组合使用
 :set nonu
 ```
 
+根据进程查询服务
+> pwdx pid
+
 ### centos6.5升级
 1. 解压： 
 > tar xvf glibc-2.14.tar.gz
