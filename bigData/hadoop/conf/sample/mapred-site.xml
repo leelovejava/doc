@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
 <configuration>
+    <!-- 指定MR运行在Yarn上 -->
     <property>
         <name>mapreduce.framework.name</name>
         <value>yarn</value>

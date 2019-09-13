@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<configuration>
+    <!-- 完全分布式集群名称 -->
+    <property>
+        <name>dfs.nameservices</name>
+        <value>mycluster</value>
+    </property>
+
+    <!-- 集群中NameNode节点都有哪些 -->
+    <property>
+        <name>dfs.ha.namenodes.mycluster</name>
+        <value>nn1,nn2</value>
+    </property>
+
+    <!-- nn1的RPC通信地址 -->
+    <property>
+        <name>dfs.namenode.rpc-address.mycluster.nn1</name>
+        <value>node02:8020</value>
+    </property>
+
+    <!-- nn2的RPC通信地址 -->
+    <property>
+        <name>dfs.namenode.rpc-address.mycluster.nn2</name>
+        <value>node03:8020</value>
+    </property>
+
+    <!-- nn1的http通信地址 -->
+    <property>
+        <name>dfs.namenode.http-address.mycluster.nn1</name>
+        <value>node02:50070</value>
+    </property>
+
+    <!-- nn2的http通信地址 -->
+    <property>
+        <name>dfs.namenode.http-address.mycluster.nn2</name>
+        <value>node03:50070</value>
+    </property>
+
+    <!-- 指定NameNode元数据在JournalNode上的存放位置 -->
+    <property>
+        <name>dfs.namenode.shared.edits.dir</name>
+        <value>qjournal://node02:8485;node03:8485;node01:8485/mycluster</value>
+    </property>
+
+    <!-- 配置隔离机制，即同一时刻只能有一台服务器对外响应 -->
+    <property>
+        <name>dfs.ha.fencing.methods</name>
+        <value>sshfence</value>
+    </property>
+
+    <!-- 使用隔离机制时需要ssh无秘钥登录-->
+    <property>
+        <name>dfs.ha.fencing.ssh.private-key-files</name>
+        <value>/root/.ssh/id_rsa</value>
+    </property>
+
+    <!-- 声明journalnode服务器存储目录-->
+    <property>
+        <name>dfs.journalnode.edits.dir</name>
+        <value>/app/hadoop-2.6.0-cdh5.7.0/data/ha/jn</value>
+    </property>
+
+    <!-- 关闭权限检查-->
+    <property>
+        <name>dfs.permissions.enable</name>
+        <value>false</value>
+    </property>
+
+    <!-- 访问代理类：client，mycluster，active配置失败自动切换实现方式-->
+    <property>
+        <name>dfs.client.failover.proxy.provider.mycluster</name>
+        <value>org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider</value>
+    </property>
+</configuration>

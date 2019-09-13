@@ -6,4 +6,9 @@
         <name>dfs.replication</name>
         <value>1</value>
     </property>
+    <!-- 指定Hadoop辅助名称节点主机配置 -->
+    <property>
+        <name>dfs.namenode.secondary.http-address</name>
+        <value>node03:50090</value>
+    </property>
 </configuration>

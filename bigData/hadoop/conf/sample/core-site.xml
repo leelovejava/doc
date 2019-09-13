@@ -2,7 +2,9 @@
 <?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
 
 <configuration>
-    <!--默认文件系统-->
+    <!-- 默认文件系统
+        指定HDFS中NameNode的地址
+    -->
     <property>
         <name>fs.defaultFS</name>
         <value>hdfs://hadoop000:8020</value>

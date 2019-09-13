@@ -230,18 +230,23 @@ cdh-5.7.0
 		192.168.199.200 hadoop001
 		127.0.0.1 localhost
 	4. ssh免密码登陆(本步骤可以省略，但是后面你重启hadoop进程时是需要手工输入密码才行)
+       .ssh
+        known_hosts 记录ssh访问过计算机的公钥(public key)
+        id_rsa      生成的私钥
+        id_rsa.pub  生成的公钥
+        authorized_keys 存放授权过得无密登录服务器公钥
 ```
 ssh-keygen (全部回车,无需输入)
 
-ssh-copy-id -i /root/.ssh/id_rsa.pub node1
+ssh-copy-id -i /root/.ssh/id_rsa.pub node01
 
-ssh-copy-id -i /root/.ssh/id_rsa.pub node2
+ssh-copy-id -i /root/.ssh/id_rsa.pub node02
 
-ssh-copy-id -i /root/.ssh/id_rsa.pub node3
+ssh-copy-id -i /root/.ssh/id_rsa.pub node03
 
-ssh-copy-id -i /root/.ssh/id_rsa.pub node4
+ssh-copy-id -i /root/.ssh/id_rsa.pub node04
 
-ssh-copy-id -i /root/.ssh/id_rsa.pub node5
+ssh-copy-id -i /root/.ssh/id_rsa.pub node05
 
 ssh node1
 ```        
