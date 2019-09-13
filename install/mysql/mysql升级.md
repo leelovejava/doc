@@ -31,7 +31,7 @@
 
 6、 安装MySQL
 
->> sudo yum install mysql-community-server
+>> sudo yum install mysql-community-server -y
 
 7、 安装完成后，输入命令查看MySQL版本号
 
