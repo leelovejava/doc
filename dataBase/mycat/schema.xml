@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<!DOCTYPE mycat:schema SYSTEM "schema.dtd">
+<mycat:schema xmlns:mycat="http://io.mycat/">
+	<!--逻辑库(schema) 数据库中间件可以被看做是一个或多个数据库集群构成的逻辑库-->
+
+	<!-- 1. 数据库配置，与server.xml中的数据库对应 -->
+    <schema name="lunch" checkSQLschema="false" sqlMaxLimit="100">
+    	<!--逻辑表
+			可以是数据切分后，分布在一个或多个分片库中，也可以不做数据切分，不分片，只有一个表构成
+    	-->
+        <table name="lunchmenu" dataNode="dn1"  />
+        <table name="restaurant" dataNode="dn1"  />
+        <table name="userlunch" dataNode="dn1"  />
+        <table name="users" dataNode="dn1"  />
+        <table name="dictionary" primaryKey="id" autoIncrement="true" dataNode="dn1,dn2"  rule="mod-long" />
+    </schema>
+
+	<!-- 2. 分片配置 dataNode
+		数据切分后，一个大表被分到不同的分片数据库上面，每个表分片所在的数据库
+	 -->
+    <dataNode name="dn1" dataHost="test1" database="lunch" />
+    <dataNode name="dn2" dataHost="test2" database="lunch" />
+
+	<!-- 3. 物理数据库配置 -->
+    <dataHost name="test1" maxCon="1000" minCon="10" balance="0"  writeType="0" dbType="mysql" dbDriver="native">
+        <heartbeat>select user();</heartbeat>
+        <writeHost host="hostM1" url="192.168.0.2:3306" user="root" password="123456">  
+        </writeHost>
+    </dataHost>
+
+    <!--节点主机 dataHost
+		数据切分后，每个分片节点（dataNode）不一定都会独占一台机器，同一机器上面可以有多个分片数据库，这样一个或多个分片节点（dataNode）所在的机器就是节点主机（dataHost）,为了规避单节点主机并发数限制，尽量将读写压力高的分片节点（dataNode）均衡的放在不同的节点主机（dataHost）
+
+		`name`
+			唯一标示dataHost标签，供上层使用
+		`maxCon` 
+			指定每个读写实例连接池的最大连接。
+		`minCon` 
+			指定每个读写实例连接池的最小连接，初始化连接池的大小
+		`balance` 负载均称类型
+			balance="0"：不开启读写分离机制，所有读操作都发送到当前可用的writeHost上
+			balance="1"：全部的readHost与stand by writeHost参与select语句的负载均衡，简单的说，当双主双从模式（M1-S1，M2-S2 并且M1 M2互为主备），正常情况下，M2,S1,S2都参与select语句的负载均衡。
+			balance="2"：所有读操作都随机的在writeHost、readHost上分发
+			balance="3"：所有读请求随机的分发到writeHst对应的readHost执行，writeHost不负担读写压力。（1.4之后版本有）
+		`writeType` 负载均衡类型。
+			writeType="0", 所有写操作发送到配置的第一个 writeHost，第一个挂了切到还生存的第二个writeHost，重新启动后已切换后的为准，切换记录在配置文件中:dnindex.properties .
+			writeType="1"，所有写操作都随机的发送到配置的 writeHost。1.5以后版本废弃不推荐。
+		`switchType` -1不自动切换
+			1 默认值 自动切换
+			2 基于MySql主从同步的状态决定是否切换心跳语句为 show slave status
+			3 基于mysql galary cluster 的切换机制（适合集群）1.4.1 心跳语句为 show status like 'wsrep%'
+			 dbType 指定后端链接的数据库类型目前支持二进制的mysql协议，还有其他使用jdbc链接的数据库，例如：mongodb，oracle，spark等
+			 dbDriver 指定连接后段数据库使用的driver，目前可选的值有native和JDBC。使用native的话，因为这个值执行的是二进制的mysql协议，所以可以使用mysql和maridb，其他类型的则需要使用JDBC驱动来支持。
+			 如果使用JDBC的话需要符合JDBC4标准的驱动jar 放到mycat\lib目录下，并检查驱动jar包中包括如下目录结构文件 META-INF\services\java.sql.Driver。 在这个文件写上具体的driver类名，例如com.mysql.jdbc.Driver
+			 writeHost readHost指定后端数据库的相关配置给mycat，用于实例化后端连接池。
+		`tempReadHostAvailable`
+			如果配置了这个属性 writeHost 下面的 readHost 仍旧可用，默认 0 可配置（0、1）。
+	-->
+    <dataHost name="test2" maxCon="1000" minCon="10" balance="0" writeType="0" dbType="mysql" dbDriver="native">
+    	<!--按照某种业务规则把数据分到某个分片的规则-->
+
+    	<!-- 
+			心跳 heartbeat
+    		指明用于和后端数据库进行心跳检查的语句
+			MYSQL  可以使用 select user()
+			Oracle 可以使用 select 1 from dual
+    	-->
+        <heartbeat>select user();</heartbeat>
+        <!--读写分离配置-->
+        <!--writeHost指定写实例-->
+        <writeHost host="hostS1" url="192.168.0.3:3306" user="root" password="123456">
+        	<!--readHost 指定读实例-->
+        	<!---<readHost host="hostS1" url="192.168.1.101:3306" user="root" password="123456" />-->
+        </writeHost>
+    </dataHost>
+
+</mycat:schema>
