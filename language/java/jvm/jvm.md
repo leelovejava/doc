@@ -55,7 +55,7 @@ VisualVM：JDK自带，功能强大，与JProfiler类似。推荐。
 
 堆信息查看
 
-![image](https://github.com/leelovejava/doc/blob/master/img/java/jvm/01.png)
+![image](assets/01.png)
 
 
 
@@ -69,14 +69,14 @@ VisualVM：JDK自带，功能强大，与JProfiler类似。推荐。
 
 
 
-![image](https://github.com/leelovejava/doc/blob/master/img/java/jvm/02.png)
+![image](assets/02.png)
 
  
 
 查看堆内类、对象信息查看：数量、类型等
 
 
-![image](https://github.com/leelovejava/doc/blob/master/img/java/jvm/03.png)
+![image](assets/03.png)
 
 
 
@@ -97,7 +97,7 @@ VisualVM：JDK自带，功能强大，与JProfiler类似。推荐。
 
 三、线程监控
 
-![image](https://github.com/leelovejava/doc/blob/master/img/java/jvm/04.png)
+![image](assets/04.png)
 
 
 线程信息监控：系统线程数量。
@@ -108,7 +108,7 @@ VisualVM：JDK自带，功能强大，与JProfiler类似。推荐。
 
 
 
-![image](https://github.com/leelovejava/doc/blob/master/img/java/jvm/05.png)
+![image](assets/05.png)
 
 Dump线程详细信息：查看线程内部运行情况
 
@@ -120,7 +120,7 @@ Dump线程详细信息：查看线程内部运行情况
 
 
 
-![image](https://github.com/leelovejava/doc/blob/master/img/java/jvm/06.png)
+![image](assets/06.png)
 
  
 
@@ -180,7 +180,7 @@ CPU热点：检查系统哪些方法占用的大量CPU时间
 说明：这是最典型的内存泄漏方式，简单说就是所有堆空间都被无法回收的垃圾对象占满，虚拟机无法再在分配新空间。
 
 
-![image](https://github.com/leelovejava/doc/blob/master/img/java/jvm/07.png)
+![image](assets/07.png)
 
 
 
@@ -293,7 +293,7 @@ JVM内存划分,运行时数据区
 
 程序计数器、Java 虚拟机栈、本地方法栈、Java 堆、方法区、运行时常量池、直接内存
 
-![image](https://github.com/leelovejava/doc/blob/master/img/java/jvm/08.png?raw=true)
+![image](assets/08.png?raw=true)
 
 ### 堆(heap)
 线程共享
@@ -331,7 +331,7 @@ jdk1.8废除永久代-->元空间（MetaSpace）
 
 存储类的元数据的，如虚拟机加载的类信息、编译后的代码等
 
-![image](https://github.com/leelovejava/doc/blob/master/img/java/jvm/09.png?raw=true)
+![image](assets/09.png?raw=true)
 
 
 

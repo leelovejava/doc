@@ -147,7 +147,7 @@ Spark Streaming 为每个输入源启动对 应的接收器,接收器以任务�
 
 
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/interview/11_trans.png)
+![image](assets/interview/11_trans.png)
 
 ㈡ 无状态转换
 

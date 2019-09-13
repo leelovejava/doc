@@ -157,7 +157,8 @@ Apache Spark™ is a unified analytics engine for large-scale data processing.
 
 *Apache Spark™ 是一个快速通用的处理大规模数据的引擎*
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/01.png)
+![image](assets/spark/01.png)
+
  内存计算框架
 
 Spark是一种快速、通用、可扩展的大数据分析引擎，2009年诞生于加州大学伯克利分校AMPLab，2010年开源，2013年6月成为Apache孵化项目，2014年2月成为Apache顶级项目。
@@ -190,14 +191,14 @@ Spark是MapReduce的替代方案，而且兼容HDFS、Hive，可融入Hadoop的�
 ### 2.3.Spark特点
 #### 2.3.1.快
 与Hadoop的MapReduce相比，Spark基于内存的运算要快100倍以上，基于硬盘的运算也要快10倍以上。Spark实现了高效的DAG执行引擎，可以通过基于内存来高效处理数据流。
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/02-feature-speed.png)
+![image](assets/spark/02-feature-speed.png)
 
 #### 2.3.2.易用
 Spark支持Java、Python和Scala的API，还支持超过80种高级算法，使用户可以快速构建不同的应用。而且Spark支持交互式的Python和Scala的shell，可以非常方便地在这些shell中使用Spark集群来验证解决问题的方法。
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/16-feature-ease-of-use.png)
+![image](assets/spark/16-feature-ease-of-use.png)
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/40-feature-easy-of-use2.png)
+![image](assets/spark/40-feature-easy-of-use2.png)
 
 ```
 wordCount
@@ -210,7 +211,7 @@ spark.read.textFile("/home/hadoop/data/words.txt").flatMap(line => line.split(" 
 Spark提供了统一的解决方案。Spark可以用于批处理、交互式查询（Spark SQL）、实时流处理（Spark Streaming）、机器学习（Spark MLlib）和图计算（GraphX）。
 这些不同类型的处理都可以在同一个应用中无缝使用。Spark统一的解决方案非常具有吸引力，毕竟任何公司都想用统一的平台去处理遇到的问题，减少开发和维护的人力成本和部署平台的物力成本。
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/39-feature-generality.png)
+![image](assets/spark/39-feature-generality.png)
 
 #### 2.3.4.兼容性
 Spark可以非常方便地与其他的开源产品进行融合。比如，Spark可以使用Hadoop的YARN和Apache Mesos作为它的资源管理和调度器，并且可以处理所有Hadoop支持的数据，包括HDFS、HBase和Cassandra等。
@@ -218,16 +219,16 @@ Spark可以非常方便地与其他的开源产品进行融合。比如，Spark�
 Spark也可以不依赖于第三方的资源管理和调度器，它实现了Standalone作为其内置的资源管理和调度框架，这样进一步降低了Spark的使用门槛，使得所有人都可以非常容易地部署和使用Spark。
 此外，Spark还提供了在EC2上部署Standalone的Spark集群的工具。
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/03.png)
+![image](assets/spark/03.png)
 
 ### 2.4.Hadoop和Spark的对比
 * feature对比 
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/22-spark-PK-hadoop.png)
+![image](assets/spark/22-spark-PK-hadoop.png)
 
 * 生态圈对比
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/23-spark-PK-hadoop2.png)
+![image](assets/spark/23-spark-PK-hadoop2.png)
 
 ## Spark应用场景?
 * 保险:Spark的机学习功能来处理和分析所有索赔,优化索赔报销流程
@@ -261,7 +262,7 @@ Spark也可以不依赖于第三方的资源管理和调度器，它实现了Sta
 tar -zxvf spark-1.5.2-bin-hadoop2.6.tgz -C /usr/local
 
 #### 2) 编译源码
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/04-download.png)
+![image](assets/spark/04-download.png)
 
 ##### [Building Spark] (http://spark.apache.org/docs/latest/building-spark.html)
 
@@ -353,7 +354,7 @@ sbin/start-all.sh
 ```
 
 启动后执行jps命令，主节点上有Master进程，其他子节点上有Work进行，登录Spark管理界面查看集群状态（主节点）：http://node1.itcast.cn:8080/
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/05.png)
+![image](assets/spark/05.png)
 
 到此为止，Spark集群安装完毕，但是有一个很大的问题，那就是Master节点存在单点故障，要解决此问题，就要借助zookeeper，并且启动至少两个Master节点来实现高可靠，配置方式比较简单：
 Spark集群规划：node1，node2是Master；node3，node4，node5是Worker
@@ -765,7 +766,7 @@ Finally, Spark includes several samples in the examples directory (Scala, Java, 
 * application-arguments Arguments passed to the main method of your main class, if any
 该算法是利用蒙特·卡罗算法求PI
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/21-spark-on-submit.png)
+![image](assets/spark/21-spark-on-submit.png)
 
 [spark-submit](http://spark.apache.org/docs/latest/submitting-applications.html)
 
@@ -821,23 +822,23 @@ spark shell仅在测试和验证我们的程序时使用的较多，在生产环
 
 1.创建一个项目
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/06.png)
+![image](assets/spark/06.png)
 
 2.选择Maven项目，然后点击next
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/07.png)
+![image](assets/spark/07.png)
 
 3.填写maven的GAV，然后点击next
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/08.png)
+![image](assets/spark/08.png)
 
 4.填写项目名称，然后点击finish
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/09.png)
+![image](assets/spark/09.png)
 
 5.创建好maven项目后，点击Enable Auto-Import
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/10.png)
+![image](assets/spark/10.png)
 
 6.配置Maven的pom.xml
 ```xml
@@ -959,13 +960,13 @@ spark shell仅在测试和验证我们的程序时使用的较多，在生产环
 ```
 7.将src/main/java和src/test/java分别修改成src/main/scala和src/test/scala，与pom.xml中的配置保持一致
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/18-pom-build.png)
+![image](assets/spark/18-pom-build.png)
 
 8.新建一个scala class，类型为Object
 
 [idea scala插件](http://plugins.jetbrains.com/plugin/1347-scala)
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/12.png)
+![image](assets/spark/12.png)
 
 
 9.编写spark程序
@@ -990,22 +991,22 @@ object WordCount {
 
 10.使用Maven打包：首先修改pom.xml中的main class
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/17-pom-main-class.png)
+![image](assets/spark/17-pom-main-class.png)
 
 
 点击idea右侧的Maven Project选项
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/13.png)
+![image](assets/spark/13.png)
 
 
 点击Lifecycle,选择clean和package，然后点击Run Maven Build
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/14.png)
+![image](assets/spark/14.png)
 
 
 11.选择编译成功的jar包，并将该jar上传到Spark集群中的某个节点上
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/15.png)
+![image](assets/spark/15.png)
 
 
 12.首先启动hdfs和Spark集群
@@ -1133,9 +1134,9 @@ HADOOP_CONF_DIR=/opt/software/hadoop-2.6.0-cdh5.7.0/etc/hadoop
 YARN_CONF_DIR=
 ```
 ##### client模式
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/19-spark-on-yarn-client.png)
+![image](assets/spark/19-spark-on-yarn-client.png)
 ##### cluster模式
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/20-spark-on-yarn-cluster.png)
+![image](assets/spark/20-spark-on-yarn-cluster.png)
 
 #### Spark On Mesos
 * 运行在Mesos,资源管理管理交给Mesos,Spark只负责运行任务调度和计算
@@ -1208,12 +1209,12 @@ The case for R is similar.
 * java/scala ⇒ jvm
 * python ⇒ python runtime
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/30-rdd-data.png)
+![image](assets/spark/30-rdd-data.png)
 
 ##### DataFrame:    
 * java/scala/python ⇒ Logic Plan
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/31-dataFrame-data.png)
+![image](assets/spark/31-dataFrame-data.png)
 
 DataFrame比RDD多了一个表头信息（Schema），像一张表了，DataFrame还配套了新的操作数据的方法，DataFrame API（如df.select())和SQL(select id, name from xx_table where ...)
 
@@ -1233,11 +1234,11 @@ DataFrame比RDD多了一个表头信息（Schema），像一张表了，DataFram
 
 数据格式
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/32-Dataset-data.png)
+![image](assets/spark/32-Dataset-data.png)
 
 或者这种,每行数据是个Object
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/33-DataSet-data2.png)
+![image](assets/spark/33-DataSet-data2.png)
 
 DataFrame = Dataset[Row]
 Dataset：强类型  typed  case class
@@ -1248,23 +1249,23 @@ DataFrame：弱类型   Row
 
 1) 相比DataFrame，Dataset提供了*编译时类型检查*，对于分布式程序来讲，提交一次作业太费劲了（要编译、打包、上传、运行），避免到提交到集群运行时才发现错误，这也是引入Dataset的一个重要原因
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/34-DataFrame.png)
+![image](assets/spark/34-DataFrame.png)
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/35-Dataset.png)
+![image](assets/spark/35-Dataset.png)
 
 2) RDD转换DataFrame后不可逆，但RDD转换Dataset是可逆的（这也是Dataset产生的原因）
 
 * 启动spark-shell，创建一个RDD
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/36-creae-rdd.png)
+![image](assets/spark/36-creae-rdd.png)
 
 * 通过RDD创建DataFrame，再通过DataFrame转换成RDD，发现RDD的类型变成了Row类型
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/37-DataFrame-convert-rdd.png)
+![image](assets/spark/37-DataFrame-convert-rdd.png)
 
 * 通过RDD创建Dataset，再通过Dataset转换为RDD，发现RDD还是原始类型
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/38-Dataset-convert-rdd.png)
+![image](assets/spark/38-Dataset-convert-rdd.png)
 
 ### 7.2.DataFrame 基本API常用操作
 people.json
@@ -1329,17 +1330,17 @@ object DataFrameApp {
 
 2）运行结果 
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/24.png)
+![image](assets/spark/24.png)
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/25.png)
+![image](assets/spark/25.png)
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/26.png)
+![image](assets/spark/26.png)
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/27.png)
+![image](assets/spark/27.png)
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/28.png)
+![image](assets/spark/28.png)
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/29.png)
+![image](assets/spark/29.png)
 
 
 ### 7.3.DataFrame与RDD互操作
@@ -1918,7 +1919,7 @@ withColumnRenamed(existingName: String, newName: String): DataFrame
 
 ## 9.Spark组件(Components)
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/42-spark-on-yarn.png)
+![image](assets/spark/42-spark-on-yarn.png)
 
 * ClusterManager:在Standalone模式中即为Master节点（主节点），控制整个集群，监控Worker.在YARN中为ResourceManager
 * Worker:从节点，负责控制计算节点，启动Executor或Driver。在YARN模式中为NodeManager,负责计算节点的控制。
@@ -1944,7 +1945,7 @@ withColumnRenamed(existingName: String, newName: String): DataFrame
 * 5、再由TaskSchedule提交任务给Executor执行。  
 * 6、其它组件协同工作，确保整个应用顺利执行。       
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/43-spark-components.png)
+![image](assets/spark/43-spark-components.png)
 
 ### Spark on Yarn流程
 * 1、基于YARN的Spark作业首先由客户端生成作业信息，提交给ResourceManager。  
@@ -1955,7 +1956,7 @@ withColumnRenamed(existingName: String, newName: String): DataFrame
 * 6、SparkExecutor向SparkAppMaster汇报并完成相应的任务。  
 * 7、SparkClient会通过AppMaster获取作业运行状态。  
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark/42-spark-on-yarn.png)
+![image](assets/spark/42-spark-on-yarn.png)
 
 ## 数据倾斜
 

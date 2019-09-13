@@ -7,7 +7,7 @@ ApplicationMaster 任务调度监控
 YARN扩展Hadoop,不仅支持MapReduce计算,还能很方便的管理诸如Hive、Hbase、Pig、Spark/Shark等应用
 种新的架构设计能够使得各种类型的应用运行在Hadoop上面，并通过Yarn从系统层面进行统一的管理，也就是说，有了Yarn，各种应用就可以互不干扰的运行在同一个Hadoop系统中，共享整个集群资源，如下图所示： 
 
-![image](https://github.com/leelovejava/doc/blob/master/img/hadoop/yarn/01.png?raw=true)
+![image](assets/01.png)
 
 
 #### 架构
@@ -34,7 +34,7 @@ ApplicationMaster：每个应用/作业对应一个，负责应用程序的管�
 Container：
 对任务运行情况的描述：cpu、memory、环境变量
 
-![image](https://github.com/leelovejava/doc/blob/master/img/hadoop/yarn/02.png?raw=true)
+![image](assets/02.png)
 
 ####YARN执行流程
 1) 用户向YARN提交作业
@@ -46,7 +46,7 @@ Container：
 7) NM启动我们作业对应的task
 8) 作业完成,AM想RM取消注册然后关闭,将所有的Container归还给系统
 
-![image](https://github.com/leelovejava/doc/blob/master/img/hadoop/yarn/03.png?raw=true)
+![image](assets/03.png)
 
 ####YARN环境搭建
 mapred-site.xml

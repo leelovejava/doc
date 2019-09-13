@@ -46,7 +46,7 @@
 ### 2.1.Spark Streaming概述
 
 ### 2.1.1.什么是Spark Streaming
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-stream/01.png?raw=true)
+![image](assets/spark-stream/01.png)
 
 Spark Streaming类似于Apache Storm，用于流式数据的处理。根据其官方文档介绍，Spark Streaming有高吞吐量和容错能力强等特点。
 Spark Streaming支持的数据输入源很多，例如：Kafka、Flume、Twitter、ZeroMQ和简单的TCP套接字等等。
@@ -54,34 +54,34 @@ Spark Streaming支持的数据输入源很多，例如：Kafka、Flume、Twitter
 而结果也能保存在很多地方，如HDFS，数据库等。
 另外Spark Streaming也能和MLlib（机器学习）以及Graphx完美融合。
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-stream/02.png?raw=true)
+![image](assets/spark-stream/02.png)
 
 ### 2.1.2.为什么要学习Spark Streaming
 
 1.易用
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-stream/03.png?raw=true)
+![image](assets/spark-stream/03.png)
 
 2.容错
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-stream/04.png?raw=true)
+![image](assets/spark-stream/04.png)
 
 3.易整合到Spark体系
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-stream/05.png?raw=true)
+![image](assets/spark-stream/05.png)
 
 ### 2.1.3.Spark与Storm的对比	
 
 1) 开发语言
 Spark ：Scala	
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-stream/06.png?raw=true)
+![image](assets/spark-stream/06.png)
 
 Storm ：Clojure
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-stream/07.png?raw=true)
+![image](assets/spark-stream/07.png)
 
 2) 编程模型
 Spark :DStream	
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-stream/08.png?raw=true)
+![image](assets/spark-stream/08.png)
 
 Storm :Spout/Bolt
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-stream/09.png?raw=true)	
+![image](assets/spark-stream/09.png)	
 
 3) 场景
 
@@ -107,11 +107,11 @@ Discretized Stream是Spark Streaming的基础抽象，代表持续性的数据�
 实现:
 "微批次"架构,把流式计算当作一系列连续的小规模批处理
 在内部实现上，DStream是一系列连续的RDD来表示。每个RDD含有一段时间间隔内的数据，如下图：
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-stream/10.png?raw=true)
+![image](assets/spark-stream/10.png)
 
 对数据的操作也是按照RDD为单位来进行的
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-stream/11.png?raw=true)
+![image](assets/spark-stream/11.png)
 
 计算过程由Spark engine来完成
 
@@ -144,7 +144,7 @@ Transform原语允许DStream上执行任意的RDD-to-RDD函数。通过该函数
 
 3.Window Operations
 Window Operations有点类似于Storm中的State，可以设置窗口的大小和滑动窗口的间隔来动态的获取当前Steaming的允许状态
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-stream/12.png?raw=true)
+![image](assets/spark-stream/12.png)
 
 3.2.2.Output Operations on DStreams
 Output Operations可以将DStream的数据输出到外部的数据库或文件系统，当某个Output Operations原语被调用时（与RDD的Action相同），streaming程序才会开始真正的计算过程。
@@ -251,7 +251,7 @@ print、saveAsTextFiles、saveAsHadoopFiles
 
 ### 5.1.流处理的流程
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-stream/18.png?raw=true)
+![image](assets/spark-stream/18.png)
 
 初识实时流处理--->日志收集框架Flume--->消息队列Kafka--->实战环境搭建--->Spark Streaming入门--->
 
@@ -263,7 +263,7 @@ Spark Streaming项目实战--->数据处理结果可视化
 
 ### 5.2.用Spark Streaming实现实时WordCount
 架构图：
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-stream/13.png?raw=true)
+![image](assets/spark-stream/13.png)
 
 #### 5.2.1.安装并启动生成者
 
@@ -322,10 +322,10 @@ object NetworkWordCount {
 
 #### 5.2.3.启动Spark Streaming程序：由于使用的是本地模式"local[2]"所以可以直接在本地运行该程序
 注意：要指定并行度，如在本地运行设置setMaster("local[2]")，相当于启动两个线程，一个给receiver，一个给computer。如果是在集群中运行，必须要求集群中可用core数大于1
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-stream/13.png?raw=true)
+![image](assets/spark-stream/13.png)
 
 #### 5.2.4.在Linux端命令行中输入单词
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-stream/14.png?raw=true)
+![image](assets/spark-stream/14.png)
 
 #### 5.2.5.在IDEA控制台中查看结果
 
@@ -445,7 +445,7 @@ object KafkaStreaming{
 
 ### 5.3.Spark Streaming整合Kafka完成网站点击流实时统计
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-stream/15.png?raw=true)
+![image](assets/spark-stream/15.png)
 
 * 1.安装并配置zk
 * 2.安装并配置Kafka

@@ -148,7 +148,7 @@ Hadoop能做什么：
 * Hbase->分布式列数据库
 * R->用做统计分析
 
-![image](https://github.com/leelovejava/doc/blob/master/img/hadoop/04-ecosystem.png)
+![image](assets/04-ecosystem.png)
 
 ### Hadoop
     名称由来：项目作者DougCutting的孩子对黄色大象玩具的命名
@@ -165,13 +165,13 @@ Hadoop能做什么：
     4. 将文件切分成指定大小的数据块并且多副本存于多个机器上
     5. 数据切分、多副本、容错对用户是透明的
 
-![image](https://github.com/leelovejava/doc/blob/master/img/hadoop/02-hdfs.png)    
+![image](assets/02-hdfs.png)    
     
 ### YARN（资源管理）
     1. 整个集群资源的管理与调度
     2. 特点：扩展性、容错性、多框架资源统一调度 
 
-![image](https://github.com/leelovejava/doc/blob/master/img/hadoop/01-yarn.png)    
+![image](assets/01-yarn.png)    
 
 ### MapReduce（分布式计算框架）
     1. 2004年12月的GoogleMapReduce论文
@@ -186,7 +186,7 @@ Hadoop能做什么：
     底层采用多种执行引擎(Spark、Tez、MapReduce)
     支持多种不同的压缩格式(gzip snappy bzip2)、存储格式(TextFile SequenceFile RCFile ORC Parquet)、自定义函数(UDF)
     
-![image](https://github.com/leelovejava/doc/blob/master/img/hadoop/03-mapreduce.png)        
+![image](assets/03-mapreduce.png)        
 
 ## 特点：
 1.开源、社区活跃

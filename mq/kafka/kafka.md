@@ -100,7 +100,7 @@
 4）无论是kafka集群，还是producer和consumer都依赖于zookeeper集群保存一些meta信息，来保证系统可用性。
 
 ### 1.2.Kafka内部实现原理
-![image](https://github.com/leelovejava/doc/blob/master/img/kafka/01.png)
+![image](assets/01.png)
  
 （1）点对点模式（一对一，消费者主动拉取数据，消息收到后消息清除）
 点对点模型通常是一个基于拉取或者轮询的消息传送模型，这种模型从队列中请求信息，而不是将消息推送到客户端。这个模型的特点是发送到队列的消息被一个且只有一个接收者接收处理，即使有多个消息监听者也是如此。
@@ -135,7 +135,7 @@
 
 ### 1.4.Kafka架构
 
- ![image](https://github.com/leelovejava/doc/blob/master/img/kafka/02.png)
+ ![image](assets/02.png)
  
 * 1）Producer ：消息生产者，就是向kafka broker发消息的客户端。
 
@@ -175,7 +175,7 @@ kafka						kafka					kafka
 #### 2.1.2 jar包下载
 http://kafka.apache.org/downloads.html
 
-![image](https://github.com/leelovejava/doc/blob/master/img/kafka/03.png)
+![image](assets/03.png)
  
 #### 2.1.3 虚拟机准备
 1）准备3台虚拟机
@@ -605,7 +605,7 @@ zookeeper.sync.time.ms	2000	How far a ZK follower can be behind a ZK leader
 
 ## 三、Kafka工作流程分析
 
-![image](https://github.com/leelovejava/doc/blob/master/img/kafka/04.png)
+![image](assets/04.png)
  
 ### 3.1.Kafka生产过程分析
 
@@ -615,7 +615,7 @@ producer采用推（push）模式将消息发布到broker，每条消息都被�
 #### 3.1.2 分区（Partition）
 消息发送时都被发送到一个topic，其本质就是一个目录，而topic是由一些Partition Logs(分区日志)组成，其组织结构如下图所示：
 
-![image](https://github.com/leelovejava/doc/blob/master/img/kafka/05.png) 
+![image](assets/05.png) 
  
 我们可以看到，每个Partition中的消息都是有序的，生产的消息被不断追加到Partition log上，其中的每一个消息都被赋予了一个唯一的offset值。
 
@@ -663,7 +663,7 @@ public int partition(String topic, Object key, byte[] keyBytes, Object value, by
 
  producer写入消息流程如下：
 
-![image](https://github.com/leelovejava/doc/blob/master/img/kafka/06.png) 
+![image](assets/06.png) 
  
 1）producer先从zookeeper的 "/brokers/.../state"节点找到该partition的leader
 
@@ -701,7 +701,7 @@ drwxrwxr-x. 2 atguigu atguigu  4096 8月   6 14:37 first-2
 
 #### 3.2.3 Zookeeper存储结构
 
-![image](https://github.com/leelovejava/doc/blob/master/img/kafka/07.png) 
+![image](assets/07.png) 
  
 注意：producer不在zk中注册，消费者在zk中注册。
 
@@ -745,7 +745,7 @@ kafka提供了两套consumer API：高级Consumer API和低级API。
 
 ### 3.3.3 消费者组
 
-![image](https://github.com/leelovejava/doc/blob/master/img/kafka/08.png) 
+![image](assets/08.png) 
  
 消费者是以consumer group消费者组的方式工作，由一个或者多个消费者组成一个组，共同消费一个topic。每个分区在同一时间只能由group中的一个消费者读取，但是多个group可以同时消费这个partition。在图中，有一个由三个消费者组成的group，有一个消费者读取主题中的两个分区，另外两个分别读取一个分区。某个消费者读取某个分区，也可以叫做某个消费者是某个分区的拥有者。
 在这种情况下，消费者可以通过水平扩展的方式同时读取大量的消息。另外，如果一个消费者失败了，那么其他的group成员会自动负载均衡读取之前失败的消费者读取的分区。
@@ -1124,7 +1124,7 @@ Producer拦截器(interceptor)是在Kafka 0.10版本被引入的，主要用于�
 1）需求：
 实现一个简单的双interceptor组成的拦截链。第一个interceptor会在消息发送前将时间戳信息加到消息value的最前部；第二个interceptor会在消息发送后更新成功发送消息数或失败发送消息数。
 
-![image](https://github.com/leelovejava/doc/blob/master/img/kafka/09.png) 
+![image](assets/09.png) 
  
 2）案例实操
 （1）增加时间戳拦截器
@@ -1299,7 +1299,7 @@ Kafka Streams。Apache Kafka开源项目的一个组成部分。是一个功能�
 
 第一，Spark和Storm都是流式处理框架，而Kafka Stream提供的是一个基于Kafka的流式处理类库。框架要求开发者按照特定的方式去开发逻辑部分，供框架调用。开发者很难了解框架的具体运行方式，从而使得调试成本高，并且使用受限。而Kafka Stream作为流式处理类库，直接提供具体的类给开发者调用，整个应用的运行方式主要由开发者控制，方便使用和调试。
  
-![image](https://github.com/leelovejava/doc/blob/master/img/kafka/10.png) 
+![image](assets/10.png) 
  
 第二，虽然Cloudera与Hortonworks方便了Storm和Spark的部署，但是这些框架的部署仍然相对复杂。而Kafka Stream作为类库，可以非常方便的嵌入应用程序中，它对应用的打包和部署基本没有任何要求。
 
@@ -1317,17 +1317,17 @@ Kafka Streams。Apache Kafka开源项目的一个组成部分。是一个功能�
 1）将net.sf.fjep.fatjar_0.0.32.jar拷贝到eclipse安装目录中的plugins目录下，然后重启eclipse即可。
 2）插件使用方法
 
-![image](https://github.com/leelovejava/doc/blob/master/img/kafka/11.png) 
+![image](assets/11.png) 
 
-![image](https://github.com/leelovejava/doc/blob/master/img/kafka/12.png) 
+![image](assets/12.png) 
 
-![image](https://github.com/leelovejava/doc/blob/master/img/kafka/13.png) 
+![image](assets/13.png) 
  
 #### 6.2.2 数据清洗案例 
 0）需求：
 	实时处理单词带有”>>>”前缀的内容。例如输入”atguigu>>>ximenqing”，最终处理成“ximenqing”
  
-![image](https://github.com/leelovejava/doc/blob/master/img/kafka/14.png) 
+![image](assets/14.png) 
  
 1）创建主类
 ```java

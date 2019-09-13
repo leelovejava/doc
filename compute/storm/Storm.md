@@ -207,7 +207,7 @@ Spark:
 
 工作进程（Workers）  
 
-![image](https://github.com/leelovejava/doc/blob/master/img/storm/01-storm-flow.png?raw=true)
+![image](assets/01-storm-flow.png)
 
 ## 架构
 

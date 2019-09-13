@@ -2317,7 +2317,7 @@ maven命令:
     启动时，服务的提供方，注册服务到注册中心，消费者(客户端)通过注册中心查找对应的服务，查询到后，调用服务。监控中心异步统计调用服务的次数和时间，根据次数作出下一步判断。
     比传统的多个查询，有利于管理调用之间的关系。
     
- ![image](https://github.com/leelovejava/doc/blob/master/img/interview/dubbo/01.png)
+ ![image](assets/dubbo/01.png)
     
 ③dubbbo软负载均衡算法有哪几种?[深圳市海魅蓝科技]
     Random LoadBalanc:随机，按权重设置随机概率
@@ -2422,7 +2422,7 @@ D、分布式锁
         
 ④MQ的对比?   
 
-![image](https://github.com/leelovejava/doc/blob/master/img/interview/mq/kafka&rabbit_comp.jpg?raw=true)
+![image](assets/mq/kafka&rabbit_comp.jpg)
 
 > kafka是一种高吞吐量,广泛应用大数据领域
 > rabbitMQ功能完善

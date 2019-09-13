@@ -500,7 +500,7 @@ res8: Array[(String, Int)] = Array((dog,100), (cat,200), (mouse,200))
 
 #### 2.3.3.WordCount中的RDD
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-rdd/01.png?raw=true)
+![image](assets/spark-rdd/01.png)
 
 #### 2.3.4.练习
 启动spark-shell
@@ -633,9 +633,9 @@ rdd5.collect
 
 RDD和它依赖的父RDD（s）的关系有两种不同的类型，即窄依赖（narrow dependency）和宽依赖（wide dependency）。
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-rdd/02.png?raw=true)
+![image](assets/spark-rdd/02.png)
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-rdd/07-depend.png?raw=true)
+![image](assets/spark-rdd/07-depend.png)
 
 
 #### 2.4.1.窄依赖
@@ -651,23 +651,23 @@ RDD和它依赖的父RDD（s）的关系有两种不同的类型，即窄依赖�
 #### 2.4.3.Lineage
 RDD只支持粗粒度转换，即在大量记录上执行的单个操作。将创建RDD的一系列Lineage（即血统）记录下来，以便恢复丢失的分区。RDD的Lineage会记录RDD的元数据信息和转换行为，当该RDD的部分分区数据丢失时，它可以根据这些信息来重新运算和恢复丢失的数据分区。
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-rdd/03.png?raw=true)
+![image](assets/spark-rdd/03.png)
 
 ### 2.5.RDD的缓存
 
 Spark速度非常快的原因之一，就是在不同操作中可以在内存中持久化或缓存个数据集。当持久化某个RDD后，每一个节点都将把计算的分片结果保存在内存中，并在对此RDD或衍生出的RDD进行的其他动作中重用。这使得后续的动作变得更加迅速。RDD相关的持久化和缓存，是Spark最重要的特征之一。可以说，缓存是Spark构建迭代式算法和快速交互式查询的关键。
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-rdd/09-cache.png?raw=true)
+![image](assets/spark-rdd/09-cache.png)
 
 #### 2.5.1.RDD缓存方式
 
 RDD通过persist方法或cache方法可以将前面的计算结果缓存，但是并不是这两个方法被调用时立即缓存，而是触发后面的action时，该RDD将会被缓存在计算节点的内存中，并供后面重用。
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-rdd/05-storage-level.png?raw=true)
+![image](assets/spark-rdd/05-storage-level.png)
 
 通过查看源码发现cache最终也是调用了persist方法，默认的存储级别都是仅在内存存储一份，Spark的存储级别还有好多种，存储级别在object StorageLevel中定义的。
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-rdd/06-persist.png?raw=true)
+![image](assets/spark-rdd/06-persist.png)
 
 缓存有可能丢失，或者存储存储于内存的数据由于内存不足而被删除，RDD的缓存容错机制保证了即使缓存丢失也能保证计算的正确执行。通过基于RDD的一系列转换，丢失的数据会被重算，由于RDD的各个Partition是相对独立的，因此只需要计算丢失的部分即可，并不需要重算全部Partition。
 
@@ -679,8 +679,8 @@ DAG有向无环图:整个任务提交时,分成几个阶段计算
 
 DAG(Directed Acyclic Graph)叫做有向无环图，原始的RDD通过一系列的转换就就形成了DAG，根据RDD之间的依赖关系的不同将DAG划分成不同的Stage，对于窄依赖，partition的转换处理在Stage中完成计算。对于宽依赖，由于有Shuffle的存在，只能在parent RDD处理完成后，才能开始接下来的计算，因此宽依赖是划分Stage的依据。
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-rdd/04.png?raw=true)
+![image](assets/spark-rdd/04.png)
 
 通过RDDs之间的这种依赖关系，一个任务流可以描述为DAG(有向无环图)，如下图所示，在实际执行过程中宽依赖对应于Shuffle(图中的reduceByKey和join)，窄依赖中的所有转换操作可以通过类似于管道的方式一气呵成执行(图中map和union可以一起执行)
 
-![image](https://github.com/leelovejava/doc/blob/master/img/spark/spark-rdd/08-dag.png?raw=true)
+![image](assets/spark-rdd/08-dag.png)
