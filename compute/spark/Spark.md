@@ -9,107 +9,197 @@ spark.apache.org
 ## 1.3.目标3：编写简单的Spark应用程序
 
 Spark基础解析
+
     什么是Spark
+    
     Spark内置模块
+    
     Spark特点
+    
     Spark运行模式
+    
     Spark安装地址
+    
     重要角色
+    
     Local模式
+    
     Standalone模式
+    
     Yarn模式（重点）
+    
     Mesos模式(了解)
+    
     几种模式对比
+    
     案例实操
+    
     编写WordCount程序
+    
     本地调试
 
 SparkCore应用解析（一）
+
     RDD概述
+    
     什么是RDD
+    
     RDD的属性、特点
+    
     RDD编程
+    
     编程模型
+    
     RDD的创建
+    
     DAG的转换
+    
     Action
+    
     RDD中的函数传递
+    
     RDD的依赖关系
+    
     RDD的缓存
+    
     RDD的CheckPoint
 
 SparkCore应用解析（二）
+
     键值对RDD数据分区器
+    
     获取RDD分区
+    
     Hash分区、Ranger分区
+    
     自定义分区
+    
     数据读取与保存
+    
     文件类数据读取与保存
+    
     文件系统类数据读取与保存
+    
     RDD编程进阶
+    
     系统累加器、自定义累加器
+    
     广播变量（调优策略）
+    
     扩展
+    
     RDD相关概念关系
 
 Spark内核解析（一）
+
     Spark 内核概述
+    
     Spark核心组件回顾
+    
     Spark通用运行流程概述
+    
     Spark 部署模式
+    
     Standalone模式运行机制
+    
     YARN模式运行机制
+    
     Spark 通讯架构
+    
     Spark通信架构概述
+    
     Spark通讯架构解析
+    
     Spark 任务调度机制
+    
     Spark任务提交流程
+    
     Spark任务调度
+    
     Spark Stage级调度
 
 Spark内核解析（二）
+
     Spark Shuffle解析
+    
     Shuffle的核心要点
+    
     HashShuffle解析
+    
     SortShuffle解析
+    
     Spark 内存管理
+    
     堆内和堆外内存规划
+    
     内存空间分配
+    
     存储内存管理
+    
     执行内存管理
+    
     Spark 核心组件解析
+    
     BlockManager数据存储与管理机制
+    
     Spark 共享变量底层实现
+    
     总结
 
 Spark 性能调优（一）
+
     常规性能调优
+    
     算子调优
+    
     Shuffle调优
+    
     JVM调优
+    
     Shuffle调优
+    
     Spark 数据倾斜
+    
     解决方案一：聚合原数据
+    
     解决方案二：过滤导致倾斜的key
+    
     解决方案三：提高shuffle操作中的reduce并行度
+    
     解决方案四：使用随机key实现双重聚合
+    
     解决方案五：将reduce join转换为map join
+    
     解决方案六：sample采样对倾斜key单独进行join
+    
     解决方案七：使用随机数
 
 Spark 性能调优(二）
+
     Spark Troubleshooting
+    
     故障排除一：控制reduce端缓冲大小以避免OOM
+    
     故障排除二：JVM GC导致的shuffle文件拉取失败
+    
     故障排除三：解决各种序列化导致的报错
+    
     故障排除四：解决算子函数返回NULL导致的问题
+    
     故障排除五：解决YARN-CLIENT模式导致的网卡流量激增问题
+    
     故障排除六：解决YARN-CLUSTER模式的JVM栈内存溢出无法执行问题
+    
     故障排除七：解决SparkSQL导致的JVM栈内存溢出
+    
     故障排除八：持久化与checkpoint的使用
+    
     运行资源调优、JVM虚拟机优化
+    
     Spark的内存管理优化、GC优化
+    
     京东商城基于Spark的风控系统的实现
+    
     Spark在美团的实践
 
 ## doc
