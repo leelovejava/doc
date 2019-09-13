@@ -122,7 +122,7 @@ Hadoop Database，是一个高可靠性、高性能、面向列、可伸缩、�
 
 #### 集群规划
 
-![image](https://github.com/leelovejava/doc/blob/master/img/dataBase/hbase/07.png)
+![image](assets/07.png)
 
 #### 版本选择:
     apache/cloudera(CDH)
@@ -391,9 +391,9 @@ Client->RegionServer
 2).Client对RegionServer发起读请求
 3).当RegionServer收到client的读请求后,先扫描自己的MemStore,再扫描BlockCache(加速读内容缓存区)如果还没找到则StoreFile中读取数据,然后数据返回给Client
 
-![image](https://github.com/leelovejava/doc/blob/master/img/dataBase/hbase/05_wirter_read.png)
+![image](assets/05_wirter_read.png)
 
-![image](https://github.com/leelovejava/doc/blob/master/img/dataBase/hbase/06.png)
+![image](assets/06.png)
 
 ### 机制
 
