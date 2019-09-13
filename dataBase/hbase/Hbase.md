@@ -174,7 +174,7 @@ Hlog(WAL log)
     记录操作和数据(可恢复数据)
 
 ## 配置
-1.
+1. hbase-env.sh
 ```
 # 配置Java环境
 export JAVA_HOME=/usr/local/java
