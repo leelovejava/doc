@@ -129,7 +129,7 @@ https://www.cnblogs.com/skyme/p/5779885.html
 
 greenplum的总体架构如下：
 
-![image](https://github.com/leelovejava/doc/blob/master/img/dataBase/greenplum/01.png)
+![image](assets/01.png)
 
 数据库由Master Severs和Segment Severs通过Interconnect互联组成
   
@@ -147,10 +147,10 @@ greenplum的总体架构如下：
    
 greenplum使用mpp架构
 
-![image](https://github.com/leelovejava/doc/blob/master/img/dataBase/greenplum/02.png)
+![image](assets/02.png)
 
  基本体系架构
  
-![image](https://github.com/leelovejava/doc/blob/master/img/dataBase/greenplum/03.png)
+![image](assets/03.png)
 
   
