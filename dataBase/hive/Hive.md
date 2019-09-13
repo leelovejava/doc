@@ -217,7 +217,7 @@ apache的hive是一个数据仓库的软件,它能方便提供非常方便的读
 
 ## Hive架构
 
-![image](https://github.com/leelovejava/doc/blob/master/img/dataBase/hive/01.png?raw=true)
+![image](assets/01.png)
 
 Jobtracker是hadoop1.x中的组件，它的功能相当于： Resourcemanager+AppMaster
 
@@ -250,7 +250,7 @@ Hive利用HDFS存储数据，利用MapReduce查询数据
 
 ### Hive与传统数据库对比
 
-![image](https://github.com/leelovejava/doc/blob/master/img/dataBase/hive/02.png?raw=true)
+![image](assets/02.png)
 
 总结：hive具有sql数据库的外表，但应用场景完全不同，hive只适合用来做批量数据统计分析
 
