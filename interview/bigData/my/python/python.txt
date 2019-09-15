@@ -1,0 +1,3 @@
+会不会python?
+
+用python 写一个脚本程序 向mysql 批量添加用户?

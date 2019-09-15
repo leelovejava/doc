@@ -1,0 +1,122 @@
+1.Flume使用场景?（☆☆☆☆☆）
+	分布式的数据收集
+	线上数据一般主要是落地（存储到磁盘）或者通过socket传输给另外一个系统，这种情况下，你很难推动线上应用或服务去修改接口，实现直接向kafka里写数据，这时候你可能就需要flume这样的系统帮你去做传输。
+
+2. Flume丢包问题（☆☆☆☆☆）
+	单机upd的flume source的配置，100+M/s数据量，10w qps flume就开始大量丢包，因此很多公司在搭建系统时，抛弃了Flume，自己研发传输系统，但是往往会参考Flume的Source-Channel-Sink模式。
+	一些公司在Flume工作过程中，会对业务日志进行监控，例如Flume agent中有多少条日志，Flume到Kafka后有多少条日志等等，如果数据丢失保持在1%左右是没有问题的，当数据丢失达到5%左右时就必须采取相应措施。
+
+3. Flume有哪些组件，flume的source、channel、sink具体是做什么的
+	1）source：用于采集数据，Source是产生数据流的地方，同时Source会将产生的数据流传输到Channel，这个有点类似于Java IO部分的Channel。
+	2）channel：用于桥接Sources和Sinks，类似于一个队列。
+	3）sink：从Channel收集数据，将数据写到目标源(可以是下一个Source，也可以是HDFS或者HBase)。
+
+4. Flume 处理日志重复问题?
+ 
+ 原因: Flume提供至少一次保证，事件至少被存储一次。有些场景会导致Flume最终会不只一次存储数据.RPC调用超时,重试
+
+ 解决: 如果事件是重复敏感型，通常可以在事件中插入唯一标识，后续处理可以使用这些唯一标识符删除重复数据
+
+ 1). 修改source源码，写一个自定义的source，继承 AbstractSource 、实现 EventDrivenSource，Configurable接口
+ 
+ 2). Taildir Source
+
+	记录日志读取位置
+	a1.sources.r1.positionFile = /var/log/flume/taildir_position.json
+
+	记录日志读取位置
+	a1.sources.r1.filegroups.f1 = /var/log/test1/example.log
+
+5. Flume 监控问题?自身支持ganlia集群监控
+监控系统做过没？Ganglia 监控系统 或者集群？
+
+	`Ganglia` 监控
+	`Nagios` 告警
+
+	集群管理工具 `Ambari`、`Cloudera Manger`
+
+6. Flume是如何拿数据的?
+	flume source
+
+7. flume是如何导入数据到kafka?具体?Kafka Sink 
+	Flume与Kafka的选取
+
+	`channel`里面配置相应的topic
+
+	a1.channels.c1.type = org.apache.flume.channel.kafka.KafkaChannel
+	a1.channels.c1.kafka.bootstrap.servers = node01:9092,node02:9092,node03:9092
+	a1.channels.c1.kafka.topic = topic_start
+	a1.channels.c1.parseAsFlumeEvent = false
+	a1.channels.c1.kafka.consumer.group.id = flume-consumer
+
+	Flume和kafka采集日志区别，采集日志时中间停了，怎么记录之前的日志。
+		Flume采集日志是通过流的方式直接将日志收集到存储层，而kafka是将缓存在kafka集群，待后期可以采集到存储层。
+		Flume采集中间停了，可以采用文件的方式记录之前的日志，而kafka是采用offset的方式记录之前的日志
+
+8. Flume的实时采集数据和定时采集数据的方法？
+	tail -f
+	Spooling
+
+9. 主要问Flume如何使用？整合Flume+Storm和整合Flume+Kafka
+
+10. Flume过滤器、拦截器
+	ETL拦截器和区分类型拦截器
+
+	采用两个拦截器的优缺点：
+		优点，模块化开发和可移植性；
+		缺点，性能会低一些(轻过滤,例如校正json数据格式是否正确)
+
+	实现:
+		a) 实现 Interceptor
+		b）重写四个方法
+			initialize 初始化
+			public Event intercept(Event event) 处理单个Event
+			public List<Event> intercept(List<Event> events) 处理多个Event，在这个方法中调用Event intercept(Event event)
+			close 方法
+		c）静态内部类，实现Interceptor.Builder
+
+11. flume在实际项目里面的数据采集？
+	数据埋点发送nginx,flume监听nginx日志,发送给kafka
+
+12. 公司flume有几台，通过什么协议获取的数据
+	3台 HTTP
+
+13. Flume收集信息的时候遇到了什么问题？怎么解决的？
+	Flume丢失数据情况及处理
+	Flume 抽取Nginx的数据，中断的怎么处理？
+
+14. Flume如何保证数据的可靠性
+ 1). Flume提供三种可靠性, JDBC, FILE and MEMORY.File Channel将所有事件写到磁盘。因此在程序关闭或机器宕机的情况下不会丢失数据。
+
+ 2). Flume使用事务的办法来保证event的可靠传递. Source和Sink分别被封装在事务中，这些事务由保存event的存储提供或者由Channel提供。这就保证了event在数据流的点对点传输中是可靠的。
+
+
+15. Flume不采集Nginx日志，通过Logger4j采集日志，优缺点是什么？
+	优点：Nginx的日志格式是固定的，但是缺少sessionid，通过logger4j采集的日志是带有sessionid的，
+		而session可以通过redis共享，保证了集群日志中的同一session落到不同的tomcat时，sessionId还是一样的,
+		而且logger4j的方式比较稳定，不会宕机。
+	缺点： 不够灵活,logger4j的方式和项目结合过于紧密，而flume的方式比较灵活，拔插式比较好，不会影响项目性能。
+
+16. FileChannel优化
+	dataDirs指向多个路径，每个路径对应不同的硬盘，增大Flume吞吐量
+
+	checkpointDir和backupCheckpointDir也尽量配置在不同硬盘对应的目录中，保证checkpoint坏掉后，可以快速使用backupCheckpointDir恢复数据
+
+17. HDFS Sink小文件处理
+（1）HDFS存入大量小文件，有什么影响？
+元数据层面：每个小文件都有一份元数据，其中包括文件路径，文件名，所有者，所属组，权限，创建时间等，这些信息都保存在Namenode内存中。所以小文件过多，会占用Namenode服务器大量内存，影响Namenode性能和使用寿命
+计算层面：默认情况下MR会对每个小文件启用一个Map任务计算，非常影响计算性能。同时也影响磁盘寻址时间
+
+（2）HDFS小文件处理
+官方默认的这三个参数配置写入HDFS后会产生小文件，hdfs.rollInterval、hdfs.rollSize、hdfs.rollCount
+基于以上`hdfs.rollInterval=3600`、`hdfs.rollSize=134217728`，`hdfs.rollCount =0`，`hdfs.roundValue=10`，`hdfs.roundUnit= second`几个参数综合作用，效果如下：
+  1）tmp文件在达到128M时会滚动生成正式文件
+  2）tmp文件创建超10秒时会滚动生成正式文件
+举例：在2018-01-01 05:23的时侯sink接收到数据，那会产生如下tmp文件：
+/atguigu/20180101/atguigu.201801010520.tmp
+即使文件内容没有达到128M，也会在05:33时滚动生成正式文件
+
+基于时间策略: hdfs.rollInterval
+基于文件大小和event数量策略:
+                  文件大小策略：hdfs.rollSize 默认1024字节
+                  event数量策略：hdfs.rollCount 默认10

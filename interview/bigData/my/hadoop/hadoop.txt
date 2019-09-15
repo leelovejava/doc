@@ -1,0 +1,51 @@
+# 1.hodoop写文件流程?
+
+# 2.hdfs了解多少？读写流程，架构？
+
+# 3. 写流程中备份三，其中一个写失败了怎么弄的？
+
+# 4.hdfs HA（过程，启动流程）？
+
+# 5.hadoop的优化？
+
+# 6.hadoop1和hadoop2的区别？
+加入了yarn解决了资源调度的问题。
+加入了对zookeeper的支持实现比较可靠的高可用。
+
+7.hadoop有哪些组件？
+
+
+9.HDFS 存储的什么类型?
+
+11.说说你hadoop 中都每个配置文件都配置了什么吧?
+
+12.Hadoop集群的优化?
+
+13.hdfs的实现?
+
+14.hdfs文件创建--工作流程？
+
+15.hdfs异步读?
+参考博客：http://blog.csdn.net/androidlushangderen/article/details/52452215
+
+16.hdfs api 源码 解答：文件创建工作流程?
+
+17.hdfs  api新特性?
+
+18.hadoop中一个job提交到resourcemanager之后，resourcemanager会生成一个什么样的容器来放这个job？
+
+19.hadoop集群中的某个block不能copy数据到其他节点，怎么办？如果并发量大了，
+       有多个block不能copy数据，怎么办？
+
+20.Zookeeper怎么实现Hadoop的高可用?
+
+21.Hadoop体系？
+
+
+
+hadoop的生态圈？
+1）Zookeeper:是一个开源的分布式应用程序协调服务,基于zookeeper可以实现同步服务，配置维护，命名服务。
+2）Flume:一个高可用的，高可靠的，分布式的海量日志采集、聚合和传输的系统。
+3）Hbase:是一个分布式的、面向列的开源数据库, 利用Hadoop HDFS作为其存储系统。
+4）Hive:基于Hadoop的一个数据仓库工具，可以将结构化的数据档映射为一张数据库表，并提供简单的sql 查询功能，可以将sql语句转换为MapReduce任务进行运行。
+5）Sqoop:将一个关系型数据库中的数据导进到Hadoop的 HDFS中，也可以将HDFS的数据导进到关系型数据库中。

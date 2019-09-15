@@ -1,0 +1,55 @@
+1. hbase介绍
+
+2. hbase有哪些组件，以及hbase里面的buffer？
+
+3. hbase rowkey的设计？
+
+4. hbase优化？
+
+5. hbase数据插入优化？
+
+6. hbase如何优化的？
+
+7. hbase的writebuffer？
+
+8. hbase对于复杂表如何设计rowkey?
+
+9. Hbase 执行过程？
+
+10. Hbase 优化？
+
+11. 关系型数据库是怎么把数据导出到Hbase 里的?
+
+12. hbase 优化问题?
+
+13. hbase 的性能优化?
+
+14. Hbase解决了什么问题?
+
+15. Hbase的相对多些，基础和优化?
+
+16. hbase最主要的特点是什么？
+
+17. hbase部署?
+
+18.和hbase同样功能的分布式数据库了解多少?
+
+19.HBase的存储原理?
+
+20.说说hbase的API都有哪些filter?
+
+21.问我major compack设置为手动会出现什么问题？
+
+22.mongoDB和hbase的区别？
+
+23.Hbase的表设计还有优化?
+
+24.hbase热点数据怎么处理？
+
+Hbase 分页查询。flume的数据怎样写到phx,或者写到hbase里边。Hbase的数据怎样同步到PHX,hbase的元数据的分页。怎么实现的。Hbase的数据量有多少。
+
+基于flume重写序列化，Hbase 根据时间查用户怎样设置RowKey  hash 和时间戳有什么区别？
+
+mysql和Hbase的区别？-京东
+
+zookeeper在hbase中的作用，zookeeper的作用

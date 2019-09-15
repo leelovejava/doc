@@ -1,0 +1,35 @@
+1.说说storm？
+
+就讲Storm的各个方面：
+Storm是什么？架构中为什么要选择它而不选择SparkStreaming？Storm的编程模型？Storm的架构
+设计和Storm的容错机制？
+我在项目中是怎么使用Storm的？
+
+2.strom窗口：五分钟统计一次。？
+
+3.storm原理?storm如何保证不丢失数据?
+
+Storm的编程模型:Topology(DAG有向无环图的实现)：spolt，bolt，构建topology，storm的并发机制及数据分发策略
+Storm保证数据不丢失是Storm的有保证消息的完整(tuple树)处理的机制：acker机制(ack的实现原理:通过tuple的id的亦或运算来判断消息是否被完整计算实现,所以在spolt发送tuple的时候需要设置消息的id)，但是这样会导致消息的重复计算，storm提供了拓扑性的事务(分阶段来实现事务的强有序和并发性)来保证消息有且仅被处理一次
+
+4.storm 流处理数据丢失？
+一般不会丢失，Storm大多的bolt都实现了acker机制，保证数据不会被丢失，当数据丢失的时候，acker机制会回调ack方法和fail方法重发tuple。
+
+5.Storm的原理?---同3
+编程模型
+
+6.spark streaming和storm的区别，可以相互取代吗？
+纯流式的实时的计算框架和微批处理的框架
+spark家族一栈式的大数据处理框架，storm显得很专业
+事务支持方面：Storm事务支持的比较好，SparkStreaming差点
+实现的功能方面：SparkStreaming提供丰富的算子可以实现丰富的功能，Storm一般做比较简单的统计
+
+7.说说你用过的storm?---同1
+
+8.storm的设计和日志的格式？
+Storm的设计主要是对pv，uv等简单的统计的topology的构建，还有其并发的设置
+日志的格式：
+
+9:storm整合kafka？
+Storm的Spout应该是源源不断的取数据，不能间断。那么，很显然，消息队列系统、分布式内存系统或内存数据库是作为其数据源的很好的选择
+由于storm-kafka已经实现了spout，我们直接用就可以

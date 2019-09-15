@@ -1,0 +1,26 @@
+
+1.sparkSQL介绍下（RDD、DataFrame）
+关于Spark Streaming的面试题：
+
+1.sparkStreaming怎么跟kafka对接的,数据拉取到哪里？
+
+2.日流量10G没必要sparkstreaming？
+
+3.spark streaming 例子。问维护做过没？说sparkStreaming的维护成本很高。	
+我告诉他是的，比如说可能会丢数据，wal会慢。这一块儿不是我维护。没细问。
+
+4.spark streming调优?
+
+5.sparkstreaming原理？
+
+6.spark Streaming介绍下？和Storm比较？
+
+7.spark Streaming某一个task挂了，怎么解决的?
+
+8.spark streaming?spark的相关算法，比如推荐系统需要什么算法?
+
+9.park streaming 工作流程？
+
+10.sparkstreanming没有问题，但无法计算，怎么排查问题?
+
+11.storm和spark streaming的区别？

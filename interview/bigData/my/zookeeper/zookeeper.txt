@@ -1,0 +1,13 @@
+1. 问了Zookeeper的工作原理。过半机制，还有节点为什么是单数台？
+
+2. zookeeper熟悉不？
+
+3. zookeeper有哪些组件？
+
+4. zookeeper的机制等，各组件的原理？
+
+5. Zookeeper到底是干嘛的?
+
+6. zookeeper的二次开发？
+
+7. Zookeeper实现分布式锁用哪个jar包，以及写mr、spark作业程序具体应该用哪些包？

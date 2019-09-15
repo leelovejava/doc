@@ -1,0 +1,56 @@
+1.怎么保证kafka传过来的数据之正确的处理一次?
+-----结合Storm事务来思考
+
+2.flume 和 kafka什么区别？
+
+3.kafka为什么要分多个partition？
+
+4.kafka和spark Streaming 的整合？
+-------重要-----不是很清楚，看kafka和SparkStreaming整合
+
+5.怎么保证数据kafka里的数据安全？
+（丢失）----磁盘存储，数据使用完后的删除的策略
+kafka丢失数据的情况
+  1). producer 向kafka中生产数据丢失数据  -- 开始事务
+  2). sparkStreaming 读取kafka 数据丢失数据
+
+6.kafka的key为null可以吗？
+
+7.怎么往kafka集群写数据的？
+------Kafka Sink(使用的是Flume)或者KafKa Spout(如果使用的是Storm)
+
+8.kafka用到的什么设计模式？
+----发布订阅模式
+
+9.kafka的原理?如果生产数据是消费数据100倍，该如何处理?
+
+10.flume与kafka区别?
+
+11.有很多消息队列技术，为什么选择kafka ?
+----kafka的特性方面回答
+
+12.kafka为什么可以支持那么大的吞吐量，怎么实现的，我直接说不知道。?
+----顺序读写，partition的分布式存储
+
+kafka怎么消费前一天的数据
+  使用KafkaConsumer.offsetsForTimes要确认集群已开启log.message.timestamp.type参数，并且clien要使用0.10.+的客户端发送数据，
+  数据格式和0.9不同了。在消息中增加了一个时间戳字段和时间戳类型。目前支持的时间戳类型有两种：CreateTime 和 LogAppendTime
+  前者表示producer创建这条消息的时间；后者表示broker接收到这条消息的时间(严格来说，是leader broker将这条消息写入到log的
+  时间)
+
+从kafka出来的数据，怎么放入 hive （静态分区和动态分区   没答好）
+
+kafka自定义分区器
+  1. 默认的分区策略
+   (1) 如果键值为 null，并且使用了默认的分区器，那么记录将被随机地发送到主题内各个可用的分区上。分区器使用轮询（Round Robin）算法将消息均衡地分布到各个分区上。
+   (2) 如果键不为空，并且使用了默认的分区器，那么 Kafka 会对键取 hash 值然后根据散列值把消息映射到特定的分区上。这里的关键之处在于，同一个键总是被映射到同一个分区上，所以在进行映射时，我们会使用主题所有的分区，而不仅仅是可用的分区。这也意味着，如果写入数据的分区是不可用的，那么就会发生错误。但这种情况很少发生。
+  2. 自定义分区器
+   为了满足业务需求，你可能需要自定义分区器，例如，通话记录中，给客服打电话的记录要存到一个分区中，其余的记录均分的分布到剩余的分区中。我们就这个案例来进行演示。
+   (1) 自定义分区器
+  (2) 使用自定义分区器
+
+Kafka为什么数据传输快？
+
+zero copy原理及如何使用.
+ 1.Zero copy在内核层直接将文件内容传送给网络Socket，避免应用层数据拷贝，减小IO开销。
+ 2.java.nio.channel.FileChannel的transferTo()方法实现zero copy

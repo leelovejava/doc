@@ -1,0 +1,31 @@
+sparkStreaming Receiver和Direct
+  receiver task是7*24小时一直在执行，一直接受数据，将一段时间内接收来的数据保存到batch中。假设batchInterval为5s,那么会将
+  接收来的数据每隔5秒封装到一个batch中，batch没有分布式计算特性，这一个batch的数据又被封装到一个RDD中，RDD最终封装到一个
+  DStream中。
+  
+  receiver模式理解：
+  在SparkStreaming程序运行起来后，Executor中会有receiver tasks接收kafka推送过来的数据。数据会被持久化，默认级别为
+  MEMORY_AND_DISK_SER_2,这个级别也可以修改。receiver task对接收过来的数据进行存储和备份，这个过程会有节点之间的数据传输。
+  备份完成后去zookeeper中更新消费偏移量，然后向Driver中的receiver tracker汇报数据的位置。最后Driver根据数据本地化将task
+  分发到不同节点上执行。
+  
+  receiver模式中存在的问题
+  当Driver进程挂掉后，Driver下的Executor都会被杀掉，当更新完zookeeper消费偏移量的时候，Driver如果挂掉了，就会存在找不到
+  数据的问题，相当于丢失数据。
+  如何解决这个问题？
+  开启WAL(write ahead log)预写日志机制,在接受过来数据备份到其他节点的时候，同时备份到HDFS上一份（我们需要将接收来的数据的
+  持久化级别降级到MEMORY_AND_DISK），这样就能保证数据的安全性。不过，因为写HDFS比较消耗性能，要在备份完数据之后才能进行更新
+  zookeeper以及汇报位置等，这样会增加job的执行时间，这样对于任务的执行提高了延迟度。
+  如果job执行的时间大于batchInterval会有什么样的问题？
+  如果接受过来的数据设置的级别是仅内存，接收来的数据会越堆积越多，最后可能会导致OOM（如果设置StorageLevel包含disk, 则内存
+  存放不下的数据会溢写至disk, 加大延迟 ）
+
+  Driect模式
+  Direct模式理解
+  SparkStreaming+kafka 的Driect模式就是将kafka看成存数据的一方，不是被动接收数据，而是主动去取数据。消费者偏移量也不是用
+  zookeeper来管理，而是SparkStreaming内部对消费者偏移量自动来维护，默认消费偏移量是在内存中，当然如果设置了checkpoint目录，
+  那么消费偏移量也会保存在checkpoint中。当然也可以实现用zookeeper来管理。
+  Direct模式并行度设置
+  Direct模式的并行度是由读取的kafka中topic的partition数决定的。
+
+Kafka + SparkStreaming 数据出现累积怎么办，怎么保证SparkStreaming中的数据不丢失？

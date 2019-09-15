@@ -1,0 +1,34 @@
+1.用scala写一个wordcount？
+答：textfile().flatmap(line.splite()).map(key.1).reduceByKey(v1+v2)
+
+2.对scala的了解 有用过play framework 框架吗
+答：熟悉scala，编写过一些spark应用程序，就是使用scala编写的，还有看spark源码的折腾出来的
+我知道它是scala 的一个web端的开发框架，好像还有一个叫Lift，但是我没用过，不是很了解
+
+3.写scala程序，主要是处理输入文本方面。过滤特定数据，按照指定顺序输出?
+答：textfile().filter().sortBy().foreach()
+
+4.scala的变量？他说函数编程一般没有变量，scala是变种啥的？
+答:scala的val常量和var变量，。。。。。
+
+5.scala的闭包？
+答：闭包是一个函数，返回值依赖于声明在函数外部的一个或多个变量
+
+6.scala中的隐式函数的关键字？
+答：implicit
+
+7.val x=y=1结果是什么？
+答：会报错，如果要多个变量同时赋值：val x,y=1
+
+8.编译好的scala程序，运行的时候还需要scala环境吗?
+答：不需要，scala编译成.class文件，运行的时候只需要jre环境即可
+
+9..Scala一些基础的问题，如：伴生对象，类的问题，有哪些class？
+答：同一个文件中：object和class的名相同，class叫object的半身类，object叫class的半生对象
+样例类：在模式匹配的时候常常看到样例类。
+
+10. scala 的交集、并集、差集，是哪个函数。给你两个hiv表使用spark交集和差集怎样实现？-京东
+
+11. Scala 的继承类关键是？scala方法是怎么定义的？隐士转换是什么？scala 的伴生对象是什么？-京东
+
+12.trait	是什么？scala 无返回值是使用的是？scala 所有引用类型的是？-京东
