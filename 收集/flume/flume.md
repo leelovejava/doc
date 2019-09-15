@@ -1,11 +1,17 @@
 # flume
 
-http://archive.cloudera.com/cdh5/cdh/5/flume-ng-1.6.0-cdh5.7.0/
+[CDH下载](http://archive.cloudera.com/cdh5/cdh/5/flume-ng-1.6.0-cdh5.7.0/)
+
+[官网下载](http://flume.apache.org/download.html)
 
 [flume官网](http://flume.apache.org/)
+
 [用户手册](http://flume.apache.org/FlumeUserGuide.html)
+
 [Flume-1-7-0中文用户手册](https://www.cnblogs.com/ximengchj/p/6423689.html)
+
 [Flume-1.8.0用户手册官方文档理解](https://blog.csdn.net/weixin_40483882/article/details/81227952)
+
 [flume学习系列](https://www.jianshu.com/p/bce1088eb8a6)
 
 ## 大纲
@@ -408,3 +414,39 @@ a3.sinks.k3.channel = c3
     1、不要在监控目录中创建并持续修改文件
     2、上传完成的文件会以.COMPLETED结尾
     3、被监控文件夹每600毫秒扫描一次变动
+    
+## Ganglia的安装与部署
+
+### 1) 安装httpd服务与php
+> sudo yum -y install httpd php
+
+### 2) 安装其他依赖
+> sudo yum -y install rrdtool perl-rrdtool rrdtool-devel apr-devel
+
+### 3) 安装ganglia
+出现glibc依赖错误,采用[源码安装](https://blog.csdn.net/qq_38996170/article/details/89531329)
+> yum -y install apr-devel apr-util check-devel cairo-devel pango-devel libxml2-devel rpmbuild glib2-devel dbus-devel freetype-devel fontconfig-devel gcc-c++ expat-devel python-devel libXrender-devel  libart_lgpl  libpng
+
+epel
+> yum install -y epel-release
+
+或
+
+> sudo rpm -Uvh http://dl.fedoraproject.org/pub/epel/6/x86_64/epel-release-6-8.noarch.rpm
+
+> sudo yum -y install ganglia-gmetad ganglia-web ganglia-gmond
+
+### 4) 修改配置文件/etc/httpd/conf.d/ganglia.conf
+sudo vim /etc/httpd/conf.d/ganglia.conf
+```shell script
+# Ganglia monitoring system php web frontend
+Alias /ganglia /usr/share/ganglia
+<Location /ganglia>
+  Order deny,allow
+  Deny from all
+  Allow from all
+  # Allow from 127.0.0.1
+  # Allow from ::1
+  # Allow from .example.com
+</Location>
+```

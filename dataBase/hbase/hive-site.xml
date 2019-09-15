@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<configuration>
+    <!--hbase和hive集成-->
+    <property>
+        <name>hive.zookeeper.quorum</name>
+        <value>node01,node02,node03</value>
+        <description>The list of ZooKeeper servers to talk to. This is only needed for read/write locks.</description>
+    </property>
+    <property>
+        <name>hive.zookeeper.client.port</name>
+        <value>2181</value>
+        <description>The port of ZooKeeper servers to talk to. This is only needed for read/write locks.</description>
+    </property>
+</configuration>

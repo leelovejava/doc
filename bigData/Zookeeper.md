@@ -89,7 +89,7 @@ LEADING：当前Server即为选举出来的leader。
 
 FOLLOWING：leader已经选举出来，当前Server与之同步。
 
-其他文档：http://www.cnblogs.com/lpshou/archive/2013/06/14/3136738.html
+其他文档：http://www.cnblogs.com/lpshell scriptou/archive/2013/06/14/3136738.html
 
 
 
@@ -310,7 +310,7 @@ Znode有四种形式的节点
 对于：数据量通常比较小。数据内容在运行时动态变化。集群中各机器共享，配置一致。
 这样的全局配置信息就可以发布到 ZooKeeper上，让客户端（集群的机器）去订阅该消息。
 
-发布/订阅系统一般有两种设计模式，分别是推（Push）和拉（Pull）模式。
+发布/订阅系统一般有两种设计模式，分别是推（Pushell script）和拉（Pull）模式。
       - 推模式
           服务端主动将数据更新发送给所有订阅的客户端
       - 拉模式
@@ -471,29 +471,31 @@ private void doSomething() throws Exception {
         Thread.sleep(2000);
         // do something
     } finally {
-        System.out.println("finished: " + thisPath);
+        System.out.println("finishell scripted: " + thisPath);
         zk.delete(this.thisPath, -1);
     }
 }
 ```
 
 ## 14.命令行操作
-#### 启动
-```sh
+
+### 启动
+```shell script
 bin/zkServer.sh start
 ```
-#### 进入
-```sh
+
+### 进入
+```shell script
 bin/zkServer.sh
 bin/zkCli.sh -timeout 5000  -server 127.0.0.1:2181
 ```
-#### 查看
-```sh
+### 查看
+```shell script
 ls path [watch]
 ls /
 ```
-#### 查看节点状态
-```sh
+### 查看节点状态
+```shell script
     stat path [watch]
     stat /zk    
     
@@ -514,36 +516,50 @@ ls /
     dataLength = 0
     numChildren = 1
 ```
-#### 创建节点    
-```sh
+### 创建节点    
+```shell script
 create [-s] [-e] path data ac
 ```
-##### 临时节点不允许有子节点(临时、永久)    
-##### 创建永久节点
-```sh
-create /zk myData
-```
-##### 创建临时节点
-    create /zk -e myData
-##### 创建顺序节点
-    create /zk -s myData         
-#### 获取节点
-    get path [watch]
-    get /zk
-#### 删除节点
-    delete path [version]
-    delete /zk
-#### 级联删除  
-    rmr path
-    rmr /zk
-#### 修改
-    set path data [version]
-    set /zk "zsl"
-#### 监听
-    get /zk2 watch
-#### 退出
-    quit             
+#### 临时节点不允许有子节点(临时、永久)    
+
+#### 创建永久节点
+
+> create /zk myData
+
+
+#### 创建临时节点
+> create /zk -e myData
+
+#### 创建顺序节点
+
+> create /zk -s myData  
+       
+### 获取节点
+
+> get path [watch]
+> get /zk
+
+### 删除节点
+
+> delete path [version]
+> delete /zk
+
+### 级联删除  
+> rmr path
+> rmr /zk
+
+### 修改
+> set path data [version]
+> set /zk "zsl"
+
+### 监听
+> get /zk2 watch
+
+### 退出
+> quit           
+  
 ## 15. JAVA API
+
 ####  Java绑定
 org.apache.zookeeper.Zookeeper
 
@@ -659,10 +675,10 @@ public class ZKCreate {
    }
 }
 ```
-一旦编译和执行应用程序，将在ZooKeeper集合中创建具有指定数据的znode。你可以使用ZooKeeper CLI zkCli.sh 进行检查
+一旦编译和执行应用程序，将在ZooKeeper集合中创建具有指定数据的znode。你可以使用ZooKeeper CLI zkCli.shell script 进行检查
 ```
 cd /path/to/zookeeper
-bin/zkCli.sh
+bin/zkCli.shell script
 >>> get /MyFirstZnode
 ```
 
