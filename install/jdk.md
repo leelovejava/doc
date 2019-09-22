@@ -25,3 +25,6 @@ export PATH=$JAVA_HOME/bin:$PATH
 ```        
 ③source /etc/profile  使更改的配置立即生效
 ④java -version  查看JDK版本信息
+
+
+[rpm版的jdk配置](https://www.cnblogs.com/liangyou666/p/9989426.html)
