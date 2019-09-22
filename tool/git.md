@@ -35,6 +35,7 @@ git rm -r –cached .idea/ 
 git commit -m "remove .idea" 
 ```
 
+错误1:
 git Authentication failed
 
 解决办法: 控制面板\用户帐户\凭据管理器\Windows凭据->删除对应的账号->检出时自动重新输入
@@ -42,7 +43,31 @@ git Authentication failed
 Can't update: no tracked branch
 git branch --set-upstream-to origin/master master
 
+错误2:
+git clone时RPC failed; curl 18 transfer closed with outstanding read data remaining
+
+https://www.cnblogs.com/zjfjava/p/10392150.html
+加大缓存区
+git config http.postBuffer 524288000
+git config --global http.lowSpeedLimit 0
+git config --global http.lowSpeedTime 999999
+
+–depth 1的含义是复制深度为1，就是每个文件只取最近一次提交，不是整个历史版本
+git clone --depth=1 http://gitlab.xxx.cn/yyy/zzz.git
+
+git fetch --unshallow
+
+错误3: RPC failed; curl 56 OpenSSL SSL_read: SSL_ERROR_SYSCALL, errno 10054
+ git config  http.sslVerify "false"
 ---------
+
+错误4: error: RPC failed; curl 18 transfer closed with outstanding read data remaining
+ git config --global http.postBuffer 524288000
+ git config http.postBuffer 524288000
+
+错误5:fatal: unable to access 'https://github.com/golang/tools.git/': OpenSSL SSL_read: SSL_ERROR_SYSCALL, errno 10054
+git config http.postBuffer 524288000
+
 
 git提交规范:
 > <type>(<scope>): <subject>

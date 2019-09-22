@@ -469,6 +469,7 @@ Debezium
 BAT大牛亲授 基于ElasticSearch的搜房网实战
 
 ### 搜索联想
+
 [elasticsearch实现中文与拼音的搜索联想](https://www.jianshu.com/p/866b53a84033)
 
 ### 原理
@@ -480,7 +481,10 @@ BAT大牛亲授 基于ElasticSearch的搜房网实战
 - [ElasticSearch写入数据的工作原理是什么？](https://mp.weixin.qq.com/s/rw6vmDgXUh0SUUh7uo1APg)
 
 ### DSL
+
 [Elasticsearch解决问题之道——请亮出你的DSL！](https://mp.weixin.qq.com/s/dWrIb03EeGqw5nQnUg9AYg)
+
+[吃透 | Elasticsearch filter和query的不同](https://blog.csdn.net/laoyang360/article/details/80468757)
 
 ### 系列课程
 
