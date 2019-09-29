@@ -42,6 +42,10 @@ git Authentication failed
 Can't update: no tracked branch
 git branch --set-upstream-to origin/master master
 
+Push to origin/master was rejected 
+在第一次提交到代码仓库的时候非常容易出现，因为初始化的仓库和本地仓库是没有什么关联的，因此，在进行第一次的新代码提交时，通常会出现这个错误
+> git pull origin master --allow-unrelated-histories
+
 ---------
 
 git提交规范:
