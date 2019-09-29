@@ -337,7 +337,7 @@ sudo yum list installed 'clickhouse*'
 > sudo service clickhouse-server start
 
 > clickhouse-client
-> clickhouse-client -h 127.0.0.1
+> clickhouse-client -h 127.0.0.1 --multiline
 
 ## 5. 常见的SQL用法
 
@@ -365,6 +365,12 @@ insert into test.m1 (id, name) values (1, 'abc'), (2, 'bbbb');
 
 -- 查询
 select * from test.m1;
+
+-- 导入数据
+cat On_Time_Reporting_Carrier_On_Time_Performance_1987_10.csv | clickhouse-client --query="INSERT INTO ontime FORMAT CSVWithNames"
+
+cat On_Time_Reporting_Carrier_On_Time_Performance_1987_11.csv | clickhouse-client --query="INSERT INTO ontime FORMAT CSVWithNames"
+
 ```
 
 

@@ -196,3 +196,11 @@ yum -y install mysql-server
 ERROR 1820 (HY000): You must reset your password using ALTER USER statement before executing this statement
 
 set password=password("youpassword");
+
+
+windows
+注册成window服务
+mysqld.exe --install MySql --defaults-file="D:\setup\mysql\my.ini"
+
+启动服务
+net start mysql

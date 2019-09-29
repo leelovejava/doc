@@ -57,13 +57,26 @@ ES集群架构13个节点，索引根据通道不同共20+索引，根据日期�
     
     数据量大时候，可以先基于时间敲定索引再检索 
     
-    控制返回字段和结果(返回业务相关字段_source;分页)
+    控制返回字段和结果(返回业务相关字段_source)
+    
+    分页(不允许深度分页,scoll api) 
+    scroll 会一次性生成所有数据的一个快照，然后每次滑动向后翻页就是通过游标 scroll_id 移动，获取下一页下一页这样子，性能会比普通分页性能要高很多很多，基本上都是毫秒级的
     
     非实时查询场景,调大`refresh_interval` ['ɪntəv(ə)l]
+    
+    减少复杂的关联查询,冗余关联字段
 
 其他调优:
 
     部署调优、业务调优 
+
+业务调优
+    
+   性能优化的杀手锏——filesystem cache,只存需要检索的字段,其他字段存es,采用es+hbase架构
+    
+   数据预热
+   
+   冷热分离
     
 ### 2、elasticsearch的倒排索引是什么？
 
@@ -191,14 +204,41 @@ Lucene是有索引和搜索的两个过程，包含索引创建，索引，搜�
 副本机制、master选举
 
 ### 10、对于GC方面，在使用Elasticsearch时要注意什么？
+
 倒排词典的索引需要常驻内存，无法GC，需要监控data node上segment memory增长趋势
 
 ### 10、terms 和term 的区别 [字节跳动]
+在查询的字段只有一个值的时候，应该使用term而不是terms，在查询字段包含多个的时候才使用terms(类似于sql中的in、or)，使用terms语法，JSON中必须包含数组
 
 ### 11、filter 和query的区别 [字节跳动]
 
+[吃透 | Elasticsearch filter和query的不同](https://blog.csdn.net/laoyang360/article/details/80468757)
+过滤器（filter）通常用于过滤文档的范围，比如某个字段是否属于某个类型，或者是属于哪个时间区间
+
+查询器（query）的使用方法像极了filter，但query更倾向于更准确的查找
+
+query filter在性能上对比：filter是不计算相关性的，同时可以cache。因此，filter速度要快于query
+
+适用于完全精确匹配，范围检索,答案只有是否
+以下场景适用于filter过滤检索：
+
+举例1：时间戳timestamp 是否在2015至2016年范围内？
+
+举例2：状态字段status 是否设置为“published”？
+
+所以，选择参考：
+1、全文搜索、评分排序，使用query；
+2、是非过滤，精确匹配，使用filter
+
 ### 12、MySQL 数据同步到es中： pagesize大小设置，数据超过这个pagesize该怎么处理 [字节跳动]
 
+1). 自己造轮子,分为全量、增量(分析binlog、基于更新时间)
+    先获取要同步总数,按同步的速率和时间,计算
+    
+2). Debezium
+    步骤1： 基Debezium的binlog机制，将Mysql数据同步到Kafka。
+    步骤2： 基于Kafka_connector机制，将kafka数据同步到Elasticsearch
+    
 ### 13、一个数字如何设置mapping，为什么 [字节跳动]
 
 ### 14、怎么避免脑裂？
@@ -240,3 +280,33 @@ Lucene是有索引和搜索的两个过程，包含索引创建，索引，搜�
 ### 15、ES和solr的区别？
 
 https://www.cnblogs.com/jajian/p/9801154.html
+
+lucene是现存功能最强大、最先进搜索库，直接基于lucene开发，api非常复杂大量的java代码、需要深入了解原理
+
+对比处:
+
+只有一个索引库、
+传统的遍历搜索方式
+采用B+树索引;
+Es是基于lucene的，隐藏了lucene复杂部分的一个分布式全文检索框架
+
+对比处:
+
+一个es的集群包含多个索引库、
+分布式搜索
+Es是采用倒排式索引
+es没有事务概念,删除不能恢复
+es开源免费
+正排索引：id ---> value
+
+倒排索引：value ---> id
+
+### 16、你还了解哪些全文检索工具？
+   
+   Lucene，Solr，HadoopContrib，Katta
+
+### 17、ES在高并发的情况下如何保证数据线程安全问题？ 
+   
+   在读数据与写数据之间如果有其他线程进行写操作，就会出问题，es使用版本控制才避免这种问题
+       
+   在修改数据的时候指定版本号，操作一次版本号加1
