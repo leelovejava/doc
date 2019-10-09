@@ -17,6 +17,8 @@
 
 [什么影响了数据库查询速度?](https://mp.weixin.qq.com/s/6RsM_tXiDwbPrCTPDZAkLw)
 
+[超级全面的MySQL优化面试解析](https://mp.weixin.qq.com/s/1mMyD6kvPZw2piR152hEqQ)
+
 [当数据量达到百万级别的时候，分页该如何处理？](https://blog.csdn.net/Danny_idea/article/details/90664571)
 
 [海量数据下的分库分表最佳实战](https://mp.weixin.qq.com/s/Iv_UGUVlyOX7C3HQ99BdFw)
