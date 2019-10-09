@@ -579,6 +579,7 @@ Shiro
 
 04
  区块链
+[漫画：什么是区块链？](https://mp.weixin.qq.com/s?__biz=MzIxMjE5MTE1Nw==&mid=2653193005&idx=1&sn=2b1839966cacbebaa972d49c8e76e3d5&chksm=8c99f1f7bbee78e1b5b3b5b08fdbc0a5ab277a5736d14a819496faa987e28c8930c516f0af6e&scene=21#wechat_redirect)
 
 哈希算法、Merkle 树、公钥密码算法、共识算法、
 Raft 协议、Paxos 算法与 Raft 算法、拜占庭问题与算法、消息认证码与数字签名

@@ -301,3 +301,7 @@ redis > scan 6 match user_token* count 5
 这个是面试经常会问到的，在工作的过程经常用的
 
 一般小公司，不会有什么问题，但数据量多的时候...
+
+#### LRU
+
+[漫画：什么是LRU算法？](https://mp.weixin.qq.com/s/h_Ns5HY27NmL_odCYLgx_Q)
