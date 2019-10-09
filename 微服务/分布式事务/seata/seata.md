@@ -1,3 +1,9 @@
+# seata
+
+## doc
+
+[seata wiki](https://github.com/seata/seata/wiki/Home_Chinese)
+
 [分布式事务 Seata Saga 模式首秀以及三种模式详解 | Meetup#3 回顾](https://mp.weixin.qq.com/s/67NvEVljnU-0-6rb7MWpGw)
 
 
