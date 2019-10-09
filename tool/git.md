@@ -7,6 +7,9 @@
 
 -[20 分钟教你搞懂 Git！](https://mp.weixin.qq.com/s/ShunINXYybKftmPUcQsrxA)
 
+更新
+git fetch origin master
+
 还原上一次提交 
 > git reset HEAD~
 
@@ -54,8 +57,6 @@ git config --global http.lowSpeedTime 999999
 
 –depth 1的含义是复制深度为1，就是每个文件只取最近一次提交，不是整个历史版本
 git clone --depth=1 http://gitlab.xxx.cn/yyy/zzz.git
-
-git fetch --unshallow
 
 错误3: RPC failed; curl 56 OpenSSL SSL_read: SSL_ERROR_SYSCALL, errno 10054
  git config  http.sslVerify "false"
