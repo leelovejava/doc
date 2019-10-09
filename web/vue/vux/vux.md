@@ -7,3 +7,5 @@ https://vux.li/demos/v2/#/demo
 
 vue2.0+vux+vue-router+axios 搭建的简单的移动端项目
 https://github.com/xingxiaoyiyio/vue2-vux-fitness-project
+
+[vux-table](https://xuliangzhan.github.io/vxe-table/#/table/base/basic)

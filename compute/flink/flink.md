@@ -109,6 +109,8 @@ Learn more about Flink at [http://flink.apache.org/](http://flink.apache.org/)
 
 [基于 Flink 实现的商品实时推荐系统](https://mp.weixin.qq.com/s/pF8mr4AeUwWWpGEAKmJW2w)
 
+[Flink 实战 | 贝壳找房基于Flink的实时平台建设](https://mp.weixin.qq.com/s/E25plFiKZl_zyCMiGv-ZDg)
+
 ## Features
  
 * A streaming-first runtime that supports both batch processing and data streaming programs

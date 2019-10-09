@@ -39,6 +39,8 @@
 
 - [Elastic认证考试](https://mp.weixin.qq.com/s/dze7OZOUYuRwvfdCxN01yQ)
 
+- [Elasticsearch 亿级数据检索性能优化案例实战](https://mp.weixin.qq.com/s/0NOETPrmE7OwQLTl7WOF5w)
+
 ## 提纲
 （1）掌握 Elasticsearch 的基本概念，主要包括：
 
