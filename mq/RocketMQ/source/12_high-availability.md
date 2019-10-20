@@ -1,0 +1,1 @@
+# [高可用](http://www.iocoder.cn/RocketMQ/high-availability/)

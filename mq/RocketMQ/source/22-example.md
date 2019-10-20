@@ -1,0 +1,1 @@
+# [简单的消息示例](http://www.iocoder.cn/RocketMQ/start/example/)

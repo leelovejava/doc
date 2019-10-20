@@ -1,0 +1,1 @@
+# [Message 顺序发送与消费](http://www.iocoder.cn/RocketMQ/message-send-and-consume-orderly/)

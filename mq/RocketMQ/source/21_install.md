@@ -1,0 +1,1 @@
+# [安装以及快速入门](http://www.iocoder.cn/RocketMQ/start/install/)

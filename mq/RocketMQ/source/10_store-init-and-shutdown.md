@@ -1,0 +1,1 @@
+# [Store 初始化与关闭](http://www.iocoder.cn/RocketMQ/store-init-and-shutdown/)
