@@ -63,6 +63,19 @@ rem 搜索完毕
 pause
 ```
 
+修改主机名
+查看
+> hostname
+
+临时修改 
+> Hostnamectl set-hostname hadoop
+
+永久修改
+> vim /etc/hostname
+> hadoop
+
+>hostname hadoop
+
 ### 切换yum源
 
 [linux yum下载慢问题解决](https://blog.csdn.net/baiyan3212/article/details/81175192)
@@ -166,6 +179,8 @@ tar: Error is not recoverable: exiting now
 
 https://www.cnblogs.com/llxx07/p/6409384.html
 
+[虚拟机能ping通物理机，物理机无法ping通虚拟机](https://jingyan.baidu.com/article/a378c960f083f0b3282830ca.html)
+
 ------xshell---------------------
 
 - [xshell/xftp 永不过期](https://zhangjia.tv/506.html)
@@ -245,3 +260,54 @@ rpm -Uvh glibc-static-2.14.1-6.x86_64.rpm
 rpm -Uvh glibc-utils-2.14.1-6.x86_64.rpm
 rpm -Uvh glibc-utils-2.14.1-6.x86_64.rpm --nodeps
 rpm -Uvh nscd-2.14.1-6.x86_64.rpm --nodeps
+
+### [centos7配置IP地址](https://www.cnblogs.com/yhongji/p/9336247.html)
+vi /etc/sysconfig/network-scripts/ifcfg-ens32
+```properties
+TYPE=Ethernet
+PROXY_METHOD=none
+BROWSER_ONLY=no
+BOOTPROTO=dhcp
+DEFROUTE=yes
+IPV4_FAILURE_FATAL=no
+IPV6INIT=yes
+IPV6_AUTOCONF=yes
+IPV6_DEFROUTE=yes
+IPV6_FAILURE_FATAL=no
+IPV6_ADDR_GEN_MODE=stable-privacy
+NAME=ens32
+UUID=1ca0cb94-dab6-4021-8292-2ba293791535
+DEVICE=ens32
+ONBOOT=yes
+```
+
+（1）bootproto=static
+
+（2）onboot=yes
+
+（3）在最后加上几行，IP地址、子网掩码、网关、dns服务器
+```properties
+TYPE=Ethernet
+PROXY_METHOD=none
+BROWSER_ONLY=no
+BOOTPROTO=static
+DEFROUTE=yes
+IPV4_FAILURE_FATAL=no
+IPV6INIT=yes
+IPV6_AUTOCONF=yes
+IPV6_DEFROUTE=yes
+IPV6_FAILURE_FATAL=no
+IPV6_ADDR_GEN_MODE=stable-privacy
+NAME=ens32
+UUID=1ca0cb94-dab6-4021-8292-2ba293791535
+DEVICE=ens32
+ONBOOT=yes
+
+IPADDR=192.168.1.160
+NETMASK=255.255.255.0
+GATEWAY=192.168.1.1
+DNS1=119.29.29.29
+DNS2=8.8.8.8
+```
+
+> systemctl restart network
