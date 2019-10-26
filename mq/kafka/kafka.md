@@ -84,6 +84,8 @@
 
 - [为了追求极致的性能，Kafka掌控了这11项要领](https://mp.weixin.qq.com/s/JyQaohyDPndFJDrw4AOWww)
 
+- [消息中间件选型分析](https://mp.weixin.qq.com/s/ad7jibTb5nTzh3nDQYKFeg)
+
 #### 书
 [《深入理解Kafka:核心设计与实践原理》笔误及改进记录](https://blog.csdn.net/u013256816/article/details/87834419)
 
