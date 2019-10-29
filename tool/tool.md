@@ -94,6 +94,9 @@ win10专业版激活码
 
 [十分钟搞懂Java效率工具Lombok使用与原理](https://mp.weixin.qq.com/s/MgkmgZ-WyXopEbPnr8-flg)
 
+### MindManager
+http://dwnld.mindjet.com/stubs/Builds/MindManager2020/20_0_334/64Bit/MindManager%202020.msi
+MP19-777-APE8-1162-BD8E
 
 ### maven
 maven清除下载失败的jar
