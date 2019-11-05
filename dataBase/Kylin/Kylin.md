@@ -13,3 +13,7 @@
 * 常见问题解答
 
 [Kylin 在满帮集团千亿级用户访问行为分析中的应用](https://mp.weixin.qq.com/s/77fveA9q_AQWBYYxpdpgYg)
+
+## doc
+
+[从给丈母娘榨果汁带你认识Apache Kylin](https://mp.weixin.qq.com/s/JPT_tbPnyEAne0CLxWzj-w)
