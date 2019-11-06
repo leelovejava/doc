@@ -387,7 +387,7 @@ vim /opt/modult/datax/job/mysql2hdfs.json
                                     "jdbc:mysql://hadoop101:3306/test"
                                 ], 
                                 "table": [
-                                    "stu1"
+                                    "student"
                                 ]
                             }
                         ], 
@@ -408,7 +408,7 @@ vim /opt/modult/datax/job/mysql2hdfs.json
                                 "type": "STRING"
                             }
                         ],  
-                        "defaultFS": "hdfs://hadoop101:9000", 
+                        "defaultFS": "hdfs://hadoop102:8020", 
                         "fieldDelimiter": "\t", 
                         "fileName": "student.txt", 
                         "fileType": "text", 
@@ -464,7 +464,7 @@ python /opt/module/datax/bin/datax.py -r hdfsreader -w mysqlwriter
                     "name": "hdfsreader", 
                     "parameter": {
                         "column": ["*"], 
-                        "defaultFS": "hdfs://hadoop102:9000", 
+                        "defaultFS": "hdfs://hadoop102:8020", 
                         "encoding": "UTF-8", 
                         "fieldDelimiter": "\t", 
                         "fileType": "text", 
