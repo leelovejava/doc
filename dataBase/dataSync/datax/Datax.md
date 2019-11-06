@@ -22,7 +22,7 @@
 
 下载地址：http://datax-opensource.oss-cn-hangzhou.aliyuncs.com/datax.tar.gz
 
-![DataX3.0概述](assets\01.png)
+![image DataX3.0概述](assets/01.png)
 
 ### 1.2 设计理念
 
@@ -36,7 +36,7 @@ DataX在阿里巴巴集团内被广泛使用，承担了所有大数据的离线
 
 ### 1.3 框架设计
 
-![DataX3.0架构设计](assets\02.png)
+![image DataX3.0架构设计](assets/02.png)
 
 
 DataX本身作为离线数据同步框架，采用Framework + plugin架构构建。将数据源读取和写入抽象成为Reader/Writer插件，纳入到整个同步框架中。
@@ -49,7 +49,7 @@ Framework：Framework用于连接reader和writer，作为两者的数据传输�
 
 DataX 3.0 开源版本支持单机多线程模式完成同步作业运行，本小节按一个DataX作业生命周期的时序图，从整体架构设计非常简要说明DataX各个模块相互关系。
 
-![DataX3.0核心架构](assets\03.png)
+![image DataX3.0核心架构](assets/03.png)
 
 核心模块介绍：
 1).  DataX完成单个数据同步的作业，我们称之为Job，DataX接受到一个Job之后，将启动一个进程来完成整个作业同步过程。`DataX Job`模块是单个作业的中枢管理节点，承担了数据清理、子任务切分(将单一作业计算转化为多个子Task)、`TaskGroup`管理等功能。
