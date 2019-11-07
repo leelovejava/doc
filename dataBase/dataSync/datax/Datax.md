@@ -282,7 +282,7 @@ vim stream2stream.json
 ##### 3)  运行
 
 ```shell
-/opt/module/datax/bin/datax.py /opt/module/datax/job/stream2stream.json
+bin/datax.py job/stream2stream.json
 ```
 
 ### 3.2 读取MYSQL中的数据存放到HDFS
@@ -290,7 +290,7 @@ vim stream2stream.json
 #### 3.2.1 查看官方模板
 
 ```shell
-python /opt/module/datax/bin/datax.py -r mysqlreader -w hdfswriter
+python bin/datax.py -r mysqlreader -w hdfswriter
 ```
 
 ```json
@@ -366,7 +366,7 @@ insert into student values(1001,'zhangsan'),(1002,'lisi'),(1003,'wangwu');
 #### 3.2.3 编写配置文件
 
 ```shell
-vim /opt/modult/datax/job/mysql2hdfs.json 
+vim job/mysql2hdfs.json 
 ```
 
 ```json
@@ -384,7 +384,7 @@ vim /opt/modult/datax/job/mysql2hdfs.json
                         "connection": [
                             {
                                 "jdbcUrl": [
-                                    "jdbc:mysql://hadoop101:3306/test"
+                                    "jdbc:mysql://hadoop101:3306/datax"
                                 ], 
                                 "table": [
                                     "student"
@@ -430,7 +430,7 @@ vim /opt/modult/datax/job/mysql2hdfs.json
 #### 3.2.4 执行任务
 
 ```shell
-bin/datax/py job/mysql2hdfs.json
+bin/datax.py job/mysql2hdfs.json
 ```
 
 #### 3.2.5 查看hdfs
@@ -450,10 +450,16 @@ hadoop fs -mv /student.txt* /student.txt
 ##### 2)  查看官方模板
 
 ```shell
-python /opt/module/datax/bin/datax.py -r hdfsreader -w mysqlwriter
+python bin/datax.py -r hdfsreader -w mysqlwriter
 ```
 
 ##### 3) 创建配置文件
+
+```shell
+vim job/hdfs2mysql.json
+```
+
+
 
 ```shell
 {
@@ -484,7 +490,7 @@ python /opt/module/datax/bin/datax.py -r hdfsreader -w mysqlwriter
                                 "table": ["student2"]
                             }
                         ], 
-                        "password": "000000", 
+                        "password": "123456", 
                         "username": "root", 
                         "writeMode": "insert"
                     }
@@ -503,8 +509,8 @@ python /opt/module/datax/bin/datax.py -r hdfsreader -w mysqlwriter
 ##### 4) 在MYSQL的datax数据库创建student2
 
 ```shell
-use test;
-create table stu1(id int,name varchar(20));
+use datax;
+create table student2(id int,name varchar(20));
 ```
 
 ##### 5) 执行任务
