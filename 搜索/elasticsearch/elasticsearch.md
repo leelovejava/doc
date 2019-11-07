@@ -37,8 +37,6 @@
 
 - [滴滴Elasticsearch多集群架构实践](https://mp.weixin.qq.com/s/K44-L0rclaIM40hma55pPQ)
 
-- [Elastic认证考试](https://mp.weixin.qq.com/s/dze7OZOUYuRwvfdCxN01yQ)
-
 - [Elasticsearch 亿级数据检索性能优化案例实战](https://mp.weixin.qq.com/s/0NOETPrmE7OwQLTl7WOF5w)
 
 ## 提纲
@@ -491,3 +489,9 @@ BAT大牛亲授 基于ElasticSearch的搜房网实战
 ### 系列课程
 
 [Elasticsearch 核心技术与实战](https://github.com/geektime-geekbang/geektime-ELK)
+
+### 考试
+
+- [Elastic认证考试](https://mp.weixin.qq.com/s/dze7OZOUYuRwvfdCxN01yQ)
+
+- [Elastic认证工程师考试经验分享](https://elasticsearch.cn/article/13530)

@@ -96,7 +96,9 @@ win10专业版激活码
 
 ### MindManager
 http://dwnld.mindjet.com/stubs/Builds/MindManager2020/20_0_334/64Bit/MindManager%202020.msi
-MP19-777-APE8-1162-BD8E
+
+2019: MP19-777-APE8-1162-BD8E
+2020: MP20-345-DP56-7778-919A
 
 ### maven
 maven清除下载失败的jar
