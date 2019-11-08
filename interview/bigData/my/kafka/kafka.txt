@@ -52,5 +52,36 @@ kafka自定义分区器
 Kafka为什么数据传输快？
 
 zero copy原理及如何使用.
- 1.Zero copy在内核层直接将文件内容传送给网络Socket，避免应用层数据拷贝，减小IO开销。
- 2.java.nio.channel.FileChannel的transferTo()方法实现zero copy
+ 1). Zero copy在内核层直接将文件内容传送给网络Socket，避免应用层数据拷贝，减小IO开销。
+ 2). java.nio.channel.FileChannel的transferTo()方法实现zero copy
+
+13. 说说kafka的ISR机制
+kafka 为了保证数据的一致性使用了isr 机制
+
+1). leader会维护一个与其基本保持同步的Replica列表，该列表称为ISR(in-sync Replica)，每个Partition都会有一个ISR，
+而且是由leader动态维护
+2). 如果一个flower比一个leader落后太多，或者超过一定时间未发起数据复制请求，则leader将其重ISR中移除
+3). 当ISR中所有Replica都向Leader发送ACK时，leader才commit
+
+14. kafka 是如何清理过期数据的？
+
+kafka的日志实际上是以日志的方式默认保存在/kafka-logs文件夹中的，默认7天清理机制，
+
+日志的真正清理时间。当删除的条件满足以后，日志将被“删除”，但是这里的删除其实只是将
+
+该日志进行了“delete”标注，文件只是无法被索引到了而已。但是文件本身，仍然是存在的，只有当过了`log.segment.delete.delay.ms` 这个时间以后，文件才会被真正的从文件系统中删除
+
+15. kafka如何保证数据的不重复和不丢失？
+
+16. kafka里面存的数据格式都是什么样的？
+
+17. kafka中存的一个是数据文件，一个是索引文件，说说这个？
+
+18. 一条message中包含哪些信息？
+
+包含 header,body。
+一个Kafka的Message由一个固定长度的header和一个变长的消息体body组成。
+header部分由一个字节的magic(文件格式)和四个字节的CRC32(用于判断body消息体是否正常)构成。
+当magic的值为1的时候，会在magic和crc32之间多一个字节的数据：attributes(保存一些相关属性，比如是否压缩、
+    压缩格式等等)；
+如果magic的值为0，那么不存在attributes属性body是由N个字节构成的一个消息体，包含了具体的key/value消息
