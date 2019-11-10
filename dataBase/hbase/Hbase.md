@@ -8,6 +8,7 @@
 [HBase 默认配置](https://blog.csdn.net/u011414200/article/details/50427529)
 
 ## doc
+[hbase3.0中文文档](https://hbase.apachecn.org/#/)
 
 [HBase Procedure解读](https://mp.weixin.qq.com/s/mpG5Gte-7g_Ue0Sr8VLS6w)
 
