@@ -2051,3 +2051,7 @@ withColumnRenamed(existingName: String, newName: String): DataFrame
 ## 数据倾斜
 
 [spark面试必问|碰到数据倾斜你该咋办](https://mp.weixin.qq.com/s/OT-VAS2gMlBjJvFP93J0Nw)
+
+
+### Spark新特性
+[Apache Spark 3.0 预览版正式发布，多项重大功能发布](https://mp.weixin.qq.com/s/0V6dx5sFyK0pFbUwwo2oIQ)
