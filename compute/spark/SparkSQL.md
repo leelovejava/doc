@@ -969,6 +969,9 @@ connectionProperties.put("user", "root")
 connectionProperties.put("password", "root")
 ```
 
+#### 分区裁剪
+[一文了解 Apache Spark 3.0 动态分区裁剪（Dynamic Partition Pruning）](https://mp.weixin.qq.com/s/RIntGmIS1TY5onQKflDzjw)
+
 #### 8.项目实战 
 慕课网日志实战
 
