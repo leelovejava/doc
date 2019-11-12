@@ -16,6 +16,22 @@
 
 [window的redis](https://github.com/microsoftarchive/redis/releases)
 
+
+
+中华石衫分布式缓存面试
+
+- [在项目中缓存是如何使用的？缓存如果使用不当会造成什么后果？](https://github.com/shishan100/Java-Interview-Advanced/blob/master/docs/high-concurrency/why-cache.md)
+- [Redis 和 Memcached 有什么区别？Redis 的线程模型是什么？为什么单线程的 Redis 比多线程的 Memcached 效率要高得多？](https://github.com/shishan100/Java-Interview-Advanced/blob/master/docs/high-concurrency/redis-single-thread-model.md)
+- [Redis 都有哪些数据类型？分别在哪些场景下使用比较合适？](https://github.com/shishan100/Java-Interview-Advanced/blob/master/docs/high-concurrency/redis-data-types.md)
+- [Redis 的过期策略都有哪些？手写一下 LRU 代码实现？](https://github.com/shishan100/Java-Interview-Advanced/blob/master/docs/high-concurrency/redis-expiration-policies-and-lru.md)
+- [如何保证 Redis 高并发、高可用？Redis 的主从复制原理能介绍一下么？Redis 的哨兵原理能介绍一下么？](https://github.com/shishan100/Java-Interview-Advanced/blob/master/docs/high-concurrency/how-to-ensure-high-concurrency-and-high-availability-of-redis.md)
+- [Redis 的持久化有哪几种方式？不同的持久化机制都有什么优缺点？持久化机制具体底层是如何实现的？](https://github.com/shishan100/Java-Interview-Advanced/blob/master/docs/high-concurrency/redis-persistence.md)
+- [Redis 集群模式的工作原理能说一下么？在集群模式下，Redis 的 key 是如何寻址的？分布式寻址都有哪些算法？了解一致性 hash 算法吗？如何动态增加和删除一个节点？](https://github.com/shishan100/Java-Interview-Advanced/blob/master/docs/high-concurrency/redis-cluster.md)
+- [了解什么是 redis 的雪崩、穿透和击穿？Redis 崩溃之后会怎么样？系统该如何应对这种情况？如何处理 Redis 的穿透？](https://github.com/shishan100/Java-Interview-Advanced/blob/master/docs/high-concurrency/redis-caching-avalanche-and-caching-penetration.md)
+- [如何保证缓存与数据库的双写一致性？](https://github.com/shishan100/Java-Interview-Advanced/blob/master/docs/high-concurrency/redis-consistence.md)
+- [Redis 的并发竞争问题是什么？如何解决这个问题？了解 Redis 事务的 CAS 方案吗？](https://github.com/shishan100/Java-Interview-Advanced/blob/master/docs/high-concurrency/redis-cas.md)
+- [生产环境中的 Redis 是怎么部署的？](https://github.com/shishan100/Java-Interview-Advanced/blob/master/docs/high-concurrency/redis-production-environment.md)
+
 ## 大纲
 * 当下的NoSQL经典应用
 * Redis入门介绍
@@ -95,28 +111,6 @@ tair、Redis、Memcache
 传统的ACID: A (Atomicity) 原子性、C (Consistency) 一致性、I (Isolation) 独立性、D (Durability) 持久性
 
 CAP: C:Consistency（强一致性）、A:Availability（可用性）、P:Partition tolerance（分区容错性）
-
-## 延迟队列
-rabbitMQ延迟队列
-https://blog.csdn.net/zhu_tianwei/article/details/53563311
-
-
-延时队列就是一种带有延迟功能的消息队列。下面会介绍几种目前已有的延时队列：
-1.Java中java.util.concurrent.DelayQueue
-优点：JDK自身实现，使用方便，量小适用
-缺点：队列消息处于jvm内存，不支持分布式运行和消息持久化
-2.Rocketmq延时队列
-优点：消息持久化，分布式
-缺点：不支持任意时间精度，只支持特定level的延时消息
-3.Rabbitmq延时队列（TTL+DLX实现）
-优点：消息持久化，分布式
-缺点：延时相同的消息必须扔在同一个队列
-
-根据自身业务和公司情况，如果实现一个自己的延时队列服务需要考虑一下几点:
-
-* 消息存储
-* 过期延时消息实时获取
-* 高可用性
 
 ## 2、Redis入门介绍
 
@@ -409,12 +403,123 @@ redis > scan 6 match user_token* count 5
 
 ## 8 使用
 
-### 8.1 redis延迟队列
+### 延迟队列
 
-https://blog.csdn.net/wizard_rp/article/details/79303623
+延时队列就是一种带有延迟功能的消息队列。下面会介绍几种目前已有的延时队列：
 
-https://github.com/Yampery/rdsmq
+1. Java中java.util.concurrent.DelayQueue
+   优点：JDK自身实现，使用方便，量小适用
+   缺点：队列消息处于jvm内存，不支持分布式运行和消息持久化
 
-[基于Redis实现延时队列服务](https://www.cnblogs.com/lylife/p/7881950.html)
+2. Rocketmq延时队列
+   优点：消息持久化，分布式
+   缺点：不支持任意时间精度，只支持特定level的延时消息
 
-[分布式之延时任务方案解析](https://www.cnblogs.com/rjzheng/p/8972725.html)
+   Rabbitmq延时队列（TTL+DLX实现）
+
+   https://blog.csdn.net/zhu_tianwei/article/details/53563311
+
+   优点：消息持久化，分布式
+   缺点：延时相同的消息必须扔在同一个队列
+
+3. ### redis延迟队列
+
+   https://blog.csdn.net/wizard_rp/article/details/79303623
+
+   https://github.com/Yampery/rdsmq
+
+   [基于Redis实现延时队列服务](https://www.cnblogs.com/lylife/p/7881950.html)
+
+   [分布式之延时任务方案解析]( https://www.cnblogs.com/rjzheng/p/8972725.html)
+
+根据自身业务和公司情况，如果实现一个自己的延时队列服务需要考虑一下几点:
+
+* 消息存储
+* 过期延时消息实时获取
+* 高可用性
+
+## 9 redis面试题
+
+#### 9.1 在项目中缓存是如何使用的？缓存如果使用不当会造成什么后果？
+
+场景:  
+
+* 统计,kafka消费端去重 
+* 短信验证码,统计次数
+* 缓存用户信息
+
+
+
+为什么使用?
+
+* 高性能
+
+* 高性能
+
+
+
+使用不当后果
+
+* 缓存和数据库不一致
+* 缓存雪崩、缓存穿透
+* 缓存并发竞争
+
+
+
+####  9.2 如何保证缓存与数据库的双写一致性？ 
+
+   缓存+数据库读写 **Cache Aside Pattern**
+
+- 读的时候，先读缓存，缓存没有的话，就读数据库，然后取出数据后放入缓存，同时返回响应。
+
+- 更新的时候，**先更新数据库，然后再删除缓存**
+
+  
+
+上亿流量高并发场景,解决方案
+
+ 更新数据的时候，根据**数据的唯一标识**，将操作路由之后，发送到一个 jvm 内部队列中。读取数据的时候，如果发现数据不在缓存中，那么将重新读取数据+更新缓存的操作，根据唯一标识路由之后，也发送同一个 jvm 内部队列中 
+
+
+
+#### 9.3 缓存雪崩
+
+大面积缓存失效或宕机,大量的查询直接到数据库
+
+
+
+解决方案
+
+- 事前：redis 高可用，主从+哨兵，redis cluster，避免全盘崩溃。
+
+  ​           避免热点数据集中失效(过期时间打撒,基础时间加减一个范围内的随机值)
+
+- 事中：本地 ehcache 缓存 + hystrix 限流&降级，避免 MySQL 被打死。
+
+- 事后：redis 持久化，一旦重启，自动从磁盘上加载数据，快速恢复缓存数据。
+
+
+
+#### 9.4 缓存穿透
+
+ 查询不存在数据 
+
+
+
+问题:  
+
+​	数据库由于压力过大而宕掉 
+
+解决:
+
+* 缓存空值, 设置过期时间
+
+* #### BloomFilter
+
+   在查询的时候先去 BloomFilter 去查询 key 是否存在，如果不存在就直接返回，存在再走查缓存 -> 查 DB 
+
+选择:
+
+​	 恶意攻击，攻击带过来的大量key 是不存在的 --BloomFilter 过滤key
+
+​     空数据的key有限的，重复率比较高 --缓存空值
