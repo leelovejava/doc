@@ -9,6 +9,8 @@
  
  
  [枚举很好用啊，为啥阿里不建议返回值用枚举？](https://mp.weixin.qq.com/s/lkZzglR7tNlKZ0lwOK8HYg)
+ 
+ [为什么阿里巴巴要禁用Executors创建线程池？](https://mp.weixin.qq.com/s/lqECXPKz1iuyvMZMYJhOlQ)
 
 ### 编程规约
 

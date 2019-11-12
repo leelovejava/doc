@@ -219,6 +219,16 @@ ps和kill组合使用
 根据进程查询服务
 > pwdx pid
 
+#### SpringBoot `nohup`日志分割
+日志分割`cronlog`
+yum install cronolog -y
+
+```shell script
+#!/bin/sh
+nohup java -jar caimombox-1.0-SNAPSHOT.jar | /usr/sbin/cronolog /caimom/log/box_dev/app-%Y-%m-%d.log &
+```
+
+
 ### centos6.5升级
 1. 解压： 
 > tar xvf glibc-2.14.tar.gz
