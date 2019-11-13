@@ -2727,37 +2727,66 @@ thymeleaf:
 
 ***************************************Linux**************************************************************************
 ### 常用命令?
- 1.如何查看当前的Linux服务器的运行级别？
+1.如何查看当前的Linux服务器的运行级别？
    ‘who -r’ 和 ‘runlevel’
- 2.如何查看Linux的默认网关？
+   
+2.如何查看Linux的默认网关？
     “route -n” 和 “netstat -nr”
- 3.如何在Linux上重建初始化内存盘镜像文件？
+    
+3.如何在Linux上重建初始化内存盘镜像文件？
     # mkinitrd -f -v /boot/initrd-$(uname -r).img $(uname -r)
- 4.cpio命令是什么？
+    
+4.cpio命令是什么？
     cpio就是复制入和复制出的意思。cpio可以向一个归档文件（或单个文件）复制文件、列表，还可以从中提取文件
- 5.patch命令是什么？如何使用？
+
+5.patch命令是什么？如何使用？
     patch命令就是用来将修改（或补丁）写进文本文件里
     # diff -Naur old_file new_file > diff_file
- 6.aspell有什么用 ?
-    aspell就是Linux操作系统上的一款交互式拼写检查器
- 7.查看域SPF记录:      linuxtechi@localhost:~$ dig -t TXT google.com
- 8.识别Linux系统中指定文件(/etc/fstab)的关联包
- 9. cat /proc/net/bonding/bond0:查看bond0的状态
- 10./proc文件系统 作用:基于内存的文件系统,维护着关于当前正在运行的内核状态信息
- 11.# find /usr -size +10M:在/usr目录下找出大小超过10MB的文件
- 12.# find /home -mtime +120:在/home目录下找出120天之前被修改过的文件
- 13.# find /var \! -atime -90:在/var目录下找出90天之内未被访问过的文件
- 14.# find / -name core -exec rm {} \:查找和直接删除文件"core"
- 15.strings:提取和显示非文本文件中的文本字符串
- 16.tee 过滤器作用:向多个目标发送输出内容
- 17.更改登录提示符来显示用户名、本机名和当前工作目录:export PS1 = ”$LOGNAME@hostname:\$PWD
- 18.ll | awk ‘{print $3,”owns”,$9}’:文件的文件名和它们的拥有者
- 19.at:安排一个程序在未来的做一次一次性执行
- 20.lspci:显示你的系统上PCI总线和附加设备的信息
+
+6.aspell有什么用 ?
+   
+   aspell就是Linux操作系统上的一款交互式拼写检查器
+
+7.查看域SPF记录:      
+    linuxtechi@localhost:~$ dig -t TXT google.com
+ 
+8.识别Linux系统中指定文件(/etc/fstab)的关联包
+
+9. cat /proc/net/bonding/bond0:查看bond0的状态
+
+10./proc文件系统
+    作用:基于内存的文件系统,维护着关于当前正在运行的内核状态信息
+
+11. 在/usr目录下找出大小超过10MB的文件
+    find /usr -size +10M: 
+
+12.在/home目录下找出120天之前被修改过的文件
+find /home -mtime +120:
+
+13.在/var目录下找出90天之内未被访问过的文件
+find /var \! -atime -90:
+
+14.查找和直接删除文件"core"
+find / -name core -exec rm {} \
+
+15.strings:提取和显示非文本文件中的文本字符串
+
+16.tee 过滤器作用:向多个目标发送输出内容
+
+17.更改登录提示符来显示用户名、本机名和当前工作目录:export PS1 = ”$LOGNAME@hostname:\$PWD
+
+18.ll | awk ‘{print $3,”owns”,$9}’:文件的文件名和它们的拥有者
+
+19.at:安排一个程序在未来的做一次一次性执行
+
+20.lspci:显示你的系统上PCI总线和附加设备的信息
+
+21. Linux 统计top10 IP访问日志
+cat  test.log|awk -F" " '{print $2}'|sort|uniq -c|sort -nrk 1 -t' '|awk -F" " '{print $2}'|head -10
 
 ### 常用命令?[面试]
 
-rz、sz、cd、find、wget、chmod
+rz、sz、cd、find、wget、chmod、netstat
 
 ### 复制文件到另一台服务器?[面试]
 
