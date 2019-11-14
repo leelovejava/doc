@@ -495,3 +495,6 @@ BAT大牛亲授 基于ElasticSearch的搜房网实战
 - [Elastic认证考试](https://mp.weixin.qq.com/s/dze7OZOUYuRwvfdCxN01yQ)
 
 - [Elastic认证工程师考试经验分享](https://elasticsearch.cn/article/13530)
+
+### 备份与恢复
+[ElasticSearch7.X集群/索引备份与恢复实战](https://mp.weixin.qq.com/s/_0RlojDsE30CeDSyLNP44w)
