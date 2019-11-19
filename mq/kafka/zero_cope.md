@@ -1,5 +1,7 @@
 # 零拷贝
 
+##  故事
+
 ```
 File.read(file, buf, len);
 Socket.send(socket, buf, len);
@@ -28,6 +30,8 @@ Socket.send(socket, buf, len);
 4、 `send()`调用返回，引发第四次的上下文切换，同时进行第四次拷贝，DMA把数据从目标套接字相关的缓存区传到协议引擎进行发送。
 
 "**整个过程中，过程1和4是由DMA负责，并不会消耗CPU，只有过程2和3的拷贝需要CPU参与**，整明白了？"
+
+>> DMA: direct memory access 直接内存拷贝(不使用CPU)
 
 "我消化一下..."
 
@@ -82,11 +86,13 @@ publicvoid transferTo(long position, long count, WritableByteChannel target);
 
 
 
+## 概念:
 
+* 从操作系统角度看,没有CPU拷贝.因为内核缓冲区之间，没有数据是重复的（只有 kernel buffer 有一份数据）。
+
+* 零拷贝不仅仅带来更少的数据复制，还能带来其他的性能优势，例如更少的上下文切换，更少的 CPU 缓存伪共享以及无 CPU 校验和计算。
 
 ## **I/O概念**
-
-
 
 
 
@@ -119,15 +125,25 @@ publicvoid transferTo(long position, long count, WritableByteChannel target);
 
 省去了内核与用户空间的往来拷贝，java也利用操作系统的此特性来提升性能，下面重点看看java对零拷贝都有哪些支持。
 
-### **3、mmap+write方式**
+## 实现
 
-使用mmap+write方式代替原来的read+write方式，mmap是一种内存映射文件的方法，即将一个文件或者其它对象映射到进程的地址空间，实现文件磁盘地址和进程虚拟地址空间中一段虚拟地址的一一对映关系；
+
+
+### 1、mmap+write
+
+
+
+使用mmap+write方式代替原来的read+write方式，mmap是一种**内存映射**文件的方法，即将一个文件或者其它对象映射到进程的地址空间，实现文件磁盘地址和进程虚拟地址空间中一段虚拟地址的一一对映关系；
+
+**文件映射到内核缓冲区,用户空间可同享内核空间的数据**
 
 这样就可以省掉原来内核read缓冲区copy数据到用户缓冲区，但是还是需要内核read缓冲区将数据copy到内核socket缓冲区，大致如下图所示：
 
+**网络传输时,减少内核空间到用户空间的拷贝次数**
+
 ![img mmap+write](assets/zero-cope/20191118095938.png)
 
-### **4、sendfile方式**
+### **2、sendfile方式**
 
 sendfile系统调用在内核版本2.1中被引入，目的是简化通过网络在两个通道之间进行的数据传输过程。sendfile系统调用的引入，不仅减少了数据复制，还减少了上下文切换的次数，大致如下图所示：
 
@@ -136,6 +152,30 @@ sendfile系统调用在内核版本2.1中被引入，目的是简化通过网络
 数据传送只发生在内核空间，所以减少了一次上下文切换；但是还是存在一次copy，能不能把这一次copy也省略掉，Linux2.4内核中做了改进，将Kernel buffer中对应的数据描述信息（内存地址，偏移量）记录到相应的socket缓冲区当中，这样连内核空间中的一次cpu copy也省掉了；
 
 
+
+#### sendfile优化
+
+Linux 在 2.4 版本中，做了一些修改，避免了从内核缓冲区拷贝到 Socket buffer 的操作，直接拷贝到协议栈，从而再一次减少了数据拷贝。具体如下图和小结：
+
+![img sendfile优化](assets/zero-cope/20191119222746.png)
+
+kermel  buffer直接经过DMA cope到protocol engine(协议栈)
+
+### 3. mmap 和 sendFile 的区别
+
+* mmap 适合小数据量读写，sendFile 适合大文件传输。
+
+* mmap 需要 4 次上下文切换，3 次数据拷贝；sendFile 需要 3 次上下文切换，最少 2 次数据拷贝。
+
+* sendFile 可以利用 DMA 方式，减少 CPU 拷贝，mmap 则不能（必须从内核拷贝到 Socket 缓冲区）。
+
+
+
+
+这里其实有 一次cpu 拷贝
+kernel buffer -> socket buffer
+但是，拷贝的信息很少，比如
+lenght , offset , 消耗低，可以忽略
 
 ## **Java零拷贝**
 
