@@ -591,6 +591,10 @@ yield()让当前正在执行的线程暂停，该方法不会阻塞线程，而�
 ⑪线程池
 [面试官：你分析过线程池源码吗？](https://mp.weixin.qq.com/s/FVfuwIQ08mRrQy_PAd6WLw)
 
+[死磕 java线程系列之线程池深入解析——生命周期](https://mp.weixin.qq.com/s/8N2icM11ldkHyvYOO-16NQ)
+
+[新手也能看懂的线程池学习总结](https://mp.weixin.qq.com/s/HCwCJw5CCDsue6H5XHfO0g)
+
 newSingleThreadExecutor 创建一个单线程化的线程池，它只会用唯一的工作线程来执行任务，保证所有任务按照指定顺序(FIFO, LIFO, 优先级)执行。
 newFixedThreadPool 创建一个定长线程池，可控制线程最大并发数，超出的线程会在队列中等待。
 newCachedThreadPool创建一个可缓存线程池，如果线程池长度超过处理需要，可灵活回收空闲线程，若无可回收，则新建线程。
