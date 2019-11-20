@@ -4,7 +4,9 @@
 
 ![img](http://img.mukewang.com/5dc292950001139406400359.jpg)
 
-![img](http://www.imooc.com/static/img/column/bg-l.png)![img](http://www.imooc.com/static/img/column/bg-r.png)
+![img](http://www.imooc.com/static/img/column/bg-l.png)
+
+![img](http://www.imooc.com/static/img/column/bg-r.png)
 
 
 
@@ -120,21 +122,24 @@ public class SwitchTest {
 我们先看一个正常的示例：
 
 ```java
-public static void main(String[] args) {
-        String param = "t";
-        switch (param) {
-            case "a":
-                System.out.println("a");
-                break;
-            case "b":
-                System.out.println("b");
-                break;
-            case "c":
-                System.out.println("c");
-                break;
-            default:
-                System.out.println("default");
-        }
+class a {
+    public static void main(String[] args) {
+            String param = "t";
+            switch (param) {
+                case "a":
+                    System.out.println("a");
+                    break;
+                case "b":
+                    System.out.println("b");
+                    break;
+                case "c":
+                    System.out.println("c");
+                    break;
+                default:
+                    System.out.println("default");
+            }
+    }
+}
 ```
 
 先进入到代码目录，对类文件进行编译：
