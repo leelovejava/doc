@@ -1,5 +1,9 @@
 # zookeeper
 
+## doc
+
+[ZooKeeper基本原理](https://www.cnblogs.com/luxiaoxun/p/4887452.html)
+
 ## 大纲
 
 ### Zookeeper原理
