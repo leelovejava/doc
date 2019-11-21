@@ -480,6 +480,8 @@ BAT大牛亲授 基于ElasticSearch的搜房网实战
 
 - [ElasticSearch写入数据的工作原理是什么？](https://mp.weixin.qq.com/s/rw6vmDgXUh0SUUh7uo1APg)
 
+- [elasticsearch 亿级数据检索案例与原理](https://www.cnblogs.com/mikevictor07/p/10006553.html)
+
 ### DSL
 
 [Elasticsearch解决问题之道——请亮出你的DSL！](https://mp.weixin.qq.com/s/dWrIb03EeGqw5nQnUg9AYg)
