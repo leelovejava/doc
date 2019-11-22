@@ -212,3 +212,8 @@ com.mysql.cj.exceptions.InvalidConnectionAttributeException: The server time zon
 [mysqld]
 default-time-zone='+08:00'
 ```
+
+### 优化
+
+#### 分页优化
+[MySQL 百万级数据量分页查询如何优化](https://mp.weixin.qq.com/s/iLNspcQYdWPUywKClxbdlg)
