@@ -1,5 +1,8 @@
 # 零拷贝
 
+## doc
+[Linux中零拷贝原理 | NIO零拷贝技术实践](https://mp.weixin.qq.com/s/o2rzI8xbFFx5jrRgfoT3nA)
+
 ##  故事
 
 ```
