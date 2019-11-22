@@ -17,3 +17,5 @@
 ## doc
 
 [从给丈母娘榨果汁带你认识Apache Kylin](https://mp.weixin.qq.com/s/JPT_tbPnyEAne0CLxWzj-w)
+
+[3000 字详解 Kylin 查询缓存重构](https://mp.weixin.qq.com/s/TlKyIcIcte3LeAuZ6Kzuuw)
