@@ -5,6 +5,8 @@
 
 [史上最全的高可用服务系统线上问题排查工具单（二）](https://mp.weixin.qq.com/s/6EBgu__zwkYbGDjnVsbDlQ)
 
+[《吐血整理》-顶级程序员工具集](https://mp.weixin.qq.com/s/WYiXHVJ-p1sZAf4jb5gIXg)
+
 ## BCompare 文本对比
 
 ## RegexBuddy 学习正则
@@ -13,7 +15,10 @@
 
 ## Everything 文件快速搜索 
 
-## markdown [Typora](https://www.typora.io/)
+## markdown
+* [Typora](https://www.typora.io/)
+* [Ipic](https://ipic.ca) 配合Typora 图片上传
+* [Md2All](http://md.aclickall.com) markdown样式排版
 
 ## 绘图 亿图图示
 
@@ -62,18 +67,41 @@ https://www.guidgen.com/
 下载代理服务器 https://github.com/ilanyu/ReverseProxy/releases
 http://127.0.0.1:8888?UUID
 
- 
-### freemind
+### 思维导图
+* Xmind官网地址：https://www.xmind.cn
 
-https://sourceforge.net/projects/freemind/ 
+* [ProcessOn在线作图地址](https://www.processon.com/i/5c349823e4b0db2e592c4847)
+
+* [freemind](https://sourceforge.net/projects/freemind/) 
  
+### MindManager
+http://dwnld.mindjet.com/stubs/Builds/MindManager2020/20_0_334/64Bit/MindManager%202020.msi
+
+2019: MP19-777-APE8-1162-BD8E
+2020: MP20-345-DP56-7778-919A
+
 ### [时序图](https://blog.csdn.net/fly_zxy/article/details/80911942)
 SequenceDiagram    
 
 Plantuml(uml)
 
+### 抓包
+Charles
+HTTP代理服务器
+https://www.charlesproxy.com
+
+### 测试
+JMeter
+
 ### 在线pdf转word
 https://smallpdf.com/cn/pdf-to-word
+
+### 图片
+[DouTu](https://www.52doutu.cn/maker/1/?order=timedown) 在线生成表情包
+[Carbon](https://carbon.now.sh/) 代码图片
+
+### 命名
+[CodeLF](https://unbug.github.io/codelf) 单词命名
 
 ### windows激活码
 win10教育版激活码
@@ -89,12 +117,6 @@ win10专业版激活码
 [在线转换pdf&翻译](https://www.onlinedoctranslator.com/)
 
 [十分钟搞懂Java效率工具Lombok使用与原理](https://mp.weixin.qq.com/s/MgkmgZ-WyXopEbPnr8-flg)
-
-### MindManager
-http://dwnld.mindjet.com/stubs/Builds/MindManager2020/20_0_334/64Bit/MindManager%202020.msi
-
-2019: MP19-777-APE8-1162-BD8E
-2020: MP20-345-DP56-7778-919A
 
 ### maven
 maven清除下载失败的jar
