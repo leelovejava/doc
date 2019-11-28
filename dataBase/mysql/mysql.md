@@ -217,3 +217,35 @@ default-time-zone='+08:00'
 
 #### 分页优化
 [MySQL 百万级数据量分页查询如何优化](https://mp.weixin.qq.com/s/iLNspcQYdWPUywKClxbdlg)
+
+#### SpringBoot
+在 `application.properties` 配置文件中添加 MySQL 数据库的相关配置：
+mysql5
+
+##### mysql数据库连接
+```properties
+spring.datasource.driver-class-name=com.mysql.jdbc.Driver
+spring.datasource.url=jdbc:mysql://localhost:3306/mybatis_plus?useSSL=false
+spring.datasource.username=root
+spring.datasource.password=123456
+```
+
+`mysql8`以上（spring boot 2.1）
+注意：`driver`和`url`的变化
+```properties
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.datasource.url=jdbc:mysql://localhost:3306/mybatis_plus?serverTimezone=GMT%2B8
+spring.datasource.username=root
+spring.datasource.password=123456
+```
+
+注意：
+
+1、这里的 url 使用了 ?serverTimezone=GMT%2B8 后缀，因为Spring Boot 2.1 集成了 8.0版本的jdbc驱动，这个版本的 jdbc 驱动需要添加这个后缀，否则运行测试用例报告如下错误：
+
+java.sql.SQLException: The server time zone value 'ÖÐ¹ú±ê×¼Ê±¼ä' is unrecognized or represents more 
+
+2、这里的 `driver-class-name` 使用了  `com.mysql.cj.jdbc.Driver` ，在 jdbc 8 中 建议使用这个驱动，之前的 `com.mysql.jdbc.Driver` 已经被废弃，否则运行测试用例的时候会有 WARN 信息
+Loading class `com.mysql.jdbc.Driver'. This is deprecated. The new driver class is `com.mysql.cj.jdbc.Driver'. 
+The driver is automatically registered via the SPI and manual loading of the driver class is generally unnecessary.
+
