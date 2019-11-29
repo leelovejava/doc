@@ -124,6 +124,8 @@ mysql:b+tree
 
 ### 4、elasticsearch是如何实现master选举的？
 
+[Elasticsearch原理（五）：Master机制及脑裂分析 源码级](https://blog.csdn.net/xiaoyu_bd/article/details/82016395)
+
 考察点:ES集群的底层原理
 
 前置前提：
