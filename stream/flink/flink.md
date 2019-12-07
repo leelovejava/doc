@@ -77,6 +77,8 @@ Learn more about Flink at [http://flink.apache.org/](http://flink.apache.org/)
 
 [Apache Flink数据流容错机制](https://www.iteblog.com/archives/1987.html)
 
+[深入理解 Flink 容错机制](https://mp.weixin.qq.com/s/c_nZmABDzduTugOLGZNVYw)
+
 [美团点评基于 Flink 的实时数仓建设实践](https://mp.weixin.qq.com/s/PJmdXkdUE5gtzcYAgAM8wQ)
 
 [四种优化 Apache Flink 应用程序的方法](https://www.iteblog.com/archives/2303.html)
@@ -243,6 +245,9 @@ This article describes [how to contribute to Apache Flink](http://flink.apache.o
 Apache Flink is an open source project of The Apache Software Foundation (ASF).
 The Apache Flink project originated from the [Stratosphere](http://stratosphere.eu) research project.
 
+### 新特性
+https://flink.apache.org/news/2019/08/22/release-1.9.0.html
+https://flink.apache.org/news/2019/10/18/release-1.9.1.html
 
 ### Flink 实战
 
