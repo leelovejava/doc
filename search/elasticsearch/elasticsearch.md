@@ -506,7 +506,9 @@ BAT大牛亲授 基于ElasticSearch的搜房网实战
 
 - [Elastic认证考试，请先看这一篇！](https://blog.csdn.net/laoyang360/article/details/95036171)
 
-#### 1、考点1：安装和配置
+[objectives](https://training.elastic.co/exam/elastic-certified-engineer#objectives)
+
+#### 1、考点1：安装和配置(Installation and Configuration)
 1)、集群部署
     部署和启动Elastic集群以满足给定要求。
     难度系数：3星（配置要熟）
@@ -523,7 +525,12 @@ BAT大牛亲授 基于ElasticSearch的搜房网实战
     使用Elasticsearch安全性定义基于角色的访问控制。
     难度系数：4星
 
-#### 2、考点2：索引数据
+* Deploy and start an Elasticsearch cluster that satisfies a given set of requirements
+* Configure the nodes of a cluster to satisfy a given set of requirements
+* Secure a cluster using Elasticsearch Security
+* Define role-based access control using Elasticsearch Security
+
+#### 2、考点2：索引数据(Indexing Data)
 1)、索引定义
     定义满足给定要求的索引。
     难度系数：2星
@@ -547,7 +554,15 @@ BAT大牛亲授 基于ElasticSearch的搜房网实战
     定义和使用管道（ingest pipeline)）以满足给定需求，包括：使用脚本修改文档(painless)。
     难度系数：5星（脚本使用有一定难度）
 
-#### 3、考点3：检索
+* Define an index that satisfies a given set of requirements
+* Perform index, create, read, update, and delete operations on the documents of an index
+* Define and use index aliases
+* Define and use an index template for a given pattern that satisfies a given set of requirements
+* Define and use a dynamic template that satisfies a given set of requirements
+* Use the Reindex API and Update By Query API to reindex and/or update documents
+* Define and use an ingest pipeline that satisfies a given set of requirements, including the use of Painless to modify documents
+
+#### 3、考点3：检索(Queries)
 1)、简单检索
     在给定索引的一个或多个fields上撰写和执行terms或者phrases检索语句。
     难度系数：2星
@@ -584,7 +599,17 @@ BAT大牛亲授 基于ElasticSearch的搜房网实战
     撰写和执行跨集群检索query。
     难度系数：4星（不经常用）
 
-#### 4、考点4：聚合
+* Write and execute a search query for terms and/or phrases in one or more fields of an index
+* Write and execute a search query that is a Boolean combination of multiple queries and filters
+* Highlight the search terms in the response of a query
+* Sort the results of a query by a given set of requirements
+* Implement pagination of the results of a search query
+* Use the scroll API to retrieve large numbers of results
+* Apply fuzzy matching to a query
+* Define and use a search template
+* Write and execute a query that searches across multiple clusters
+
+#### 4、考点4：聚合(Aggregations)
 1)、Metric&bucket聚合
     撰写和执行Metric和bucket聚合
     难度系数：4星
@@ -597,7 +622,10 @@ BAT大牛亲授 基于ElasticSearch的搜房网实战
     撰写和执行pipeline（管道）聚合
     难度系数：4星
 
-#### 5、考点5：映射和文本分析
+* Write and execute metric and bucket aggregations
+* Write and execute aggregations that contain sub-aggregations
+
+#### 5、考点5：映射和文本分析(Mappings and Text Analysis)
 1)、Mapping定义
     定义满足给定需求的映射（Mapping）。
     难度系数：2星
@@ -618,7 +646,12 @@ BAT大牛亲授 基于ElasticSearch的搜房网实战
     配置父子关联关系索引
     难度系数：4星
 
-#### 6、考点6：集群管理
+* Define a mapping that satisfies a given set of requirements
+* Define and use a custom analyzer that satisfies a given set of requirements
+* Define and use multi-fields with different data types and/or analyzers
+* Configure an index so that it properly maintains the relationships of nested arrays of objects
+
+#### 6、考点6：集群管理(Cluster Administration)
 1)、分片分配
     基于给定需求，在指定节点的索引上分配分片。
     难度系数：4星
@@ -642,6 +675,13 @@ BAT大牛亲授 基于ElasticSearch的搜房网实战
 6)、跨集群检索
     为集群配置跨集群检索。
     难度系数：4星
+
+* Allocate the shards of an index to specific nodes based on a given set of requirements
+* Configure shard allocation awareness and forced awareness for an index
+* Diagnose shard issues and repair a cluster’s health
+* Backup and restore a cluster and/or specific indices
+* Configure a cluster for use with a hot/warm architecture
+* Configure a cluster for cross cluster search
 
 #### 7、考试难度与含金量
 难度大不大？
@@ -668,7 +708,7 @@ Wood大叔：Elastic 官方认证考试那些事儿 ：https://elasticsearch.cn/
 1、考试时间非常紧、题目非常多。
 2、满分才是通过，差一点也是不通过。（180分钟，11题必须全对，中间任何的出错，整个考试就是不通过。）——势必：证书含金量非常大。
 3、所有的考试都是越早考过越好。考试当前是基于6.5版本，因为Elastic推陈出新非常快，7.X版本只是时间问题。
-但是，新版本新特性如果没有来得及实践，势必难度会更大。
+但是，新版本新特性如果没有来得及实践，势必难度会更大。(`Elasticsearch 7.2`)
 4、文档必须非常熟悉、要o(1)复杂度快速定位章节。阿里云欧阳楚才兄也反馈，需要我们本机连接美国服务器，网络时延会比较大，考试中网络偶尔会非常卡。时间有限，翻文档的时间多了，势必后面题会做不完！
 5、单纯看文档是没有用的，必须`kibana`实践敲一遍甚至多遍。
 6、攻克英文关，全程英文，没有一点中文。
@@ -676,6 +716,24 @@ Wood大叔：Elastic 官方认证考试那些事儿 ：https://elasticsearch.cn/
 8、`kibana` tool 命令行要熟悉。
 9、考试费用400美金，试错成本太高。
 
+#### 9、考题回顾
+* 冷热分离架构配置
+* update_by_query + script按照要求更新索引
+* 自定义分词插件，让king's和kings有相同的评分
+* nested类型和nested query
+* dynamic mapping
+* multi-match, boost, most_fields
+* date-histogram, sub-aggregation
+* 开启security
+* 集群备份snapshot
+* match_phrase, highLighting, sort
+
+### 冷热分离
+[官网5.x hot-warm](https://www.elastic.co/cn/blog/hot-warm-architecture-in-elasticsearch-5-x)
+
+[使用索引生命周期管理实现热温冷架构](https://www.elastic.co/blog/implementing-hot-warm-cold-in-elasticsearch-with-index-lifecycle-management)
+
+[Elasticsearch冷热分离原理和实践](https://elasticsearch.cn/article/13566)
 
 ### 备份与恢复
 [ElasticSearch7.X集群/索引备份与恢复实战](https://mp.weixin.qq.com/s/_0RlojDsE30CeDSyLNP44w)
