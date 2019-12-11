@@ -15,4 +15,8 @@
 
 1）[CM下载地址](http://archive.cloudera.com/cm5/cm/5/)
 
+[cdh6](https://archive.cloudera.com/cdh6/)
+
 2）[离线库下载地址](http://archive.cloudera.com/cdh5/parcels)
+
+[卸载](https://blog.csdn.net/xiaozhaoshigedasb/article/details/85264889)
