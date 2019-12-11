@@ -30,19 +30,19 @@
 
 Elastic官网：https://www.elastic.co/cn/
 
-![1526464088259](assets/1526464088259.png)
+![1526464088259](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526464088259.png)
 
 
 
 Elastic有一条完整的产品线：Elasticsearch、Kibana、Logstash等，前面说的三个就是大家常说的ELK技术栈。
 
- ![1526464220142](assets/1526464220142.png)
+ ![1526464220142](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526464220142.png)
 
 ### 1.1.2.Elasticsearch
 
 Elasticsearch官网：https://www.elastic.co/cn/products/elasticsearch
 
-![1526464283575](assets/1526464283575.png)
+![1526464283575](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526464283575.png)
 
 如上所述，Elasticsearch具备以下特点：
 
@@ -135,7 +135,7 @@ su - leyou
 
 我们将安装包上传到：/home/leyou目录
 
- ![1526465700159](assets/1526465700159.png)
+ ![1526465700159](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526465700159.png)
 
 解压缩：
 
@@ -143,7 +143,7 @@ su - leyou
 tar xvf elasticsearch-6.2.4.tar.gz
 ```
 
- ![1526465823442](assets/1526465823442.png)
+ ![1526465823442](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526465823442.png)
 
 我们把目录重命名：
 
@@ -151,11 +151,11 @@ tar xvf elasticsearch-6.2.4.tar.gz
 mv elasticsearch-6.2.4/ elasticsearch
 ```
 
- ![1526466797274](assets/1526466797274.png)
+ ![1526466797274](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526466797274.png)
 
 进入，查看目录结构：
 
- ![1526465896725](assets/1526465896725.png)
+ ![1526465896725](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526465896725.png)
 
 ```shell
 # 文件授权
@@ -170,7 +170,7 @@ chown leyou:leyou elasticsearch/ -R
 
 需要修改的配置文件有两个：
 
-  ![1526465991472](assets/1526465991472.png)
+  ![1526465991472](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526465991472.png)
 
 > 修改jvm配置
 
@@ -250,13 +250,13 @@ mkdir /home/leyou/elasticsearch/data
 mkdir /home/leyou/elasticsearch/logs
 ```
 
- ![1526467246550](assets/1526467246550.png)
+ ![1526467246550](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526467246550.png)
 
 ## 1.3.运行
 
 进入elasticsearch/bin目录，可以看到下面的执行文件：
 
- ![1526467324965](assets/1526467324965.png)
+ ![1526467324965](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526467324965.png)
 
 然后输入命令：
 
@@ -268,7 +268,7 @@ mkdir /home/leyou/elasticsearch/logs
 
 ### 1.3.1.错误1：内核过低
 
-![1526467439804](assets/1526467439804.png)
+![1526467439804](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526467439804.png)
 
 我们使用的是centos6，其linux内核版本为2.6。而Elasticsearch的插件要求至少3.5以上版本。不过没关系，我们禁用这个插件即可。
 
@@ -376,7 +376,7 @@ sudo sysctl -p
 
 再次启动，终于成功了！
 
-![1526472722397](assets/1526472722397.png)
+![1526472722397](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526472722397.png)
 
 可以看到绑定了两个端口:
 
@@ -385,7 +385,7 @@ sudo sysctl -p
 
 我们在浏览器中访问：http://192.168.206.66:9200
 
- ![1533834934277](assets/1533834934277.png)
+ ![1533834934277](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1533834934277.png)
 
 ##如果需要开机自启动见附件《elasticsearch开机自启动配置.md》
 
@@ -397,7 +397,7 @@ https://github.com/anbai-inc/Kibana_Hanization
 
 ### 1.4.1.什么是Kibana？
 
-![1526481256534](assets/1526481256534.png)
+![1526481256534](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526481256534.png)
 
 Kibana是一个基于Node.js的Elasticsearch索引库数据统计工具，可以利用Elasticsearch的聚合功能，生成各种图表，如柱形图，线状图，饼图等。
 
@@ -409,13 +409,13 @@ Kibana是一个基于Node.js的Elasticsearch索引库数据统计工具，可以
 
 最新版本与elasticsearch保持一致，也是6.2.4
 
- ![1526481608877](assets/1526481608877.png)
+ ![1526481608877](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526481608877.png)
 
 
 
 解压即可：
 
- ![1526482581793](assets/1526482581793.png)
+ ![1526482581793](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526482581793.png)
 
 ### 1.4.3.配置运行
 
@@ -433,29 +433,29 @@ elasticsearch.url: "http://192.168.206.66:9200"
 
 进入安装目录下的bin目录：
 
- ![1526482642658](assets/1526482642658.png)
+ ![1526482642658](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526482642658.png)
 
 双击运行：
 
- ![1526482862080](assets/1526482862080.png)
+ ![1526482862080](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526482862080.png)
 
 发现kibana的监听端口是5601
 
 我们访问：http://127.0.0.1:5601
 
-![1526482926798](assets/1526482926798.png)
+![1526482926798](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526482926798.png)
 
 ### 1.4.4.控制台
 
 选择左侧的DevTools菜单，即可进入控制台页面：
 
- ![1526483064339](assets/1526483064339.png)
+ ![1526483064339](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526483064339.png)
 
 
 
 在页面右侧，我们就可以输入请求，访问Elasticsearch了。
 
-![1526483200872](assets/1526483200872.png)
+![1526483200872](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526483200872.png)
 
 
 
@@ -467,7 +467,7 @@ Lucene的IK分词器早在2012年已经没有维护了，现在我们要使用�
 
 上传课前资料中的zip包，解压到Elasticsearch目录的plugins目录中：
 
- ![1526482432181](assets/1526482432181.png)
+ ![1526482432181](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526482432181.png)
 
 使用unzip命令解压：
 
@@ -477,7 +477,7 @@ unzip elasticsearch-analysis-ik-6.2.4.zip
 
 得到一个名为elasticsearch的目录：
 
-![1526482469109](assets/1526482469109.png)
+![1526482469109](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526482469109.png)
 
 我们将其改名为`ik-analyzer`
 
@@ -487,7 +487,7 @@ unzip elasticsearch-analysis-ik-6.2.4.zip
 
 然后重启elasticsearch：
 
-![1526523386610](assets/1526523386610.png)
+![1526523386610](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526523386610.png)
 
 
 
@@ -557,7 +557,7 @@ Elasticsearch提供了Rest风格的API，即http请求接口，而且也提供�
 
 文档地址：https://www.elastic.co/guide/en/elasticsearch/reference/current/getting-started.html
 
-![1526518410240](assets/1526518410240.png)
+![1526518410240](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526518410240.png)
 
 
 
@@ -565,11 +565,11 @@ Elasticsearch提供了Rest风格的API，即http请求接口，而且也提供�
 
 Elasticsearch支持的客户端非常多：https://www.elastic.co/guide/en/elasticsearch/client/index.html
 
-  ![1526518624942](assets/1526518624942.png)
+  ![1526518624942](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526518624942.png)
 
 点击Java Rest Client后，你会发现又有两个：
 
- ![1526518662013](assets/1526518662013.png)
+ ![1526518662013](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526518662013.png)
 
 
 
@@ -577,7 +577,7 @@ Low Level Rest Client是低级别封装，提供一些基础功能，但更灵�
 
 High Level Rest Client，是在Low  Level Rest Client基础上进行的高级别封装，功能更丰富和完善，而且API会变的简单
 
- ![1526518875072](assets/1526518875072.png)
+ ![1526518875072](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526518875072.png)
 
 
 
@@ -664,7 +664,7 @@ Elasticsearch采用Rest风格API，因此其API就是一次http请求，你可�
 
 我们先用PostMan来试试
 
-![1533865711980](assets/1533865711980.png)
+![1533865711980](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1533865711980.png)
 
  
 
@@ -674,7 +674,7 @@ Elasticsearch采用Rest风格API，因此其API就是一次http请求，你可�
 
 kibana的控制台，可以对http请求进行简化，示例：
 
-![1526519787118](assets/1526519787118.png)
+![1526519787118](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526519787118.png)
 
 相当于是省去了elasticsearch的服务器地址
 
@@ -694,13 +694,13 @@ Get请求可以帮我们查看索引信息，格式：
 GET /索引库名
 ```
 
-![1526520159937](assets/1526520159937.png)
+![1526520159937](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526520159937.png)
 
 
 
 或者，我们可以使用*来查询所有索引库配置：
 
-![1526520202284](assets/1526520202284.png)
+![1526520202284](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526520202284.png)
 
 
 
@@ -718,15 +718,15 @@ DELETE /索引库名
 
 > 示例
 
-![1526520267195](assets/1526520267195.png)
+![1526520267195](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526520267195.png)
 
 再次查看heima2：
 
- ![1526520309064](assets/1526520309064.png)
+ ![1526520309064](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526520309064.png)
 
 当然，我们也可以用HEAD请求，查看索引是否存在：
 
- ![1526520441966](assets/1526520441966.png)
+ ![1526520441966](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526520441966.png)
 
 
 
@@ -849,7 +849,7 @@ GET /heima/_mapping
 
 Elasticsearch中支持的数据类型非常丰富：
 
- ![1526523877042](assets/1526523877042.png)
+ ![1526523877042](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526523877042.png)
 
 我们说几个关键的：
 
@@ -903,7 +903,7 @@ index的默认值就是true，也就是说你不进行任何配置，所有字�
 
 其它的不再一一讲解，用的不多，大家参考官方文档：
 
- ![1526525159369](assets/1526525159369.png)
+ ![1526525159369](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526525159369.png)
 
 
 
@@ -1140,7 +1140,7 @@ PUT /heima/goods/3
 
 结果：
 
- ![1526527917700](assets/1526527917700.png)
+ ![1526527917700](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526527917700.png)
 
 ## 2.8.删除数据
 
@@ -1154,7 +1154,7 @@ DELETE /索引库名/类型名/id值
 
 > 示例：
 
- ![1526528059521](assets/1526528059521.png)
+ ![1526528059521](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526528059521.png)
 
 
 
@@ -1280,7 +1280,7 @@ PUT /heima/goods/3
 
 现在，索引库中有2部手机，1台电视：
 
-![1526528746961](assets/1526528746961.png)
+![1526528746961](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526528746961.png)
 
 - or关系
 
@@ -1299,7 +1299,7 @@ GET /heima/_search
 
 结果：
 
- ![1526529226647](assets/1526529226647.png)
+ ![1526529226647](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526529226647.png)
 
 
 
@@ -1324,7 +1324,7 @@ GET /heima/goods/_search
 
 结果：
 
- ![1526529350469](assets/1526529350469.png)
+ ![1526529350469](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526529350469.png)
 
 本例中，只有同时包含`小米`和`电视`的词条才会被搜索到。
 
@@ -1356,7 +1356,7 @@ GET /heima/_search
 
 结果：
 
-![1526529480394](assets/1526529480394.png)
+![1526529480394](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526529480394.png)
 
 
 
@@ -2471,7 +2471,7 @@ GET /cars/_search
 
 9、Vertical bar ：用垂直条形图作为一个通用图形。
 
-![1526570422090](assets/1526570422090.png)
+![1526570422090](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526570422090.png)
 
 ### 4.5.2.范围分桶range
 
@@ -2501,7 +2501,7 @@ Spring Data Elasticsearch是Spring Data项目下的一个子模块。
 
 
 
-![1526539628841](assets/1526539628841.png)
+![1526539628841](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526539628841.png)
 
 
 
@@ -2509,13 +2509,13 @@ Spring Data 是的使命是给各种数据访问提供统一的编程接口，�
 
 包含很多不同数据操作的模块：
 
-![1526539880872](assets/1526539880872.png)
+![1526539880872](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526539880872.png)
 
 
 
 Spring Data Elasticsearch的页面：https://projects.spring.io/spring-data-elasticsearch/
 
-![1526540053252](assets/1526540053252.png)
+![1526540053252](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526540053252.png)
 
 特征：
 
@@ -2531,7 +2531,7 @@ Spring Data Elasticsearch的页面：https://projects.spring.io/spring-data-elas
 
 我们新建一个demo，学习Elasticsearch
 
-![1526540770995](assets/1526540770995.png)
+![1526540770995](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526540770995.png)
 
 
 
@@ -2675,7 +2675,7 @@ public class Item {
 
 ElasticsearchTemplate中提供了创建索引的API：
 
- ![1526543473384](assets/1526543473384.png)
+ ![1526543473384](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526543473384.png)
 
 - 可以根据类的信息自动生成，也可以手动指定indexName和Settings
 
@@ -2683,7 +2683,7 @@ ElasticsearchTemplate中提供了创建索引的API：
 
 映射相关的API：
 
- ![1526543823946](assets/1526543823946.png)
+ ![1526543823946](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526543823946.png)
 
 - 一样，可以根据类的字节码信息（注解配置）来生成映射，或者手动编写映射
 
@@ -2765,7 +2765,7 @@ GET /item
 
 删除索引的API：
 
- ![1526544759120](assets/1526544759120.png)
+ ![1526544759120](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526544759120.png)
 
 可以根据类名或索引名删除。
 
@@ -2780,7 +2780,7 @@ public void deleteIndex() {
 
 结果：
 
- ![1526544850821](assets/1526544850821.png)
+ ![1526544850821](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526544850821.png)
 
 
 
@@ -2792,11 +2792,11 @@ Spring Data 的强大之处，就在于你不用写任何DAO处理，自动根�
 
 来看下Repository的继承关系：
 
- ![1526546236732](assets/1526546236732.png)
+ ![1526546236732](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526546236732.png)
 
 我们看到有一个ElasticsearchCrudRepository接口：
 
-![1526546475648](assets/1526546475648.png)
+![1526546475648](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526546475648.png)
 
 所以，我们只需要定义接口，然后继承它就OK了。
 
@@ -2953,7 +2953,7 @@ public void indexList() {
 
 ElasticsearchRepository提供了一些基本的查询方法：
 
- ![1526547082304](assets/1526547082304.png)
+ ![1526547082304](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526547082304.png)
 
 我们来试试查询所有：
 
@@ -2970,7 +2970,7 @@ public void query(){
 
 结果：
 
-![1526547278354](assets/1526547278354.png)
+![1526547278354](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526547278354.png)
 
 
 
@@ -3051,11 +3051,11 @@ public void queryByPriceBetween(){
 
 结果：
 
-![1526548739292](assets/1526548739292.png)
+![1526548739292](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526548739292.png)
 
 加入日志查看查询条件：
 
-![1535432390634](assets/1535432390634.png)
+![1535432390634](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1535432390634.png)
 
 
 
@@ -3086,7 +3086,7 @@ public void search(){
 - QueryBuilders.matchQuery("title", "小米手机")：利用QueryBuilders来生成一个查询。QueryBuilders提供了大量的静态方法，用于生成各种不同类型的查询：
 
 
-![1526551301905](assets/1526551301905.png)
+![1526551301905](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526551301905.png)
 
 
 
@@ -3100,11 +3100,11 @@ public void search(){
 
    - 其它属性：
 
-      ![1526551844588](assets/1526551844588.png)
+      ![1526551844588](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526551844588.png)
 
 结果：
 
-![1526551636506](assets/1526551636506.png)
+![1526551636506](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526551636506.png)
 
 ### 5.5.4.分页查询
 
@@ -3142,7 +3142,7 @@ public void searchByPage(){
 
 结果：
 
-![1526561023006](assets/1526561023006.png)
+![1526561023006](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526561023006.png)
 
 可以发现，**Elasticsearch中的分页是从第0页开始**。
 
@@ -3177,7 +3177,7 @@ public void searchAndSort(){
 
 结果：
 
-![1526561360230](assets/1526561360230.png)
+![1526561360230](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526561360230.png)
 
 ## 5.6.聚合
 
@@ -3217,7 +3217,7 @@ public void testAgg(){
 
 显示的结果：
 
- ![1526570652729](assets/1526570652729.png)
+ ![1526570652729](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526570652729.png)
 
 
 
@@ -3225,13 +3225,13 @@ public void testAgg(){
 
 - `AggregationBuilders`：聚合的构建工厂类。所有聚合都由这个类来构建，看看他的静态方法：
 
-  ![1526567597724](assets/1526567597724.png)
+  ![1526567597724](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526567597724.png)
 
 - `AggregatedPage`：聚合查询的结果类。它是`Page<T>`的子接口：
 
 
 
-  ![1526567748355](assets/1526567748355.png)
+  ![1526567748355](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526567748355.png)
 
 
 
@@ -3239,17 +3239,17 @@ public void testAgg(){
 
   `AggregatedPage`在`Page`功能的基础上，拓展了与聚合相关的功能，它其实就是对聚合结果的一种封装，大家可以参照聚合结果的JSON结构来看。
 
-  ![1526567889455](assets/1526567889455.png)
+  ![1526567889455](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526567889455.png)
 
   而返回的结果都是Aggregation类型对象，不过根据字段类型不同，又有不同的子类表示
 
-  ![1526568128210](assets/1526568128210.png)
+  ![1526568128210](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526568128210.png)
 
 
 
 我们看下页面的查询的JSON结果与Java类的对照关系：
 
- ![1526571200130](assets/1526571200130.png)
+ ![1526571200130](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526571200130.png)
 
 
 
@@ -3291,5 +3291,5 @@ public void testSubAgg(){
 
 结果：
 
- ![1526572198447](assets/1526572198447.png)
+ ![1526572198447](http://q2c2s5mn1.bkt.clouddn.com/es/leyou/1526572198447.png)
 
