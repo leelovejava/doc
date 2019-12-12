@@ -22,4 +22,9 @@ yum list java-1.8*
 
 java -version
 
-修改`/etc/hosts`
+修改`/etc/profile`
+
+```shell script
+export JAVA_HOME=/usr/lib/jvm/jre/
+export PATH=$JAVA_HOME/bin:$PATH
+```
