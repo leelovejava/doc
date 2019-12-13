@@ -116,6 +116,8 @@
 * Define and use a search template
 * Write and execute a query that searches across multiple clusters
 
+[Elasticsearch基础但非常有用的功能之二：模板](https://mp.weixin.qq.com/s/ddpwXr-YHiAfAPgK6dJwng)
+
 ### 4、考点4：聚合(Aggregations)
 1)、Metric&bucket聚合
     撰写和执行Metric和bucket聚合
