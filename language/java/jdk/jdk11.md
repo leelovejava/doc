@@ -24,7 +24,7 @@ java -version
 
 修改`/etc/profile`
 
-```shell script
+```shell script 
 export JAVA_HOME=/usr/lib/jvm/jre/
 export PATH=$JAVA_HOME/bin:$PATH
 ```
