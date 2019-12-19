@@ -75,9 +75,11 @@ http://127.0.0.1:8888?UUID
 * [freemind](https://sourceforge.net/projects/freemind/) 
  
 ### MindManager
+
 http://dwnld.mindjet.com/stubs/Builds/MindManager2020/20_0_334/64Bit/MindManager%202020.msi
 
 2019: MP19-777-APE8-1162-BD8E
+
 2020: MP20-345-DP56-7778-919A
 
 ### [时序图](https://blog.csdn.net/fly_zxy/article/details/80911942)
@@ -97,7 +99,9 @@ JMeter
 https://smallpdf.com/cn/pdf-to-word
 
 ### 图片
+
 [DouTu](https://www.52doutu.cn/maker/1/?order=timedown) 在线生成表情包
+
 [Carbon](https://carbon.now.sh/) 代码图片
 
 ### 命名

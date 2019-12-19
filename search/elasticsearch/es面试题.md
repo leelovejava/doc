@@ -33,50 +33,44 @@ ES集群架构13个节点，索引根据通道不同共20+索引，根据日期�
 
 [es 在数据量很大的情况下（数十亿级别）如何提高查询效率啊？](https://doocs.github.io/advanced-java/#/docs/high-concurrency/es-optimizing-query-performance)
 
-设计阶段:
+#### 设计阶段:
 
-    使用别名进行索引管理
+* 使用别名进行索引管理
     
-    采取冷热分离机制，热数据存储到SSD，提高检索效率；冷数据定期进行shrink操作，以缩减存储 
+* 采取冷热分离机制，热数据存储到SSD，提高检索效率；冷数据定期进行shrink操作，以缩减存储 
     
-    精心设计字段类型
+* 精心设计字段类型
     
-    不要再在一个索引下创建多个type(6.x默认对应doc,5.x type对应table)
+* 不要再在一个索引下创建多个type(6.x默认对应doc,5.x type对应table)
     
-    仅针对需要分词的字段，合理的设置分词器
+* 仅针对需要分词的字段，合理的设置分词器
 
-写入调优:   
+#### 写入调优:   
 
-    写入前副本数设置为0 
+* 写入前副本数设置为0 
     
-    采取bulk批量写入
+* 采取bulk批量写入
 
-查询调优:
+* 性能优化的杀手锏——filesystem cache,只存需要检索的字段,其他字段存es,采用es+hbase架构
 
-    禁用`wildcard`(通配符查询)、`terms`(多值搜索 in查询) ['waɪldkɑrd] [tɜ:mz]
+#### 查询调优:
+
+* 禁用`wildcard`(通配符查询)、`terms`(多值搜索 in查询) ['waɪldkɑrd] [tɜ:mz]
     
-    数据量大时候，可以先基于时间敲定索引再检索 
+* 数据量大时候，可以先基于时间敲定索引再检索 
     
-    控制返回字段和结果(返回业务相关字段_source)
+* 控制返回字段和结果(返回业务相关字段_source)
     
-    分页(不允许深度分页,scoll api) 
+* 分页(不允许深度分页,scroll api) 
     scroll 会一次性生成所有数据的一个快照，然后每次滑动向后翻页就是通过游标 scroll_id 移动，获取下一页下一页这样子，性能会比普通分页性能要高很多很多，基本上都是毫秒级的
     
     非实时查询场景,调大`refresh_interval` ['ɪntəv(ə)l]
     
     减少复杂的关联查询,冗余关联字段
 
-其他调优:
+#### 其他调优:
 
-    部署调优、业务调优 
-
-业务调优
-    
-   性能优化的杀手锏——filesystem cache,只存需要检索的字段,其他字段存es,采用es+hbase架构
-    
-   数据预热
-   
-   冷热分离
+   部署调优、业务调优(数据预热) 
     
 ### 2、elasticsearch的倒排索引是什么？
 
@@ -149,6 +143,7 @@ mysql:b+tree
     若两节点都为候选主节点，则id小的值会主节点。注意这里的id为string类型
 
 ### 5、详细描述一下Elasticsearch索引文档的过程？
+
 考察点:ES集群的底层原理
 
 [es写数据过程、读数据过程、搜索数据过程](https://doocs.github.io/advanced-java/#/docs/high-concurrency/es-write-query-search)
@@ -192,7 +187,7 @@ fetch阶段的目的：取数据。
 4. 线程池+队列大小根据业务需要做调整；
 5. 磁盘存储raid方式——存储有条件使用RAID10，增加单节点性能以及避免单节点存储故障
 
-### 8、[lucence内部结构是什么？](https://www.jianshu.com/p/0dfcee4637c5)
+### 8、[Lucence内部结构是什么？](https://www.jianshu.com/p/0dfcee4637c5)
 考察点:知识面的广度和深度
 
 Lucene是有索引和搜索的两个过程，包含索引创建，索引，搜索三个要点
@@ -305,7 +300,7 @@ es开源免费
 
 ### 16、你还了解哪些全文检索工具？
    
-   Lucene，Solr，HadoopContrib，Katta
+   Lucene、Solr、HadoopContrib、`Katta`
 
 ### 17、ES在高并发的情况下如何保证数据线程安全问题？ 
    
