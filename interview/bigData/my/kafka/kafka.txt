@@ -8,7 +8,7 @@
 4.kafka和spark Streaming 的整合？
 -------重要-----不是很清楚，看kafka和SparkStreaming整合
 
-5.怎么保证数据kafka里的数据安全？
+5.怎么保证数据kafka里的数据安全？(怎么解决kafka的数据丢失的问题)
 （丢失）----磁盘存储，数据使用完后的删除的策略
 kafka丢失数据的情况
   1). producer 向kafka中生产数据丢失数据  -- 开始事务

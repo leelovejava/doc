@@ -1,6 +1,6 @@
 hbase读取hdfs的方式  hive读取hdfs的方式
 
-hdfs的 读写 流程
+HDFS的 读写 流程
 读:
   a.client用FileSystem的open()函数打开文件（创建path）
   b.DistributedFileSystem查找namenode结点元数据信息，将元数据信息封装在输入流中返回给客户端。
