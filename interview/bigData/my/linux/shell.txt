@@ -79,3 +79,9 @@ head -n"$end"   #显示前n条记录
 3) 编写sql统计出现频率最高的10个world,并且按照频率大小排倒序
 4) 将结果写入mysql表中
 4. Spark实现(Scala)
+
+shell获取第10行数据
+```
+sed -n '10p' data.txt
+sed -n '1,10p' data.txt
+```

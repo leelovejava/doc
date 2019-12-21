@@ -33,3 +33,5 @@ Storm的设计主要是对pv，uv等简单的统计的topology的构建，还有
 9:storm整合kafka？
 Storm的Spout应该是源源不断的取数据，不能间断。那么，很显然，消息队列系统、分布式内存系统或内存数据库是作为其数据源的很好的选择
 由于storm-kafka已经实现了spout，我们直接用就可以
+
+storm版的wordCount
