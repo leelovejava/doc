@@ -63,7 +63,7 @@ rem 搜索完毕
 pause
 ```
 
-修改主机名
+### 修改主机名
 查看
 > hostname
 
@@ -75,6 +75,18 @@ pause
 > hadoop
 
 >hostname hadoop
+
+```
+192.168.179.201 node01
+192.168.179.202 node02
+192.168.179.203 node03
+
+```
+
+### 配置主机名
+vim /etc/sysconfig/network-scripts/ifcfg-eth0
+IPADDR=192.168.179.201
+service network restart
 
 ### 切换yum源
 
@@ -93,9 +105,10 @@ yum clean all
 yum makecache
 
 ### 其他
+
 ### 关闭防火墙
   
-  centos7 firewalld
+centos7 firewalld
       
       https://blog.csdn.net/Post_Yuan/article/details/78603212  
       
@@ -103,7 +116,7 @@ yum makecache
       
       systemctl disable firewalld
   
-  centos6 iptables
+centos6 iptables
      
      //临时关闭
      service iptables stop

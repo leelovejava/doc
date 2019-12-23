@@ -190,6 +190,10 @@ https://www.elastic.co/downloads/past-releases
 
 > Access on http://localhost:9200
 
+[ElasticSearch 单机多节点部署(伪集群)](https://blog.csdn.net/sinat_30026065/article/details/83150243)
+
+[集群搭建](https://www.cnblogs.com/leeSmall/p/9220535.html)
+
 ### 2.elasticsearch-head
 
 > 安装复杂，推荐`Cerebro`
@@ -244,7 +248,7 @@ https://www.elastic.co/downloads/past-releases
 
 数据行Row	                文档Document
 
-数据列Column	            字段Field
+数据列Column	                字段Field
 
 约束 Schema	                映射Mapping
 

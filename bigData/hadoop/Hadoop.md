@@ -202,6 +202,8 @@ HDP:Hortonworks Data Platform
 cdh-5.7.0
 生产或者测试环境选择对应CDH版本时，一定要采用尾号是一样的版本
 
+[apache下载地址](http://archive.apache.org/dist/)
+
 ## hadoop环境搭建
 
 ### doc

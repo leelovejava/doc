@@ -8,7 +8,7 @@
 -[20 分钟教你搞懂 Git！](https://mp.weixin.qq.com/s/ShunINXYybKftmPUcQsrxA)
 
 更新
-git fetch origin master
+> git fetch origin master
 
 还原上一次提交 
 > git reset HEAD~
@@ -67,8 +67,15 @@ git clone --depth=1 http://gitlab.xxx.cn/yyy/zzz.git
  git config --global http.postBuffer 524288000
  git config http.postBuffer 524288000
 
-错误5:fatal: unable to access 'https://github.com/golang/tools.git/': OpenSSL SSL_read: SSL_ERROR_SYSCALL, errno 10054
+错误5:
+fatal: unable to access 'https://github.com/golang/tools.git/': OpenSSL SSL_read: SSL_ERROR_SYSCALL, errno 10054
 git config http.postBuffer 524288000
+
+压缩配置
+git config --global core.compression -1 
+
+git卡在Unpacking objects
+将https://github.com/XXXXXXXXXX 换成 git://github.com/XXXXX
 
 错误6: Push to origin/master was rejected 
 在第一次提交到代码仓库的时候非常容易出现，因为初始化的仓库和本地仓库是没有什么关联的，因此，在进行第一次的新代码提交时，通常会出现这个错误
