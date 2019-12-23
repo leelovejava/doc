@@ -36,7 +36,7 @@
 
 19.定时器如何写？
 
-20. Hashmap hashset treemap 区别
+20. Hashmap hashSet treeMap 区别
 
 21.什么是hashMap？
 
@@ -46,7 +46,7 @@
 
 24.java 中 怎么解决多线程问题 有几种方式 ，他们之间的不同?
 
-25.Hashtale hashmap currenthashtable 区别?
+25.HashTable hashMap currentHashTable 区别?
 
 26.Jvm 机制 以及OOM发生的情况 简述一下?
 
@@ -54,7 +54,7 @@
 
 28.Java  序列化 SqenceFile 并说明你的序列化方式和适用场景?
 
-29.Hashmap怎么实现，与tremap的区别?
+29.HashMap怎么实现，与treeMap的区别?
 
 30.Java中问到常问的new String()问题 到底是创建几个对象，StringBuffer和StringBuilder区别?
 
@@ -70,7 +70,7 @@
 
 36.对spring的理解?
 
-37.java7新特性?
+37.java7新特性?java8新特性?
 
 38.java实现上述功能，在TB级别数据情况下，实现方案?
 
@@ -78,21 +78,21 @@
 
 40.做一个排序（java伪代码）?
 
-41.常用的jqury框架，比如jqury的表单校验框架？
+41.常用的jquery框架，比如jquery的表单校验框架？
 
 42.单例？
 
-43.LinkdList和ArrayList的区别？
+43.LinkedList和ArrayList的区别？
 
 44.http传输的时候是明文的，怎么解决安全问题？
 
 45.垃圾回收机制？
+48.java垃圾回收机制?
 
 46.java内存模型？
-
 47.java内存模型？
 
-48.java垃圾回收机制?
+
 
 49.object中有哪些方法?
 
@@ -112,8 +112,10 @@
 
 57.Java内存错误中的一个错误，问我如何解决？
 
-58.Callable和Runable的区别？
+58.Callable和`Runable`的区别？
 
 59.在线项目的bug如何调试？
 
-60.进程和线程的区别，线程如何配置？?
+60.进程和线程的区别，线程如何配置?
+
+三种遍历map的方式

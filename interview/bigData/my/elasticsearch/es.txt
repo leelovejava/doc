@@ -1,0 +1,5 @@
+请描述elasticsearch的master选举机制
+
+项目中es分片分了多少片?
+
+ik分词器怎么设置不分词

@@ -19,3 +19,6 @@ redis分布式锁是什么？
 Redis中key的设计特性原理？
 
 Redis架构原理、搭建？
+
+
+[Redis面试连环问](https://mp.weixin.qq.com/s/jc-RCNSvbOykSsoKmCJLow)

@@ -1,12 +1,12 @@
-1.mapreduce的原理和架构？
+1.MapReduce的原理和架构？
 
 2.hadoop的全排序和局部排序和二次排序?
 
-3.Mapreduce 过程？
+3.MapReduce 过程？
 
-4.Mapreduce 优化？
+4.MapReduce 优化？
 
-5.通过mapreduce 实现两个表的join?
+5.通过MapReduce 实现两个表的join?
 
 6.MR的原理 拿wordcount来讲，以及优化(全面些)?
 
@@ -15,17 +15,21 @@
 8.给一个案例  用mapreduce去实现，，这个实现过程，会遇到什么问题，怎么解决？
 
 9.mr数据倾斜解决办法？
+
 8.hadoop 数据倾斜问题?
 
 10.mapreduce的pagerank实现?
 
-11. mapreduce  merge?
+11. MapReduce  merge?
 
-12,用代码写出你使用过的mapreduce？
+12,用代码写出你使用过的MapReduce？
 
 13.MapReduce流程基本原理？
 
 14.MapReduce过程的数据倾斜怎么解决?
 
 15.MapReduce过程，Zookeeper实现高可用的原理?
+
 22.MR的过程？
+
+mapReduce中的shuffle阶段的工作流程,以及如何优化?

@@ -1,0 +1,15 @@
+架构
+Lambda 与 Kappa
+[Lambda 与 Kappa 架构笔记](https://www.jianshu.com/p/d391fe9c7976)
+
+Lambda
+https://upload-images.jianshu.io/upload_images/1552893-5b0692e1d55a8483.png!web?imageMogr2/auto-orient/strip|imageView2/2/w/500/format/webp
+
+Kappa架构
+
+https://upload-images.jianshu.io/upload_images/1552893-92e855fe7a69417b.png!web?imageMogr2/auto-orient/strip|imageView2/2/w/550/format/webp
+
+1.使用Kafka或其它系统来对需要重新计算的数据进行日志记录，以及提供给多个订阅者使用。例如需要重新计算30天内的数据，我们可以在Kafka中设置30天的数据保留值。
+2.当需要进行重新计算时，启动流处理作业的第二个实例对之前获得的数据进行处理，之后直接把结果数据放入新的数据输出表中。
+3.当作业完成时，让应用程序直接读取新的数据记录表。
+4.停止历史作业，删除旧的数据输出表。

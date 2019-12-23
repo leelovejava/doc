@@ -33,3 +33,55 @@ sort ， uniq -u，uniq -t ，uniq -d， cat 组合使用，解决从不同文�
 14、使用过linux吗 怎么用命令查看被占用的端口？
 
 15、写过shell脚本吗？
+
+16、word count:词频统计
+给定文本文件words.txt,有很多行,每行有很多单词,单词之间空格分隔,文件实例内容:
+hello world i am comming,
+hello world,you are here,
+hello mike!
+how are you!
+统计文件中出现频率最高的前10个词以及它的频率;
+结果实例:
+hello 3
+world 2
+are 2
+you 2
+mike 1
+...
+
+请提供以下几种实现:
+
+1.linux命令实现
+```shell
+cat stat.sh
+#!/bin/bash
+end=$1 #$1,第一个入参，表示统计出现频率最高的单词的个数的前n个
+
+
+cat $2 | #$2,第二个入参，表示需要统计的文件名
+#tr是sed的精简，可以用一个字符替换另一个字符或者删除重复的字符
+#-c表示补集，即[a-z][A-Z]的补集，即非字母字符,
+#-s是出现多个重复的，则去重，只一个，
+#\012是新行的意思，就用换行替换非字符符号，如多个重复出现则只显示一个
+tr -cs "[a-z][A-Z]" "[\012*]" | #这样可以保证每行只有一个单词
+tr A-Z a-z | #将大写字母替换为小写字母
+sort | #将每行排序
+uniq -c| #统计每行单词个数
+sort -k1nr -k2 | #先按第一域数字（k1n）降序(r)排序，再按第二域排序
+head -n"$end"   #显示前n条记录
+```
+./stat.sh 10 words.txt
+
+2. java实现(jdk)
+3. hive实现
+1) 在hive中建表
+2) 导入文件到hive表;
+3) 编写sql统计出现频率最高的10个world,并且按照频率大小排倒序
+4) 将结果写入mysql表中
+4. Spark实现(Scala)
+
+shell获取第10行数据
+```
+sed -n '10p' data.txt
+sed -n '1,10p' data.txt
+```
