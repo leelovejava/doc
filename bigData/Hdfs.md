@@ -349,3 +349,6 @@ HADOOP_USER_NAME:hadoop
 [翻译经典 HDFS 原理讲解漫画 之一----系统构成和写数据过程](https://blog.csdn.net/hudiefenmu/article/details/37655491)
 [翻译经典 HDFS 原理讲解漫画 之二----读数据和容错](https://blog.csdn.net/hudiefenmu/article/details/37694503)
 [翻译经典 HDFS 原理讲解漫画 之三---容错和副本布局策略](https://blog.csdn.net/hudiefenmu/article/details/37820789)
+
+## 读写流程 
+[HDFS上传和下载原理（有源码解析）](https://blog.51cto.com/kinglab/2442820)
