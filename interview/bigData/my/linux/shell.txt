@@ -85,3 +85,12 @@ shell获取第10行数据
 sed -n '10p' data.txt
 sed -n '1,10p' data.txt
 ```
+
+shell熟不熟？文件查找用什么命令？文件内容过滤用什么？grep命令用过没？
+find / -name java
+
+为4保留 其余过滤
+cat test.txt | awk -F '|' '{if ($NF==4) print $0}'
+
+grep [参数] 正则表达式 [文件]
+ps -ef | grep java

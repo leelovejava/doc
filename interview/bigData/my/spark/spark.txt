@@ -10,7 +10,8 @@
 
 2.spark源码-DAG-Task--任务调度部分？
 答案：
-首先清楚spark是粗粒度的资源申请，任务调度：sparkContext-DAGSheduler切分stage，TaskSheduler发送任务到申请好的Executor中的线程池执行
+首先清楚spark是粗粒度的资源申请，任务调度：sparkContext-DAGScheduler切分stage，TaskScheduler发送任务到申请好的Executor中的线程池执行
+
 3.submit相关配置？一般指定多大的资源？
 答案：submit --master/yarn  --class  --deploy model clster/client
           --Executor cores	默认一个Executor 1 core，lg内存，1G，2--3个task
