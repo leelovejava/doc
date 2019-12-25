@@ -111,3 +111,8 @@ Eureka基于AP，能保证高可用，即使所有机器都挂了，也能拿到
 
 所以理论上Eureka是更适合作注册中心。而现实环境中大部分项目可能会使用ZooKeeper，那是因为集群不够大，并且基本不会遇到用做注册中心的机器一半以上都挂了的情况。
 所以实际上也没什么大问题
+
+11. Zookeeper存储数据信息?
+dubbo: [Zookeeper 保存的Dubbo信息详解](https://blog.csdn.net/HUXU981598436/article/details/88952032)
+kafka:
+hbase:
