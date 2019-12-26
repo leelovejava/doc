@@ -1,0 +1,3 @@
+1. Netty中粘包/拆包处理
+LineBasedFrameDecoder 和 StringDecoder（将接收到的对象转换成字符串）
+因为是双向会话，所以两端都要添加
