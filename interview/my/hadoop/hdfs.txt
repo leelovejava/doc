@@ -1,6 +1,6 @@
 hbase读取hdfs的方式  hive读取hdfs的方式
 
-HDFS的 读写 流程
+1) HDFS的 读写 流程?hdfs了解多少？读写流程，架构
 读:
   a.client用FileSystem的open()函数打开文件（创建path）
   b.DistributedFileSystem查找namenode结点元数据信息，将元数据信息封装在输入流中返回给客户端。
@@ -30,4 +30,29 @@ HDFS的 读写 流程
   f.客户端结束写入数据，则调用 stream 的 close 函数，最后通知元数据节点写入完毕 
   g.客户端切分文件Block，按 Block 线性地和 NN 获取 DN 列表（副本数），验证 DN 列表后以更小的单位流式传输数据，
     各节点两两通信确定可用，Block 传输结束后，DN 向 NN 汇报 Block 信息，DN 向 Client 汇报完成，Client 向 NN 汇报完成，
-    获取下一个 Block 存放的 DN 列表，最终 Client 汇报完成，NN 会在写流程更新文件状态。   
+    获取下一个 Block 存放的 DN 列表，最终 Client 汇报完成，NN 会在写流程更新文件状态。
+
+2) 写流程中备份三，其中一个写失败了怎么弄的？(如果一个节点或多个节点写入失败)
+只要成功写入的节点数量达到`dfs.replication.min`(默认为1)，那么就任务是写成功的。
+然后NameNode会通过异步的方式将block复制到其他节点，使数据副本达到`dfs.replication`参数配置的个数
+
+3) hdfs HA（过程，启动流程）
+①开启zookeeper服务
+
+　　$>zkServer.sh start
+
+②开启`journalNode`守护进程（在`journal`协议指定的节点上执行）[ˈdʒɜːnl]
+
+　　$>hadoop-daemon.sh start journalnode
+
+③开启namenode守护进程（在nn1和nn2执行）
+
+　　$>hadoop-daemon.sh start namenode
+
+④开启datanode守护进程
+
+　　$>hadoop-daemons.sh start datanode（在namenode节点上执行开启全部datanode）
+
+⑤开启zkfc守护进程
+
+　　$>hadoop-daemon.sh --script $HADOOP_PREFIX/bin/hdfs start zkfc　
