@@ -1,6 +1,8 @@
 
 ## doc
 
+- [elasticsearch国内下载镜像](https://thans.cn/mirror/elasticsearch.html)
+
 - [官网](https://www.elastic.co/cn/webinars/getting-started-elasticsearch)
 
 - [Elasticsearch权威指南](https://www.elastic.co/guide/cn/elasticsearch/guide/current/index.html)
