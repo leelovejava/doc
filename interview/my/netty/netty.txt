@@ -1,0 +1,21 @@
+1. BIO、NIO和AIO的区别？
+
+2. NIO的组成？
+
+3. Netty的特点？
+
+4. Netty的线程模型？
+
+5. TCP 粘包/拆包的原因及解决方法？
+    LineBasedFrameDecoder 和 StringDecoder（将接收到的对象转换成字符串）
+    因为是双向会话，所以两端都要添加
+
+6. 了解哪几种序列化协议？
+
+7. 如何选择序列化协议？
+
+8. Netty的零拷贝实现？
+
+9. Netty的高性能表现在哪些方面？
+
+10. NIOEventLoopGroup源码？

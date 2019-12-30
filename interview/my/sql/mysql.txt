@@ -5,3 +5,5 @@ Mysql 主从复制一段时间后 突然数据同步不了怎么办
 [一手好 SQL 是如何炼成的？](https://mp.weixin.qq.com/s/WsQZhZhuzfs2YZgamrGUOw)
 
 [[灵魂拷问]MySQL面试高频一百问(工程师方向)](https://juejin.im/post/5d351303f265da1bd30596f9)
+
+[UML类图](https://lqcoder.com/p/3582679f.html)

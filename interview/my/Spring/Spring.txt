@@ -1,0 +1,25 @@
+1、什么是 Spring 框架？Spring 框架有哪些主要模块？
+2、使用 Spring 框架能带来哪些好处？
+3、什么是控制反转(IOC)？什么是依赖注入？
+4、请解释下 Spring 框架中的 IoC？
+5、BeanFactory 和 ApplicationContext 有什么区别？
+6、Spring 有几种配置方式？
+7、如何用基于 XML 配置的方式配置 Spring？
+8、如何用基于 Java 配置的方式配置 Spring？
+9、怎样用注解的方式配置 Spring？
+10、请解释 Spring Bean 的生命周期？
+11、Spring Bean 的作用域之间有什么区别？
+12、什么是 Spring inner beans？
+13、Spring 框架中的单例 Beans 是线程安全的么？
+14、请举例说明如何在 Spring 中注入一个 Java Collection？
+15、如何向 Spring Bean 中注入一个 Java.util.Properties？
+16、请解释 Spring Bean 的自动装配？
+17、请解释自动装配模式的区别？
+18、如何开启基于注解的自动装配？
+19、请举例解释@Required 注解？
+20、请举例解释@Autowired 注解？
+21、请举例说明@Qualifier 注解？
+22、构造方法注入和设值注入有什么区别？
+23、Spring 框架中有哪些不同类型的事件？
+24、FileSystemResource 和 ClassPathResource 有何区别？
+25、Spring 框架中都用到了哪些设计模式？

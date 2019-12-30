@@ -1,24 +1,46 @@
+[Redis面试连环问](https://mp.weixin.qq.com/s/jc-RCNSvbOykSsoKmCJLow)
+
+[为什么RedisCluster会设计成16384个槽呢?](https://blog.csdn.net/u013256816/article/details/103707927)
+
 1.redis用来做什么？  模型等，频繁调用的放在redis中，取其快
+
+Redis的特点
+使用Redis有哪些好处？
 
 2.redis的常用数据类型？
 
+redis单线程为什么快?
+
 3.redis 工作原理？
+
+读写分离模型
+数据分片模型
 
 4.redis缓存机制?
 
 5.redis支持的最大数据量是多少？redis集群下怎么从某一台集群查key-value。
 
-21. redis，查看list的全量数据命令是?查看hash里边的全量数据命令?。你们用的redis什什么集群，简单的注册没有卡槽的概集群模式和哨兵模式的区别？
+6. redis，查看list的全量数据命令是?查看hash里边的全量数据命令?。你们用的redis什什么集群，简单的注册没有卡槽的概集群模式和哨兵模式的区别？
 
-22. redis的持久化的方式有几种。java jdk 自带计数线程安全。
+7. redis的持久化的方式有几种。java jdk 自带计数线程安全。
 
-缓存的淘汰策略。
+8. 缓存的淘汰策略。Redis的回收策略
+MySQL里有2000w数据，redis中只存20w的数据，如何保证redis中的数据都是热点数据245
 
-redis分布式锁是什么？
+9. redis分布式锁是什么？怎么实现?和zookeeper相比优缺点?
 
-Redis中key的设计特性原理？
+10. Redis中key的设计特性原理？
 
-Redis架构原理、搭建？
+11. Redis架构原理、搭建？
+
+12. `memecache`与Redis的区别都有哪些？
+
+13. 虚拟内存
 
 
-[Redis面试连环问](https://mp.weixin.qq.com/s/jc-RCNSvbOykSsoKmCJLow)
+14. redis常见的性能问题都有哪些？如何解决？
+redis数据倾斜
+
+15. Redis 最适合的场景
+
+16. 多级缓存架构
