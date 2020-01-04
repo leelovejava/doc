@@ -53,6 +53,7 @@
 ## 一、Kafka概述
 
 ### 1.0.doc
+- [插曲：大白话带你认识Kafka](https://juejin.im/post/5dcf6b6e51882510a23314f3#heading-16)
 
 - [史上最全、最详细的 kafka 学习笔记！](https://mp.weixin.qq.com/s/Vfo7fOoCi3jf0EhT4k3mMA)
 

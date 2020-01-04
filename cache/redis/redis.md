@@ -16,7 +16,7 @@
 
 [window的redis](https://github.com/microsoftarchive/redis/releases)
 
-
+[为什么RedisCluster会设计成16384个槽呢?](https://mp.weixin.qq.com/s/lNGNVgCp0234NnhUzwJ0dA)
 
 中华石衫分布式缓存面试
 
