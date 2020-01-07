@@ -1,5 +1,7 @@
 # RocketMQ
 
+[RocketMQ入门总结](https://juejin.im/post/5df0825b51882512420af94a#heading-0)
+
 ## 分布式事务
 可靠消息最终一致性方案
 ![img RocketMq分布式事务](assets/rocketmq-transaction.png)
