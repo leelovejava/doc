@@ -149,3 +149,9 @@ mvn install:install-file -Dfile=C:\Users\Adminstrator\Downloads\\ojdbc6-11.2.0.1
 
 ### 语音转字幕
 [语音自动生成字幕](https://aismartvip.com/)
+
+### system
+后台：mp.juxiaotu.cn
+账号：jutukeji2
+密码：jutukeji
+小程序端对应：橘兔社区拼团
