@@ -2,6 +2,36 @@
 
 [为什么RedisCluster会设计成16384个槽呢?](https://blog.csdn.net/u013256816/article/details/103707927)
 
+45.redis 是什么？都有哪些使用场景？
+
+46.redis 有哪些功能？
+
+47.redis 和 memecache 有什么区别？
+
+48.redis 为什么是单线程的？
+
+49.什么是缓存穿透？怎么解决？
+
+50.redis 支持的数据类型有哪些？
+
+51.redis 支持的 java 客户端都有哪些？
+
+52.jedis 和 redisson 有哪些区别？
+
+53.怎么保证缓存和数据库数据的一致性？
+
+54.redis 持久化有几种方式？
+
+55.redis 怎么实现分布式锁？
+
+56.redis 分布式锁有什么缺陷？
+
+57.redis 如何做内存优化？
+
+58.redis 淘汰策略有哪些？
+
+59.redis 常见的性能问题有哪些？该如何解决？
+
 ## 1.redis用来做什么？  模型等，频繁调用的放在redis中，取其快
 
 Redis的特点
