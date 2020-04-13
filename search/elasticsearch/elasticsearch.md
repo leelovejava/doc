@@ -43,6 +43,8 @@
 
 - [死磕Elasticsearch方法论认知清单](https://mp.weixin.qq.com/s/q5iYjOF5229Ddg1EPPwgsQ)
 
+- [Elasticsearch 与传统数据库界限](https://mp.weixin.qq.com/s/RUoUK4qNPZ8YPB_qW6-Xdg)
+
 ## 提纲
 （1）掌握 Elasticsearch 的基本概念，主要包括：
 
@@ -489,6 +491,9 @@ BAT大牛亲授 基于ElasticSearch的搜房网实战
 - [ElasticSearch写入数据的工作原理是什么？](https://mp.weixin.qq.com/s/rw6vmDgXUh0SUUh7uo1APg)
 
 - [elasticsearch 亿级数据检索案例与原理](https://www.cnblogs.com/mikevictor07/p/10006553.html)
+
+### 索引
+- [Elasticsearch 索引设计实战指南](https://mp.weixin.qq.com/s/KQQJfKCOuqadTujbLNu5aA)
 
 ### DSL
 

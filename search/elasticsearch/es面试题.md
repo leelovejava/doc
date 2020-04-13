@@ -53,6 +53,8 @@ ES集群架构13个节点，索引根据通道不同共20+索引，根据日期�
 
 * 性能优化的杀手锏——filesystem cache,只存需要检索的字段,其他字段存es,采用es+hbase架构
 
+* 数据预热
+
 #### 查询调优:
 
 * 禁用`wildcard`(通配符查询)、`terms`(多值搜索 in查询) ['waɪldkɑrd] [tɜ:mz]
@@ -86,7 +88,7 @@ ES集群架构13个节点，索引根据通道不同共20+索引，根据日期�
 
 查询流程:
 
-    根据关键字,搜索索引区域,查询对应的docId,通过docId,去数据区域查询数据
+   根据关键字,搜索索引区域,查询对应的docId,通过docId,去数据区域查询数据
 
 倒排索引包括如下信息:
 1. 文档ID，用于获取原始文档的信息 
@@ -307,3 +309,23 @@ es开源免费
    在读数据与写数据之间如果有其他线程进行写操作，就会出问题，es使用版本控制才避免这种问题
        
    在修改数据的时候指定版本号，操作一次版本号加1
+   
+### 18、es写入数据的过程
+1. 客户端选择一个node发送请求过去，这个node就是coordinating node (协调节点)
+2. coordinating node，对document进行路由，将请求转发给对应的node
+3. 实际上的node上的primary shard处理请求，然后将数据同步到replica node
+4. coordinating node，如果发现primary node和所有的replica node都搞定之后，就会返回请求到客户端
+
+### 19、es读数据过程
+查询，GET某一条的数据，写入某个document，这个document会自动给你分配一个全局的唯一ID，同时跟住这个ID进行hash路由到对应的primary shard上面去，当然也可以手动的设置ID
+
+1. 客户端发送任何一个请求到任意一个node，成为coordinate node
+2. coordinate node 对document进行路由，将请求转发到对应的node，此时会使用round-robin随机轮训算法，在primary shard 以及所有的replica中随机选择一个，让读请求负载均衡，
+3. 接受请求的node，返回document给coordinate note
+4. coordinate node返回给客户端
+
+### 20、es搜索数据过程
+1. 客户端发送一个请求给coordinate node
+2. 协调节点将搜索的请求转发给所有的shard对应的primary shard 或replica shard
+3. query phase：每一个shard 将自己搜索的结果（其实也就是一些唯一标识），返回给协调节点，有协调节点进行数据的合并，排序，分页等操作，产出最后的结果
+4. fetch phase ，接着由协调节点，根据唯一标识去各个节点进行拉去数据，最总返回给客户端
