@@ -4,6 +4,46 @@
 
 [2019年最火的容器、K8S和DevOps入门都在这了](https://mp.weixin.qq.com/s/ExmE8zejcH70Erry0aozSQ)
 
+## 安装
+yum install -y yum-utils device-mapper-persistent-data lvm2
+
+设置yum源
+```shell script
+# 中央仓库
+yum-config-manager --add-repo http://download.docker.com/linux/centos/docker-ce.repo
+# 阿里仓库
+yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+```
+
+docker安装compose
+```shell script
+# https://docs.docker.com/compose/install/#install-using-pip
+# 1.下载
+sudo curl -L "https://github.com/docker/compose/releases/download/1.25.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+# 网速查情况下,去github下载 
+cp docker-compose-Linux-x86_64 /usr/local/bin/docker-compose
+# 2. 赋予执行权限
+sudo chmod +x /usr/local/bin/docker-compose
+# 3. 检查安装
+docker-compose --version
+```
+
+docker安装单机版es
+```shell script
+useradd elastic
+chown -R elastic:elastic ./*
+#拉取镜像
+docker pull elasticsearch:7.2.1
+#创建容器
+docker create --name elasticsearch --net host -e "discovery.type=single-node"
+-e
+"network.host=172.16.55.185" elasticsearch:7.2.1
+#启动
+docker start elasticsearch
+#查看日志
+docker logs elasticsearch
+```
+
 ---------mysql------------------
 创建mysql容器
 --e 指定配置文件
@@ -181,3 +221,16 @@ sudo apt-get install build-essential
 ----
 查看容器端口映射信息
 docker container port CONTAINER_ID
+
+
+```shell script
+# 阿里云镜像加速
+sudo mkdir -p /etc/docker
+sudo tee /etc/docker/daemon.json <<-'EOF'
+{
+  "registry-mirrors": ["https://j8bshe1p.mirror.aliyuncs.com"]
+}
+EOF
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+```

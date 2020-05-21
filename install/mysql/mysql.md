@@ -4,6 +4,8 @@
 
 [linux安装mysql8](https://www.cnblogs.com/wlwl/p/9686809.html)
 
+[linux安装mysql8](https://www.cnblogs.com/z0909y/p/10772854.html)
+
 [Navicat连接Mysql8.0.11出现1251错误](https://blog.csdn.net/qq_36068954/article/details/80175755)
 
 > sudo mysqld --skip-grant-tables  --skip-networking &
