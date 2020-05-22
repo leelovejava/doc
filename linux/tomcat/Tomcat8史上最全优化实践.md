@@ -11,7 +11,7 @@ tomcat服务器在JavaEE项目中使用率非常高，所以在生产环境对to
 
 #### 1.1.1、部署安装tomcat8
 
-下载并安装 ：[https://tomcat.apache.org/download-80.cgi](https://links.jianshu.com/go?to=https%3A%2F%2Ftomcat.apache.org%2Fdownload-80.cgi)
+下载并安装 ：[https://tomcat.apache.org/download-80.cgi](https%3A%2F%2Ftomcat.apache.org%2Fdownload-80.cgi)
 
 ![img](https:////upload-images.jianshu.io/upload_images/17179731-11d28cdbc05c67aa?imageMogr2/auto-orient/strip|imageView2/2/w/443/format/webp)
 
