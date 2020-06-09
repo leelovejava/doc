@@ -297,7 +297,11 @@ ssh node1
 			
        3.0  http://hadoop001:9870/
 
-
+    
+    安全模式关闭 hdfs dfsadmin -safemode leave
+    
+    安全模式开启  hdfs dfsadmin -safemode enter
+    
 7）停止HDFS
 	sbin/stop-dfs.sh
 	
@@ -356,6 +360,17 @@ http://blog.51cto.com/zero01/2094901?from=singlemessage
 
 ###端口改变
 https://issues.apache.org/jira/browse/HDFS-9427
+
+Daemon	App	Hadoop2 	Hadoop3 
+
+NameNode Port	Hadoop HDFS NameNode	8020 / 9000	9820
+
+Hadoop HDFS NameNode HTTP UI	50070	9870
+
+Hadoop HDFS NameNode HTTPS UI	50470	9871
+
+Secondary NameNode Port	Secondary NameNode HTTP	50091	9869
+
 
 #### Namenode 端口: 
 50470 --> 9871
