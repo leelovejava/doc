@@ -2,84 +2,156 @@
 
 ## 1、Tomcat8优化
 
-```
-tomcat服务器在JavaEE项目中使用率非常高，所以在生产环境对tomcat的优化也变得非常重要了。
-对于tomcat的优化，主要是从两个方面入手，第一是，tomcat自身的配置，另一个是tomcat所运行的jvm虚拟机的
-```
+tomcat服务器在JavaEE项目中使用率非常高，所以在生产环境对tomcat的优化也变得非常重要了。 
+
+对于tomcat的优化，主要是从两个方面入手，第一是，tomcat自身的配置，另一个是tomcat所运行的jvm虚拟机的。
 
 ### 1.1、Tomcat配置优化
 
 #### 1.1.1、部署安装tomcat8
 
-下载并安装 ：[https://tomcat.apache.org/download-80.cgi](https://links.jianshu.com/go?to=https%3A%2F%2Ftomcat.apache.org%2Fdownload-80.cgi)
+下载并安装 ：https://tomcat.apache.org/download-80.cgi
 
-![img](https:////upload-images.jianshu.io/upload_images/17179731-11d28cdbc05c67aa?imageMogr2/auto-orient/strip|imageView2/2/w/443/format/webp)
+![](https://img-blog.csdnimg.cn/20190709141158818.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3poYW8xMjk5MDAyNzg4,size_16,color_FFFFFF,t_70)
+
+```shell
+cd /tmp
+wget https://mirrors.tuna.tsinghua.edu.cn/apache/tomcat/tomcat-8/v8.5.55/bin/apache-tomcat-8.5.55.tar.gz
+
+tar -xvf apache-tomcat-8.5.55.tar.gz
+cd apache-tomcat-8.5.55/conf
+# 修改配置文件,配置tomcat的管理用户
+vim tomcat-users.xml
+# 写入如下内容
+<role rolename="manager"/>
+<role rolename="manager-gui"/>
+<role rolename="admin"/>
+<role rolename="admin-gui"/>
+<user username="tomcat" password="tomcat" roles="admin-gui,admin,manager-gui,manager"/>
+# 保存退出
+:wq
+
+# 控制台中文乱码,修改conf/logging.properties
+# 将`java.util.logging.ConsoleHandler.encoding = UTF-8`
+# 修改为`java.util.logging.ConsoleHandler.encoding = GBK`
+```
 
 
 
-![img](https:////upload-images.jianshu.io/upload_images/17179731-1e671a4ccc650d56?imageMogr2/auto-orient/strip|imageView2/2/w/668/format/webp)
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<tomcat-users xmlns="http://tomcat.apache.org/xml"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://tomcat.apache.org/xml tomcat-users.xsd"
+              version="1.0">
+  <role rolename="manager"/>
+  <role rolename="manager-gui"/>
+  <role rolename="admin"/>
+  <role rolename="admin-gui"/>
+  <user username="tomcat" password="tomcat" roles="admin-gui,admin,manager-gui,manager"/>
+</tomcat-users>
+```
 
-![img](https:////upload-images.jianshu.io/upload_images/17179731-7e72268755c100e5?imageMogr2/auto-orient/strip|imageView2/2/w/671/format/webp)
+
+
+```shell
+# 如果是tomcat7,配置了tomcat用户就饿可以登录系统了,但是tomcat中不行,还需要修改另一个配置文件，否则提示403
+vim webapps/mamager/META-INF/context.xml
+# 将<value>的内容注释掉
+<Valve className="org.apache.catalina.valves.RemoteAddrValve"
+         allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1" />
+<Manager sessionAttributeValueClassNameFilter="java\.lang\.(?:Boolean|Integer|Long|Number|String)|org\.apache\.catalina\.filters\.CsrfPreventionFilter\$LruCache(?:\$1)?|java\.util\.(?:Linked)?HashMap"/>
+# 保存退出即可
+
+# 启动tomcat
+```
 
 #### 1.1.2 禁用AJP连接
 
 在服务状态页面中可以看到，默认状态下会启用AJP服务，并且占用8009端口。
 
+![AJP连接](https://img-blog.csdnimg.cn/20190709150314940.png)
 
 
-![img](https:////upload-images.jianshu.io/upload_images/17179731-9f4ce3b5113c334d.png?imageMogr2/auto-orient/strip|imageView2/2/w/693/format/webp)
 
 什么是AJP呢？
- AJP（Apache JServer Protocol）
- AJPv13协议是面向包的。WEB服务器和Servlet容器通过TCP连接来交互；为了节省Socket创建的昂贵代价，WEB服务器会
- 尝试维护一个永久TCP连接到servlet容器，并且在多个请求和响应周期过程会重用连接。
+	AJP（Apache JServer Protocol）
+
+​    AJPv13协议是面向包的。WEB服务器和Servlet容器通过TCP连接来交互；为了节省Socket创建的昂贵代价，WEB服务器会尝试维护一个永久TCP连接到servlet容器，并且在多个请求和响应周期过程会重用连接。
 
 
 
-![img](https:////upload-images.jianshu.io/upload_images/17179731-03c162fd46a144cb?imageMogr2/auto-orient/strip|imageView2/2/w/546/format/webp)
+![Web客户端访问Tomcat服务器上的JSP组件的两种方式](https://img-blog.csdnimg.cn/20190709150652972.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3poYW8xMjk5MDAyNzg4,size_16,color_FFFFFF,t_70)
 
-我们一般是使用Nginx+tomcat的架构，所以用不着AJP协议，所以把AJP连接器禁用。修改conf下的server.xml文件，将AJP
- 服务禁用掉即可。
+我们一般是使用Nginx+tomcat的架构，所以用不着AJP协议，所以把AJP连接器禁用。修改conf下的server.xml文件，将AJP服务禁用掉即可。
+
+```xml
+<Connector protocol="AJP/1.3" address="::1" port="8009" redirectPort="8443" />
+```
 
 
 
-![img](https:////upload-images.jianshu.io/upload_images/17179731-9331d503adf4dd33.png?imageMogr2/auto-orient/strip|imageView2/2/w/716/format/webp)
+![禁用AJP](https://img-blog.csdnimg.cn/20190709150859916.png)
 
 #### 1.1.3、执行器（线程池）
 
+在tomcat中每一个用户请求都是一个线程，所以可以使用线程池提高性能。 修改server.xml文件 ：
 
+```xml
+<!--将注释打开-->
+<Executor name="tomcatThreadPool" namePrefix="catalina-exec-"
+        maxThreads="500" minSpareThreads="50" prestartminSpareThreads="true" maxQueueSize="100"/>
+<!--
+参数说明:
+maxThreads: 最大并发数,默认设置 200, 一般建议在 500 ~ 1000, 根据硬件设施和业务来判断
+minSpareThreads: Tomcat 初始化时创建的线程数, 默认设置 25
+prestartminSpareThreads: 在 Tomcat 初始化的时候就初始化 minSpareThreads 的参数值, 如果不等于 true, mniniSpareThreads 的值就没啥效果了
+maxQueueSize,最大的等待队列数,超过则拒绝请求
+-->
 
-```css
-在tomcat中每一个用户请求都是一个线程，所以可以使用线程池提高性能。
-修改server.xml文件 ：
+<!--在Connector中设置executor属性指向上面的执行器-->
+<Connector executor="tomcatThreadPool"
+               port="8080" protocol="HTTP/1.1"
+               connectionTimeout="20000"
+               redirectPort="8443" />
 ```
-
-![img](https:////upload-images.jianshu.io/upload_images/17179731-3c32439426b0d8cb?imageMogr2/auto-orient/strip|imageView2/2/w/659/format/webp)
 
 保存退出，重启tomcat，查看效果。
 
+![AJP 问题:Max Threads:-1](https://img-blog.csdnimg.cn/20190709152209257.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3poYW8xMjk5MDAyNzg4,size_16,color_FFFFFF,t_70)
 
-
-![img](https:////upload-images.jianshu.io/upload_images/17179731-30b690214aadf2e1?imageMogr2/auto-orient/strip|imageView2/2/w/702/format/webp)
+​			[Tomcat7中maxThreads等于-1问题](https://blog.csdn.net/weixin_38278878/article/details/80144397)
 
 #### 1.1.4 3种运行模式
 
-
-
-```cpp
+```
 tomcat的运行模式有3种 ：
-    1. bio
-        默认的模式，性能非常低下，没有经过任何优化处理和支持。
-    2. nio
-        nio（new I/O），是Java SE 1.4及后续版本提供的一种新的I/O操作方式（既java.nio包及其子包）。Java nio是一个基于缓冲区、
-        并能提供非阻塞I/O操作的Java API，因此nio也被看成是non-blocking I/O的缩写。它拥有比传统I/O操作（bio）更好的并发运行
-        性能。
-    3. apr
-        安装起来最空难，但是从操作系统级别来解决异步的IO问题，大幅度的提高性能。
+	1. bio
+		默认的模式，性能非常低下，没有经过任何优化处理和支持。
+		
+	2. nio
+		nio（new I/O），是Java SE 1.4及后续版本提供的一种新的I/O操作方式（既java.nio包及其子包）。Java nio是一个基于缓冲区、
+		并能提供非阻塞I/O操作的Java API，因此nio也被看成是non-blocking I/O的缩写。它拥有比传统I/O操作（bio）更好的并发运行性能。
+		
+	3. apr
+		安装起来最困难，但是从操作系统级别来解决异步的IO问题，大幅度的提高性能。
+		
 推荐使用nio，不过，在tomcat8中有最新的nio2，速度更快，建议使用nio2.
 ```
 
-![img](https:////upload-images.jianshu.io/upload_images/17179731-43586a6b2498caba?imageMogr2/auto-orient/strip|imageView2/2/w/671/format/webp)
+
+
+```xml
+<!--之前 protocol="HTTP/1.1" -->
+<Connector executor="tomcatThreadPool"
+               port="8080" protocol="org.apache.coyote.http11.Http11Nio2Protocol"
+               connectionTimeout="20000"
+               redirectPort="8443" />
+```
+
+![运行模式nio效果](https://img-blog.csdnimg.cn/20190709153252619.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3poYW8xMjk5MDAyNzg4,size_16,color_FFFFFF,t_70)
+
+
 
 建议tomcat8以下使用nio，tomcat8及以上使用nio2.
 
@@ -89,17 +161,17 @@ Apache JMeter是开源的压力测试工具，测量tomcat的吞吐量等信息�
 
 ### 1.3.1、下载安装
 
-下载地址 ：[http://jmeter.apache.org/download_jmeter.cgi](https://links.jianshu.com/go?to=http%3A%2F%2Fjmeter.apache.org%2Fdownload_jmeter.cgi)
+下载地址 ：http://jmeter.apache.org/download_jmeter.cgi
 
-![img](https:////upload-images.jianshu.io/upload_images/17179731-be907b01a693f874?imageMogr2/auto-orient/strip|imageView2/2/w/608/format/webp)
+![JMeter下载](https://img-blog.csdnimg.cn/20190709155452423.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3poYW8xMjk5MDAyNzg4,size_16,color_FFFFFF,t_70)
 
 
 
 安装 ：直接将下载好的zip压缩包进行解压即可。
 
+![JMeter首页](https://img-blog.csdnimg.cn/20190709160624970.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3poYW8xMjk5MDAyNzg4,size_16,color_FFFFFF,t_70)
 
 
-![img](https:////upload-images.jianshu.io/upload_images/17179731-b981fc1e1d3d1278?imageMogr2/auto-orient/strip|imageView2/2/w/693/format/webp)
 
 ### 1.3.2、修改主题和语言
 
@@ -109,45 +181,39 @@ Apache JMeter是开源的压力测试工具，测量tomcat的吞吐量等信息�
 
 第一步 ：保存测试用例
 
+![保存测试用例](https://img-blog.csdnimg.cn/20190709161021487.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3poYW8xMjk5MDAyNzg4,size_16,color_FFFFFF,t_70)
 
 
-![img](https:////upload-images.jianshu.io/upload_images/17179731-73d02d1fc37d1327?imageMogr2/auto-orient/strip|imageView2/2/w/699/format/webp)
 
 第二步 ：添加线程组，使用线程模拟用户的并发
 
+![添加线程组](https://img-blog.csdnimg.cn/20190709161201917.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3poYW8xMjk5MDAyNzg4,size_16,color_FFFFFF,t_70)
 
-
-![img](https:////upload-images.jianshu.io/upload_images/17179731-f48595952c3bd22a?imageMogr2/auto-orient/strip|imageView2/2/w/583/format/webp)
-
-![img](https:////upload-images.jianshu.io/upload_images/17179731-e13cc15b0daa6364?imageMogr2/auto-orient/strip|imageView2/2/w/702/format/webp)
+![线程组设置参数](https://img-blog.csdnimg.cn/20190709161718734.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3poYW8xMjk5MDAyNzg4,size_16,color_FFFFFF,t_70)
 
 第四步 ：添加请求监控
 
-
-
-![img](https:////upload-images.jianshu.io/upload_images/17179731-7463b5e65f38c8f1?imageMogr2/auto-orient/strip|imageView2/2/w/630/format/webp)
+![添加请求监控](https://img-blog.csdnimg.cn/20190709161824605.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3poYW8xMjk5MDAyNzg4,size_16,color_FFFFFF,t_70)
 
 ### 1.3.4、启动、进行测试
 
-![img](https:////upload-images.jianshu.io/upload_images/17179731-3087d6e0513d996a?imageMogr2/auto-orient/strip|imageView2/2/w/689/format/webp)
+![启动JMeter](https://img-blog.csdnimg.cn/20190709162811393.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3poYW8xMjk5MDAyNzg4,size_16,color_FFFFFF,t_70)
 
 ### 1.3.5、聚合报告
 
 在聚合报告中，重点看吞吐量
 
+![聚合报告](https://img-blog.csdnimg.cn/20190709162707279.png)
 
-
-![img](https:////upload-images.jianshu.io/upload_images/17179731-b6aa162fdb74cde1.png?imageMogr2/auto-orient/strip|imageView2/2/w/753/format/webp)
-
-### 1.4、调整tomcat参数进行优化
+## 1.4、调整tomcat参数进行优化
 
 通过上面测试可以看出，tomcat在不做任何调整时，吞吐量为73次/秒。
 
 ### 1.4.1、禁用AJP服务
 
-![img](https:////upload-images.jianshu.io/upload_images/17179731-e4a92e48b251c27b?imageMogr2/auto-orient/strip|imageView2/2/w/709/format/webp)
+![禁用AJP服务](https://img-blog.csdnimg.cn/20190709171540236.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3poYW8xMjk5MDAyNzg4,size_16,color_FFFFFF,t_70)
 
-可以看到，禁用AJP服务后，吞吐量会有所提升。
+可以看到，禁用AJP服务后，吞吐量会有所提升
 
 ### 1.4.2、设置线程池
 
@@ -155,19 +221,19 @@ Apache JMeter是开源的压力测试工具，测量tomcat的吞吐量等信息�
 
 ### 1.4.2.1、最大线程数为500，初始为50
 
-![img](https:////upload-images.jianshu.io/upload_images/17179731-562fc314211f57e8.png?imageMogr2/auto-orient/strip|imageView2/2/w/678/format/webp)
+![设置线程池](https://img-blog.csdnimg.cn/20190710110939430.png)
 
 测试结果 ：
 
-![img](https:////upload-images.jianshu.io/upload_images/17179731-f975365cee303912.png?imageMogr2/auto-orient/strip|imageView2/2/w/699/format/webp)
+![设置线程池后效果](https://img-blog.csdnimg.cn/20190710111000672.png)
 
 吞吐量为128次/秒。
 
 ### 1.4.2.2、最大线程数为1000，初始为200
 
-![img](https:////upload-images.jianshu.io/upload_images/17179731-6880009855d95966.png?imageMogr2/auto-orient/strip|imageView2/2/w/644/format/webp)
+![设置线程池2](https://img-blog.csdnimg.cn/20190710111042141.png)
 
-![img](https:////upload-images.jianshu.io/upload_images/17179731-b86b1b785b311529.png?imageMogr2/auto-orient/strip|imageView2/2/w/696/format/webp)
+![设置线程池的效果](https://img-blog.csdnimg.cn/2019071011163469.png)
 
 吞吐量为151，有所提升。
 
@@ -175,112 +241,100 @@ Apache JMeter是开源的压力测试工具，测量tomcat的吞吐量等信息�
 
 是否是线程数最多，速度越快呢？
 
+![设置线程池3](https://img-blog.csdnimg.cn/20190710111805232.png)
 
-
-![img](https:////upload-images.jianshu.io/upload_images/17179731-7da081ea516f0af4.png?imageMogr2/auto-orient/strip|imageView2/2/w/654/format/webp)
-
-![img](https:////upload-images.jianshu.io/upload_images/17179731-e5ab10faaf9af999.png?imageMogr2/auto-orient/strip|imageView2/2/w/696/format/webp)
+![线程池效果3](https://img-blog.csdnimg.cn/20190710112037461.png)
 
 可以看到，虽然最大线程已经设置到5000，但是实际测试效果并不理想，并且平均的响应时间也变长， 所以单纯靠提升线程数量是不能一直得到性能提升的。
 
 ### 1.4.2.4、设置最大等待队列数
 
 默认情况下，请求发送到tomcat，如果tomcat正忙，那么该请求会一直等待。这样虽然可以保证每个请求都能请求到，但是请求时间就会变长。
- 有些时候，我们也不一定要求请求一定等待，可以设置最大等待队列大小，如果超过就不等待了。这样虽然有些请求是失败的，但是请求时间会缩短。
+有些时候，我们也不一定要求请求一定等待，可以设置最大等待队列大小，如果超过就不等待了。这样虽然有些请求是失败的，但是请求时间会缩短。
+
+![设置线程池参数4](https://img-blog.csdnimg.cn/20190710112547294.png)
 
 
-
-![img](https:////upload-images.jianshu.io/upload_images/17179731-6a8a02884070928d.png?imageMogr2/auto-orient/strip|imageView2/2/w/705/format/webp)
 
 测试结果 ：
- 平均响应时间 ：2.5秒；响应时间明显缩短。
- 错误率 ：54%；错误率提升到一半，也可以理解，最大线程为500，测试的并发为1000。
- 吞吐量 ：281次/秒；吞吐量明显提升。
- 结论 ：响应时间、吞吐量这2个指标需要找到平衡才能达到更好的性能。
+	平均响应时间 ：2.5秒；响应时间明显缩短。
+	错误率 ：54%；错误率提升到一半，也可以理解，最大线程为500，测试的并发为1000。
+	吞吐量 ：281次/秒；吞吐量明显提升。
+结论 ：响应时间、吞吐量这2个指标需要找到平衡才能达到更好的性能。
 
 ### 1.4.3、设置nio2的运行模式
 
 将最大线程设置为500进行测试 ：
 
+![设置nio2的运行模式](https://img-blog.csdnimg.cn/20190710151238718.png)
 
-
-![img](https:////upload-images.jianshu.io/upload_images/17179731-d7d0e97d542d4cf7.png?imageMogr2/auto-orient/strip|imageView2/2/w/666/format/webp)
-
-![img](https:////upload-images.jianshu.io/upload_images/17179731-53d70e4c3e21f4d9.png?imageMogr2/auto-orient/strip|imageView2/2/w/713/format/webp)
+![设置nio2的运行模式效果](https://img-blog.csdnimg.cn/20190710151148513.png)
 
 可以看到，平均响应时间有缩短，吞吐量有提升，可以得出结论 ：nio2的性能要高于nio。
 
-### 1.5、调整JVM参数进行优化
+## 1.5、调整JVM参数进行优化
 
 为了测试一致性，依然将最大线程数设置为500，启用nio2运行模式。
 
 ### 1.5.1、设置并行垃圾回收器
 
 年轻代、老年代均使用并行收集器，初始堆内存64M，最大堆内存512M
- JAVA_OPTS="-XX:+UseParallelGC -XX:UseParalleloldGC -Xms64 -Xmx512m -XX:+PrintGCDetails -XX:PringtGCTomeStamps -XX:+PrintGCDateStamps -XX:+PrintHeapAtGC -Xloggc:…/logs/gc.log"
+JAVA_OPTS="-XX:+UseParallelGC -XX:UseParalleloldGC -Xms64 -Xmx512m -XX:+PrintGCDetails -XX:PringtGCTomeStamps -XX:+PrintGCDateStamps -XX:+PrintHeapAtGC -Xloggc:…/logs/gc.log"
 
-
-
-![img](https:////upload-images.jianshu.io/upload_images/17179731-ae3a4ec313b51f5f.png?imageMogr2/auto-orient/strip|imageView2/2/w/618/format/webp)
+![设置并行垃圾回收器](https://img-blog.csdnimg.cn/2019071015180511.png)
 
 测试结果与默认的JVM参数结果接近。
 
 ### 1.5.2、查看GC日志
 
-![img](https:////upload-images.jianshu.io/upload_images/17179731-c8d0c37ecaa8a709?imageMogr2/auto-orient/strip|imageView2/2/w/723/format/webp)
+![GC日志,问题一](https://img-blog.csdnimg.cn/20190710152649664.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3poYW8xMjk5MDAyNzg4,size_16,color_FFFFFF,t_70)
 
 在报告中线上，在5次GC时，系统所消耗的时间大于用户时间，这反应出的服务器的性能存在瓶颈，调度CPU等资源所消耗的时间要长一些。
 
-
-
-![img](https:////upload-images.jianshu.io/upload_images/17179731-7e1853efafad9fcb?imageMogr2/auto-orient/strip|imageView2/2/w/703/format/webp)
+![GC日志 问题二](https://img-blog.csdnimg.cn/20190710152848962.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3poYW8xMjk5MDAyNzg4,size_16,color_FFFFFF,t_70)
 
 可以从关键指标中看出，吞吐量表现不错，但是GC时，线程的暂停时间稍有点长。
 
-
-
-![img](https:////upload-images.jianshu.io/upload_images/17179731-ca2cea242a8e3e5b?imageMogr2/auto-orient/strip|imageView2/2/w/712/format/webp)
+![GC日志 问题三](https://img-blog.csdnimg.cn/20190710153026561.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3poYW8xMjk5MDAyNzg4,size_16,color_FFFFFF,t_70)
 
 通过GC的统计可以看出 ：
- 年轻代的gc有74次，次数稍有点多，说明年轻代设置的大小不合适需要调整；
- FullGC有8次，说明堆内存的大小不合适，需要调整。
+年轻代的gc有74次，次数稍有点多，说明年轻代设置的大小不合适需要调整；
+FullGC有8次，说明堆内存的大小不合适，需要调整。
 
-
-
-![img](https:////upload-images.jianshu.io/upload_images/17179731-0564e9772e6dd92c?imageMogr2/auto-orient/strip|imageView2/2/w/713/format/webp)
-
-从GC原因可以看出，年轻代大小设置不合理，导致了多次GC。
+![GC日志 问题四](https://img-blog.csdnimg.cn/20190710153731651.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3poYW8xMjk5MDAyNzg4,size_16,color_FFFFFF,t_70)
 
 ### 1.5.3、调整年轻代大小
 
 JAVA_OPTS="-XX:+UseParallelGC -XX:+UseParalleloldGC -Xms128m -Xmx1024m -XX:NewSize=64m -XX:MaxNewSize=256m -XX:PrintGCDetails -XX:+PrintGCTimeStamps -XX:+PrintGCDateStamps -XX:+PrintHeapAtGC -Xloggc:…/logs/gc.log"
- 将初始堆大小设置为128m，最大为1024m
- 初始年轻代大小64m，年轻代最大256m
-
-
-
-![img](https:////upload-images.jianshu.io/upload_images/17179731-61cde1fc16855ae2.png?imageMogr2/auto-orient/strip|imageView2/2/w/694/format/webp)
+将初始堆大小设置为128m，最大为1024m
+初始年轻代大小64m，年轻代最大256m
+![调整年轻代大小](https://img-blog.csdnimg.cn/20190710154200772.png)
 
 从测试结果来看，吞吐量以及响应时间均有提升。
- 查看gc日志 ：
+查看gc日志 ：
+
+![调整年轻代大小](https://img-blog.csdnimg.cn/20190710154712679.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3poYW8xMjk5MDAyNzg4,size_16,color_FFFFFF,t_70)
 
 
 
-![img](https:////upload-images.jianshu.io/upload_images/17179731-6c8d8d557321bef5?imageMogr2/auto-orient/strip|imageView2/2/w/739/format/webp)
-
-![img](https:////upload-images.jianshu.io/upload_images/17179731-ccb6f43ca3fb93b1?imageMogr2/auto-orient/strip|imageView2/2/w/701/format/webp)
+![](https://img-blog.csdnimg.cn/20190710154727616.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3poYW8xMjk5MDAyNzg4,size_16,color_FFFFFF,t_70)
 
 可以看到GC次数要明显减少，说明调整是有效的。
 
 ### 1.5.4、设置G1垃圾回收器
 
-设置最大停顿时间100毫秒，初始堆内存128m，最大堆内存1024m
- JAVA_OPTS="-XX:+UseG1GC -XX:MaxGCPauseMillis=100 -Xms128m -Xmx1024m -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -XX:+PrintGCDateStamps -XX:+PrintHeapAtGC -Xloggc:…/logs/gc.log"
- 测试结果 ：
+```shell
+# 设置最大停顿时间100毫秒，初始堆内存128m，最大堆内存1024m
+JAVA_OPTS="-XX:+UseG1GC -XX:MaxGCPauseMillis=100 -Xms128m -Xmx1024m -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -XX:+PrintGCDateStamps -XX:+PrintHeapAtGC -Xloggc:…/logs/gc.log"
+
+windows:
+set "JAVA_OPTS=%JAVA_OPTS% %JSSE_OPTS% -XX:+UseG1GC -XX:MaxGCPauseMillis=100 -Xms128m -Xmx1024m -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -XX:+PrintGCDateStamps -XX:+PrintHeapAtGC -Xloggc:…/logs/gc.log"
+```
 
 
 
-![img](https:////upload-images.jianshu.io/upload_images/17179731-38e43bacfb806e5f?imageMogr2/auto-orient/strip|imageView2/2/w/697/format/webp)
+测试结果 ：
+![G1垃圾回收器](https://img-blog.csdnimg.cn/20190710155459832.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3poYW8xMjk5MDAyNzg4,size_16,color_FFFFFF,t_70)
 
 可以看到，吞吐量有所提升，响应时间也有所缩短。
 
@@ -477,19 +531,3 @@ for (Map.Entry<String, String> entry : map.entrySet()) {
  7、日志的输出要注意级别；
  8、对资源的close()建议分开操作。
 
-
-
-84人点赞
-
-
-
-[日记本]()
-
-
-
-
-
-作者：一入码坑深似海
-链接：https://www.jianshu.com/p/b2826ead1c4e
-来源：简书
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
