@@ -1,0 +1,417 @@
+proceeding ...
+WARNING: The BYFN_CA1_PRIVATE_KEY variable is not set. Defaulting to a blank string.
+WARNING: The BYFN_CA2_PRIVATE_KEY variable is not set. Defaulting to a blank string.
+Stopping cli                    ... done
+Stopping orderer2.example.com   ... done
+Stopping peer0.org1.example.com ... done
+Stopping peer0.org2.example.com ... done
+Stopping orderer.example.com    ... done
+Stopping orderer4.example.com   ... done
+Stopping peer1.org2.example.com ... done
+Stopping orderer5.example.com   ... done
+Stopping orderer3.example.com   ... done
+Stopping peer1.org1.example.com ... done
+Removing cli                    ... done
+Removing orderer2.example.com   ... done
+Removing peer0.org1.example.com ... done
+Removing peer0.org2.example.com ... done
+Removing orderer.example.com    ... done
+Removing orderer4.example.com   ... done
+Removing peer1.org2.example.com ... done
+Removing orderer5.example.com   ... done
+Removing orderer3.example.com   ... done
+Removing peer1.org1.example.com ... done
+Removing network net_byfn
+Removing volume net_orderer.example.com
+Removing volume net_peer0.org1.example.com
+Removing volume net_peer1.org1.example.com
+Removing volume net_peer0.org2.example.com
+Removing volume net_peer1.org2.example.com
+Removing volume net_orderer2.example.com
+Removing volume net_orderer3.example.com
+Removing volume net_orderer4.example.com
+Removing volume net_orderer5.example.com
+Removing volume net_peer0.org3.example.com
+WARNING: Volume net_peer0.org3.example.com not found.
+Removing volume net_peer1.org3.example.com
+WARNING: Volume net_peer1.org3.example.com not found.
+---- No containers available for deletion ----
+---- No images available for deletion ----
+root@hyperledger:/software/hyperledger/fabric-samples/first-network# ./byfn.sh -m up\
+> ^C
+root@hyperledger:/software/hyperledger/fabric-samples/first-network# ./byfn.sh -m up
+Starting for channel 'mychannel' with CLI timeout of '10' seconds and CLI delay of '3' seconds
+Continue? [Y/n] y
+proceeding ...
+LOCAL_VERSION=2.0.1
+DOCKER_IMAGE_VERSION=2.0.1
+/software/hyperledger/fabric-samples/first-network/../bin/cryptogen
+
+##########################################################
+##### Generate certificates using cryptogen tool #########
+##########################################################
++ cryptogen generate --config=./crypto-config.yaml
+org1.example.com
+org2.example.com
++ res=0
++ set +x
+
+Generate CCP files for Org1 and Org2
+/software/hyperledger/fabric-samples/first-network/../bin/configtxgen
+##########################################################
+#########  Generating Orderer Genesis block ##############
+##########################################################
++ configtxgen -profile SampleMultiNodeEtcdRaft -channelID byfn-sys-channel -outputBlock ./channel-artifacts/genesis.block
+2020-04-19 21:58:29.478 CST [common.tools.configtxgen] main -> INFO 001 Loading configuration
+2020-04-19 21:58:29.503 CST [common.tools.configtxgen.localconfig] completeInitialization -> INFO 002 orderer type: etcdraft
+2020-04-19 21:58:29.503 CST [common.tools.configtxgen.localconfig] completeInitialization -> INFO 003 Orderer.EtcdRaft.Options unset, setting to tick_interval:"500ms" election_tick:10 heartbeat_tick:1 max_inflight_blocks:5 snapshot_interval_size:16777216 
+2020-04-19 21:58:29.503 CST [common.tools.configtxgen.localconfig] Load -> INFO 004 Loaded configuration: /software/hyperledger/fabric-samples/first-network/configtx.yaml
+2020-04-19 21:58:29.505 CST [common.tools.configtxgen] doOutputBlock -> INFO 005 Generating genesis block
+2020-04-19 21:58:29.505 CST [common.tools.configtxgen] doOutputBlock -> INFO 006 Writing genesis block
++ res=0
++ set +x
+
+#################################################################
+### Generating channel configuration transaction 'channel.tx' ###
+#################################################################
++ configtxgen -profile TwoOrgsChannel -outputCreateChannelTx ./channel-artifacts/channel.tx -channelID mychannel
+2020-04-19 21:58:29.530 CST [common.tools.configtxgen] main -> INFO 001 Loading configuration
+2020-04-19 21:58:29.557 CST [common.tools.configtxgen.localconfig] Load -> INFO 002 Loaded configuration: /software/hyperledger/fabric-samples/first-network/configtx.yaml
+2020-04-19 21:58:29.557 CST [common.tools.configtxgen] doOutputChannelCreateTx -> INFO 003 Generating new channel configtx
+2020-04-19 21:58:29.559 CST [common.tools.configtxgen] doOutputChannelCreateTx -> INFO 004 Writing new channel tx
++ res=0
++ set +x
+
+#################################################################
+#######    Generating anchor peer update for Org1MSP   ##########
+#################################################################
++ configtxgen -profile TwoOrgsChannel -outputAnchorPeersUpdate ./channel-artifacts/Org1MSPanchors.tx -channelID mychannel -asOrg Org1MSP
+2020-04-19 21:58:29.584 CST [common.tools.configtxgen] main -> INFO 001 Loading configuration
+2020-04-19 21:58:29.609 CST [common.tools.configtxgen.localconfig] Load -> INFO 002 Loaded configuration: /software/hyperledger/fabric-samples/first-network/configtx.yaml
+2020-04-19 21:58:29.609 CST [common.tools.configtxgen] doOutputAnchorPeersUpdate -> INFO 003 Generating anchor peer update
+2020-04-19 21:58:29.611 CST [common.tools.configtxgen] doOutputAnchorPeersUpdate -> INFO 004 Writing anchor peer update
++ res=0
++ set +x
+
+#################################################################
+#######    Generating anchor peer update for Org2MSP   ##########
+#################################################################
++ configtxgen -profile TwoOrgsChannel -outputAnchorPeersUpdate ./channel-artifacts/Org2MSPanchors.tx -channelID mychannel -asOrg Org2MSP
+2020-04-19 21:58:29.636 CST [common.tools.configtxgen] main -> INFO 001 Loading configuration
+2020-04-19 21:58:29.662 CST [common.tools.configtxgen.localconfig] Load -> INFO 002 Loaded configuration: /software/hyperledger/fabric-samples/first-network/configtx.yaml
+2020-04-19 21:58:29.662 CST [common.tools.configtxgen] doOutputAnchorPeersUpdate -> INFO 003 Generating anchor peer update
+2020-04-19 21:58:29.663 CST [common.tools.configtxgen] doOutputAnchorPeersUpdate -> INFO 004 Writing anchor peer update
++ res=0
++ set +x
+
+Creating network "net_byfn" with the default driver
+Creating volume "net_orderer.example.com" with default driver
+Creating volume "net_peer0.org1.example.com" with default driver
+Creating volume "net_peer1.org1.example.com" with default driver
+Creating volume "net_peer0.org2.example.com" with default driver
+Creating volume "net_peer1.org2.example.com" with default driver
+Creating volume "net_orderer2.example.com" with default driver
+Creating volume "net_orderer3.example.com" with default driver
+Creating volume "net_orderer4.example.com" with default driver
+Creating volume "net_orderer5.example.com" with default driver
+Creating orderer5.example.com   ... done
+Creating peer0.org2.example.com ... done
+Creating peer1.org2.example.com ... done
+Creating orderer4.example.com   ... done
+Creating peer0.org1.example.com ... done
+Creating orderer3.example.com   ... done
+Creating orderer.example.com    ... done
+Creating peer1.org1.example.com ... done
+Creating orderer2.example.com   ... done
+Creating cli                    ... done
+CONTAINER ID        IMAGE                               COMMAND             CREATED             STATUS                  PORTS                                NAMES
+9ec88a0c8503        hyperledger/fabric-tools:latest     "/bin/bash"         2 seconds ago       Up Less than a second                                        cli
+a33bf77b2671        hyperledger/fabric-orderer:latest   "orderer"           10 seconds ago      Up 5 seconds            7050/tcp, 0.0.0.0:8050->8050/tcp     orderer2.example.com
+1006aee89f79        hyperledger/fabric-peer:latest      "peer node start"   10 seconds ago      Up 2 seconds            7051/tcp, 0.0.0.0:8051->8051/tcp     peer1.org1.example.com
+a6904c7431e1        hyperledger/fabric-orderer:latest   "orderer"           10 seconds ago      Up 1 second             7050/tcp, 0.0.0.0:9050->9050/tcp     orderer3.example.com
+7deaccf064e4        hyperledger/fabric-orderer:latest   "orderer"           10 seconds ago      Up 6 seconds            0.0.0.0:7050->7050/tcp               orderer.example.com
+f00bca71c0d3        hyperledger/fabric-peer:latest      "peer node start"   10 seconds ago      Up 3 seconds            0.0.0.0:7051->7051/tcp               peer0.org1.example.com
+15af65bc5c86        hyperledger/fabric-peer:latest      "peer node start"   10 seconds ago      Up 7 seconds            7051/tcp, 0.0.0.0:10051->10051/tcp   peer1.org2.example.com
+f4610ff5d904        hyperledger/fabric-orderer:latest   "orderer"           10 seconds ago      Up 4 seconds            7050/tcp, 0.0.0.0:10050->10050/tcp   orderer4.example.com
+1323e72bef6a        hyperledger/fabric-peer:latest      "peer node start"   10 seconds ago      Up 7 seconds            7051/tcp, 0.0.0.0:9051->9051/tcp     peer0.org2.example.com
+3c45b82a2a2d        hyperledger/fabric-orderer:latest   "orderer"           10 seconds ago      Up 6 seconds            7050/tcp, 0.0.0.0:11050->11050/tcp   orderer5.example.com
+Sleeping 15s to allow Raft cluster to complete booting
+Vendoring Go dependencies ...
+/software/hyperledger/fabric-samples/chaincode/abstore/go /software/hyperledger/fabric-samples/first-network
+go: downloading github.com/hyperledger/fabric-contract-api-go v1.0.0
+go: downloading github.com/hyperledger/fabric-protos-go v0.0.0-20200124220212-e9cfc186ba7b
+go: downloading github.com/hyperledger/fabric-chaincode-go v0.0.0-20200128192331-2d899240a7ed
+go: downloading github.com/xeipuuv/gojsonschema v1.2.0
+go: downloading github.com/go-openapi/spec v0.19.4
+go: downloading github.com/gobuffalo/packr v1.30.1
+go: downloading github.com/golang/protobuf v1.3.2
+go: downloading google.golang.org/grpc v1.23.0
+go: downloading github.com/gobuffalo/envy v1.7.0
+go: downloading github.com/xeipuuv/gojsonreference v0.0.0-20180127040603-bd5ef7bd5415
+go: downloading github.com/gobuffalo/packd v0.3.0
+go: downloading github.com/rogpeppe/go-internal v1.3.0
+go: downloading github.com/joho/godotenv v1.3.0
+go: downloading github.com/go-openapi/swag v0.19.5
+go: downloading github.com/xeipuuv/gojsonpointer v0.0.0-20180127040702-4e3ac2762d5f
+go: downloading github.com/go-openapi/jsonreference v0.19.2
+go: downloading github.com/go-openapi/jsonpointer v0.19.3
+go: downloading github.com/mailru/easyjson v0.0.0-20190626092158-b2ccc519800e
+go: downloading gopkg.in/yaml.v2 v2.2.2
+go: downloading github.com/PuerkitoBio/purell v1.1.1
+go: downloading golang.org/x/text v0.3.2
+go: downloading golang.org/x/net v0.0.0-20190827160401-ba9fcec4b297
+go: downloading github.com/PuerkitoBio/urlesc v0.0.0-20170810143723-de5bf2ad4578
+go: downloading golang.org/x/sys v0.0.0-20190710143415-6ec70d6a5542
+go: downloading google.golang.org/genproto v0.0.0-20180831171423-11092d34479b
+/software/hyperledger/fabric-samples/first-network
+Finished vendoring Go dependencies
+
+ ____    _____      _      ____    _____ 
+/ ___|  |_   _|    / \    |  _ \  |_   _|
+\___ \    | |     / _ \   | |_) |   | |  
+ ___) |   | |    / ___ \  |  _ <    | |  
+|____/    |_|   /_/   \_\ |_| \_\   |_|  
+
+Build your first network (BYFN) end-to-end test
+
+Channel name : mychannel
+Creating channel...
++ peer channel create -o orderer.example.com:7050 -c mychannel -f ./channel-artifacts/channel.tx --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
++ res=0
++ set +x
+2020-04-19 13:58:58.121 UTC [channelCmd] InitCmdFactory -> INFO 001 Endorser and orderer connections initialized
+2020-04-19 13:58:58.140 UTC [cli.common] readBlock -> INFO 002 Expect block, but got status: &{NOT_FOUND}
+2020-04-19 13:58:58.142 UTC [channelCmd] InitCmdFactory -> INFO 003 Endorser and orderer connections initialized
+2020-04-19 13:58:58.346 UTC [cli.common] readBlock -> INFO 004 Expect block, but got status: &{SERVICE_UNAVAILABLE}
+2020-04-19 13:58:58.350 UTC [channelCmd] InitCmdFactory -> INFO 005 Endorser and orderer connections initialized
+2020-04-19 13:58:58.551 UTC [cli.common] readBlock -> INFO 006 Expect block, but got status: &{SERVICE_UNAVAILABLE}
+2020-04-19 13:58:58.553 UTC [channelCmd] InitCmdFactory -> INFO 007 Endorser and orderer connections initialized
+2020-04-19 13:58:58.753 UTC [cli.common] readBlock -> INFO 008 Expect block, but got status: &{SERVICE_UNAVAILABLE}
+2020-04-19 13:58:58.755 UTC [channelCmd] InitCmdFactory -> INFO 009 Endorser and orderer connections initialized
+2020-04-19 13:58:58.956 UTC [cli.common] readBlock -> INFO 00a Expect block, but got status: &{SERVICE_UNAVAILABLE}
+2020-04-19 13:58:58.958 UTC [channelCmd] InitCmdFactory -> INFO 00b Endorser and orderer connections initialized
+2020-04-19 13:58:59.159 UTC [cli.common] readBlock -> INFO 00c Expect block, but got status: &{SERVICE_UNAVAILABLE}
+2020-04-19 13:58:59.161 UTC [channelCmd] InitCmdFactory -> INFO 00d Endorser and orderer connections initialized
+2020-04-19 13:58:59.363 UTC [cli.common] readBlock -> INFO 00e Received block: 0
+===================== Channel 'mychannel' created ===================== 
+
+Having all peers join the channel...
++ peer channel join -b mychannel.block
++ res=0
++ set +x
+2020-04-19 13:58:59.409 UTC [channelCmd] InitCmdFactory -> INFO 001 Endorser and orderer connections initialized
+2020-04-19 13:58:59.438 UTC [channelCmd] executeJoin -> INFO 002 Successfully submitted proposal to join channel
+===================== peer0.org1 joined channel 'mychannel' ===================== 
++ peer channel join -b mychannel.block
+
++ res=0
++ set +x
+2020-04-19 13:59:02.484 UTC [channelCmd] InitCmdFactory -> INFO 001 Endorser and orderer connections initialized
+2020-04-19 13:59:02.514 UTC [channelCmd] executeJoin -> INFO 002 Successfully submitted proposal to join channel
+===================== peer1.org1 joined channel 'mychannel' ===================== 
+
++ peer channel join -b mychannel.block
++ res=0
++ set +x
+2020-04-19 13:59:05.559 UTC [channelCmd] InitCmdFactory -> INFO 001 Endorser and orderer connections initialized
+2020-04-19 13:59:05.588 UTC [channelCmd] executeJoin -> INFO 002 Successfully submitted proposal to join channel
+===================== peer0.org2 joined channel 'mychannel' ===================== 
+
++ peer channel join -b mychannel.block
++ res=0
++ set +x
+2020-04-19 13:59:08.633 UTC [channelCmd] InitCmdFactory -> INFO 001 Endorser and orderer connections initialized
+2020-04-19 13:59:08.662 UTC [channelCmd] executeJoin -> INFO 002 Successfully submitted proposal to join channel
+===================== peer1.org2 joined channel 'mychannel' ===================== 
+
+Updating anchor peers for org1...
++ peer channel update -o orderer.example.com:7050 -c mychannel -f ./channel-artifacts/Org1MSPanchors.tx --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
++ res=0
++ set +x
+2020-04-19 13:59:11.705 UTC [channelCmd] InitCmdFactory -> INFO 001 Endorser and orderer connections initialized
+2020-04-19 13:59:11.719 UTC [channelCmd] update -> INFO 002 Successfully submitted channel update
+===================== Anchor peers updated for org 'Org1MSP' on channel 'mychannel' ===================== 
+
+Updating anchor peers for org2...
++ peer channel update -o orderer.example.com:7050 -c mychannel -f ./channel-artifacts/Org2MSPanchors.tx --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
++ res=0
++ set +x
+2020-04-19 13:59:14.762 UTC [channelCmd] InitCmdFactory -> INFO 001 Endorser and orderer connections initialized
+2020-04-19 13:59:14.775 UTC [channelCmd] update -> INFO 002 Successfully submitted channel update
+===================== Anchor peers updated for org 'Org2MSP' on channel 'mychannel' ===================== 
+
++ peer lifecycle chaincode package mycc.tar.gz --path github.com/hyperledger/fabric-samples/chaincode/abstore/go/ --lang golang --label mycc_1
++ res=0
++ set +x
+===================== Chaincode is packaged on peer0.org1 ===================== 
+
+Installing chaincode on peer0.org1...
++ peer lifecycle chaincode install mycc.tar.gz
++ res=0
++ set +x
+2020-04-19 13:59:34.376 UTC [cli.lifecycle.chaincode] submitInstallProposal -> INFO 001 Installed remotely: response:<status:200 payload:"\nGmycc_1:f5cc6d6e871262e8da9788f3d463442e51c482ec8288c13e4545741ad45d86fa\022\006mycc_1" > 
+2020-04-19 13:59:34.376 UTC [cli.lifecycle.chaincode] submitInstallProposal -> INFO 002 Chaincode code package identifier: mycc_1:f5cc6d6e871262e8da9788f3d463442e51c482ec8288c13e4545741ad45d86fa
+===================== Chaincode is installed on peer0.org1 ===================== 
+
+Install chaincode on peer0.org2...
++ peer lifecycle chaincode install mycc.tar.gz
++ res=0
++ set +x
+2020-04-19 13:59:48.646 UTC [cli.lifecycle.chaincode] submitInstallProposal -> INFO 001 Installed remotely: response:<status:200 payload:"\nGmycc_1:f5cc6d6e871262e8da9788f3d463442e51c482ec8288c13e4545741ad45d86fa\022\006mycc_1" > 
+2020-04-19 13:59:48.646 UTC [cli.lifecycle.chaincode] submitInstallProposal -> INFO 002 Chaincode code package identifier: mycc_1:f5cc6d6e871262e8da9788f3d463442e51c482ec8288c13e4545741ad45d86fa
+===================== Chaincode is installed on peer0.org2 ===================== 
+
++ peer lifecycle chaincode queryinstalled
++ res=0
++ set +x
+Installed chaincodes on peer:
+Package ID: mycc_1:f5cc6d6e871262e8da9788f3d463442e51c482ec8288c13e4545741ad45d86fa, Label: mycc_1
+PackageID is mycc_1:f5cc6d6e871262e8da9788f3d463442e51c482ec8288c13e4545741ad45d86fa
+===================== Query installed successful on peer0.org1 on channel ===================== 
+
++ peer lifecycle chaincode approveformyorg --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem --channelID mychannel --name mycc --version 1 --init-required --package-id mycc_1:f5cc6d6e871262e8da9788f3d463442e51c482ec8288c13e4545741ad45d86fa --sequence 1 --waitForEvent
++ set +x
+2020-04-19 13:59:48.754 UTC [cli.lifecycle.chaincode] setOrdererClient -> INFO 001 Retrieved channel (mychannel) orderer endpoint: orderer.example.com:7050
+2020-04-19 13:59:50.793 UTC [chaincodeCmd] ClientWait -> INFO 002 txid [4b37e56a8056c0e68f75a0137847f962d9082c8681b8b276f79be840feb7fc7a] committed with status (VALID) at 
+===================== Chaincode definition approved on peer0.org1 on channel 'mychannel' ===================== 
+
+===================== Checking the commit readiness of the chaincode definition on peer0.org1 on channel 'mychannel'... ===================== 
+Attempting to check the commit readiness of the chaincode definition on peer0.org1 ...3 secs
++ peer lifecycle chaincode checkcommitreadiness --channelID mychannel --name mycc --version 1 --sequence 1 --output json --init-required
++ res=0
++ set +x
+
+{
+	"approvals": {
+		"Org1MSP": true,
+		"Org2MSP": false
+	}
+}
+===================== Checking the commit readiness of the chaincode definition successful on peer0.org1 on channel 'mychannel' ===================== 
+===================== Checking the commit readiness of the chaincode definition on peer0.org2 on channel 'mychannel'... ===================== 
+Attempting to check the commit readiness of the chaincode definition on peer0.org2 ...3 secs
++ peer lifecycle chaincode checkcommitreadiness --channelID mychannel --name mycc --version 1 --sequence 1 --output json --init-required
++ res=0
++ set +x
+
+{
+	"approvals": {
+		"Org1MSP": true,
+		"Org2MSP": false
+	}
+}
+===================== Checking the commit readiness of the chaincode definition successful on peer0.org2 on channel 'mychannel' ===================== 
++ peer lifecycle chaincode approveformyorg --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem --channelID mychannel --name mycc --version 1 --init-required --package-id mycc_1:f5cc6d6e871262e8da9788f3d463442e51c482ec8288c13e4545741ad45d86fa --sequence 1 --waitForEvent
++ set +x
+2020-04-19 13:59:56.957 UTC [cli.lifecycle.chaincode] setOrdererClient -> INFO 001 Retrieved channel (mychannel) orderer endpoint: orderer.example.com:7050
+2020-04-19 13:59:58.993 UTC [chaincodeCmd] ClientWait -> INFO 002 txid [15b7b3b62e180f61c774d3edecfbbb589777bcf1d3525f7b18b3031cdcc63028] committed with status (VALID) at 
+===================== Chaincode definition approved on peer0.org2 on channel 'mychannel' ===================== 
+
+===================== Checking the commit readiness of the chaincode definition on peer0.org1 on channel 'mychannel'... ===================== 
+Attempting to check the commit readiness of the chaincode definition on peer0.org1 ...3 secs
++ peer lifecycle chaincode checkcommitreadiness --channelID mychannel --name mycc --version 1 --sequence 1 --output json --init-required
++ res=0
++ set +x
+
+{
+	"approvals": {
+		"Org1MSP": true,
+		"Org2MSP": true
+	}
+}
+===================== Checking the commit readiness of the chaincode definition successful on peer0.org1 on channel 'mychannel' ===================== 
+===================== Checking the commit readiness of the chaincode definition on peer0.org2 on channel 'mychannel'... ===================== 
+Attempting to check the commit readiness of the chaincode definition on peer0.org2 ...3 secs
++ peer lifecycle chaincode checkcommitreadiness --channelID mychannel --name mycc --version 1 --sequence 1 --output json --init-required
++ res=0
++ set +x
+
+{
+	"approvals": {
+		"Org1MSP": true,
+		"Org2MSP": true
+	}
+}
+===================== Checking the commit readiness of the chaincode definition successful on peer0.org2 on channel 'mychannel' ===================== 
++ peer lifecycle chaincode commit -o orderer.example.com:7050 --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem --channelID mychannel --name mycc --peerAddresses peer0.org1.example.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt --peerAddresses peer0.org2.example.com:9051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt --version 1 --sequence 1 --init-required
++ res=0
++ set +x
+2020-04-19 14:00:07.448 UTC [chaincodeCmd] ClientWait -> INFO 001 txid [e2daf51ae5d9c0fb64bd48994d71ed91ffffe0460104c9ffeb1b774357cfbc96] committed with status (VALID) at peer0.org2.example.com:9051
+2020-04-19 14:00:07.462 UTC [chaincodeCmd] ClientWait -> INFO 002 txid [e2daf51ae5d9c0fb64bd48994d71ed91ffffe0460104c9ffeb1b774357cfbc96] committed with status (VALID) at peer0.org1.example.com:7051
+===================== Chaincode definition committed on channel 'mychannel' ===================== 
+
+===================== Querying chaincode definition on peer0.org1 on channel 'mychannel'... ===================== 
+Attempting to Query committed status on peer0.org1 ...3 secs
++ peer lifecycle chaincode querycommitted --channelID mychannel --name mycc
++ res=0
++ set +x
+
+Committed chaincode definition for chaincode 'mycc' on channel 'mychannel':
+Version: 1, Sequence: 1, Endorsement Plugin: escc, Validation Plugin: vscc, Approvals: [Org1MSP: true, Org2MSP: true]
+===================== Query chaincode definition successful on peer0.org1 on channel 'mychannel' ===================== 
+===================== Querying chaincode definition on peer0.org2 on channel 'mychannel'... ===================== 
+Attempting to Query committed status on peer0.org2 ...3 secs
++ peer lifecycle chaincode querycommitted --channelID mychannel --name mycc
++ res=0
++ set +x
+
+Committed chaincode definition for chaincode 'mycc' on channel 'mychannel':
+Version: 1, Sequence: 1, Endorsement Plugin: escc, Validation Plugin: vscc, Approvals: [Org1MSP: true, Org2MSP: true]
+===================== Query chaincode definition successful on peer0.org2 on channel 'mychannel' ===================== 
++ peer chaincode invoke -o orderer.example.com:7050 --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem -C mychannel -n mycc --peerAddresses peer0.org1.example.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt --peerAddresses peer0.org2.example.com:9051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt --isInit -c '{"Args":["Init","a","100","b","100"]}'
++ res=0
++ set +x
+2020-04-19 14:00:13.645 UTC [chaincodeCmd] chaincodeInvokeOrQuery -> INFO 001 Chaincode invoke successful. result: status:200 
+===================== Invoke transaction successful on peer0.org1 peer0.org2 on channel 'mychannel' ===================== 
+
+Querying chaincode on peer0.org1...
+===================== Querying on peer0.org1 on channel 'mychannel'... ===================== 
+Attempting to Query peer0.org1 ...3 secs
++ peer chaincode query -C mychannel -n mycc -c '{"Args":["query","a"]}'
++ res=0
++ set +x
+
+100
+===================== Query successful on peer0.org1 on channel 'mychannel' ===================== 
+Sending invoke transaction on peer0.org1 peer0.org2...
++ peer chaincode invoke -o orderer.example.com:7050 --tls true --cafile /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem -C mychannel -n mycc --peerAddresses peer0.org1.example.com:7051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt --peerAddresses peer0.org2.example.com:9051 --tlsRootCertFiles /opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt -c '{"Args":["invoke","a","b","10"]}'
++ res=0
++ set +x
+2020-04-19 14:00:16.772 UTC [chaincodeCmd] chaincodeInvokeOrQuery -> INFO 001 Chaincode invoke successful. result: status:200 
+===================== Invoke transaction successful on peer0.org1 peer0.org2 on channel 'mychannel' ===================== 
+
+Querying chaincode on peer0.org1...
+===================== Querying on peer0.org1 on channel 'mychannel'... ===================== 
+Attempting to Query peer0.org1 ...3 secs
++ peer chaincode query -C mychannel -n mycc -c '{"Args":["query","a"]}'
++ res=0
++ set +x
+
+90
+===================== Query successful on peer0.org1 on channel 'mychannel' ===================== 
+Installing chaincode on peer1.org2...
++ peer lifecycle chaincode install mycc.tar.gz
++ res=0
++ set +x
+2020-04-19 14:00:34.064 UTC [cli.lifecycle.chaincode] submitInstallProposal -> INFO 001 Installed remotely: response:<status:200 payload:"\nGmycc_1:f5cc6d6e871262e8da9788f3d463442e51c482ec8288c13e4545741ad45d86fa\022\006mycc_1" > 
+2020-04-19 14:00:34.064 UTC [cli.lifecycle.chaincode] submitInstallProposal -> INFO 002 Chaincode code package identifier: mycc_1:f5cc6d6e871262e8da9788f3d463442e51c482ec8288c13e4545741ad45d86fa
+===================== Chaincode is installed on peer1.org2 ===================== 
+
+Querying chaincode on peer1.org2...
+===================== Querying on peer1.org2 on channel 'mychannel'... ===================== 
+Attempting to Query peer1.org2 ...3 secs
++ peer chaincode query -C mychannel -n mycc -c '{"Args":["query","a"]}'
++ res=0
++ set +x
+
+90
+===================== Query successful on peer1.org2 on channel 'mychannel' ===================== 
+
+========= All GOOD, BYFN execution completed =========== 
+
+
+ _____   _   _   ____   
+| ____| | \ | | |  _ \  
+|  _|   |  \| | | | | | 
+| |___  | |\  | | |_| | 
+|_____| |_| \_| |____/  
