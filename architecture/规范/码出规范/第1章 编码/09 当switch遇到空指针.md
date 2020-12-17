@@ -2,15 +2,17 @@
 
 更新时间：2019-11-06 18:58:59
 
-![img](http://img.mukewang.com/5dc292950001139406400359.jpg)
+![img](http://img2.sycdn.imooc.com/5dc292950001139406400359.jpg)
 
-![img](http://www.imooc.com/static/img/column/bg-l.png)
+![img](http://www.imooc.com/static/img/column/bg-l.png)![img](http://www.imooc.com/static/img/column/bg-r.png)
 
-![img](http://www.imooc.com/static/img/column/bg-r.png)
+生活的理想，就是为了理想的生活。——张闻天
 
 
 
-# 1. 前言
+
+
+## 1. 前言
 
 《手册》的第 18 页有关于 `switch` 的规约：
 
@@ -53,17 +55,17 @@ public class SwitchTest {
 
 
 
-# 2. 问题分析
+## 2. 问题分析
 
 
 
-## 2.1 源码大法
+### 2.1 源码大法
 
 按照我们一贯的风格，我们应该先上 “源码大法”，但是 `switch` 是关键字，无法进入 JDK 源码中查看学习，因此我们暂时放弃通过源码或源码注释来分析解决的手段。
 
 
 
-## 2.2 官方文档
+### 2.2 官方文档
 
 我们去官方文档 JLS[3](http://www.imooc.com/read/55/article/1146#fn3) 查看 `swtich` 语句[相关描述](https://docs.oracle.com/javase/specs/jls/se8/html/jls-14.html#jls-14.11)。
 
@@ -77,7 +79,7 @@ public class SwitchTest {
 > - 和 switch 语句关联的常量不能为 null ；
 > - 一个 switch 语句最多有一个 default 标签。
 
-![图片描述](http://img.mukewang.com/5dc28adc000186df15660988.png)
+![图片描述](http://img1.sycdn.imooc.com/5dc28adc000186df15660988.png)
 
 我们了解到 switch 语句支持的类型，以及会出现编译错误的原因。
 
@@ -109,7 +111,7 @@ public class SwitchTest {
 
 
 
-## 2.3 Java 反汇编大法
+### 2.3 Java 反汇编大法
 
 如何印证官方文档的描述？如何进一步分析呢？
 
@@ -117,29 +119,26 @@ public class SwitchTest {
 
 
 
-### 2.3.1 switch 举例
+#### 2.3.1 switch 举例
 
 我们先看一个正常的示例：
 
 ```java
-class a {
-    public static void main(String[] args) {
-            String param = "t";
-            switch (param) {
-                case "a":
-                    System.out.println("a");
-                    break;
-                case "b":
-                    System.out.println("b");
-                    break;
-                case "c":
-                    System.out.println("c");
-                    break;
-                default:
-                    System.out.println("default");
-            }
-    }
-}
+public static void main(String[] args) {
+        String param = "t";
+        switch (param) {
+            case "a":
+                System.out.println("a");
+                break;
+            case "b":
+                System.out.println("b");
+                break;
+            case "c":
+                System.out.println("c");
+                break;
+            default:
+                System.out.println("default");
+        }
 ```
 
 先进入到代码目录，对类文件进行编译：
@@ -264,7 +263,7 @@ default 语句对应 137 行，打印 “default” 字符串，然后执行 145
 
 
 
-### 2.3.2 分析问题
+#### 2.3.2 分析问题
 
 经过前面的学习我们对 String 为参数的 switch 语句的执行流程有了初步认识。
 
@@ -323,7 +322,7 @@ public class com.imooc.basic.learn_switch.SwitchTest {
 
 在调试模式下，在变量选项卡上右键，选择 “Evaluate Expression…” ，填写想执行想计算的表达式即可：
 
-![图片描述](http://img.mukewang.com/5dc2a76b0001c49814441042.png)
+![图片描述](http://img1.sycdn.imooc.com/5dc2a76b0001c49814441042.png)
 
 我们将上面的字节码的逻辑反向 “翻译” 成 java 代码大致如下：
 
@@ -339,7 +338,7 @@ if(hashCode == ("null").hashCode() && param.equals("null")){
 
 对应流程图如下：
 
-![图片描述](http://img.mukewang.com/5dc28a9c0001ee3e10981172.png)
+![图片描述](http://img1.sycdn.imooc.com/5dc28a9c0001ee3e10981172.png)
 
 因此空指针的原因就一目了然了。
 
@@ -375,7 +374,7 @@ switch 表达式会先计算字符串的 hashCode （main 函数偏移为 7 处�
 
 
 
-# 3. 总结
+## 3. 总结
 
 本节我们结合一个简单的案例 和 jvms， 学习了 switch 的基本原理，分析了示例代码产生空指针的原因。本节还介绍了一个简单的调试技巧，以及 “猜想和验证” 的学习方式，希望大家在后面的学习和工作中多加实践。
 
@@ -383,7 +382,7 @@ switch 表达式会先计算字符串的 hashCode （main 函数偏移为 7 处�
 
 
 
-# 4. 课后题
+## 4. 课后题
 
 下面的代码结果是啥呢？
 
@@ -405,7 +404,7 @@ public class SwitchTest {
 
 
 
-# 参考资料
+## 参考资料
 
 ------
 

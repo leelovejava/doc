@@ -4,7 +4,9 @@
 
 ![img](http://img.mukewang.com/5dc292cb000139a906400359.jpg)
 
-![img](http://www.imooc.com/static/img/column/bg-l.png)![img](http://www.imooc.com/static/img/column/bg-r.png)
+![img](http://www.imooc.com/static/img/column/bg-l.png)
+
+![img](http://www.imooc.com/static/img/column/bg-r.png)
 
 
 
